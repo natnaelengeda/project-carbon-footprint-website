@@ -5,6 +5,7 @@ import Root from "./Root";
 
 // Pages
 import Home from "../pages/home";
+import CarbonFootPrint from "@/pages/carbonfootprint";
 
 export const router = createBrowserRouter([
   {
@@ -14,6 +15,10 @@ export const router = createBrowserRouter([
       {
         path: "/",
         element: <Home />
+      },
+      {
+        path: "/carbonfootprint",
+        element: <CarbonFootPrint />
       }
     ]
   }
