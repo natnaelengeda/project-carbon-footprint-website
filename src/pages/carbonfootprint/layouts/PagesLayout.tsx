@@ -14,15 +14,15 @@ export default function PagesLayout({ children }: Props) {
       {/* Top Header */}
       <div className="w-full h-32">
         {/* Main Content */}
-        <div className="w-full h-full mx-auto xl:container px-20 flex items-center justify-start">
+        <div className="w-full h-full mx-auto xl:container px-5 md:px-20 flex items-center justify-start">
           <img
             src={AppAsset.Logo}
-            className="h-24 w-24" />
+            className="w-16 md:w-24 h-auto object-contain" />
         </div>
 
       </div>
       {children}
-      
+
     </div>
   )
 }

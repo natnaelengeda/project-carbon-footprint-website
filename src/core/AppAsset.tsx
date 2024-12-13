@@ -9,6 +9,15 @@ import BannerThree from "@/assets/imgs/banner/banner-three.svg";
 import BannerFour from "@/assets/imgs/banner/banner-four.svg";
 import BannerFive from "@/assets/imgs/banner/banner-five.svg";
 import BannerSix from "@/assets/imgs/banner/banner-six.svg";
+import BannerSeven from "@/assets/imgs/banner/banner-seven.svg";
+import BannerEight from "@/assets/imgs/banner/banner-eight.svg";
+import BannerNine from "@/assets/imgs/banner/banner-nine.svg";
+
+// Badges
+import BlueBadge from "@/assets/imgs/badges/blue-badge.svg";
+import GreenBadge from "@/assets/imgs/badges/green-badge.svg";
+import VioletBadge from "@/assets/imgs/badges/violet-badge.svg";
+import LightGreenBadge from "@/assets/imgs/badges/light-green-badge.svg";
 
 // Icons
 import RightArrowIcon from "@/assets/icons/arrow-right-02.svg";
@@ -39,6 +48,15 @@ class AppAsset {
   static BannerFour = BannerFour;
   static BannerFive = BannerFive;
   static BannerSix = BannerSix;
+  static BannerSeven = BannerSeven;
+  static BannerEight = BannerEight;
+  static BannerNine = BannerNine;
+
+  // Badges
+  static BlueBadge = BlueBadge;
+  static GreenBadge = GreenBadge;
+  static VioletBadge = VioletBadge;
+  static LightGreenBadge = LightGreenBadge;
 
   // Icons
   static RightArrowIcon = RightArrowIcon;

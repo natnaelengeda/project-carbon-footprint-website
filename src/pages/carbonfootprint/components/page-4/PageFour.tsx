@@ -5,6 +5,8 @@ import PagesLayout from '../../layouts/PagesLayout'
 // Mantine 
 import {
   Tooltip,
+  Slider,
+  RangeSlider,
 } from '@mantine/core';
 
 // AppAsset
@@ -19,6 +21,7 @@ export default function PageFour({ setPage }: Props) {
     <PagesLayout>
       <div
         className="relative w-full h-screen mx-auto 2xl:container flex flex-col items-center justify-between gap-5 py-20">
+
         {/* Top Section */}
         <div className='flex flex-col items-center justify-start gap-5'>
           {/* Image Content */}
@@ -27,11 +30,11 @@ export default function PageFour({ setPage }: Props) {
             {/* Image */}
             <img
               src={AppAsset.BannerFour}
-              className="w-[550px] h-[550px] object-cover" />
+              className="md:w-[550px] md:h-[550px] object-cover" />
           </div>
 
           {/* Note */}
-          <div className="w-auto flex flex-row items-center justify-center gap-3 font-semibold text-[48px] pt-20">
+          <div className="w-auto flex flex-row items-center justify-center gap-3 font-semibold text-2xl md:text-[48px] pt-20">
             <div className='flex flex-col items-start justify-start'>
               <p>What is your household energy </p>
               <p>usage?</p>
@@ -63,7 +66,7 @@ export default function PageFour({ setPage }: Props) {
                     src={AppAsset.CheckedIcon}
                     className="w-[36px] h-[36px]" />
                   <p
-                    className='text-[30px] font-normal'>
+                    className='text-2xl md:text-[30px] font-normal'>
                     Heating / Cooling
                   </p>
                 </div>
@@ -94,11 +97,26 @@ export default function PageFour({ setPage }: Props) {
                   </div>
 
                   {/* Form */}
-                  <div className='w-full h-auto'>
-                    <input
+                  <div className='w-full h-auto pr-32'>
+                    <Slider
+                      color="#35D36A"
+                      size="xl"
+                      min={1}
+                      max={24}
+                      marks={[
+                        { value: 1, label: '1' },
+                        { value: 4, label: '4' },
+                        { value: 8, label: '8' },
+                        { value: 12, label: '12' },
+                        { value: 16, label: '16' },
+                        { value: 20, label: '20' },
+                        { value: 24, label: '24' },
+                      ]}
+                    />
+                    {/* <input
                       type="text"
                       placeholder='Enter hourly usage per day'
-                      className='w-full h-16 rounded-xl border border-[#CBCBCB] px-5 text-[24px] focus:outline-primary' />
+                      className='w-full h-16 rounded-xl border border-[#CBCBCB] px-5 text-[24px] focus:outline-primary' /> */}
 
                   </div>
                 </div>

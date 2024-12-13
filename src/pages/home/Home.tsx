@@ -15,7 +15,7 @@ export default function Home() {
 
       {/* Main Content */}
       <div
-        className="w-full h-full mx-auto 2xl:container flex flex-col items-center justify-start gap-5 py-20">
+        className="w-full h-full mx-auto 2xl:container flex flex-col items-center justify-start gap-5 py-10 mdpy-20">
 
         {/* Top Content */}
         <div
@@ -49,34 +49,35 @@ export default function Home() {
         </div>
 
         {/* Note */}
-        <div className="w-auto flex flex-col items-center justify-start gap- text-[28px] pt-10">
+        <div className="w-auto flex flex-col items-center justify-start gap- text-lg md:text-[28px] pt-10 text-center ">
           <p>Lorem ipsum dolor sit amet consectetur. Consectetur</p>
           <p>ultricies vel massa pretium. Ornare sollicitudin.</p>
         </div>
 
         {/* Buttons */}
-        <div className="w-auto flex flex-col items-center justify-start gap-10 pt-10">
+        <div className="w-auto flex flex-col items-center justify-start gap-3 md:gap-10 pt-10">
 
           <button
             // to="/carbonfootprint"
             onClick={() => {
               navigate("/carbonfootprint");
+              localStorage.setItem("page_type", "carbonfootprint");
             }}
-            className="w-[26rem] h-24 bg-primary text-white font-semibold rounded-3xl text-3xl px- py-4 hover:opacity-80">
+            className="w-auto h-auto md:w-[26rem] md:h-24 bg-primary text-white font-semibold rounded-lg md:rounded-3xl text-lg md:text-3xl px-2 md:px-0 py-4 hover:opacity-80">
             Carbon Footprint Calculator
           </button>
           <button
             onClick={() => {
               toast.success("This feature is not available yet.");
             }}
-            className="w-[26rem] h-24 bg-primary text-white font-semibold rounded-3xl text-3xl px-2 py-4 hover:opacity-80">
+            className="w-40 h-auto md:w-[26rem] md:h-24 bg-primary text-white font-semibold rounded-lg md:rounded-3xl text-lg md:text-3xl px-2 py-4 hover:opacity-80">
             Q/A
           </button>
           <button
             onClick={() => {
               toast.success("This feature is not available yet.");
             }}
-            className="w-[26rem] h-24 bg-primary text-white font-semibold rounded-3xl text-3xl px-2 py-4 hover:opacity-80">
+            className="w-40 h-auto md:w-[26rem] md:h-24 bg-primary text-white font-semibold rounded-lg md:rounded-3xl text-lg md:text-3xl px-2 py-4 hover:opacity-80">
             Pledge System
           </button>
 

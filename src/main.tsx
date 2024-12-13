@@ -11,6 +11,11 @@ import { MantineProvider } from '@mantine/core';
 // Roast
 import { Toaster } from 'react-hot-toast';
 
+// State
+import { Provider } from 'react-redux';
+import { persistor, store } from "./store";
+import { PersistGate } from 'redux-persist/integration/react';
+
 // Styles
 import "./index.css";
 import "./styles/tailwind.css";
@@ -23,11 +28,17 @@ const root = ReactDOMClient.createRoot(container);
 
 function App() {
   return (
-    <MantineProvider>
-      <RouterProvider
-        router={router} />
-      <Toaster />
-    </MantineProvider>
+    <Provider store={store}>
+      <PersistGate
+        loading={null}
+        persistor={persistor}>
+        <MantineProvider>
+          <RouterProvider
+            router={router} />
+          <Toaster />
+        </MantineProvider>
+      </PersistGate>
+    </Provider>
   );
 }
 

@@ -1,11 +1,29 @@
+import { useEffect, useState } from 'react';
+
 // Page Layout
 import PagesLayout from '../../layouts/PagesLayout'
+
+// State
+import {
+  useDispatch,
+  useSelector,
+} from 'react-redux';
+import {
+  addName,
+  CarbonState,
+} from '@/state/carbon';
 
 // Mantine
 import { TextInput } from '@mantine/core';
 
+// Toast
+import toast from 'react-hot-toast';
+
 // AppAsset
 import AppAsset from '@/core/AppAsset';
+
+// Utils
+import { generateRandomId } from '@/utils/idGenerator';
 
 // Interface
 interface Props {
@@ -13,55 +31,93 @@ interface Props {
 }
 
 export default function PageTwo({ setPage }: Props) {
+  // New Values
+  const [name, setName] = useState<string>("");
+  const id = generateRandomId();
+
+  // State
+  const dispatch = useDispatch();
+  const carbonData = useSelector((state: { carbon: CarbonState }) => state.carbon);
+
+  // Width
+  const width = window.innerWidth;
+
+  const onNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    console.log(e.target.value);
+
+    setName(e.target.value);
+
+    dispatch(addName({
+      id: id,
+      name: e.target.value,
+    }));
+  }
+
+  useEffect(() => {
+    console.log(carbonData);
+    if (carbonData!.name!.length > 0) {
+      setName(carbonData.name!);
+    }
+  }, []);
+
   return (
     <PagesLayout>
       <div
-        className="relative w-full h-screen mx-auto 2xl:container flex flex-col items-center justify-between gap-5 py-20">
+        className="relative w-full h-screen mx-auto 2xl:container flex flex-col items-center justify-between gap-5 py-10 md:py-20">
 
         {/* Top Section  */}
         <div className='flex flex-col items-center justify-start gap-5'>
 
           {/* Image Content */}
           <div
-            className="w-full h-auto flex flex-col items-center justify-start gap-5 px-10">
+            className="w-full mx-auto h-auto flex flex-col items-center justify-start gap-5 px-5 md:px-10">
             {/* Image */}
             <img
               src={AppAsset.BannerTwo}
-              className="w-[500px] h-[500px] object-cover" />
+              className="w-full h-auto md:w-[500px] md:h-[500px] object-contain mx-auto" />
           </div>
 
           {/* Note */}
-          <div className="w-auto flex flex-col items-center justify-start font-semibold text-[48px] pt-20">
+          <div
+            className="w-auto flex flex-col items-center justify-start font-semibold text-[30px] md:text-[48px] pt-5 md:pt-20">
             <p>Would you mind sharing your </p>
             <p>name? (Optional)</p>
           </div>
 
           {/* TextInput */}
-          <div className="w-auto flex flex-col items-center justify-start gap-5 pt-10">
+          <div className="w-full flex flex-col items-center justify-start gap-5 pt-2 md:pt-10 px-5">
             <TextInput
               placeholder="Eg. John Doe"
-              size="xl"
-              radius={"lg"}
+              value={name}
+              onChange={onNameChange}
+              size={
+                width > 768 ? "xl" : "md"
+              }
+              radius={width > 768 ? "md" : "md"}
               leftSection={
                 <img
                   src={AppAsset.UserBlackIcon}
                   className="w-6 h-6" />}
-              className="w-[35rem]" />
+              className="w-full md:w-[35rem]" />
           </div>
         </div>
 
         {/* Bottom Section */}
         <div
-          className='w-full h-80 flex items-start justify-end px-40'>
+          className='w-full h-80 flex items-start justify-end md:px-40'>
           <button
             onClick={() => {
-              setPage(3);
+              if (name.length > 0) setPage(3);
+              else
+                toast.error("Please enter your name", {
+                  duration: 4000,
+                });
             }}
-            className='w-[221.32px] h-[100px] rounded-full bg-primary text-white flex flex-row items-center justify-center gap-3'>
-            <p className='text-[34.56px] font-semibold'>Next</p>
+            className='md:w-[221.32px] md:h-[100px] rounded-lg md:rounded-full bg-primary text-white flex flex-row items-center justify-center gap-3 px-6 py-2'>
+            <p className='text-2xl md:text-[34.56px] font-semibold'>Next</p>
             <img
               src={AppAsset.RightArrowIcon}
-              className="w-10 h-auto object-contain" />
+              className="w-8 md:w-10 h-auto object-contain" />
           </button>
 
         </div>
