@@ -1,12 +1,24 @@
+import { useState } from 'react';
+
+// Import Swiper React components
+import { Swiper, SwiperSlide } from 'swiper/react';
 
 // AppAsset
 import AppAsset from "@/core/AppAsset";
+
+// import required modules
+import { Autoplay } from 'swiper/modules';
+
+// Import Swiper styles
+import 'swiper/css';
 
 interface Props {
   setPage: React.Dispatch<React.SetStateAction<number>>;
 }
 
 export default function PageOne({ setPage }: Props) {
+  const [currentSlider, setCurrentSlider] = useState<number>(0);
+
   return (
     <div
       className="w-full h-full mx-auto 2xl:container flex flex-col items-center justify-start gap-5 py-10 md:py-20">
@@ -25,19 +37,49 @@ export default function PageOne({ setPage }: Props) {
 
       {/* Image Content */}
       <div
-        className="w-full h-auto flex flex-col items-center justify-start gap-5 px-5 md:px-10">
+        className="w-full h-auto flex flex-col items-center justify-start gap-5 px-3 md:px-10">
         {/* Image */}
-        <img
-          src={AppAsset.BannerOne}
-          className="w-full h-auto object-cover" />
+        <Swiper
+          className='w-full'
+          spaceBetween={10}
+          slidesPerView={1}
+          autoplay={{
+            delay: 2500,
+            disableOnInteraction: false,
+          }}
+          onSlideChange={(e) => {
+            setCurrentSlider(e.activeIndex);
+          }}
+          onSwiper={(swiper) => console.log(swiper)}
+          modules={[Autoplay]}>
+          <SwiperSlide>
+            <img
+              src={AppAsset.BannerOne}
+              className="w-full h-80 md:h-[35rem] object-contain" />
+          </SwiperSlide>
+          <SwiperSlide>
+            <img
+              src={AppAsset.BannerTwo}
+              className="w-full h-80 md:h-[35rem] object-contain" />
+          </SwiperSlide>
+          <SwiperSlide>
+            <img
+              src={AppAsset.BannerThree}
+              className="w-full h-80 md:h-[35rem] object-contain" />
+          </SwiperSlide>
+        </Swiper>
+
 
         {/* Pagination */}
         <div className="w-60 h-10 flex flex-row items-center justify-center gap-4">
-          <div className="w-5 h-5 md:w-8 md:h-8 rounded-full bg-primary">
+          <div
+            className={`w-5 h-5 md:w-8 md:h-8 rounded-full transition-all ${currentSlider == 0 ? 'bg-primary' : 'bg-[#35D36A4D]'}`}>
           </div>
-          <div className="w-5 h-5 md:w-8 md:h-8 rounded-full bg-[#35D36A4D]">
+          <div
+            className={`w-5 h-5 md:w-8 md:h-8 rounded-full transition-all ${currentSlider == 1 ? 'bg-primary' : 'bg-[#35D36A4D]'}`}>
           </div>
-          <div className="w-5 h-5 md:w-8 md:h-8 rounded-full bg-[#35D36A4D]">
+          <div
+            className={`w-5 h-5 md:w-8 md:h-8 rounded-full transition-all ${currentSlider == 2 ? 'bg-primary' : 'bg-[#35D36A4D]'}`}>
           </div>
         </div>
       </div>
@@ -56,7 +98,7 @@ export default function PageOne({ setPage }: Props) {
           onClick={() => {
             setPage(2);
           }}
-          className="md:w-[245px] md:h-[88.9px] bg-primary text-white font-semibold rounded-xl md:rounded-full text-lg md:text-3xl px- py-4 hover:opacity-80 flex items-center justify-center gap-3 px-5 md:px-0">
+          className="md:w-[245px] md:h-[88.9px] bg-primary text-white font-semibold rounded-full text-lg md:text-3xl px- py-4 hover:opacity-80 flex items-center justify-center gap-3 px-5 md:px-0">
           Start
           <img
             src={AppAsset.RightArrowIcon}
