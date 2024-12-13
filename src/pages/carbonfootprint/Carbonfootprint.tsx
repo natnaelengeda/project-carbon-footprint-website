@@ -39,7 +39,7 @@ export default function CarbonFootPrint() {
                         page == 9 ?
                           <PageNine setPage={setPage} /> :
                           page == 10 ?
-                            <PageTen setPage={setPage} /> : null
+                            <PageTen /> : null
       }
     </div>
   )

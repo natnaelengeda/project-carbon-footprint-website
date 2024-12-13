@@ -2,9 +2,9 @@
 // AppAsset
 import AppAsset from '@/core/AppAsset';
 
-interface Props {
-  setPage: React.Dispatch<React.SetStateAction<number>>;
-}
+// interface Props {
+//   setPage?: React.Dispatch<React.SetStateAction<number>>;
+// }
 
 export interface MetricItemProps {
   label: string;
@@ -15,7 +15,7 @@ export interface ProgressBarProps {
   percentage: number;
 }
 
-export default function PageTen({ setPage }: Props) {
+export default function PageTen() {
 
   const metricsData: MetricItemProps[] = [
     { label: 'Water Usage', percentage: 82 },
