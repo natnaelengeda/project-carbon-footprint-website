@@ -6,7 +6,6 @@ import PagesLayout from '../../layouts/PagesLayout'
 import {
   Tooltip,
   Slider,
-  RangeSlider,
 } from '@mantine/core';
 
 // AppAsset
