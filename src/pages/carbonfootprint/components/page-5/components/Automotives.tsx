@@ -5,6 +5,8 @@ import { Slider } from "@mantine/core";
 
 // App Asset
 import AppAsset from "@/core/AppAsset";
+
+// Components
 import ArrowComponent from "../../ArrowComponent";
 import CheckboxComponent from "../../CheckboxComponent";
 
@@ -31,7 +33,7 @@ export default function Automotives() {
           selected={selected} />
       </div>
 
-      {/* Bottom Context */}
+      {/* Bottom Content */}
       <div
         style={{
           display: selected ? "flex" : "none"
