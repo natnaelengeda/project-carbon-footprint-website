@@ -7,8 +7,14 @@ import {
   Tooltip,
 } from '@mantine/core';
 
+// Components
+import NavigationComponent from '../NavigationComponent';
+
 // AppAsset
 import AppAsset from '@/core/AppAsset';
+import Clothes from './components/Clothes';
+import Showers from './components/Showers';
+import Garden from './components/Garden';
 
 
 interface Props {
@@ -16,14 +22,18 @@ interface Props {
 }
 
 export default function PageNine({ setPage }: Props) {
+  const func = () => {
+    return true;
+  }
+
   return (
     <PagesLayout>
       <div
-        className="relative w-full h-screen mx-auto 2xl:container flex flex-col items-center justify-between gap-5 py-20">
+        className="relative w-full h-screen mx-auto 2xl:container flex flex-col items-center justify-between gap-5 py-10 md:py-20">
 
         {/* Top Section  */}
         <div
-          className='w-[750px] flex flex-col items-center justify-start gap-5'>
+          className='w-full md:w-[750px] flex flex-col items-center justify-start gap-5'>
 
           {/* Image Content */}
           <div
@@ -31,12 +41,13 @@ export default function PageNine({ setPage }: Props) {
             {/* Image */}
             <img
               src={AppAsset.BannerNine}
-              className="w-[550px] h-[550px] object-contain" />
+              className="md:w-[550px] md:h-[550px] object-contain" />
           </div>
 
           {/* Note */}
           <div
-            className="w-full flex flex-row items-center justify-between gap-3 font-semibold text-[48px] pt-20">
+            className="w-full flex flex-row items-center justify-between gap-3 font-semibold text-2xl md:text-[48px] pt-10 md:pt-20 px-5 md:px-0">
+
             <div className='flex flex-col items-start justify-start'>
               <p>Water Usage</p>
             </div>
@@ -50,153 +61,26 @@ export default function PageNine({ setPage }: Props) {
 
           {/* Content */}
           <div
-            className="w-full flex flex-col items-start justify-start gap-8 pt-10 px-4">
+            className="w-full flex flex-col items-start justify-start gap-8 pt-5 md:pt-10 px-4 pb-10 md:pb-0">
 
             {/* Washing Clothes */}
-            <div
-              className='w-full h-auto flex flex-col items-start justify-start gap-5'>
-              {/* Top Content */}
-              <div
-                className='w-full h-auto flex flex-row items-center justify-between'>
-
-                {/* Check Box */}
-                <div
-                  className='flex flex-row items-center justify-start gap-[30px]'>
-                  <img
-                    src={AppAsset.CheckedIcon}
-                    className="w-[36px] h-[36px]" />
-                  <p
-                    className='text-[30px] font-normal'>
-                    Washing Clothes
-                  </p>
-                </div>
-
-                {/* Arrow */}
-                <div className='pr-5 pt-3'>
-                  <img
-                    src={AppAsset.ArrowUpIcon}
-                    className="w-[36px] h-[36px]" />
-                </div>
-              </div>
-
-              <div
-                className='w-full h-auto flex flex-col items-start justify-start pl-16 gap-5'>
-
-                {/* Form */}
-                <div
-                  className='w-full h-auto flex flex-col items-start justify-start gap-5 pr-5'>
-                  <input
-                    type="text"
-                    placeholder='E.g 2 times a week'
-                    className='w-full h-16 rounded-xl border border-[#CBCBCB] px-5 text-[24px] focus:outline-primary' />
-
-                </div>
-              </div>
-            </div>
+            <Clothes />
 
             {/* Showers */}
-            <div
-              className='w-full h-auto flex flex-col items-start justify-start gap-5'>
-              {/* Top Content */}
-              <div
-                className='w-full h-auto flex flex-row items-center justify-between'>
-
-                {/* Check Box */}
-                <div
-                  className='flex flex-row items-center justify-start gap-[30px]'>
-                  <img
-                    src={AppAsset.CheckedIcon}
-                    className="w-[36px] h-[36px]" />
-                  <p
-                    className='text-[30px] font-normal'>
-                    Showers
-                  </p>
-                </div>
-
-                {/* Arrow */}
-                <div className='pr-5 pt-3'>
-                  <img
-                    src={AppAsset.ArrowUpIcon}
-                    className="w-[36px] h-[36px]" />
-                </div>
-              </div>
-
-              <div
-                className='w-full h-auto flex flex-col items-start justify-start pl-16 gap-5'>
-
-                {/* Form */}
-                <div
-                  className='w-full h-auto flex flex-col items-start justify-start gap-5 pr-5'>
-                  <input
-                    type="text"
-                    placeholder='Enter days per week'
-                    className='w-full h-16 rounded-xl border border-[#CBCBCB] px-5 text-[24px] focus:outline-primary' />
-
-                  <input
-                    type="text"
-                    placeholder='Enter average duration in minutes'
-                    className='w-full h-16 rounded-xl border border-[#CBCBCB] px-5 text-[24px] focus:outline-primary' />
-
-                </div>
-              </div>
-            </div>
+            <Showers />
 
             {/* Garden Watering */}
-            <div
-              className='w-full h-auto flex flex-col items-start justify-start gap-5'>
-              {/* Top Content */}
-              <div
-                className='w-full h-auto flex flex-row items-center justify-between'>
-
-                {/* Check Box */}
-                <div
-                  className='flex flex-row items-center justify-start gap-[30px]'>
-                  <img
-                    src={AppAsset.CheckedIcon}
-                    className="w-[36px] h-[36px]" />
-                  <p
-                    className='text-[30px] font-normal'>
-                    Garden Watering
-                  </p>
-                </div>
-
-                {/* Arrow */}
-                <div className='pr-5 pt-3'>
-                  <img
-                    src={AppAsset.ArrowUpIcon}
-                    className="w-[36px] h-[36px]" />
-                </div>
-              </div>
-
-            </div>
+            <Garden />
           </div>
-
-
         </div>
 
-        {/* Bottom Section */}
-        <div
-          className='w-full h-80 flex items-start justify-end px-40 gap-3 pt-10'>
-          <button
-            onClick={() => {
-              setPage(8);
-            }}
-            className='w-[100px] h-[100px] rounded-full border border-primary flex items-center justify-center'>
-            <img
-              src={AppAsset.LeftArrowIcon}
-              className='w-[40.56px] h-[40.56px]' />
-          </button>
-          <button
-            onClick={() => {
-              setPage(10);
-            }}
-            className='w-[221.32px] h-[100px] rounded-full bg-primary text-white flex flex-row items-center justify-center gap-3'>
-            <p className='text-[34.56px] font-semibold'>Next</p>
-            <img
-              src={AppAsset.RightArrowIcon}
-              className="w-10 h-auto object-contain" />
-          </button>
-        </div>
+        {/* Navigation */}
+        <NavigationComponent
+          setPage={setPage}
+          func={func}
+          prevPage={8}
+          nextPage={10} />
+
       </div>
     </PagesLayout>
   )

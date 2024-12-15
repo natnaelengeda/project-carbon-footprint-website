@@ -1,5 +1,5 @@
 // Page Layout
-import { Tooltip } from '@mantine/core';
+import { Slider, Tooltip } from '@mantine/core';
 import PagesLayout from '../../layouts/PagesLayout'
 
 // Interface
@@ -9,12 +9,18 @@ interface Props {
 
 // AppAsset
 import AppAsset from '@/core/AppAsset';
+import NavigationComponent from '../NavigationComponent';
 
 export default function PageSeven({ setPage }: Props) {
+
+  const func = () => {
+    return true;
+  }
+
   return (
     <PagesLayout>
       <div
-        className="relative w-full h-screen mx-auto 2xl:container flex flex-col items-center justify-between gap-5 py-20">
+        className="relative w-full h-screen mx-auto 2xl:container flex flex-col items-center justify-between gap-5 py-10 md:py-20">
 
         {/* Top Section  */}
         <div className='flex flex-col items-center justify-start gap-5'>
@@ -25,18 +31,18 @@ export default function PageSeven({ setPage }: Props) {
             {/* Image */}
             <img
               src={AppAsset.BannerSeven}
-              className="w-[550px] h-[550px] object-cover" />
+              className="md:w-[550px] md:h-[550px] object-contain" />
           </div>
 
 
           {/* Note */}
           <div
-            className="w-auto flex flex-row items-start justify-center gap-3 font-semibold text-[48px] pt-20">
+            className="w-auto flex flex-row items-start justify-center gap-3 font-semibold text-2xl md:text-[48px] pt-10 md:pt-20">
             <div className='flex flex-col items-start justify-start'>
               <p>What is your weekly waste </p>
               <p>disposal in kilograms?</p>
             </div>
-            <div className='pt-6'>
+            <div className='pt-2 md:pt-6'>
               <Tooltip
                 label="Lorem ipsum dolor sit amet consectetur. Ante ipsum gravida vestibulum leo.">
                 <img
@@ -50,41 +56,42 @@ export default function PageSeven({ setPage }: Props) {
           <div className='w-full h-auto pt-10'>
 
             {/* Form */}
-            <div className='w-full h-auto'>
-              <input
-                type="text"
-                placeholder='E.g. 1 kg '
-                className='w-full h-16 rounded-xl border border-[#CBCBCB] px-5 text-[24px] focus:outline-primary' />
+            <div
+              className='w-full h-auto px-3 md:px-0'>
+              <div
+                className="w-full h-auto flex flex-col items-start justify-start gap-2">
+                {/* Text */}
+                <p className="text-[#B7B7B7] text-lg md:text-[24px]">
+                  Select food wastage in kilo grams per week
+                </p>
+                <Slider
+                  className="w-full"
+                  color="#35D36A"
+                  size="xl"
+                  min={1}
+                  max={30}
+                  marks={[
+                    { value: 1, label: '1' },
+                    { value: 5, label: '5' },
+                    { value: 10, label: '10' },
+                    { value: 15, label: '15' },
+                    { value: 20, label: '20' },
+                    { value: 25, label: '25' },
+                    { value: 30, label: '30' },
+                  ]}
+                />
+              </div>
 
             </div>
           </div>
-
-
         </div>
 
-        {/* Bottom Section */}
-        <div
-          className='w-full h-80 flex items-start justify-end px-40 gap-3'>
-          <button
-            onClick={() => {
-              setPage(6);
-            }}
-            className='w-[100px] h-[100px] rounded-full border border-primary flex items-center justify-center'>
-            <img
-              src={AppAsset.LeftArrowIcon}
-              className='w-[40.56px] h-[40.56px]' />
-          </button>
-          <button
-            onClick={() => {
-              setPage(8);
-            }}
-            className='w-[221.32px] h-[100px] rounded-full bg-primary text-white flex flex-row items-center justify-center gap-3'>
-            <p className='text-[34.56px] font-semibold'>Next</p>
-            <img
-              src={AppAsset.RightArrowIcon}
-              className="w-10 h-auto object-contain" />
-          </button>
-        </div>
+        {/* Navigation */}
+        <NavigationComponent
+          setPage={setPage}
+          func={func}
+          prevPage={6}
+          nextPage={8} />
       </div>
     </PagesLayout>
   )
