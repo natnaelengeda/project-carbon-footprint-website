@@ -5,12 +5,14 @@ export interface CarbonState {
   id: string;
   name?: string;
   housing_type?: string;
+  house_hold_energy?: [];
 }
 
 const initialState: CarbonState = {
   id: "",
   name: "",
   housing_type: "",
+  house_hold_energy: [],
 };
 
 export const carbonSlice = createSlice({
@@ -23,6 +25,9 @@ export const carbonSlice = createSlice({
     },
     addHousingType: (state, action: PayloadAction<{ housing_type: string }>) => {
       state.housing_type = action.payload.housing_type;
+    },
+    addHouseHoldEnergy: (state, action: PayloadAction<{ house_hold_energy: [] }>) => {
+      state.house_hold_energy = action.payload.house_hold_energy;
     },
     clearEverything: (state) => {
       state.id = "";

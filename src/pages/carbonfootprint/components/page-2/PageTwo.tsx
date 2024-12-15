@@ -24,6 +24,7 @@ import AppAsset from '@/core/AppAsset';
 
 // Utils
 import { generateRandomId } from '@/utils/idGenerator';
+import NavigationComponent from '../NavigationComponent';
 
 // Interface
 interface Props {
@@ -43,7 +44,6 @@ export default function PageTwo({ setPage }: Props) {
   const width = window.innerWidth;
 
   const onNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    console.log(e.target.value);
 
     setName(e.target.value);
 
@@ -53,8 +53,16 @@ export default function PageTwo({ setPage }: Props) {
     }));
   }
 
+  const func = () => {
+    if (name.length > 0) return true;
+    else
+      toast.error("Please enter your name", {
+        duration: 4000,
+      });
+    return false;
+  }
+
   useEffect(() => {
-    console.log(carbonData);
     if (carbonData!.name!.length > 0) {
       setName(carbonData.name!);
     }
@@ -103,24 +111,12 @@ export default function PageTwo({ setPage }: Props) {
         </div>
 
         {/* Bottom Section */}
-        <div
-          className='w-full h-80 flex items-start justify-end md:px-40'>
-          <button
-            onClick={() => {
-              if (name.length > 0) setPage(3);
-              else
-                toast.error("Please enter your name", {
-                  duration: 4000,
-                });
-            }}
-            className='md:w-[221.32px] md:h-[100px] rounded-lg md:rounded-full bg-primary text-white flex flex-row items-center justify-center gap-3 px-6 py-2'>
-            <p className='text-2xl md:text-[34.56px] font-semibold'>Next</p>
-            <img
-              src={AppAsset.RightArrowIcon}
-              className="w-8 md:w-10 h-auto object-contain" />
-          </button>
+        <NavigationComponent
+          setPage={setPage}
+          func={func}
+          prevPage={1}
+          nextPage={3} />
 
-        </div>
       </div>
     </PagesLayout>
   )

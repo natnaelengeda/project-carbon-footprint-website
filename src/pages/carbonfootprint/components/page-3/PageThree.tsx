@@ -22,6 +22,7 @@ import {
 // AppAsset
 import AppAsset from '@/core/AppAsset';
 import { useEffect, useState } from 'react';
+import NavigationComponent from '../NavigationComponent';
 
 
 interface Props {
@@ -37,6 +38,9 @@ export default function PageThree({ setPage }: Props) {
   const dispatch = useDispatch();
   const carbonData = useSelector((state: { carbon: CarbonState }) => state.carbon);
 
+  const func = () => {
+    return true;
+  }
 
   // Check if the user have already selected
   useEffect(() => {
@@ -46,7 +50,6 @@ export default function PageThree({ setPage }: Props) {
   }, []);
 
   useEffect(() => {
-    console.log(value);
     dispatch(addHousingType({
       housing_type: value,
     }))
@@ -122,71 +125,15 @@ export default function PageThree({ setPage }: Props) {
                   label="Hut" />
               </div>
             </RadioGroup>
-            {/* <Radio.Group
-              name="housing-type">
-              <Group
-                className='flex flex-col'>
-                <div
-                  className='flex flex-col gap-5'>
-                  <Radio
-                    iconColor=""
-                    color="#35D36A"
-                    value="house"
-                    size={width > 768 ? "xl" : "md"}
-                    label="House" />
-                  <Radio
-                    iconColor=""
-                    color="#35D36A"
-                    value="appartment"
-                    size={width > 768 ? "xl" : "md"}
-                    label="Appartment" />
-                  <Radio
-                    iconColor=""
-                    color="#35D36A"
-                    value="condo"
-                    size={width > 768 ? "xl" : "md"}
-                    label="Condo" />
-                  <Radio
-                    iconColor=""
-                    color="#35D36A"
-                    value="villa"
-                    size={width > 768 ? "xl" : "md"}
-                    label="Villa" />
-                  <Radio
-                    iconColor=""
-                    color="#35D36A"
-                    value="hut"
-                    size={width > 768 ? "xl" : "md"}
-                    label="Hut" />
-                </div>
-              </Group>
-            </Radio.Group> */}
           </div>
         </div>
 
-        {/* Bottom Section */}
-        <div
-          className='w-full h-80 flex items-start justify-end px-5 md:px-40 gap-3 pb-10 md:pb-0'>
-          <button
-            onClick={() => {
-              setPage(2);
-            }}
-            className='w-10 h-10 md:w-[100px] md:h-[100px] rounded-full border border-primary flex items-center justify-center p-2 md:p-0'>
-            <img
-              src={AppAsset.LeftArrowIcon}
-              className='w-20 h-auto object-contain md:w-[40.56px] md:h-[40.56px]' />
-          </button>
-          <button
-            onClick={() => {
-              setPage(4);
-            }}
-            className='md:w-[221.32px] md:h-[100px] rounded-lg md:rounded-full bg-primary text-white flex flex-row items-center justify-center gap-3 px-6 py-2 '>
-            <p className='text-lg md:text-[34.56px] font-semibold'>Next</p>
-            <img
-              src={AppAsset.RightArrowIcon}
-              className="w-6 md:w-10 h-auto object-contain" />
-          </button>
-        </div>
+        {/* Navigation */}
+        <NavigationComponent
+          setPage={setPage}
+          func={func}
+          prevPage={2}
+          nextPage={4} />
 
       </div>
     </PagesLayout>

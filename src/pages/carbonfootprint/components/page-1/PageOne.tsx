@@ -50,7 +50,6 @@ export default function PageOne({ setPage }: Props) {
           onSlideChange={(e) => {
             setCurrentSlider(e.activeIndex);
           }}
-          onSwiper={(swiper) => console.log(swiper)}
           modules={[Autoplay]}>
           <SwiperSlide>
             <img
