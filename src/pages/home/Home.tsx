@@ -63,22 +63,31 @@ export default function Home() {
               navigate("/carbonfootprint");
               localStorage.setItem("page_type", "carbonfootprint");
             }}
-            className="w-auto h-auto md:w-[26rem] md:h-24 bg-primary text-white font-semibold rounded-lg md:rounded-3xl text-lg md:text-3xl px-2 md:px-0 py-4 hover:opacity-80">
-            Carbon Footprint Calculator
+            className="w-auto h-auto md:w-[325px] md:h-[76px] border border-primary bg-white text-primary font-semibold rounded-lg md:rounded-full text-lg md:text-[26px] px-2 md:px-0 py-4 hover:opacity-80 flex flex-row items-center justify-center gap-3">
+            <p>Carbon Footprint</p>
+            <img src={AppAsset.RightArrowGreenicon}
+              className="w-[36px] object-contain"
+            />
           </button>
           <button
             onClick={() => {
               toast.success("This feature is not available yet.");
             }}
-            className="w-40 h-auto md:w-[26rem] md:h-24 bg-primary text-white font-semibold rounded-lg md:rounded-3xl text-lg md:text-3xl px-2 py-4 hover:opacity-80">
-            Q/A
+            className="w-auto h-auto md:w-[325px] md:h-[76px] border border-primary bg-white text-primary font-semibold rounded-lg md:rounded-full text-lg md:text-[26px] px-2 md:px-0 py-4 hover:opacity-80 flex flex-row items-center justify-center gap-3">
+            <p>Interactive Q/A</p>
+            <img src={AppAsset.RightArrowGreenicon}
+              className="w-[36px] object-contain"
+            />
           </button>
           <button
             onClick={() => {
               toast.success("This feature is not available yet.");
             }}
-            className="w-40 h-auto md:w-[26rem] md:h-24 bg-primary text-white font-semibold rounded-lg md:rounded-3xl text-lg md:text-3xl px-2 py-4 hover:opacity-80">
-            Pledge System
+            className="w-auto h-auto md:w-[325px] md:h-[76px] border border-primary bg-white text-primary font-semibold rounded-lg md:rounded-full text-lg md:text-[26px] px-2 md:px-0 py-4 hover:opacity-80 flex flex-row items-center justify-center gap-3">
+            <p>Personal Pledge</p>
+            <img src={AppAsset.RightArrowGreenicon}
+              className="w-[36px] object-contain"
+            />
           </button>
 
 
