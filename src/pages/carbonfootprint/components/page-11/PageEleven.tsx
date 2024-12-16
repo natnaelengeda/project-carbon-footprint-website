@@ -127,7 +127,7 @@ export default function PageEleven({ setPage }: Props) {
                 setPage(1);
               }}
               className="md:w-[192px] md:h-[69px] border border-primary text-primary text-xl md:text-[24px] rounded-full hover:bg-primary hover:text-white">
-              Start again
+              Finish
             </button>
           </div>
         </div>

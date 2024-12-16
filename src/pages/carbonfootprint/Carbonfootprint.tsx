@@ -14,7 +14,7 @@ import PageTen from "./components/page-10";
 import PageEleven from "./components/page-11";
 
 export default function CarbonFootPrint() {
-  const [page, setPage] = useState<number>(1);
+  const [page, setPage] = useState<number>(10);
 
 
   return (

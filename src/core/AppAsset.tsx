@@ -43,6 +43,18 @@ import StatsReuseIcon from "@/assets/icons/stats/recycle-03.svg";
 import StatsShopIcon from "@/assets/icons/stats/shopping-basket-01.svg";
 import StatsRepoirIcon from "@/assets/icons/stats/wrench-01.svg";
 
+// Category Icons
+import AirplaneCategoryIcon from "@/assets/icons/categories/airplane-01.svg";
+import BicycleCategoryIcon from "@/assets/icons/categories/bicycle-01.svg";
+import CarCategoryIcon from "@/assets/icons/categories/car-01.svg";
+import ChickenTightCategoryIcon from "@/assets/icons/categories/chicken-thighs.svg";
+import GlobalCategoryIcon from "@/assets/icons/categories/global.svg";
+import MotorbikeCategoryIcon from "@/assets/icons/categories/motorbike-02.svg";
+import PlantCategoryIcon from "@/assets/icons/categories/plant-02.svg";
+import VegiterianCategoryIcon from "@/assets/icons/categories/vegetarian-food.svg";
+import WorkoutCategoryIcon from "@/assets/icons/categories/workout-run.svg";
+import CheckMarkCategoryIcon from "@/assets/icons/categories/checkmark-square.svg";
+
 // Chart
 import Chart1 from "@/assets/imgs/chart/chart.svg";
 
@@ -85,13 +97,24 @@ class AppAsset {
   static UserBlackIcon = UserBlackIcon;
   static InformationCircleIcon = InformationCircleIcon;
 
-  // StatsIcons
+  // Stats Icons
   static StatsRecycleIcon = StatsRecycleIcon;
   static StatsCompostingIcon = StatsCompostingIcon;
   static StatsReuseIcon = StatsReuseIcon;
   static StatsShopIcon = StatsShopIcon;
   static StatsRepoirIcon = StatsRepoirIcon;
 
+  // Category Icons
+  static AirplaneCategoryIcon = AirplaneCategoryIcon;
+  static BicycleCategoryIcon = BicycleCategoryIcon;
+  static CarCategoryIcon = CarCategoryIcon;
+  static ChickenTightCategoryIcon = ChickenTightCategoryIcon;
+  static GlobalCategoryIcon = GlobalCategoryIcon;
+  static MotorbikeCategoryIcon = MotorbikeCategoryIcon;
+  static PlantCategoryIcon = PlantCategoryIcon;
+  static VegiterianCategoryIcon = VegiterianCategoryIcon;
+  static WorkoutCategoryIcon = WorkoutCategoryIcon;
+  static CheckMarkCategoryIcon = CheckMarkCategoryIcon;
 
   // Chart
   static Chart1 = Chart1;

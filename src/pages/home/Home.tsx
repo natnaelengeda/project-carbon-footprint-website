@@ -71,7 +71,8 @@ export default function Home() {
           </button>
           <button
             onClick={() => {
-              toast.success("This feature is not available yet.");
+              navigate("/interactive-qa");
+              localStorage.setItem("page_type", "interactive-qa");
             }}
             className="w-auto h-auto md:w-[325px] md:h-[76px] border border-primary bg-white text-primary font-semibold rounded-lg md:rounded-full text-lg md:text-[26px] px-2 md:px-0 py-4 hover:opacity-80 flex flex-row items-center justify-center gap-3">
             <p>Interactive Q/A</p>
