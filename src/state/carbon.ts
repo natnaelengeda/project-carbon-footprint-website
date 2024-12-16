@@ -32,6 +32,8 @@ export const carbonSlice = createSlice({
     clearEverything: (state) => {
       state.id = "";
       state.name = "";
+      state.housing_type = "";
+      state.house_hold_energy = [];
     }
   },
 });

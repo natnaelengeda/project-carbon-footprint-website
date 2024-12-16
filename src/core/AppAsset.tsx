@@ -21,6 +21,7 @@ import LightGreenBadge from "@/assets/imgs/badges/light-green-badge.svg";
 
 // Icons
 import RightArrowIcon from "@/assets/icons/arrow-right-02.svg";
+import RightArrowGreenIcon from "@/assets/icons/arrow-right-02-green.svg";
 import LeftArrowIcon from "@/assets/icons/arrow-left-02.svg";
 
 import CheckedIcon from "@/assets/icons/checkmark-square.svg";
@@ -35,6 +36,15 @@ import RadioOffIcon from "@/assets/icons/Radio Off.svg";
 import UserBlackIcon from "@/assets/icons/user.svg";
 import InformationCircleIcon from "@/assets/icons/information-circle.svg";
 
+// Stats Icon
+import StatsRecycleIcon from "@/assets/icons/stats/recycle-02.svg";
+import StatsCompostingIcon from "@/assets/icons/stats/plant-02.svg";
+import StatsReuseIcon from "@/assets/icons/stats/recycle-03.svg";
+import StatsShopIcon from "@/assets/icons/stats/shopping-basket-01.svg";
+import StatsRepoirIcon from "@/assets/icons/stats/wrench-01.svg";
+
+// Chart
+import Chart1 from "@/assets/imgs/chart/chart.svg";
 
 class AppAsset {
   public constructor() { }
@@ -60,6 +70,7 @@ class AppAsset {
 
   // Icons
   static RightArrowIcon = RightArrowIcon;
+  static RightArrowGreenicon = RightArrowGreenIcon;
   static LeftArrowIcon = LeftArrowIcon;
 
   static CheckedIcon = CheckedIcon;
@@ -73,6 +84,17 @@ class AppAsset {
 
   static UserBlackIcon = UserBlackIcon;
   static InformationCircleIcon = InformationCircleIcon;
+
+  // StatsIcons
+  static StatsRecycleIcon = StatsRecycleIcon;
+  static StatsCompostingIcon = StatsCompostingIcon;
+  static StatsReuseIcon = StatsReuseIcon;
+  static StatsShopIcon = StatsShopIcon;
+  static StatsRepoirIcon = StatsRepoirIcon;
+
+
+  // Chart
+  static Chart1 = Chart1;
 
 }
 

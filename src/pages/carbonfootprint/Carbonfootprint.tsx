@@ -11,9 +11,10 @@ import PageSeven from "./components/page-7";
 import PageEight from "./components/page-8";
 import PageNine from "./components/page-9";
 import PageTen from "./components/page-10";
+import PageEleven from "./components/page-11";
 
 export default function CarbonFootPrint() {
-  const [page, setPage] = useState<number>(10);
+  const [page, setPage] = useState<number>(11);
 
 
   return (
@@ -39,7 +40,9 @@ export default function CarbonFootPrint() {
                         page == 9 ?
                           <PageNine setPage={setPage} /> :
                           page == 10 ?
-                            <PageTen /> : null
+                            <PageTen setPage={setPage} /> :
+                            page == 11 ?
+                              <PageEleven setPage={setPage} /> : null
       }
     </div>
   )
