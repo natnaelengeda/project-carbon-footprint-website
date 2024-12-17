@@ -4,8 +4,13 @@ import { useEffect, useState } from 'react';
 import { Slider } from '@mantine/core';
 
 // State
-import { useDispatch } from 'react-redux';
-import { addHouseholdEnergy, deleteHouseholdEnergy } from '@/state/carbon';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  addHouseholdEnergy,
+  CarbonState,
+  deleteHouseholdEnergy,
+  selectHouseholdEnergyById,
+} from '@/state/carbon';
 
 // Components
 import ArrowComponent from '../../ArrowComponent';
@@ -16,10 +21,12 @@ export default function Cooking() {
   const [sliderValue, setSliderValue] = useState<number>(0);
 
   const dispatch = useDispatch();
-
+  const carbon = useSelector((state: { carbon: CarbonState }) => state.carbon);
+  const heatingCoolingEnergy = useSelector((state: any) =>
+    selectHouseholdEnergyById(state, 2) // Replace '1' with the ID you want
+  );
 
   const updateSlider = (value: number) => {
-    console.log(value);
     setSliderValue(value);
     dispatch(
       addHouseholdEnergy({
@@ -47,6 +54,17 @@ export default function Cooking() {
       )
     }
   }, [selected]);
+
+  // Update When Page is Opened
+  useEffect(() => {
+
+    if (carbon.house_hold_energy!.length > 0) {
+      if (heatingCoolingEnergy && heatingCoolingEnergy.selected == true) {
+        setSelected(true);
+        setSliderValue(heatingCoolingEnergy.value!);
+      }
+    }
+  }, []);
 
   return (
     <div

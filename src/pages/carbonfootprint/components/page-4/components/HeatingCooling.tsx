@@ -75,7 +75,7 @@ export default function HeatingCooling() {
     );
   }
 
-  // Update if Selected
+  // Update When Page is Re Opened
   useEffect(() => {
 
     if (carbon.house_hold_energy!.length > 0) {

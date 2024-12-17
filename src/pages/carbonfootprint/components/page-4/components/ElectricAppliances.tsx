@@ -4,8 +4,13 @@ import { useEffect, useState } from 'react';
 import { Slider } from '@mantine/core';
 
 // State
-import { useDispatch } from 'react-redux';
-import { addHouseholdEnergy, deleteHouseholdEnergy } from '@/state/carbon';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  addHouseholdEnergy,
+  CarbonState,
+  deleteHouseholdEnergy,
+  selectHouseholdEnergyById
+} from '@/state/carbon';
 
 // Components
 import CheckboxComponent from '../../CheckboxComponent'
@@ -14,8 +19,25 @@ import ArrowComponent from '../../ArrowComponent';
 
 export default function ElectricAppliances() {
   const [selected, setSelected] = useState<boolean>(false);
+  const [sliderValue, setSliderValue] = useState<number>(0);
 
   const dispatch = useDispatch();
+  const carbon = useSelector((state: { carbon: CarbonState }) => state.carbon);
+  const heatingCoolingEnergy = useSelector((state: any) =>
+    selectHouseholdEnergyById(state, 3) // Replace '1' with the ID you want
+  );
+
+  const updateSlider = (value: number) => {
+    setSliderValue(value);
+    dispatch(
+      addHouseholdEnergy({
+        id: 3,
+        name: "electric-appliances",
+        selected: true,
+        value: value
+      }));
+  }
+
 
   useEffect(() => {
     if (selected == true) {
@@ -33,6 +55,16 @@ export default function ElectricAppliances() {
       )
     }
   }, [selected]);
+
+  // Update When Page is Opened
+  useEffect(() => {
+    if (carbon.house_hold_energy!.length > 0) {
+      if (heatingCoolingEnergy && heatingCoolingEnergy.selected == true) {
+        setSelected(true);
+        setSliderValue(heatingCoolingEnergy.value!);
+      }
+    }
+  }, []);
 
   return (
     <div
@@ -68,6 +100,8 @@ export default function ElectricAppliances() {
 
           </p>
           <Slider
+            value={sliderValue}
+            onChange={updateSlider}
             className="w-full"
             color="#35D36A"
             size="xl"
