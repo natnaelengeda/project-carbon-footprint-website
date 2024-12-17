@@ -9,17 +9,154 @@ import {
 import ArrowComponent from '../../ArrowComponent';
 import CheckboxComponent from '../../CheckboxComponent';
 
+// State
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  addHouseholdEnergy,
+  CarbonState,
+  deleteHouseholdEnergy,
+  selectHouseholdEnergyById,
+} from '@/state/carbon';
+
+
 // AppAsset
 import AppAsset from '@/core/AppAsset';
 
 export default function HeatingCooling() {
   const [selected, setSelected] = useState<boolean>(false);
-
   const [selectedType, setSelectedType] = useState<string>("electric-air-conditioning");
 
+  // Sliders
+  const [electricAirConditioning, setElectricAirConditioning] = useState<number>(1);
+  const [charcoal, setCharcoal] = useState<number>(1);
+
+  const dispatch = useDispatch();
+
+  const carbon = useSelector((state: { carbon: CarbonState }) => state.carbon);
+  const heatingCoolingEnergy = useSelector((state: any) =>
+    selectHouseholdEnergyById(state, 1) // Replace '1' with the ID you want
+  );
+
+  const updateElectricAirConditioning = (value: number) => {
+    setElectricAirConditioning(value);
+    dispatch(
+      addHouseholdEnergy({
+        id: 1,
+        name: "heating-cooling",
+        selected: true,
+        category: [
+          {
+            id: 1,
+            name: "electric_air_conditioning",
+            selected: true,
+            value: value
+          },
+        ],
+      })
+    );
+  }
+
+  const updateCharcoal = (value: number) => {
+    setCharcoal(value);
+    dispatch(
+      addHouseholdEnergy({
+        id: 1,
+        name: "heating-cooling",
+        selected: true,
+        category: [
+          {
+            id: 2,
+            name: "charcoal",
+            selected: true,
+            value: value
+          },
+        ],
+      })
+    );
+  }
+
+  // Update if Selected
+  useEffect(() => {
+
+    if (carbon.house_hold_energy!.length > 0) {
+      if (heatingCoolingEnergy) {
+        setSelected(true);
+
+        // Update Slider
+        if (heatingCoolingEnergy.category) {
+
+          heatingCoolingEnergy.category.map((category: any) => {
+            if (category.name == "electric_air_conditioning") {
+              setSelectedType("electric-air-conditioning");
+              setElectricAirConditioning(category.value);
+            } else if (category.name == "charcoal") {
+              setSelectedType("charcoal")
+              setCharcoal(category.value);
+            } else if (category.name == "none") {
+              setSelectedType("none");
+            }
+          });
+        }
+      }
+
+    }
+  }, []);
 
   useEffect(() => {
+    if (selectedType == "electric-air-conditioning") {
+      dispatch(
+        addHouseholdEnergy({
+          id: 1,
+          name: "heating-cooling",
+          selected: true,
+          category: [
+            { id: 1, name: "electric_air_conditioning", selected: true, value: 1 },
+          ],
+        })
+      );
+    } else if (selectedType == "charcoal") {
+      dispatch(
+        addHouseholdEnergy({
+          id: 1,
+          name: "heating-cooling",
+          selected: true,
+          category: [
+            { id: 2, name: "charcoal", selected: true, value: 1 },
+          ],
+        })
+      );
+    } else if (selectedType == "none") {
+      dispatch(
+        addHouseholdEnergy({
+          id: 1,
+          name: "heating-cooling",
+          selected: true,
+          category: [
+            { id: 3, name: "none", selected: true, value: 1 },
+          ],
+        })
+      );
+    }
+
+  }, [selectedType]);
+
+  useEffect(() => {
+
     if (selected == true) {
+      dispatch(
+        addHouseholdEnergy({
+          id: 1,
+          name: "heating-cooling",
+          selected: true,
+          category: [
+            { id: 1, name: "electric_air_conditioning", selected: true, value: 1 },
+          ],
+        })
+      );
+    } else {
+      dispatch(
+        deleteHouseholdEnergy({ id: 1 })
+      );
     }
   }, [selected]);
 
@@ -68,8 +205,15 @@ export default function HeatingCooling() {
             style={{
               display: selectedType == "electric-air-conditioning" ? "block" : "none"
             }}
-            className='w-full h-auto pl-2 pr-5 md:pr-32'>
+            className='w-full h-auto pl-2 pr-5 md:pr-32 flex flex-col items-start justify-start g'>
+            {/* Text */}
+            <p className="text-[#B7B7B7] text-lg md:text-[24px] pb-2">
+              Select hourly usage per day
+            </p>
+
             <Slider
+              value={electricAirConditioning}
+              onChange={updateElectricAirConditioning}
               color="#35D36A"
               size="xl"
               min={1}
@@ -90,7 +234,7 @@ export default function HeatingCooling() {
 
         {/* Charcoal */}
         <div
-          className='w-full flex flex-col items-start justify-start gap-8 '>
+          className='w-full flex flex-col items-start justify-start gap-2 md:gap-8 '>
 
           {/* Select Option */}
           <div
@@ -103,14 +247,36 @@ export default function HeatingCooling() {
           </div>
 
           {/* Form */}
-          <div
-            className='w-full h-auto hidden'>
-            <input
-              type="text"
-              placeholder='Enter hourly usage per day'
-              className='w-full h-16 rounded-xl border border-[#CBCBCB] px-5 text-[24px]' />
 
+          <div
+            style={{
+              display: selectedType == "charcoal" ? "block" : "none"
+            }}
+            className='w-full h-auto pl-2 pr-5 md:pr-32 flex flex-col items-start justify-start g'>
+            {/* Text */}
+            <p className="text-[#B7B7B7] text-lg md:text-[24px] pb-2">
+              Select hourly usage per day
+            </p>
+
+            <Slider
+              value={charcoal}
+              onChange={updateCharcoal}
+              color="#35D36A"
+              size="xl"
+              min={1}
+              max={24}
+              marks={[
+                { value: 1, label: '1' },
+                { value: 4, label: '4' },
+                { value: 8, label: '8' },
+                { value: 12, label: '12' },
+                { value: 16, label: '16' },
+                { value: 20, label: '20' },
+                { value: 24, label: '24' },
+              ]}
+            />
           </div>
+
         </div>
 
         {/* None */}

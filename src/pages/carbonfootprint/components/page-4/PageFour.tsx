@@ -32,7 +32,6 @@ export default function PageFour({ setPage }: Props) {
   const carbon = useSelector((state: { carbon: CarbonState }) => state.carbon);
 
   const func = () => {
-    return true;
 
     if (carbon.house_hold_energy!.length > 0) {
       return true;

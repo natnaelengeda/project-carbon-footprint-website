@@ -1,4 +1,11 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+
+// Mantine
+import { Slider } from '@mantine/core';
+
+// State
+import { useDispatch, useSelector } from 'react-redux';
+import { addHouseholdEnergy, deleteHouseholdEnergy } from '@/state/carbon';
 
 // Components
 import CheckboxComponent from '../../CheckboxComponent'
@@ -6,6 +13,25 @@ import ArrowComponent from '../../ArrowComponent';
 
 export default function LightBulbs() {
   const [selected, setSelected] = useState<boolean>(false);
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (selected == true) {
+      dispatch(
+        addHouseholdEnergy({
+          id: 4,
+          name: "light-bulbs",
+          selected: true,
+          value: 1,
+        })
+      )
+    } else {
+      dispatch(
+        deleteHouseholdEnergy({ id: 4 })
+      )
+    }
+  }, [selected]);
 
   return (
     <div
@@ -24,6 +50,41 @@ export default function LightBulbs() {
         <ArrowComponent
           selected={selected} />
 
+      </div>
+
+
+      {/* Bottom Content */}
+      <div
+        style={{
+          display: selected ? "flex" : "none"
+        }}
+        className='w-full h-auto flex flex-col items-start justify-start pt-3 pl-5 md:pl-16 gap-8 md:gap-16'>
+
+        <div
+          className="w-full h-auto flex flex-col items-start justify-start gap-2">
+          {/* Text */}
+          <p className="text-[#B7B7B7] text-lg md:text-[24px]">
+            Select Average Light Use Time in Hours
+
+          </p>
+          <Slider
+            className="w-full"
+            color="#35D36A"
+            size="xl"
+            min={1}
+            max={8}
+            marks={[
+              { value: 1, label: '1' },
+              { value: 2, label: '2' },
+              { value: 3, label: '3' },
+              { value: 4, label: '4' },
+              { value: 5, label: '5' },
+              { value: 6, label: '6' },
+              { value: 7, label: '7' },
+              { value: 8, label: '8' },
+            ]}
+          />
+        </div>
       </div>
     </div>
   )
