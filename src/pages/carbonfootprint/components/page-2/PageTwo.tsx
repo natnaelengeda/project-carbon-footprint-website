@@ -14,18 +14,18 @@ import {
   CarbonState,
 } from '@/state/carbon';
 
+// Navigation Component
+import NavigationComponent from '../NavigationComponent';
+
 // Mantine
 import { TextInput } from '@mantine/core';
-
-// Toast
-import toast from 'react-hot-toast';
 
 // AppAsset
 import AppAsset from '@/core/AppAsset';
 
 // Utils
 import { generateRandomId } from '@/utils/idGenerator';
-import NavigationComponent from '../NavigationComponent';
+import { generateRandomName } from '@/utils/randomNameGenerator';
 
 // Interface
 interface Props {
@@ -55,12 +55,16 @@ export default function PageTwo({ setPage }: Props) {
   }
 
   const func = () => {
+    const newName = generateRandomName();
+
     if (name.length > 0) return true;
     else
-      toast.error("Please enter your name", {
-        duration: 4000,
-      });
-    return false;
+      dispatch(addName({
+        id: id,
+        name: newName,
+      }));
+
+    return true;
   }
 
   useEffect(() => {

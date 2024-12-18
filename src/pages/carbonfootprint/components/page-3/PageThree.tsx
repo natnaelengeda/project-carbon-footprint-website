@@ -8,8 +8,10 @@ import {
   RadioGroup,
 } from '@mantine/core';
 
-// State
+// Components
+import NavigationComponent from '../NavigationComponent';
 
+// State
 import {
   useDispatch,
   useSelector,
@@ -22,8 +24,6 @@ import {
 // AppAsset
 import AppAsset from '@/core/AppAsset';
 import { useEffect, useState } from 'react';
-import NavigationComponent from '../NavigationComponent';
-
 
 interface Props {
   setPage: React.Dispatch<React.SetStateAction<number>>;

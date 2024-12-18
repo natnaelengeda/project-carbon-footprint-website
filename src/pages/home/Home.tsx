@@ -63,7 +63,7 @@ export default function Home() {
               navigate("/carbonfootprint");
               localStorage.setItem("page_type", "carbonfootprint");
             }}
-            className="w-auto h-auto md:w-[325px] md:h-[76px] border border-primary bg-white text-primary font-semibold rounded-lg md:rounded-full text-lg md:text-[26px] px-2 md:px-0 py-4 hover:opacity-80 flex flex-row items-center justify-center gap-3">
+            className="w-auto h-auto md:w-[325px] md:h-[76px] border border-primary bg-white text-primary font-semibold rounded-full md:rounded-full text-lg md:text-[26px] px-2 md:px-0 py-4 hover:opacity-80 flex flex-row items-center justify-center gap-3">
             <p>Carbon Footprint</p>
             <img src={AppAsset.RightArrowGreenicon}
               className="w-[36px] object-contain"
@@ -74,7 +74,7 @@ export default function Home() {
               navigate("/interactive-qa");
               localStorage.setItem("page_type", "interactive-qa");
             }}
-            className="w-auto h-auto md:w-[325px] md:h-[76px] border border-primary bg-white text-primary font-semibold rounded-lg md:rounded-full text-lg md:text-[26px] px-2 md:px-0 py-4 hover:opacity-80 flex flex-row items-center justify-center gap-3">
+            className="w-auto h-auto md:w-[325px] md:h-[76px] border border-primary bg-white text-primary font-semibold rounded-full md:rounded-full text-lg md:text-[26px] px-2 md:px-0 py-4 hover:opacity-80 flex flex-row items-center justify-center gap-3">
             <p>Interactive Q/A</p>
             <img src={AppAsset.RightArrowGreenicon}
               className="w-[36px] object-contain"
@@ -84,7 +84,7 @@ export default function Home() {
             onClick={() => {
               toast.success("This feature is not available yet.");
             }}
-            className="w-auto h-auto md:w-[325px] md:h-[76px] border border-primary bg-white text-primary font-semibold rounded-lg md:rounded-full text-lg md:text-[26px] px-2 md:px-0 py-4 hover:opacity-80 flex flex-row items-center justify-center gap-3">
+            className="w-auto h-auto md:w-[325px] md:h-[76px] border border-primary bg-white text-primary font-semibold rounded-full md:rounded-full text-lg md:text-[26px] px-7 md:px-0 py-4 hover:opacity-80 flex flex-row items-center justify-center gap-3">
             <p>Personal Pledge</p>
             <img src={AppAsset.RightArrowGreenicon}
               className="w-[36px] object-contain"

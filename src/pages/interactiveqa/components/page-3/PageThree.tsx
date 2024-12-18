@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 // Page Layout
 import PagesLayout from "../../layouts/PagesLayout";
@@ -6,6 +6,7 @@ import PagesLayout from "../../layouts/PagesLayout";
 // Styles
 import "./styles/styles.css";
 import AppAsset from "@/core/AppAsset";
+import Timer from "./components/Timer";
 
 const questions = [
   {
@@ -130,7 +131,12 @@ const questions = [
   },
 ]
 
-export default function PageThree() {
+// Interface
+interface Props {
+  setPage: React.Dispatch<React.SetStateAction<number>>;
+}
+
+export default function PageThree({ setPage }: Props) {
   const [answers, setAnswers] = useState<{ [key: number]: number }>({});
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
 
@@ -154,11 +160,13 @@ export default function PageThree() {
   return (
     <PagesLayout>
       <div
-        className="w-full h-full min-h-screen flex flex-col items-center justify-start pt-10 md:pt-[329.5px]">
+        className="w-full h-full min-h-screen flex flex-col items-center justify-start pt-10 md:pt-[66px]">
 
         {/* Questions */}
         <div
           className="w-full md:w-[724px] flex flex-col items-start justify-start gap-4 md:gap-[95px]">
+          {/* Timer */}
+          <Timer />
 
           {/* Type */}
           <div
@@ -207,7 +215,6 @@ export default function PageThree() {
                 );
               })
             }
-
           </div>
         </div>
 
@@ -216,7 +223,7 @@ export default function PageThree() {
         <div
           className="w-full pt-10 md:pt-40 flex flex-row items-center justify-end pr-10 md:pr-[140px] gap-1 md:gap-5">
 
-          {
+          {/* {
             currentQuestionIndex > 0 && (
               <button
                 onClick={() => {
@@ -228,7 +235,7 @@ export default function PageThree() {
                   className='w-20 h-auto object-contain md:w-[40.56px] md:h-[40.56px]' />
               </button>
             )
-          }
+          } */}
           {currentQuestionIndex < questions.length - 1 && (
             <button
               onClick={handleNextQuestion}
@@ -239,6 +246,17 @@ export default function PageThree() {
                 src={AppAsset.RightArrowIcon} />
             </button>
           )}
+          {
+            currentQuestionIndex === questions.length - 1 && (
+              <button
+                onClick={() => {
+                  setPage(4);
+                }}
+                className="flex flex-row items-center justify-center md:w-[220.32px] md:h-[100px] bg-primary rounded-full text-white px-3 md:px-0 py-2 md:py-0 gap-2">
+                <p className="text-xl md:text-[34px]">Submit</p>
+              </button>
+            )
+          }
         </div>
 
 

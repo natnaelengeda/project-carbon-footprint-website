@@ -23,12 +23,15 @@ import AppAsset from '@/core/AppAsset';
 
 // Toast
 import toast from 'react-hot-toast';
+import { useState } from 'react';
 
 interface Props {
   setPage: React.Dispatch<React.SetStateAction<number>>;
 }
 
 export default function PageFour({ setPage }: Props) {
+  const [opened, setOpened] = useState<string>("heating-cooling");
+
   const carbon = useSelector((state: { carbon: CarbonState }) => state.carbon);
 
   const func = () => {
@@ -79,16 +82,24 @@ export default function PageFour({ setPage }: Props) {
             className="w-full flex flex-col items-start justify-start gap-5 pt-3 md:pt-10 px-4">
 
             {/* Heating / Cooling */}
-            <HeatingCooling />
+            <HeatingCooling
+              opened={opened}
+              setOpened={setOpened} />
 
             {/* Cooking */}
-            <Cooking />
+            <Cooking
+              opened={opened}
+              setOpened={setOpened} />
 
             {/* Electric Appliances */}
-            <ElectricAppliances />
+            <ElectricAppliances
+              opened={opened}
+              setOpened={setOpened} />
 
             {/* Light Bulbs */}
-            <LightBulbs />
+            <LightBulbs
+              opened={opened}
+              setOpened={setOpened} />
           </div>
         </div>
 

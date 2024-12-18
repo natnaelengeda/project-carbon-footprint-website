@@ -26,7 +26,7 @@ export default function Automotives() {
         <CheckboxComponent
           selected={selected}
           setSelected={setSelected}
-          text='Own Automotives' />
+          text='Own Automobile' />
 
         {/* Arrow */}
         <ArrowComponent

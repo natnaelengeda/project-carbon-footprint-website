@@ -7,7 +7,8 @@ export default {
         Urbanist: ["Urbanist", "sans-serif"],
       },
       colors: {
-        primary: "#35D36A",
+        // primary: "#35D36A",
+        primary: "#3d5b43",
         "primary-blue": "#59B4F5",
       },
     },

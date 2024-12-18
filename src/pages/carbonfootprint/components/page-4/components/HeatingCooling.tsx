@@ -18,11 +18,15 @@ import {
   selectHouseholdEnergyById,
 } from '@/state/carbon';
 
-
 // AppAsset
 import AppAsset from '@/core/AppAsset';
 
-export default function HeatingCooling() {
+interface Props {
+  opened: string;
+  setOpened: React.Dispatch<React.SetStateAction<string>>;
+}
+
+export default function HeatingCooling({ opened, setOpened }: Props) {
   const [selected, setSelected] = useState<boolean>(false);
   const [selectedType, setSelectedType] = useState<string>("electric-air-conditioning");
 
@@ -98,7 +102,6 @@ export default function HeatingCooling() {
           });
         }
       }
-
     }
   }, []);
 
@@ -172,6 +175,8 @@ export default function HeatingCooling() {
         <CheckboxComponent
           selected={selected}
           setSelected={setSelected}
+          setOpened={setOpened}
+          location="heating-cooling"
           text="Heating / Cooling" />
 
         {/* Arrow */}
@@ -182,13 +187,13 @@ export default function HeatingCooling() {
       {/* Bottom Context */}
       <div
         style={{
-          display: selected ? "flex" : "none"
+          display: opened == "heating-cooling" ? "flex" : "none"
         }}
         className='w-full h-auto flex flex-col items-start justify-start pl-5 md:pl-16 gap-7 md:gap-10'>
 
         {/* Electric Air Conditioning */}
         <div
-          className='w-full flex flex-col items-start justify-start gap-6 pt-5 md:pt-[48px]'>
+          className='w-full flex flex-col items-start justify-start gap-2 pt-4 md:pt-[48px]'>
 
           {/* Select Option */}
           <div
@@ -200,7 +205,7 @@ export default function HeatingCooling() {
             <p className='text-xl md:text-[26px] font-normal'>Electric Air Conditioning</p>
           </div>
 
-          {/* Form - Electric Air Conditionint */}
+          {/* Form - Electric Air Conditioning */}
           <div
             style={{
               display: selectedType == "electric-air-conditioning" ? "block" : "none"
@@ -264,15 +269,21 @@ export default function HeatingCooling() {
               color="#35D36A"
               size="xl"
               min={1}
-              max={24}
+              max={12}
               marks={[
                 { value: 1, label: '1' },
+                { value: 2, label: '2' },
+                { value: 3, label: '3' },
                 { value: 4, label: '4' },
+                { value: 5, label: '5' },
+                { value: 6, label: '6' },
+                { value: 7, label: '7' },
                 { value: 8, label: '8' },
+                { value: 9, label: '9' },
+                { value: 10, label: '10' },
+                { value: 11, label: '11' },
                 { value: 12, label: '12' },
-                { value: 16, label: '16' },
-                { value: 20, label: '20' },
-                { value: 24, label: '24' },
+
               ]}
             />
           </div>

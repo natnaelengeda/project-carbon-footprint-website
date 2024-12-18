@@ -116,7 +116,8 @@ export default function PageEleven({ setPage }: Props) {
 
         </div>
 
-        <div className="w-full flex flex-col items-center justify-start gap-5">
+        <div
+          className="w-full flex flex-col items-center justify-start gap-5 pb-10 md:pb-0">
           <hr className="w-full border-2 border-[#D7D7D7]" />
           <p className="text-lg md:text-[20px] text-[#BCBCBC] text-center">This page will reset in 30 minutes. You can start again using the button below.</p>
 
@@ -126,7 +127,7 @@ export default function PageEleven({ setPage }: Props) {
                 disptach(clearEverything());
                 setPage(1);
               }}
-              className="md:w-[192px] md:h-[69px] border border-primary text-primary text-xl md:text-[24px] rounded-full hover:bg-primary hover:text-white">
+              className="md:w-[192px] md:h-[69px] border border-primary text-primary text-2xl md:text-[24px] rounded-full hover:bg-primary hover:text-white px-5 md:px-0 py-2 md:py-0">
               Finish
             </button>
           </div>

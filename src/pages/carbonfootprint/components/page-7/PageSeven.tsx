@@ -10,6 +10,8 @@ interface Props {
 // AppAsset
 import AppAsset from '@/core/AppAsset';
 import NavigationComponent from '../NavigationComponent';
+import Recycle from './components/Recycle';
+import WeeklyCollection from './components/WeeklyCollection';
 
 export default function PageSeven({ setPage }: Props) {
 
@@ -23,17 +25,17 @@ export default function PageSeven({ setPage }: Props) {
         className="relative w-full h-screen mx-auto 2xl:container flex flex-col items-center justify-between gap-5 py-10 md:py-20">
 
         {/* Top Section  */}
-        <div className='flex flex-col items-center justify-start gap-5'>
+        <div
+          className='w-full md:w-[750px] flex flex-col items-center justify-start gap-5'>
+
           {/* Image Content */}
           <div
-            className="w-full h-auto flex flex-col items-center justify-start gap-5 px-10">
-
+            className="w-full h-auto flex flex-col items-center justify-start gap-5 px-5 md:px-0">
             {/* Image */}
             <img
-              src={AppAsset.BannerSeven}
-              className="md:w-[550px] md:h-[550px] object-contain" />
+              src={AppAsset.BannerEight}
+              className="md:w-[750px] md:h-[500px] object-contain" />
           </div>
-
 
           {/* Note */}
           <div
@@ -52,37 +54,15 @@ export default function PageSeven({ setPage }: Props) {
             </div>
           </div>
 
-          {/* Conent */}
-          <div className='w-full h-auto pt-10'>
+          {/* Content */}
+          <div
+            className="w-full flex flex-col items-start justify-start gap-5 pt-10 px-4">
 
-            {/* Form */}
-            <div
-              className='w-full h-auto px-3 md:px-0'>
-              <div
-                className="w-full h-auto flex flex-col items-start justify-start gap-2">
-                {/* Text */}
-                <p className="text-[#B7B7B7] text-lg md:text-[24px]">
-                  Select food wastage in kilo grams per week
-                </p>
-                <Slider
-                  className="w-full"
-                  color="#35D36A"
-                  size="xl"
-                  min={1}
-                  max={30}
-                  marks={[
-                    { value: 1, label: '1' },
-                    { value: 5, label: '5' },
-                    { value: 10, label: '10' },
-                    { value: 15, label: '15' },
-                    { value: 20, label: '20' },
-                    { value: 25, label: '25' },
-                    { value: 30, label: '30' },
-                  ]}
-                />
-              </div>
+            {/* Weekly collection */}
+            <WeeklyCollection />
 
-            </div>
+            {/* Recycling Habits */}
+            <Recycle />
           </div>
         </div>
 
@@ -90,9 +70,11 @@ export default function PageSeven({ setPage }: Props) {
         <NavigationComponent
           setPage={setPage}
           func={func}
-          prevPage={6}
-          nextPage={8} />
+          prevPage={7}
+          nextPage={9} />
+
       </div>
+
     </PagesLayout>
   )
 }
