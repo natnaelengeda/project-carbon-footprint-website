@@ -126,7 +126,10 @@ const ProgressBar: React.FC<ProgressBarProps> = ({ percentage }) => {
       <div className="flex z-0 w-full bg-gray-200 min-h-[10px] md:min-h-[18px] max-md:max-w-full" />
       <div
         className="flex absolute bottom-0 left-0 z-0 max-w-full bg-[#35D36A] rounded-full h-[10px] md:h-[18px] md:min-h-[18px]"
-        style={{ width }}
+        style={{
+          background: "linear-gradient(to right, #00ff00,#00ff00, #ffff00,#ffff00, #ff4500, #ff0000)",
+          width
+        }}
       />
     </div>
   );

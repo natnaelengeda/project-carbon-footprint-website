@@ -1,7 +1,7 @@
-// Page Layout
-import AppAsset from "@/core/AppAsset";
-import PagesLayout from "../../layouts/PagesLayout";
 import { useState } from "react";
+
+// AppAsset
+import AppAsset from "@/core/AppAsset";
 
 // Interface
 interface Props {

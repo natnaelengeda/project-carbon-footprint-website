@@ -32,7 +32,7 @@ interface Props {
 export default function PageThree({ setPage }: Props) {
   const width = window.innerWidth;
 
-  const [value, setValue] = useState("house");
+  const [value, setValue] = useState("appartment");
 
   // State
   const dispatch = useDispatch();
@@ -95,31 +95,25 @@ export default function PageThree({ setPage }: Props) {
                 className='flex flex-col gap-5'>
                 <Radio
                   iconColor=""
-                  color="#35D36A"
-                  value="house"
-                  size={width > 768 ? "xl" : "md"}
-                  label="House" />
-                <Radio
-                  iconColor=""
-                  color="#35D36A"
+                  color={`var(--main-color)`}
                   value="appartment"
                   size={width > 768 ? "xl" : "md"}
                   label="Appartment" />
                 <Radio
                   iconColor=""
-                  color="#35D36A"
+                  color={`var(--main-color)`}
                   value="condo"
                   size={width > 768 ? "xl" : "md"}
                   label="Condo" />
                 <Radio
                   iconColor=""
-                  color="#35D36A"
+                  color={`var(--main-color)`}
                   value="villa"
                   size={width > 768 ? "xl" : "md"}
                   label="Villa" />
                 <Radio
                   iconColor=""
-                  color="#35D36A"
+                  color={`var(--main-color)`}
                   value="hut"
                   size={width > 768 ? "xl" : "md"}
                   label="Hut" />
@@ -134,7 +128,6 @@ export default function PageThree({ setPage }: Props) {
           func={func}
           prevPage={2}
           nextPage={4} />
-
       </div>
     </PagesLayout>
   )

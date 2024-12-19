@@ -1,14 +1,56 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 // Mantine
 import { Slider } from '@mantine/core';
+
+// State
+import { useDispatch } from 'react-redux';
+import { addWaterUsage, deleteWaterUsage } from '@/state/carbon';
 
 // Components
 import ArrowComponent from '../../ArrowComponent';
 import CheckboxComponent from '../../CheckboxComponent';
 
-export default function Garden() {
+// Interface
+interface Props {
+  opened: string;
+  setOpened: React.Dispatch<React.SetStateAction<string>>;
+}
+
+
+export default function Garden({ opened, setOpened }: Props) {
   const [selected, setSelected] = useState<boolean>(false);
+  const [slider, setSlider] = useState<number>(1);
+
+  const dispatch = useDispatch();
+
+  const updateSlider = (value: number) => {
+    setSlider(value);
+    dispatch(
+      addWaterUsage({
+        id: 3,
+        name: "gardening-water",
+        value: value,
+      }))
+  }
+
+
+  useEffect(() => {
+    if (selected) {
+      dispatch(
+        addWaterUsage({
+          id: 3,
+          name: "gardening-water",
+          value: 1,
+        }))
+    } else {
+      dispatch(
+        deleteWaterUsage({
+          id: 1
+        })
+      )
+    }
+  }, [selected]);
 
   return (
     <div
@@ -22,6 +64,8 @@ export default function Garden() {
         <CheckboxComponent
           selected={selected}
           setSelected={setSelected}
+          setOpened={setOpened}
+          location="garden-watering"
           text="Garden Watering" />
 
         {/* Arrow */}
@@ -32,16 +76,18 @@ export default function Garden() {
       {/* Bottom Content */}
       <div
         style={{
-          display: selected ? "flex" : "none"
+          display: opened == "garden-watering" ? "flex" : "none"
         }}
         className='w-full h-auto flex flex-col items-start justify-start pl-5 md:pl-16 gap-5'>
         <div
           className="w-full h-auto flex flex-col items-start justify-start gap-2">
           {/* Text */}
           <p className="text-[#B7B7B7] text-lg md:text-[24px]">
-            Select average amount in liters
+            Select average  amount in liters
           </p>
           <Slider
+            value={slider}
+            onChange={updateSlider}
             className="w-full"
             color="#35D36A"
             size="xl"

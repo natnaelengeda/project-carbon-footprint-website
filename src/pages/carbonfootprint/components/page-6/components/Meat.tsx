@@ -1,12 +1,57 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+
+// Mantine
+import { Slider } from "@mantine/core";
 
 // Components
 import ArrowComponent from "../../ArrowComponent";
 import CheckboxComponent from "../../CheckboxComponent";
-import { Slider } from "@mantine/core";
+import { addDiet, deleteDiet } from "@/state/carbon";
+import { useDispatch } from "react-redux";
 
-export default function Meat() {
+// Interface
+interface Props {
+  opened: string;
+  setOpened: React.Dispatch<React.SetStateAction<string>>;
+}
+
+export default function Meat({ opened, setOpened }: Props) {
   const [selected, setSelected] = useState<boolean>(false);
+  const [slider, setSlider] = useState<number>(1);
+
+  const dispatch = useDispatch();
+
+  const updateSlider = (value: number) => {
+    setSlider(value);
+    dispatch(
+      addDiet({
+        id: 3,
+        name: "meat",
+        selected: true,
+        value: value,
+      })
+    )
+
+  }
+
+  useEffect(() => {
+    if (selected) {
+      dispatch(
+        addDiet({
+          id: 3,
+          name: "meat",
+          selected: true,
+          value: 1,
+        })
+      )
+    } else {
+      dispatch(
+        deleteDiet({
+          id: 3
+        })
+      )
+    }
+  }, [selected]);
 
   return (
     <div
@@ -19,6 +64,8 @@ export default function Meat() {
         <CheckboxComponent
           selected={selected}
           setSelected={setSelected}
+          setOpened={setOpened}
+          location="meat"
           text="Meat" />
 
         {/* Arrow */}
@@ -26,10 +73,10 @@ export default function Meat() {
           selected={selected} />
       </div>
 
-  {/* Bottom Content */}
+      {/* Bottom Content */}
       <div
         style={{
-          display: selected ? "flex" : "none"
+          display: opened == "meat" ? "flex" : "none"
         }}
         className='w-full h-auto flex flex-col items-start justify-start pl-5 md:pl-16 gap-5'>
 
@@ -43,6 +90,8 @@ export default function Meat() {
               Select days usage per week
             </p>
             <Slider
+              value={slider}
+              onChange={updateSlider}
               className="w-full"
               color="#35D36A"
               size="xl"
@@ -55,6 +104,7 @@ export default function Meat() {
                 { value: 4, label: '4' },
                 { value: 5, label: '5' },
                 { value: 6, label: '6' },
+                { value: 7, label: '7' },
               ]}
             />
           </div>

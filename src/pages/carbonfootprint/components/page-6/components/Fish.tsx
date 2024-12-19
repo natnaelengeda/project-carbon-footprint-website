@@ -1,12 +1,60 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
-import ArrowComponent from '../../ArrowComponent'
-import CheckboxComponent from '../../CheckboxComponent';
+// Mantine
 import { Slider } from '@mantine/core';
 
-export default function Fish() {
-  const [selected, setSelected] = useState<boolean>(false);
+// State
+import { useDispatch } from 'react-redux';
+import { addDiet, deleteDiet } from '@/state/carbon';
 
+// Components
+import ArrowComponent from '../../ArrowComponent'
+import CheckboxComponent from '../../CheckboxComponent';
+
+
+// Interface
+interface Props {
+  opened: string;
+  setOpened: React.Dispatch<React.SetStateAction<string>>;
+}
+
+export default function Fish({ opened, setOpened }: Props) {
+  const [selected, setSelected] = useState<boolean>(false);
+  const [slider, setSlider] = useState<number>(1);
+
+  const dispatch = useDispatch();
+
+  const updateSlider = (value: number) => {
+    setSlider(value);
+    dispatch(
+      addDiet({
+        id: 4,
+        name: "fish",
+        selected: true,
+        value: value,
+      })
+    )
+
+  }
+
+  useEffect(() => {
+    if (selected) {
+      dispatch(
+        addDiet({
+          id: 4,
+          name: "fish",
+          selected: true,
+          value: 1,
+        })
+      )
+    } else {
+      dispatch(
+        deleteDiet({
+          id: 4
+        })
+      )
+    }
+  }, [selected]);
   return (
     <div
       className='w-full h-auto flex flex-col items-start justify-start gap-5'>
@@ -19,6 +67,8 @@ export default function Fish() {
         <CheckboxComponent
           selected={selected}
           setSelected={setSelected}
+          setOpened={setOpened}
+          location="fish"
           text="Fish" />
 
         {/* Arrow */}
@@ -29,7 +79,7 @@ export default function Fish() {
       {/* Bottom Content */}
       <div
         style={{
-          display: selected ? "flex" : "none"
+          display: opened == "fish" ? "flex" : "none"
         }}
         className='w-full h-auto flex flex-col items-start justify-start pl-5 md:pl-16 gap-5'>
 
@@ -43,6 +93,8 @@ export default function Fish() {
               Select days usage per week
             </p>
             <Slider
+              value={slider}
+              onChange={updateSlider}
               className="w-full"
               color="#35D36A"
               size="xl"
@@ -55,6 +107,7 @@ export default function Fish() {
                 { value: 4, label: '4' },
                 { value: 5, label: '5' },
                 { value: 6, label: '6' },
+                { value: 7, label: '7 ' },
               ]}
             />
           </div>

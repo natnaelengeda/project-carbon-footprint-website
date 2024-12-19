@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 
 // Mantine
 import { Slider } from "@mantine/core";
@@ -6,10 +6,50 @@ import { Slider } from "@mantine/core";
 // Components
 import ArrowComponent from "../../ArrowComponent";
 import CheckboxComponent from "../../CheckboxComponent";
+import { useDispatch } from "react-redux";
+import { addWaste, deleteWaste } from "@/state/carbon";
 
-export default function WeeklyCollection() {
+// Interface
+interface Props {
+  opened: string;
+  setOpened: React.Dispatch<React.SetStateAction<string>>;
+}
+
+export default function WeeklyCollection({ opened, setOpened }: Props) {
   const [selected, setSelected] = useState<boolean>(false);
+  const [slider, setSlider] = useState<number>(0);
 
+  const dispatch = useDispatch();
+
+  const updateSlider = (value: number) => {
+    setSlider(value)
+    dispatch(
+      addWaste({
+        id: 1,
+        name: "weekly-collection",
+        value: value,
+      })
+    )
+  }
+
+  // Update Main State
+  useEffect(() => {
+    if (selected) {
+      dispatch(
+        addWaste({
+          id: 1,
+          name: "weekly-collection",
+          value: 1,
+        })
+      )
+    } else {
+      dispatch(
+        deleteWaste({
+          id: 1,
+        })
+      );
+    }
+  }, [selected]);
   return (
     <div
       className='w-full h-auto flex flex-col items-start justify-start gap-5'>
@@ -21,6 +61,8 @@ export default function WeeklyCollection() {
         <CheckboxComponent
           selected={selected}
           setSelected={setSelected}
+          setOpened={setOpened}
+          location="weekly-collection"
           text="Weekly Collection" />
 
         {/* Arrow */}
@@ -31,7 +73,7 @@ export default function WeeklyCollection() {
       {/* Bottom Content */}
       <div
         style={{
-          display: selected ? "flex" : "none"
+          display: opened == "weekly-collection" ? "flex" : "none"
         }}
         className='w-full h-auto flex flex-col items-start justify-start pl-5 md:pl-16 gap-5'>
 
@@ -45,6 +87,8 @@ export default function WeeklyCollection() {
               Select weekly collection frequency
             </p>
             <Slider
+              value={slider}
+              onChange={updateSlider}
               className="w-full"
               color="#35D36A"
               size="xl"

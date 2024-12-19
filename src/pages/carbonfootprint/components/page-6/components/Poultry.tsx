@@ -1,14 +1,59 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 // Mantine
 import { Slider } from "@mantine/core";
+
+// State
+import { useDispatch } from "react-redux";
+import { addDiet, deleteDiet } from "@/state/carbon";
 
 // Components
 import ArrowComponent from "../../ArrowComponent";
 import CheckboxComponent from "../../CheckboxComponent";
 
-export default function Poultry() {
+// Interface
+interface Props {
+  opened: string;
+  setOpened: React.Dispatch<React.SetStateAction<string>>;
+}
+
+export default function Poultry({ opened, setOpened }: Props) {
   const [selected, setSelected] = useState<boolean>(false);
+  const [slider, setSlider] = useState<number>(1);
+
+  const dispatch = useDispatch();
+
+  const updateSlider = (value: number) => {
+    setSlider(value);
+    dispatch(
+      addDiet({
+        id: 1,
+        name: "poultry",
+        selected: true,
+        value: value,
+      })
+    )
+
+  }
+
+  useEffect(() => {
+    if (selected) {
+      dispatch(
+        addDiet({
+          id: 1,
+          name: "poultry",
+          selected: true,
+          value: 1,
+        })
+      )
+    } else {
+      dispatch(
+        deleteDiet({
+          id: 1
+        })
+      )
+    }
+  }, [selected]);
 
   return (
     <div
@@ -21,6 +66,8 @@ export default function Poultry() {
         <CheckboxComponent
           selected={selected}
           setSelected={setSelected}
+          setOpened={setOpened}
+          location="poultry"
           text='Poultry (Chicken)' />
 
         {/* Arrow */}
@@ -31,7 +78,7 @@ export default function Poultry() {
       {/* Bottom Content */}
       <div
         style={{
-          display: selected ? "flex" : "none"
+          display: opened == "poultry" ? "flex" : "none"
         }}
         className='w-full h-auto flex flex-col items-start justify-start pl-5 md:pl-16 gap-5'>
 
@@ -45,6 +92,8 @@ export default function Poultry() {
               Select days usage per week
             </p>
             <Slider
+              value={slider}
+              onChange={updateSlider}
               className="w-full"
               color="#35D36A"
               size="xl"
@@ -57,6 +106,7 @@ export default function Poultry() {
                 { value: 4, label: '4' },
                 { value: 5, label: '5' },
                 { value: 6, label: '6' },
+                { value: 7, label: '7' },
               ]}
             />
           </div>

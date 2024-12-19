@@ -1,3 +1,4 @@
+import { useState } from 'react';
 
 // Page Layout
 import PagesLayout from '../../layouts/PagesLayout'
@@ -22,6 +23,8 @@ interface Props {
 }
 
 export default function PageNine({ setPage }: Props) {
+  const [opened, setOpened] = useState<string>("washing-clothes");
+
   const func = () => {
     return true;
   }
@@ -64,13 +67,19 @@ export default function PageNine({ setPage }: Props) {
             className="w-full flex flex-col items-start justify-start gap-8 pt-5 md:pt-10 px-4 pb-10 md:pb-0">
 
             {/* Washing Clothes */}
-            <Clothes />
+            <Clothes
+              opened={opened}
+              setOpened={setOpened} />
 
             {/* Showers */}
-            <Showers />
+            <Showers
+              opened={opened}
+              setOpened={setOpened} />
 
             {/* Garden Watering */}
-            <Garden />
+            <Garden
+              opened={opened}
+              setOpened={setOpened} />
           </div>
         </div>
 

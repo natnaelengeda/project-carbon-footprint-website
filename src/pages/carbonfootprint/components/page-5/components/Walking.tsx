@@ -1,12 +1,76 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+
+// Mantine
+import { Slider } from '@mantine/core';
+
+// State
+import { useDispatch } from 'react-redux';
+import {
+  addTransportationMode,
+  deleteTransportationMode
+} from '@/state/carbon';
 
 // Components
 import ArrowComponent from '../../ArrowComponent';
 import CheckboxComponent from '../../CheckboxComponent';
-import { Slider } from '@mantine/core';
 
-export default function Walking() {
+// Interface
+interface Props {
+  opened: string;
+  setOpened: React.Dispatch<React.SetStateAction<string>>;
+}
+
+export default function Walking({ opened, setOpened }: Props) {
   const [selected, setSelected] = useState<boolean>(false);
+
+  // State
+  const dispatch = useDispatch();
+
+  const [slider1, setSlider1] = useState<number>(1);
+  const [slider2, setSlider2] = useState<number>(1);
+
+  const updateSlider1 = (value: number) => {
+    setSlider1(value);
+    dispatch(
+      addTransportationMode({
+        id: 4,
+        name: 'walking',
+        selected: selected,
+        value: value,
+      })
+    );
+  }
+
+  const updateSlider2 = (value: number) => {
+    setSlider2(value);
+    dispatch(
+      addTransportationMode({
+        id: 4,
+        name: 'walking',
+        selected: selected,
+        frequency: value,
+      })
+    );
+  }
+
+  useEffect(() => {
+    if (selected) {
+      dispatch(
+        addTransportationMode({
+          id: 4,
+          name: 'walking',
+          selected: selected,
+          value: 1,
+        })
+      )
+    } else {
+      dispatch(
+        deleteTransportationMode({
+          id: 4
+        })
+      )
+    }
+  }, [selected]);
 
   return (
     <div
@@ -20,7 +84,9 @@ export default function Walking() {
         <CheckboxComponent
           selected={selected}
           setSelected={setSelected}
-          text='Walking' />
+          text='Walking'
+          location='walking'
+          setOpened={setOpened} />
 
         {/* Arrow */}
         <ArrowComponent
@@ -30,7 +96,7 @@ export default function Walking() {
       {/* Bottom Content */}
       <div
         style={{
-          display: selected ? "flex" : "none"
+          display: opened == "walking" ? "flex" : "none"
         }}
         className='w-full h-auto flex flex-col items-start justify-start pt-3 pl-5 md:pl-16 gap-8 md:gap-1'>
         <div
@@ -44,6 +110,8 @@ export default function Walking() {
               Select distance you walk in km per day
             </p>
             <Slider
+              value={slider1}
+              onChange={updateSlider1}
               className="w-full"
               color="#35D36A"
               size="xl"
@@ -69,11 +137,13 @@ export default function Walking() {
               Select days days you walk per week
             </p>
             <Slider
+              value={slider2}
+              onChange={updateSlider2}
               className="w-full"
               color="#35D36A"
               size="xl"
               min={1}
-              max={8}
+              max={7}
               marks={[
                 { value: 1, label: '1' },
                 { value: 2, label: '2' },

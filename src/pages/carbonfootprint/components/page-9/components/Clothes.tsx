@@ -1,15 +1,55 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 // Mantine
 import { Slider } from "@mantine/core";
 
+// State
+import { useDispatch } from "react-redux";
+
 // AppAsset
 import ArrowComponent from "../../ArrowComponent";
 import CheckboxComponent from "../../CheckboxComponent";
+import { addWaterUsage, deleteWaterUsage } from "@/state/carbon";
 
-export default function Clothes() {
+// Interface
+interface Props {
+  opened: string;
+  setOpened: React.Dispatch<React.SetStateAction<string>>;
+}
+
+export default function Clothes({ opened, setOpened }: Props) {
   const [selected, setSelected] = useState<boolean>(false);
+  const [slider, setSlider] = useState<number>(1);
 
+  const dispatch = useDispatch();
+
+
+  const updateSlider = (value: number) => {
+    setSlider(value);
+    dispatch(
+      addWaterUsage({
+        id: 1,
+        name: "washing-clothes",
+        value: value,
+      }))
+  }
+
+  useEffect(() => {
+    if (selected) {
+      dispatch(
+        addWaterUsage({
+          id: 1,
+          name: "washing-clothes",
+          value: 1,
+        }))
+    } else {
+      dispatch(
+        deleteWaterUsage({
+          id: 1
+        })
+      )
+    }
+  }, [selected]);
   return (
     <div
       className='w-full h-auto flex flex-col items-start justify-start gap-5'>
@@ -22,6 +62,8 @@ export default function Clothes() {
         <CheckboxComponent
           selected={selected}
           setSelected={setSelected}
+          setOpened={setOpened}
+          location="washing-clothes"
           text="Washing Clothes" />
 
         {/* Arrow */}
@@ -33,7 +75,7 @@ export default function Clothes() {
       {/* Bottom Content */}
       <div
         style={{
-          display: selected ? "flex" : "none"
+          display: opened == "washing-clothes" ? "flex" : "none"
         }}
         className='w-full h-auto flex flex-col items-start justify-start pl-5 md:pl-16 gap-5'>
 
@@ -49,6 +91,8 @@ export default function Clothes() {
               Select weekly washing frequency
             </p>
             <Slider
+              value={slider}
+              onChange={updateSlider}
               className="w-full"
               color="#35D36A"
               size="xl"

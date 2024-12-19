@@ -1,3 +1,5 @@
+import { useState } from 'react';
+
 // Page Layout
 import { Tooltip } from '@mantine/core';
 import PagesLayout from '../../layouts/PagesLayout';
@@ -16,6 +18,7 @@ interface Props {
 }
 
 export default function PageFive({ setPage }: Props) {
+  const [opened, setOpened] = useState<string>("own-automobile");
 
   const func = () => {
     return true;
@@ -57,16 +60,24 @@ export default function PageFive({ setPage }: Props) {
             className="w-full flex flex-col items-start justify-start gap-5 pt-3 md:pt-10 px-4">
 
             {/* Own Automotive */}
-            <Automotives />
+            <Automotives
+              opened={opened}
+              setOpened={setOpened} />
 
             {/* Public Transport */}
-            <PublicTransport />
+            <PublicTransport
+              opened={opened}
+              setOpened={setOpened} />
 
             {/* Bicycle */}
-            <Bicycle />
+            <Bicycle
+              opened={opened}
+              setOpened={setOpened} />
 
             {/* Walking */}
-            <Walking />
+            <Walking
+              opened={opened}
+              setOpened={setOpened} />
 
           </div>
         </div>

@@ -12,16 +12,30 @@ import NavigationComponent from '../NavigationComponent';
 
 // AppAsset
 import AppAsset from '@/core/AppAsset';
+import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { updateFoodWastage } from '@/state/carbon';
 
 interface Props {
   setPage: React.Dispatch<React.SetStateAction<number>>;
 }
 
 export default function PageEight({ setPage }: Props) {
+  const [slider, setSlider] = useState<number>(1);
+  const dispatch = useDispatch();
+
+  const updateSlider = (value: number) => {
+    setSlider(value);
+    dispatch(updateFoodWastage({
+      food_wastage: value
+    }))
+  }
 
   const func = () => {
     return true;
   }
+
+
 
   return (
     <PagesLayout>
@@ -68,6 +82,8 @@ export default function PageEight({ setPage }: Props) {
                   Select food wastage in kilo grams per week
                 </p>
                 <Slider
+                  value={slider}
+                  onChange={updateSlider}
                   className="w-full"
                   color="#35D36A"
                   size="xl"
@@ -93,8 +109,8 @@ export default function PageEight({ setPage }: Props) {
         <NavigationComponent
           setPage={setPage}
           func={func}
-          prevPage={6}
-          nextPage={8} />
+          prevPage={7}
+          nextPage={9} />
       </div>
     </PagesLayout>
   )

@@ -1,8 +1,12 @@
+import { useState } from 'react';
+
 // Page Layout
 import PagesLayout from '../../layouts/PagesLayout'
 
-import AppAsset from '@/core/AppAsset';
+// Mantine
 import { Tooltip } from '@mantine/core';
+
+import AppAsset from '@/core/AppAsset';
 import NavigationComponent from '../NavigationComponent';
 import Poultry from './components/Poultry';
 import Vegitable from './components/Vegitable';
@@ -14,6 +18,7 @@ interface Props {
 }
 
 export default function PageSix({ setPage }: Props) {
+  const [opened, setOpened] = useState<string>("poultry");
 
   const func = () => {
     return true;
@@ -57,16 +62,24 @@ export default function PageSix({ setPage }: Props) {
             className="w-full flex flex-col items-start justify-start gap-8 pt-10 px-4">
 
             {/* Poultry */}
-            <Poultry />
+            <Poultry
+              opened={opened}
+              setOpened={setOpened} />
 
             {/* Vegetables */}
-            <Vegitable />
+            <Vegitable
+              opened={opened}
+              setOpened={setOpened} />
 
             {/* Meat */}
-            <Meat />
+            <Meat
+              opened={opened}
+              setOpened={setOpened} />
 
             {/* Fish */}
-            <Fish />
+            <Fish
+              opened={opened}
+              setOpened={setOpened} />
 
           </div>
 

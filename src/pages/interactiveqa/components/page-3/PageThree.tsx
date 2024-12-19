@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 // Page Layout
 import PagesLayout from "../../layouts/PagesLayout";
@@ -151,9 +151,9 @@ export default function PageThree({ setPage }: Props) {
     setCurrentQuestionIndex(prevIndex => prevIndex + 1);
   };
 
-  const handlePreviousQuestion = () => {
-    setCurrentQuestionIndex(prevIndex => prevIndex - 1);
-  };
+  // const handlePreviousQuestion = () => {
+  //   setCurrentQuestionIndex(prevIndex => prevIndex - 1);
+  // };
 
   const currentQuestion = questions[currentQuestionIndex];
 

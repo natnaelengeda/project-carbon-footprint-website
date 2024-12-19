@@ -1,12 +1,74 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+
+// State
+import { useDispatch } from 'react-redux';
+
+// Mantine
+import { Slider } from '@mantine/core';
 
 // Components
 import ArrowComponent from '../../ArrowComponent';
 import CheckboxComponent from '../../CheckboxComponent';
-import { Slider } from '@mantine/core';
+import { addTransportationMode, deleteTransportationMode } from '@/state/carbon';
 
-export default function Bicycle() {
+// Interface
+interface Props {
+  opened: string;
+  setOpened: React.Dispatch<React.SetStateAction<string>>;
+}
+
+export default function Bicycle({ opened, setOpened }: Props) {
   const [selected, setSelected] = useState<boolean>(false);
+
+  const [slider1, setSlider1] = useState<number>(1);
+  const [slider2, setSlider2] = useState<number>(1);
+
+  // State
+  const dispatch = useDispatch();
+
+  const updateSlider1 = (value: number) => {
+    setSlider1(value);
+    dispatch(
+      addTransportationMode({
+        id: 3,
+        name: "bicycle",
+        selected: selected,
+        value: value,
+      })
+    );
+  }
+
+  const updateSlider2 = (value: number) => {
+    setSlider2(value);
+    dispatch(
+      addTransportationMode({
+        id: 3,
+        name: "bicycle",
+        selected: selected,
+        frequency: value,
+      })
+    );
+  }
+
+  useEffect(() => {
+    if (selected) {
+      dispatch(
+        addTransportationMode({
+          id: 3,
+          name: "bicycle",
+          selected: selected,
+          value: 1,
+          frequency: 1,
+        })
+      );
+    } else {
+      dispatch(
+        deleteTransportationMode({
+          id: 3,
+        })
+      )
+    }
+  }, [selected]);
 
   return (
     <div
@@ -20,7 +82,9 @@ export default function Bicycle() {
         <CheckboxComponent
           selected={selected}
           setSelected={setSelected}
-          text="Bicycle" />
+          text="Bicycle"
+          location="bicycle"
+          setOpened={setOpened} />
 
         {/* Arrow */}
         <ArrowComponent
@@ -28,7 +92,7 @@ export default function Bicycle() {
       </div>
       <div
         style={{
-          display: selected ? "flex" : "none"
+          display: opened == "bicycle" ? "flex" : "none"
         }}
         className='w-full h-auto flex flex-col items-start justify-start pt-3 pl-5 md:pl-16 gap-8 md:gap-1'>
         <div
@@ -42,6 +106,8 @@ export default function Bicycle() {
               Select distance usage in km per day
             </p>
             <Slider
+              value={slider1}
+              onChange={updateSlider1}
               className="w-full"
               color="#35D36A"
               size="xl"
@@ -67,11 +133,13 @@ export default function Bicycle() {
               Select days usage per week
             </p>
             <Slider
+              value={slider2}
+              onChange={updateSlider2}
               className="w-full"
               color="#35D36A"
               size="xl"
               min={1}
-              max={8}
+              max={7}
               marks={[
                 { value: 1, label: '1' },
                 { value: 2, label: '2' },

@@ -1,5 +1,7 @@
+import { useState } from 'react';
+
 // Page Layout
-import { Slider, Tooltip } from '@mantine/core';
+import { Tooltip } from '@mantine/core';
 import PagesLayout from '../../layouts/PagesLayout'
 
 // Interface
@@ -14,6 +16,7 @@ import Recycle from './components/Recycle';
 import WeeklyCollection from './components/WeeklyCollection';
 
 export default function PageSeven({ setPage }: Props) {
+  const [opened, setOpened] = useState<string>("weekly-collection");
 
   const func = () => {
     return true;
@@ -59,10 +62,14 @@ export default function PageSeven({ setPage }: Props) {
             className="w-full flex flex-col items-start justify-start gap-5 pt-10 px-4">
 
             {/* Weekly collection */}
-            <WeeklyCollection />
+            <WeeklyCollection
+              opened={opened}
+              setOpened={setOpened} />
 
             {/* Recycling Habits */}
-            <Recycle />
+            <Recycle
+              opened={opened}
+              setOpened={setOpened} />
           </div>
         </div>
 
@@ -70,8 +77,8 @@ export default function PageSeven({ setPage }: Props) {
         <NavigationComponent
           setPage={setPage}
           func={func}
-          prevPage={7}
-          nextPage={9} />
+          prevPage={6}
+          nextPage={8} />
 
       </div>
 

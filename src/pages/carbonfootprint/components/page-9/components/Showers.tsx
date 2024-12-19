@@ -1,12 +1,68 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+
+// Mantine
+import { Slider } from "@mantine/core";
+
+// State
+import { addWaterUsage, deleteWaterUsage } from "@/state/carbon";
+import { useDispatch } from "react-redux";
 
 // Components
 import ArrowComponent from "../../ArrowComponent";
 import CheckboxComponent from "../../CheckboxComponent";
-import { Slider } from "@mantine/core";
 
-export default function Showers() {
+
+
+// Interface
+interface Props {
+  opened: string;
+  setOpened: React.Dispatch<React.SetStateAction<string>>;
+}
+export default function Showers({ opened, setOpened }: Props) {
   const [selected, setSelected] = useState<boolean>(false);
+  const [slider, setSlider] = useState<number>(1);
+  const [slider1, setSlider1] = useState<number>(1);
+
+  const dispatch = useDispatch();
+
+  const updateSlider = (value: number) => {
+    setSlider(value);
+    dispatch(
+      addWaterUsage({
+        id: 2,
+        name: "showers",
+        value: value,
+        frequency: slider1
+      }))
+  }
+
+  const updateSlider1 = (value: number) => {
+    setSlider1(value);
+    dispatch(
+      addWaterUsage({
+        id: 2,
+        name: "showers",
+        value: slider,
+        frequency: value,
+      }))
+  }
+
+  useEffect(() => {
+    if (selected) {
+      dispatch(
+        addWaterUsage({
+          id: 2,
+          name: "showers",
+          value: 1,
+        }))
+    } else {
+      dispatch(
+        deleteWaterUsage({
+          id: 2
+        })
+      )
+    }
+  }, [selected]);
 
   return (
     <div
@@ -19,6 +75,8 @@ export default function Showers() {
         <CheckboxComponent
           selected={selected}
           setSelected={setSelected}
+          setOpened={setOpened}
+          location="showers"
           text="Showers" />
 
         {/* Arrow */}
@@ -29,7 +87,7 @@ export default function Showers() {
       {/* Bottom Content */}
       <div
         style={{
-          display: selected ? "flex" : "none"
+          display: opened == "showers" ? "flex" : "none"
         }}
         className='w-full h-auto flex flex-col items-start justify-start pl-5 md:pl-16 gap-5'>
 
@@ -45,6 +103,8 @@ export default function Showers() {
               Select days frequency per week
             </p>
             <Slider
+              value={slider}
+              onChange={updateSlider}
               className="w-full"
               color="#35D36A"
               size="xl"
@@ -70,6 +130,8 @@ export default function Showers() {
               Select average duration in minutes
             </p>
             <Slider
+              value={slider1}
+              onChange={updateSlider1}
               className="w-full"
               color="#35D36A"
               size="xl"

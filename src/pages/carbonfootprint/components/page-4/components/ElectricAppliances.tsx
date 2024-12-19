@@ -6,9 +6,11 @@ import { Slider } from '@mantine/core';
 // State
 import { useDispatch, useSelector } from 'react-redux';
 import {
+  addHouseholdEnegryCategory,
   addHouseholdEnergy,
   CarbonState,
   deleteHouseholdEnergy,
+  deleteHouseholdEnergyCategory,
   selectHouseholdEnergyById
 } from '@/state/carbon';
 
@@ -25,9 +27,6 @@ interface Props {
 
 export default function ElectricAppliances({ opened, setOpened }: Props) {
   const [selected, setSelected] = useState<boolean>(false);
-  const [selectedType, setSelectedType] = useState<string>("tv");
-
-  const [sliderValue, setSliderValue] = useState<number>(0);
 
   const [tvSelected, setTvSelected] = useState<boolean>(false);
   const [tvSlider, setTvSlider] = useState<number>(0);
@@ -47,21 +46,61 @@ export default function ElectricAppliances({ opened, setOpened }: Props) {
 
   const updateTVSlider = (value: number) => {
     setTvSlider(value);
+    dispatch(
+      addHouseholdEnegryCategory({
+        parent_id: 3,
+        category_id: 1,
+        id: 1,
+        name: "electric-appliances-tv",
+        selected: true,
+        value: value
+      })
+    );
   }
 
   const updateWashingMachineSlider = (value: number) => {
     setWashingMachineSlider(value);
+    dispatch(
+      addHouseholdEnegryCategory({
+        parent_id: 3,
+        category_id: 2,
+        id: 2,
+        name: "electric-appliances-washing-machine",
+        selected: true,
+        value: value
+      })
+    );
   }
 
   const updateWashingMachineSlider1 = (value: number) => {
     setWashingMachineSlider1(value);
+    dispatch(
+      addHouseholdEnegryCategory({
+        parent_id: 3,
+        category_id: 2,
+        id: 2,
+        name: "electric-appliances-washing-machine",
+        selected: true,
+        frequency: value
+      })
+    );
   }
 
   const updateIronSlider = (value: number) => {
     setIronSlider(value);
+    dispatch(
+      addHouseholdEnegryCategory({
+        parent_id: 3,
+        category_id: 3,
+        id: 3,
+        name: "electric-appliances-iron-clothes",
+        selected: true,
+        value: value
+      })
+    );
   }
 
-
+  // Main Selet State
   useEffect(() => {
     if (selected == true) {
       dispatch(
@@ -79,12 +118,83 @@ export default function ElectricAppliances({ opened, setOpened }: Props) {
     }
   }, [selected]);
 
+
+  // TV State
+  useEffect(() => {
+    if (tvSelected) {
+      dispatch(
+        addHouseholdEnegryCategory({
+          parent_id: 3,
+          category_id: 1,
+          id: 1,
+          name: "electric-appliances-tv",
+          selected: true,
+          value: 1
+        })
+      );
+    } else {
+      dispatch(
+        deleteHouseholdEnergyCategory({
+          parent_id: 3,
+          category_id: 1
+        })
+      )
+
+    }
+  }, [tvSelected]);
+
+  // Washing Machine State
+  useEffect(() => {
+    if (washingSelected) {
+      dispatch(
+        addHouseholdEnegryCategory({
+          parent_id: 3,
+          category_id: 2,
+          id: 2,
+          name: "electric-appliances-washing-machine",
+          selected: true,
+          value: 1
+        })
+      );
+    } else {
+      dispatch(
+        deleteHouseholdEnergyCategory({
+          parent_id: 3,
+          category_id: 2,
+        })
+      )
+    }
+  }, [washingSelected]);
+
+  // Ironing Cloths State
+  useEffect(() => {
+    if (ironSelected) {
+      dispatch(
+        addHouseholdEnegryCategory({
+          parent_id: 3,
+          category_id: 3,
+          id: 3,
+          name: "electric-appliances-iron-clothes",
+          selected: true,
+          value: 1
+        })
+      );
+    } else {
+      dispatch(
+        deleteHouseholdEnergyCategory({
+          parent_id: 3,
+          category_id: 3,
+        })
+      )
+    }
+  }, [ironSelected]);
+
+
   // Update When Page is Opened
   useEffect(() => {
     if (carbon.house_hold_energy!.length > 0) {
       if (heatingCoolingEnergy && heatingCoolingEnergy.selected == true) {
         setSelected(true);
-        setSliderValue(heatingCoolingEnergy.value!);
       }
     }
   }, []);

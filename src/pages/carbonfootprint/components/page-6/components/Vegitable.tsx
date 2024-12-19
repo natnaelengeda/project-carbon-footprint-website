@@ -1,12 +1,55 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 // Components
 import ArrowComponent from '../../ArrowComponent'
 import CheckboxComponent from '../../CheckboxComponent';
 import { Slider } from '@mantine/core';
+import { useDispatch } from 'react-redux';
+import { addDiet, deleteDiet } from '@/state/carbon';
 
-export default function Vegitable() {
+// Interface
+interface Props {
+  opened: string;
+  setOpened: React.Dispatch<React.SetStateAction<string>>;
+}
+
+export default function Vegitable({ opened, setOpened }: Props) {
   const [selected, setSelected] = useState<boolean>(false);
+  const [slider, setSlider] = useState<number>(1);
+
+  const dispatch = useDispatch();
+
+  const updateSlider = (value: number) => {
+    setSlider(value);
+    dispatch(
+      addDiet({
+        id: 2,
+        name: "vegitable",
+        selected: true,
+        value: value,
+      })
+    )
+  }
+
+  useEffect(() => {
+    if (selected) {
+      dispatch(
+        addDiet({
+          id: 2,
+          name: "vegitable",
+          selected: true,
+          value: 1,
+        })
+      )
+    } else {
+      dispatch(
+        deleteDiet({
+          id: 2
+        })
+      )
+    }
+  }, [selected]);
+
 
   return (
     <div
@@ -19,6 +62,8 @@ export default function Vegitable() {
         <CheckboxComponent
           selected={selected}
           setSelected={setSelected}
+          setOpened={setOpened}
+          location="vegitables"
           text='Vegetables' />
 
         {/* Arrow */}
@@ -30,7 +75,7 @@ export default function Vegitable() {
       {/* Bottom Content */}
       <div
         style={{
-          display: selected ? "flex" : "none"
+          display: opened == "vegitables" ? "flex" : "none"
         }}
         className='w-full h-auto flex flex-col items-start justify-start pl-5 md:pl-16 gap-5'>
 
@@ -44,6 +89,8 @@ export default function Vegitable() {
               Select days usage per week
             </p>
             <Slider
+              value={slider}
+              onChange={updateSlider}
               className="w-full"
               color="#35D36A"
               size="xl"
@@ -56,6 +103,7 @@ export default function Vegitable() {
                 { value: 4, label: '4' },
                 { value: 5, label: '5' },
                 { value: 6, label: '6' },
+                { value: 7, label: '7' },
               ]}
             />
           </div>
