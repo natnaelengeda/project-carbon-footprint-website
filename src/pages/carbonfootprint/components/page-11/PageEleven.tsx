@@ -5,6 +5,7 @@ import { useDispatch } from "react-redux";
 
 // AppAsset
 import AppAsset from "@/core/AppAsset";
+import BarGraph from "./components/BarGraph";
 
 interface Props {
   setPage: React.Dispatch<React.SetStateAction<number>>;
@@ -46,23 +47,10 @@ export default function PageEleven({ setPage }: Props) {
         className="w-full md:w-[798.45px] h-auto flex flex-col md:flex-row gap-4 md:gap-0 items-start md:items-center justify-center md:justify-start">
 
         {/* Graph */}
-        <div className="w-full h-auto flex items-center justify-center md:justify-start">
-          <div className="md:w-[336.22px] md:h-[291.13px] relative bg-">
-            <img
-              src={AppAsset.Chart1}
-              className="md:w-[336.22px] md:h-[291.13px] object-contain" />
-
-            <div
-              className="w-[290px] md:w-[290px] h-full absolute top-0 left-0 flex flex-col items-center justify-center md:text-[19.px]">
-              <p>Global</p>
-              <p>Statistics</p>
-            </div>
-          </div>
-
-        </div>
+        <BarGraph />
 
         {/* Data */}
-        <div className="w-full h-40 grid grid-cols-2 px-4 md:px-0">
+        <div className="w-full h-40 hidden grid-cols-2 px-4 md:px-0">
           {
             CharTData.map((data, index) => {
               return (
@@ -94,7 +82,7 @@ export default function PageEleven({ setPage }: Props) {
 
         {/* Contents */}
         <div
-          className="w-full h-auto flex flex-col items-start justify-start gap-8 md:gap-[70px]">
+          className="w-full h-auto flex flex-col items-start justify-start gap-8 md:gap-[70px] px-3 md:px-0">
           {
             InsightData.map((data, index) => {
               return (
