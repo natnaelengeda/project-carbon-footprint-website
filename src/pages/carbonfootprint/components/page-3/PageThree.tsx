@@ -98,7 +98,7 @@ export default function PageThree({ setPage }: Props) {
                   color={`var(--main-color)`}
                   value="appartment"
                   size={width > 768 ? "xl" : "md"}
-                  label="Appartment" />
+                  label="Apartment" />
                 <Radio
                   iconColor=""
                   color={`var(--main-color)`}
