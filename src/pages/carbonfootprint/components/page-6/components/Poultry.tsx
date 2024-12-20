@@ -33,7 +33,6 @@ export default function Poultry({ opened, setOpened }: Props) {
         value: value,
       })
     )
-
   }
 
   useEffect(() => {
@@ -57,7 +56,7 @@ export default function Poultry({ opened, setOpened }: Props) {
 
   return (
     <div
-      className='w-full h-auto flex flex-col items-start justify-start gap-5'>
+      className='w-full h-auto flex flex-col items-start justify-start gap-3'>
       {/* Top Content */}
       <div
         className='w-full h-auto flex flex-row items-center justify-between'>

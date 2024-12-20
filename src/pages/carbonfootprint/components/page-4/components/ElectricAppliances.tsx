@@ -225,7 +225,7 @@ export default function ElectricAppliances({ opened, setOpened }: Props) {
         style={{
           display: opened == "electric-appliances" ? "flex" : "none"
         }}
-        className='w-full h-auto flex flex-col items-start justify-start pt-3 pl-5 md:pl-16 gap-2 md:gap-1'>
+        className='w-full h-auto flex flex-col items-start justify-start pl-5 md:pl-16 gap-5 md:gap-7'>
 
 
         {/* TV */}
@@ -265,10 +265,15 @@ export default function ElectricAppliances({ opened, setOpened }: Props) {
               marks={[
                 { value: 1, label: '1' },
                 { value: 2, label: '2' },
+                { value: 3, label: '3' },
                 { value: 4, label: '4' },
+                { value: 5, label: '5' },
                 { value: 6, label: '6' },
+                { value: 7, label: '7' },
                 { value: 8, label: '8' },
+                { value: 9, label: '9' },
                 { value: 10, label: '10' },
+                { value: 11, label: '11' },
                 { value: 12, label: '12' },
               ]}
             />
@@ -278,7 +283,7 @@ export default function ElectricAppliances({ opened, setOpened }: Props) {
 
         {/* Washing Machine */}
         <div
-          className='w-full flex flex-col items-start justify-start gap-2 pt-5 md:pt-[48px]'>
+          className='w-full flex flex-col items-start justify-start gap-2 '>
 
           {/* Select Option */}
           <div
@@ -362,7 +367,7 @@ export default function ElectricAppliances({ opened, setOpened }: Props) {
 
         {/* Iron */}
         <div
-          className='w-full flex flex-col items-start justify-start gap-2 pt-5'>
+          className='w-full flex flex-col items-start justify-start gap-2 '>
 
           {/* Select Option */}
           <div

@@ -20,7 +20,10 @@ interface Props {
 
 export default function Garden({ opened, setOpened }: Props) {
   const [selected, setSelected] = useState<boolean>(false);
+
   const [slider, setSlider] = useState<number>(1);
+  const [slider1, setSlider1] = useState<number>(1);
+
 
   const dispatch = useDispatch();
 
@@ -31,9 +34,20 @@ export default function Garden({ opened, setOpened }: Props) {
         id: 3,
         name: "gardening-water",
         value: value,
+        frequency: slider1
       }))
   }
 
+  const updateSlider1 = (value: number) => {
+    setSlider1(value);
+    dispatch(
+      addWaterUsage({
+        id: 3,
+        name: "gardening-water",
+        value: slider,
+        frequency: value,
+      }))
+  }
 
   useEffect(() => {
     if (selected) {
@@ -79,6 +93,35 @@ export default function Garden({ opened, setOpened }: Props) {
           display: opened == "garden-watering" ? "flex" : "none"
         }}
         className='w-full h-auto flex flex-col items-start justify-start pl-5 md:pl-16 gap-5'>
+
+        {/* Frequency */}
+        <div
+          className="w-full h-auto flex flex-col items-start justify-start gap-2">
+          {/* Text */}
+          <p className="text-[#B7B7B7] text-lg md:text-[24px]">
+            Select days frequency per week
+          </p>
+          <Slider
+            value={slider1}
+            onChange={updateSlider1}
+            className="w-full"
+            color="#35D36A"
+            size="xl"
+            min={1}
+            max={7}
+            marks={[
+              { value: 1, label: '1' },
+              { value: 2, label: '2' },
+              { value: 3, label: '3' },
+              { value: 4, label: '4' },
+              { value: 5, label: '5' },
+              { value: 6, label: '6' },
+              { value: 7, label: '7' },
+            ]}
+          />
+        </div>
+
+        {/* Duration */}
         <div
           className="w-full h-auto flex flex-col items-start justify-start gap-2">
           {/* Text */}
@@ -94,12 +137,12 @@ export default function Garden({ opened, setOpened }: Props) {
             min={1}
             max={70}
             marks={[
-              { value: 10, label: '1' },
-              { value: 20, label: '2' },
-              { value: 30, label: '3' },
-              { value: 40, label: '4' },
-              { value: 50, label: '5' },
-              { value: 60, label: '6' },
+              { value: 10, label: '10' },
+              { value: 20, label: '20' },
+              { value: 30, label: '30' },
+              { value: 40, label: '40' },
+              { value: 50, label: '50' },
+              { value: 60, label: '60' },
               { value: 70, label: '60+' },
             ]}
           />

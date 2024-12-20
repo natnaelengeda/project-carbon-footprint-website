@@ -20,6 +20,7 @@ interface Props {
 }
 export default function Showers({ opened, setOpened }: Props) {
   const [selected, setSelected] = useState<boolean>(false);
+  
   const [slider, setSlider] = useState<number>(1);
   const [slider1, setSlider1] = useState<number>(1);
 
@@ -138,12 +139,12 @@ export default function Showers({ opened, setOpened }: Props) {
               min={1}
               max={70}
               marks={[
-                { value: 10, label: '1' },
-                { value: 20, label: '2' },
-                { value: 30, label: '3' },
-                { value: 40, label: '4' },
-                { value: 50, label: '5' },
-                { value: 60, label: '6' },
+                { value: 10, label: '10' },
+                { value: 20, label: '20' },
+                { value: 30, label: '30' },
+                { value: 40, label: '40' },
+                { value: 50, label: '50' },
+                { value: 60, label: '60' },
                 { value: 70, label: '60+' },
               ]}
             />

@@ -19,7 +19,6 @@ import ArrowComponent from '../../ArrowComponent';
 // AppAsset
 import AppAsset from '@/core/AppAsset';
 
-
 // Interface
 interface Props {
   opened: string;
@@ -276,12 +275,12 @@ export default function PublicTransport({ opened, setOpened }: Props) {
         style={{
           display: opened == "public-transport" ? "flex" : "none"
         }}
-        className='w-full h-auto flex flex-col items-start justify-start pt-3 pl-5 md:pl-16 gap-1 md:gap-1'>
+        className='w-full h-auto flex flex-col items-start justify-start pt-5 pl-5 md:pl-16 gap-1 md:gap-1'>
 
 
         {/* Bus */}
         <div
-          className='w-full flex flex-col items-start justify-start gap-2 pt-5'>
+          className='w-full flex flex-col items-start justify-start gap-2 '>
 
           {/* Select Option */}
           <div

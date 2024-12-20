@@ -87,7 +87,7 @@ export default function Cooking({ opened, setOpened }: Props) {
     );
   }
 
-  
+
   useEffect(() => {
     if (selected == true) {
       dispatch(
@@ -211,11 +211,11 @@ export default function Cooking({ opened, setOpened }: Props) {
         style={{
           display: opened == "cooking" ? "flex" : "none"
         }}
-        className='w-full h-auto flex flex-col items-start justify-start pl-5 md:pl-16 gap-2 md:gap-0'>
+        className='w-full h-auto flex flex-col items-start justify-start pl-5 md:pl-16 gap-5 md:gap-7 pt-4'>
 
         {/* Electric Stove */}
         <div
-          className='w-full flex flex-col items-start justify-start gap-2 pt-4 md:pt-[48px]'>
+          className='w-full flex flex-col items-start justify-start gap-2'>
 
           {/* Select Option */}
           <div
@@ -261,7 +261,7 @@ export default function Cooking({ opened, setOpened }: Props) {
 
         {/* Charcoal */}
         <div
-          className='w-full flex flex-col items-start justify-start gap-2 pt-4 md:pt-[48px]'>
+          className='w-full flex flex-col items-start justify-start gap-2'>
 
           {/* Select Option */}
           <div
@@ -307,7 +307,7 @@ export default function Cooking({ opened, setOpened }: Props) {
 
         {/* Gas Stove */}
         <div
-          className='w-full flex flex-col items-start justify-start gap-2 pt-4 md:pt-[48px]'>
+          className='w-full flex flex-col items-start justify-start gap-2'>
 
           {/* Select Option */}
           <div

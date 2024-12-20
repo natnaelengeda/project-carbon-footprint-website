@@ -17,7 +17,6 @@ import Clothes from './components/Clothes';
 import Showers from './components/Showers';
 import Garden from './components/Garden';
 
-
 interface Props {
   setPage: React.Dispatch<React.SetStateAction<number>>;
 }

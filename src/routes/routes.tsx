@@ -8,6 +8,9 @@ import Home from "../pages/home";
 import CarbonFootPrint from "@/pages/carbonfootprint";
 import InteractiveQA from "@/pages/interactiveqa";
 
+// Test
+import Test from "@/pages/test";
+
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -24,6 +27,13 @@ export const router = createBrowserRouter([
       {
         path: "/interactive-qa",
         element: <InteractiveQA />
+      },
+
+
+      // Test
+      {
+        path: "/test",
+        element: <Test />
       }
     ]
   }

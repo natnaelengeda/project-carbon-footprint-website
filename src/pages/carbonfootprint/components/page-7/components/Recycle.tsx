@@ -139,7 +139,7 @@ export default function Recycle({ opened, setOpened }: Props) {
 
             {/* Paper */}
             <div
-              className='flex flex-row items-center justify-start gap-2 md:gap-[30px]'>
+              className='flex flex-row items-center justify-start gap-2 md:gap-[15px]'>
               <img
                 onClick={() => {
                   setPaperSelected(!paperSelected);
@@ -147,7 +147,7 @@ export default function Recycle({ opened, setOpened }: Props) {
                 src={paperSelected ?
                   AppAsset.CheckedIcon :
                   AppAsset.UncheckedIcon}
-                className="w-5 h-auto md:w-[36px] md:h-[36px] object-contain" />
+                className="w-5 h-auto md:w-[30px] md:h-auto object-contain" />
               <p
                 className='text-xl md:text-[30px] font-normal'>
                 Paper
@@ -156,7 +156,7 @@ export default function Recycle({ opened, setOpened }: Props) {
 
             {/* Plastic */}
             <div
-              className='flex flex-row items-center justify-start gap-2 md:gap-[30px]'>
+              className='flex flex-row items-center justify-start gap-2 md:gap-[15px]'>
               <img
                 onClick={() => {
                   setPlasticSelected(!plasticSelected);
@@ -164,7 +164,7 @@ export default function Recycle({ opened, setOpened }: Props) {
                 src={plasticSelected ?
                   AppAsset.CheckedIcon :
                   AppAsset.UncheckedIcon}
-                className="w-5 h-auto md:w-[36px] md:h-[36px] object-contain" />
+                className="w-5 h-auto md:w-[30px] md:h-auto object-contain" />
               <p
                 className='text-xl md:text-[30px] font-normal'>
                 Plastic
@@ -173,7 +173,7 @@ export default function Recycle({ opened, setOpened }: Props) {
 
             {/* Bottle */}
             <div
-              className='flex flex-row items-center justify-start gap-2 md:gap-[30px]'>
+              className='flex flex-row items-center justify-start gap-2 md:gap-[15px]'>
               <img
                 onClick={() => {
                   setBottleSelected(!bottleSelected);
@@ -181,7 +181,7 @@ export default function Recycle({ opened, setOpened }: Props) {
                 src={bottleSelected ?
                   AppAsset.CheckedIcon :
                   AppAsset.UncheckedIcon}
-                className="w-5 h-auto md:w-[36px] md:h-[36px] object-contain" />
+                className="w-5 h-auto md:w-[30px] md:h-auto object-contain" />
               <p
                 className='text-xl md:text-[30px] font-normal'>
                 Bottle
@@ -190,7 +190,7 @@ export default function Recycle({ opened, setOpened }: Props) {
 
             {/* Metal */}
             <div
-              className='flex flex-row items-center justify-start gap-2 md:gap-[30px]'>
+              className='flex flex-row items-center justify-start gap-2 md:gap-[15px]'>
               <img
                 onClick={() => {
                   setMetalSelected(!metalSelected);
@@ -198,7 +198,7 @@ export default function Recycle({ opened, setOpened }: Props) {
                 src={metalSelected ?
                   AppAsset.CheckedIcon :
                   AppAsset.UncheckedIcon}
-                className="w-5 h-auto md:w-[36px] md:h-[36px] object-contain" />
+                className="w-5 h-auto md:w-[30px] md:h-auto object-contain" />
               <p
                 className='text-xl md:text-[30px] font-normal'>
                 Metal

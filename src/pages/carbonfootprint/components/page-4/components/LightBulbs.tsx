@@ -11,8 +11,6 @@ import {
 import {
   addHouseholdEnegryCategory,
   addHouseholdEnergy,
-  // CarbonState,
-  // selectHouseholdEnergyById,
   deleteHouseholdEnergy,
   deleteHouseholdEnergyCategory,
 } from '@/state/carbon';
@@ -33,10 +31,6 @@ export default function LightBulbs({ opened, setOpened }: Props) {
 
   // State
   const dispatch = useDispatch();
-  // const carbon = useSelector((state: { carbon: CarbonState }) => state.carbon);
-  // const heatingCoolingEnergy = useSelector((state: any) =>
-  //   selectHouseholdEnergyById(state, 4) // Replace '1' with the ID you want
-  // );
 
   // Bulb Types
   const [incandescent, setIncandescent] = useState<boolean>(false);
@@ -236,7 +230,7 @@ export default function LightBulbs({ opened, setOpened }: Props) {
         style={{
           display: opened == "light-bulbs" ? "flex" : "none"
         }}
-        className='w-full h-auto flex flex-col items-start justify-start pt-3 pl-5 md:pl-16 gap-1 md:gap-16'>
+        className='w-full h-auto flex flex-col items-start justify-start pt-3 pl-5 md:pl-10 gap-5 md:gap-7'>
 
         {/* Incandecent */}
         <div
@@ -288,7 +282,7 @@ export default function LightBulbs({ opened, setOpened }: Props) {
 
         {/* LED  */}
         <div
-          className='w-full flex flex-col items-start justify-start gap-2 pt-5'>
+          className='w-full flex flex-col items-start justify-start gap-2 '>
 
           {/* Select Option */}
           <div
@@ -336,7 +330,7 @@ export default function LightBulbs({ opened, setOpened }: Props) {
 
         {/* CFL  */}
         <div
-          className='w-full flex flex-col items-start justify-start gap-2 pt-5'>
+          className='w-full flex flex-col items-start justify-start gap-2 '>
 
           {/* Select Option */}
           <div
@@ -384,7 +378,7 @@ export default function LightBulbs({ opened, setOpened }: Props) {
 
         {/* Flurecent */}
         <div
-          className='w-full flex flex-col items-start justify-start gap-2 pt-5'>
+          className='w-full flex flex-col items-start justify-start gap-2'>
 
           {/* Select Option */}
           <div
