@@ -7,6 +7,7 @@ import Root from "./Root";
 import Home from "../pages/home";
 import CarbonFootPrint from "@/pages/carbonfootprint";
 import InteractiveQA from "@/pages/interactiveqa";
+import Pledge from "@/pages/pledge";
 
 // Test
 import Test from "@/pages/test";
@@ -27,6 +28,10 @@ export const router = createBrowserRouter([
       {
         path: "/interactive-qa",
         element: <InteractiveQA />
+      },
+      {
+        path: "/pledge",
+        element: <Pledge />
       },
 
 

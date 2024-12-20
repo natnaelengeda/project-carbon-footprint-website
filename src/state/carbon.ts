@@ -386,6 +386,7 @@ export const carbonSlice = createSlice({
       state.transportation_mode = [];
       state.diet = [];
       state.waste = [];
+      state.water_usage = [];
       state.food_wastage = 0;
     },
   },

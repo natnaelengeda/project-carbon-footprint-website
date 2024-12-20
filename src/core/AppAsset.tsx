@@ -58,6 +58,10 @@ import CheckMarkCategoryIcon from "@/assets/icons/categories/checkmark-square.sv
 // Chart
 import Chart1 from "@/assets/imgs/chart/chart.svg";
 
+// Pledge
+import SearchIcon from "@/assets/icons/pledge/search-01.svg";
+import InformationGreenIcon from "@/assets/icons/pledge/information-circle-green.svg";
+
 class AppAsset {
   public constructor() { }
 
@@ -118,6 +122,10 @@ class AppAsset {
 
   // Chart
   static Chart1 = Chart1;
+
+  // Pledge
+  static SearchIcon = SearchIcon;
+  static InformationGreenIcon = InformationGreenIcon;
 
 }
 

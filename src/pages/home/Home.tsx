@@ -1,9 +1,6 @@
 // AppAsset
 import AppAsset from "@/core/AppAsset";
 
-// Toast
-import toast from "react-hot-toast";
-
 // React Router
 import { useNavigate } from "react-router-dom";
 
@@ -38,14 +35,14 @@ export default function Home() {
             className="w-full h-auto object-cover" />
 
           {/* Pagination */}
-          <div className="w-60 h-10 flex flex-row items-center justify-center gap-4">
+          {/* <div className="w-60 h-10 flex flex-row items-center justify-center gap-4">
             <div className="w-8 h-8 rounded-full bg-primary">
             </div>
             <div className="w-8 h-8 rounded-full bg-[#35D36A4D]">
             </div>
             <div className="w-8 h-8 rounded-full bg-[#35D36A4D]">
             </div>
-          </div>
+          </div> */}
         </div>
 
         {/* Note */}
@@ -63,7 +60,7 @@ export default function Home() {
               navigate("/carbonfootprint");
               localStorage.setItem("page_type", "carbonfootprint");
             }}
-            className="w-auto h-auto md:w-[325px] md:h-[76px] border border-primary bg-white text-primary font-semibold rounded-full md:rounded-full text-lg md:text-[26px] px-2 md:px-0 py-4 hover:opacity-80 flex flex-row items-center justify-center gap-3">
+            className="w-auto h-auto md:w-[325px] md:h-[76px] border border-primary bg-white text-primary font-semibold rounded-full md:rounded-full text-lg md:text-[26px] px-5 md:px-0 py-2 md:py-4 hover:opacity-80 flex flex-row items-center justify-center gap-3">
             <p>Carbon Footprint</p>
             <img src={AppAsset.RightArrowGreenicon}
               className="w-[36px] object-contain"
@@ -74,7 +71,7 @@ export default function Home() {
               navigate("/interactive-qa");
               localStorage.setItem("page_type", "interactive-qa");
             }}
-            className="w-auto h-auto md:w-[325px] md:h-[76px] border border-primary bg-white text-primary font-semibold rounded-full md:rounded-full text-lg md:text-[26px] px-2 md:px-0 py-4 hover:opacity-80 flex flex-row items-center justify-center gap-3">
+            className="w-auto h-auto md:w-[325px] md:h-[76px] border border-primary bg-white text-primary font-semibold rounded-full md:rounded-full text-lg md:text-[26px] px-5 md:px-0 py-2 md:py-4 hover:opacity-80 flex flex-row items-center justify-center gap-3">
             <p>Interactive Q/A</p>
             <img src={AppAsset.RightArrowGreenicon}
               className="w-[36px] object-contain"
@@ -82,9 +79,10 @@ export default function Home() {
           </button>
           <button
             onClick={() => {
-              toast.success("This feature is not available yet.");
+              navigate("/pledge");
+              localStorage.setItem("page_type", "pledge");
             }}
-            className="w-auto h-auto md:w-[325px] md:h-[76px] border border-primary bg-white text-primary font-semibold rounded-full md:rounded-full text-lg md:text-[26px] px-7 md:px-0 py-4 hover:opacity-80 flex flex-row items-center justify-center gap-3">
+            className="w-auto h-auto md:w-[325px] md:h-[76px] border border-primary bg-white text-primary font-semibold rounded-full md:rounded-full text-lg md:text-[26px] px-5 md:px-0 py-2 md:py-4 hover:opacity-80 flex flex-row items-center justify-center gap-3">
             <p>Personal Pledge</p>
             <img src={AppAsset.RightArrowGreenicon}
               className="w-[36px] object-contain"
