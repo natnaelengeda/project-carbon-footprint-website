@@ -62,6 +62,13 @@ import Chart1 from "@/assets/imgs/chart/chart.svg";
 import SearchIcon from "@/assets/icons/pledge/search-01.svg";
 import InformationGreenIcon from "@/assets/icons/pledge/information-circle-green.svg";
 
+import BoltIcon from "@/assets/icons/pledge/energy.svg";
+import BusIcon from "@/assets/icons/pledge/bus-01.svg";
+import VegiterianFoodIcon from "@/assets/icons/pledge/vegetarian-food.svg";
+import WatermelonIcon from "@/assets/icons/pledge/watermelon.svg";
+import WasteIcon from "@/assets/icons/pledge/delete-01.svg";
+import WaterDroplet from "@/assets/icons/pledge/droplet.svg";
+
 class AppAsset {
   public constructor() { }
 
@@ -126,6 +133,17 @@ class AppAsset {
   // Pledge
   static SearchIcon = SearchIcon;
   static InformationGreenIcon = InformationGreenIcon;
+
+
+  static BoltIcon = BoltIcon;
+  static BusIcon = BusIcon;
+  static VegiterianFoodIcon = VegiterianFoodIcon;
+  static WatermelonIcon = WatermelonIcon;
+  static WasteIcon = WasteIcon;
+  static WaterDroplet = WaterDroplet;
+
+
+
 
 }
 

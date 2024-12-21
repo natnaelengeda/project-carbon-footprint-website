@@ -9,9 +9,10 @@ import PageFour from "./components/page-4";
 import PageFive from "./components/page-5";
 import PageSix from "./components/page-6";
 import PageSeven from "./components/page-7";
+import PageEight from "./components/page-8";
 
 export default function Pledge() {
-  const [page, setPage] = useState<number>(7);
+  const [page, setPage] = useState<number>(8);
 
   return (
     <div
@@ -32,7 +33,9 @@ export default function Pledge() {
                     page == 6 ?
                       <PageSix setPage={setPage} /> :
                       page == 7 ?
-                        <PageSeven setPage={setPage} /> : null
+                        <PageSeven setPage={setPage} /> :
+                        page == 8 ?
+                          <PageEight setPage={setPage} /> : null
       }
 
     </div>
