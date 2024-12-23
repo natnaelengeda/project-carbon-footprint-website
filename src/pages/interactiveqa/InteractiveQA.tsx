@@ -8,7 +8,7 @@ import FinishedPage from "./components/finished-page";
 import LeadersBoard from "./components/leadersboard";
 
 export default function InteractiveQA() {
-  const [page, setPage] = useState<number>(1);
+  const [page, setPage] = useState<number>(3);
 
   return (
     <div className="w-full h-screen">
@@ -21,6 +21,7 @@ export default function InteractiveQA() {
               setPage={setPage} /> :
             page == 3 ?
               <PageThree
+                page={page}
                 setPage={setPage} /> :
               page == 4 ?
                 <FinishedPage

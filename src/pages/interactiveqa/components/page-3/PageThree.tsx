@@ -3,10 +3,14 @@ import { useState } from "react";
 // Page Layout
 import PagesLayout from "../../layouts/PagesLayout";
 
+// Components
+import Timer from "./components/Timer";
+
+// AppAsset
+import AppAsset from "@/core/AppAsset";
+
 // Styles
 import "./styles/styles.css";
-import AppAsset from "@/core/AppAsset";
-import Timer from "./components/Timer";
 
 const questions = [
   {
@@ -133,28 +137,42 @@ const questions = [
 
 // Interface
 interface Props {
+  page: number;
   setPage: React.Dispatch<React.SetStateAction<number>>;
 }
 
-export default function PageThree({ setPage }: Props) {
+export default function PageThree({ page, setPage }: Props) {
   const [answers, setAnswers] = useState<{ [key: number]: number }>({});
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+  const [currentQuestionA, setCurruentQuestion] = useState({
+    question: 0,
+    answer: 0,
+  });
+
+  const [click, setClick] = useState<number>(1);
 
   const handleAnswerChange = (questionId: number, choiceId: number) => {
     setAnswers(prevAnswers => ({
       ...prevAnswers,
       [questionId]: choiceId
     }));
+
+    setCurruentQuestion({
+      question: questionId,
+      answer: choiceId
+    });
+
   };
 
   const handleNextQuestion = () => {
     setCurrentQuestionIndex(prevIndex => prevIndex + 1);
+    setClick(1);
   };
 
-  // const handlePreviousQuestion = () => {
-  //   setCurrentQuestionIndex(prevIndex => prevIndex - 1);
-  // };
-
+  const checkAnswer = () => {
+    console.log(currentQuestionA);
+    setClick(2);
+  }
   const currentQuestion = questions[currentQuestionIndex];
 
   return (
@@ -165,8 +183,13 @@ export default function PageThree({ setPage }: Props) {
         {/* Questions */}
         <div
           className="w-full md:w-[724px] flex flex-col items-start justify-start gap-4 md:gap-[95px]">
+
           {/* Timer */}
-          <Timer />
+          <Timer
+            page={page}
+            setPage={setPage}
+            handleNextQuestion={handleNextQuestion} 
+            checkAnswer={checkAnswer}/>
 
           {/* Type */}
           <div
@@ -202,14 +225,33 @@ export default function PageThree({ setPage }: Props) {
                       className="w-full h-auto flex flex-row items-center md:items-start justify-start gap-3 md:gap-[20px] custom-radio">
                       <input
                         type="radio"
-                        // className="custom-radio"
                         name={`question-${currentQuestion.id}`}
                         value={choice.id}
                         checked={answers[currentQuestion.id] === choice.id}
-                        onChange={() => handleAnswerChange(currentQuestion.id, choice.id)}
+                        onChange={() => {
+                          if (click == 1) {
+                            handleAnswerChange(currentQuestion.id, choice.id)
+                          }
+                        }}
                       />
-                      <span className="custom-radio-button"></span>
-                      <span className="text-lg md:text-[30px] font-normal"> {choice.text}</span>
+                      <span
+                        className="custom-radio-button">
+                      </span>
+                      <span
+                        className="text-lg md:text-[30px] font-normal">
+                        {choice.text}
+                        {
+                          click == 2 &&
+                          currentQuestionA.answer == choice.id &&
+                          <>
+                            <div
+                              className="pt-5">
+                              <p><span className={`${choice.isCorrect ? "text-primary" : "text-red-500"} font-bold`}>{choice.isCorrect ? "Correct: " : "Incorrect Answer: "}</span> {choice.explanation}</p>
+                            </div>
+                          </>
+
+                        }
+                      </span>
                     </label>
                   </div>
                 );
@@ -223,29 +265,36 @@ export default function PageThree({ setPage }: Props) {
         <div
           className="w-full pt-10 md:pt-40 flex flex-row items-center justify-end pr-10 md:pr-[140px] gap-1 md:gap-5">
 
-          {/* {
-            currentQuestionIndex > 0 && (
+          {
+            currentQuestionIndex < questions.length - 1 &&
+            (
               <button
                 onClick={() => {
-                  handlePreviousQuestion()
+                  switch (click) {
+                    case 1:
+                      checkAnswer();
+                      break;
+                    case 2:
+                      handleNextQuestion();
+                      break;
+
+                  }
                 }}
-                className={`w-10 h-10 md:w-[100px] md:h-[100px] rounded-full border border-primary flex items-center justify-center p-2 md:p-0`}>
-                <img
-                  src={AppAsset.LeftArrowIcon}
-                  className='w-20 h-auto object-contain md:w-[40.56px] md:h-[40.56px]' />
+                className="flex flex-row items-center justify-center md:w-[220.32px] md:h-[100px] bg-primary rounded-full text-white px-3 md:px-0 py-2 md:py-0 gap-2">
+                {click == 1 ?
+                  <>
+                    <p className="text-xl md:text-[34px]">Submit</p>
+                  </> :
+                  <>
+                    <p className="text-xl md:text-[34px]">Next</p>
+                    <img
+                      className="w-6 md:w-[34.56px] h-auto object-contain"
+                      src={AppAsset.RightArrowIcon} />
+                  </>
+                }
+
               </button>
-            )
-          } */}
-          {currentQuestionIndex < questions.length - 1 && (
-            <button
-              onClick={handleNextQuestion}
-              className="flex flex-row items-center justify-center md:w-[220.32px] md:h-[100px] bg-primary rounded-full text-white px-3 md:px-0 py-2 md:py-0 gap-2">
-              <p className="text-xl md:text-[34px]">Next</p>
-              <img
-                className="w-6 md:w-[34.56px] h-auto object-contain"
-                src={AppAsset.RightArrowIcon} />
-            </button>
-          )}
+            )}
           {
             currentQuestionIndex === questions.length - 1 && (
               <button
@@ -253,13 +302,12 @@ export default function PageThree({ setPage }: Props) {
                   setPage(4);
                 }}
                 className="flex flex-row items-center justify-center md:w-[220.32px] md:h-[100px] bg-primary rounded-full text-white px-3 md:px-0 py-2 md:py-0 gap-2">
-                <p className="text-xl md:text-[34px]">Submit</p>
+                <p
+                  className="text-xl md:text-[34px]">Submit</p>
               </button>
             )
           }
         </div>
-
-
 
       </div>
     </PagesLayout>

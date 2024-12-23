@@ -1,6 +1,14 @@
 import { useState, useEffect } from 'react';
 
-export default function Timer() {
+// Interface
+interface Props {
+  page: number;
+  setPage: React.Dispatch<React.SetStateAction<number>>;
+  handleNextQuestion: () => void;
+  checkAnswer: () => void;
+}
+
+export default function Timer({ page, setPage, handleNextQuestion, checkAnswer }: Props) {
   const width = window.innerWidth;
 
   // Duration
@@ -21,6 +29,17 @@ export default function Timer() {
 
     return () => clearInterval(timer);
   }, [timeLeft]);
+
+  console.log(page);
+  // Update Time when reacher 0
+  useEffect(() => {
+    if (timeLeft === 0) {
+      handleNextQuestion();
+      // setPage((prev) => prev + 1);
+      checkAnswer();
+      setTimeLeft(duration);
+    }
+  }, [timeLeft, setPage, duration]);
 
   return (
     <div className='w-full flex items-center justify-center'>
