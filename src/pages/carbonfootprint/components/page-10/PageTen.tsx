@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 // State
 import { useSelector } from 'react-redux';
@@ -18,6 +18,7 @@ import { mapData } from '@/utils/convertDataFunc';
 // App Asset
 import AppAsset from '@/core/AppAsset';
 import MetricItem from './components/MetricItem';
+import Skeleton from 'react-loading-skeleton';
 
 // Types
 interface MetricItemProps {
@@ -35,25 +36,66 @@ export default function PageTen({ setPage }: Props) {
   const carbon = useSelector((state: any) => state.carbon);
   const data = mapData(carbon);
 
-  const metricsData: MetricItemProps[] = [
-    { label: 'Water Usage', percentage: 10 },
-    { label: 'Food Waste', percentage: 30 },
-    { label: 'Transportation Impact', percentage: 45 },
-    { label: 'Diet Sustainability', percentage: 73 },
-    { label: 'Waste Disposal & Recycling', percentage: 65 },
-    { label: 'Energy Usage', percentage: 75 }
-  ];
+  const [loading, setLoading] = useState<boolean>(true);
 
+  const [allData, setAllData] = useState<number>(0);
+
+  const [waterUsage, setWaterUsage] = useState<number>(0);
+  const [foodWaste, setFoodWaste] = useState<number>(0);
+  const [transport, setTransport] = useState<number>(0);
+  const [diet, setDiet] = useState<number>(0);
+  const [waste, setWaste] = useState<number>(0);
+  const [energyUsage, setEnergyUsage] = useState<number>(0);
 
   const sendFunction = () => {
-    axios.post("http://192.168.0.100:5001/api/v1/carbonFootPrint", data)
+    axios.post("http://159.69.19.171/api/v1/carbonFootPrint", data)
       .then((response) => {
-        console.log(response);
+        const data = response.data;
+        var allSum = 0;
+        allSum = data.dietAndFood + data.foodWastage + data.householdEnergy + data.transportationMode + data.wasteDisposal + data.waterUsage;
+
+        setAllData(data);
+
+        var waterUsage = (data.waterUsage / allSum) * 100;
+        var foodWaste = (data.foodWastage / allSum) * 100;
+        var transport = (data.transportationMode / allSum) * 100;
+        var diet = (data.dietAndFood / allSum) * 100;
+        var waste = (data.wasteDisposal / allSum) * 100;
+        var energyUsage = (data.householdEnergy / allSum) * 100;
+
+        setWaterUsage(waterUsage);
+        setFoodWaste(foodWaste);
+        setTransport(transport);
+        setDiet(diet);
+        setWaste(waste);
+        setEnergyUsage(energyUsage);
+
+        console.table({
+          waterUsage,
+          foodWaste,
+          transport,
+          diet,
+          waste,
+          energyUsage
+        });
+
+        setLoading(false);
       })
   }
 
+  const metricsData: MetricItemProps[] = [
+    { label: 'Water Usage', percentage: waterUsage },
+    { label: 'Food Waste', percentage: foodWaste },
+    { label: 'Transportation Impact', percentage: transport },
+    { label: 'Diet Sustainability', percentage: diet },
+    { label: 'Waste Disposal & Recycling', percentage: waste },
+    { label: 'Energy Usage', percentage: energyUsage }
+  ];
+
+
   useEffect(() => {
     sendFunction();
+    window.scrollTo(0, 0);
   }, []);
 
 
@@ -64,16 +106,35 @@ export default function PageTen({ setPage }: Props) {
       {/* Badge Image */}
       <div
         className="w-full h-auto px-5 md:px-0 flex justify-center">
-        <img
-          src={AppAsset.BlueBadge}
-          className="w-full h-auto md:w-[598px] md:h-[527px] object-contain" />
+        {
+          loading ?
+            <div className='w-80 h-80 md:w-[598px] md:h-[527px] '>
+              <Skeleton
+                className='w-full h-full'
+                borderRadius={20} />
+            </div> :
+            <img
+              src={AppAsset.BlueBadge}
+              className="w-80 h-80 md:w-[598px] md:h-[527px] object-contain" />
+        }
       </div>
 
       {/* Text */}
-      <div className="w-full h-auto flex flex-col items-center justify-start gap-5 md:gap-[52px] ">
-        <p className="text-primary-blue text-4xl md:text-[64px] font-bold">Aqua - Warrior</p>
-        <p className="text-xl md:text-[28px]">Congrats, You Got the "Aqua - Warrior" Badge!</p>
-      </div>
+      {
+        loading ?
+          <div className="w-full h-auto flex flex-col items-center justify-start gap-5 md:gap-[52px] pt-2 px-4 md:px-0">
+            <div className='w-36 h-8 md:w-60 md:h-16'>
+              <Skeleton className='w-full h-full' />
+            </div>
+            <div className='w-full md:w-[35rem] h-8'>
+              <Skeleton className='w-full h-full' />
+            </div>
+          </div> :
+          <div className="w-full h-auto flex flex-col items-center justify-start gap-5 md:gap-[52px] ">
+            <p className="text-primary-blue text-4xl md:text-[64px] font-bold">Aqua - Warrior</p>
+            <p className="text-xl md:text-[28px]">Congrats, You Got the "Aqua - Warrior" Badge!</p>
+          </div>
+      }
 
       {/* Results */}
       <div
@@ -95,6 +156,8 @@ export default function PageTen({ setPage }: Props) {
           className="w-full h-full md:w-[666px] pt-5">
           <div className="flex flex-col w-full px-2 md:px-0">
             {
+              !loading &&
+              allData &&
               metricsData.map((metric, index) => (
                 <MetricItem
                   key={index}
@@ -103,6 +166,8 @@ export default function PageTen({ setPage }: Props) {
                 />
               ))
             }
+            <LoadingSkeleton
+              loading={loading} />
           </div>
         </div>
 
@@ -127,4 +192,62 @@ export default function PageTen({ setPage }: Props) {
     </div>
   );
 
+}
+
+
+const LoadingSkeleton = ({ loading }: { loading: boolean }) => {
+  return (
+    <>
+      {
+        loading &&
+        <div className='w-full h-auto flex flex-col items-start justify-start'>
+          {
+            [1, 2, 3, 4, 5, 6].map((index) => {
+              return (
+                <div
+                  key={index}
+                  className="w-full  flex flex-col md:mt-14 max-md:mt-5 md:max-md:mt-10 max-md:max-w-full">
+                  <div className="flex flex-wrap gap-7 items-start w-full text-md md:text-2xl leading-loose text-slate-900 max-md:max-w-full">
+                    <div
+                      className="flex-1 shrink basis-0">
+                      <div className='w-20 rounded-full overflow-hidden'>
+                        <Skeleton
+                          className='w-full h-full rounded-full'
+                        />
+                      </div>
+                    </div>
+                    <div>
+                      <div className='w-10 rounded-full overflow-hidden'>
+                        <Skeleton
+                          className='w-full h-full rounded-full'
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    className="flex overflow-hidden relative flex-col md:mt-5 w-full rounded-2xl min-h-[10px] md:min-h-[18px] max-md:max-w-full pt-">
+                    <div className='relative w-full h-[26px] rounded-full overflow-hidden'>
+                      <div
+                        className='absolute top-1 left-0 w-full h-[26px] bg-[#E9ECEF]'>
+                      </div>
+                      <div className='relative w-60 h-full'>
+                        <Skeleton
+                          className='w-full h-full rounded-full'
+                          style={{
+                            height: 23
+                          }}
+                          borderRadius={20}
+                        />
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+              );
+            })
+          }
+        </div>
+      }
+    </>
+  );
 }

@@ -8,8 +8,11 @@ import { router } from './routes/routes';
 // Mantine
 import { MantineProvider } from '@mantine/core';
 
-// Roast
+// Toaster
 import { Toaster } from 'react-hot-toast';
+
+// Skeleton
+import { SkeletonTheme } from 'react-loading-skeleton'
 
 // State
 import { Provider } from 'react-redux';
@@ -20,6 +23,7 @@ import { PersistGate } from 'redux-persist/integration/react';
 import "./index.css";
 import "./styles/tailwind.css";
 import '@mantine/core/styles.css';
+import 'react-loading-skeleton/dist/skeleton.css'
 
 const container = document.getElementById('root') as HTMLElement;
 
@@ -33,9 +37,13 @@ function App() {
         loading={null}
         persistor={persistor}>
         <MantineProvider>
-          <RouterProvider
-            router={router} />
-          <Toaster />
+          <SkeletonTheme
+            baseColor="#11001415"
+            highlightColor="#35D36A">
+            <RouterProvider
+              router={router} />
+            <Toaster />
+          </SkeletonTheme>
         </MantineProvider>
       </PersistGate>
     </Provider>
