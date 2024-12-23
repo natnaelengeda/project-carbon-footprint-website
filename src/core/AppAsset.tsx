@@ -12,6 +12,7 @@ import BannerSix from "@/assets/imgs/banner/banner-six.svg";
 import BannerSeven from "@/assets/imgs/banner/banner-seven.svg";
 import BannerEight from "@/assets/imgs/banner/banner-eight.svg";
 import BannerNine from "@/assets/imgs/banner/banner-nine.svg";
+import BannerTen from "@/assets/imgs/banner/banner-ten.svg";
 
 // Badges
 import BlueBadge from "@/assets/imgs/badges/blue-badge.svg";
@@ -61,6 +62,8 @@ import Chart1 from "@/assets/imgs/chart/chart.svg";
 // Pledge
 import SearchIcon from "@/assets/icons/pledge/search-01.svg";
 import InformationGreenIcon from "@/assets/icons/pledge/information-circle-green.svg";
+import MailIcon from "@/assets/icons/pledge/mail-02.svg";
+import PhoneIcon from "@/assets/icons/pledge/call-02.svg";
 
 import BoltIcon from "@/assets/icons/pledge/energy.svg";
 import BusIcon from "@/assets/icons/pledge/bus-01.svg";
@@ -68,6 +71,10 @@ import VegiterianFoodIcon from "@/assets/icons/pledge/vegetarian-food.svg";
 import WatermelonIcon from "@/assets/icons/pledge/watermelon.svg";
 import WasteIcon from "@/assets/icons/pledge/delete-01.svg";
 import WaterDroplet from "@/assets/icons/pledge/droplet.svg";
+
+// Tick
+import TickImage from "@/assets/imgs/Illustration.svg";
+
 
 class AppAsset {
   public constructor() { }
@@ -84,6 +91,7 @@ class AppAsset {
   static BannerSeven = BannerSeven;
   static BannerEight = BannerEight;
   static BannerNine = BannerNine;
+  static BannerTen = BannerTen;
 
   // Badges
   static BlueBadge = BlueBadge;
@@ -133,7 +141,8 @@ class AppAsset {
   // Pledge
   static SearchIcon = SearchIcon;
   static InformationGreenIcon = InformationGreenIcon;
-
+  static MailIcon = MailIcon;
+  static PhoneIcon = PhoneIcon;
 
   static BoltIcon = BoltIcon;
   static BusIcon = BusIcon;
@@ -142,9 +151,7 @@ class AppAsset {
   static WasteIcon = WasteIcon;
   static WaterDroplet = WaterDroplet;
 
-
-
-
+  static TickImage = TickImage;
 }
 
 export default AppAsset;

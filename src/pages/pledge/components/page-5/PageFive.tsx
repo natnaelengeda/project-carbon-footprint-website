@@ -88,7 +88,7 @@ export default function PageFive({ setPage }: Props) {
         {/* Navigation */}
         <NavigationComponent
           setPage={setPage}
-          nextPage={5} />
+          nextPage={6} />
       </div>
     </PagesLayout>
   )
