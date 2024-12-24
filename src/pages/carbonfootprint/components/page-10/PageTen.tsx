@@ -10,7 +10,8 @@ import { useSelector } from 'react-redux';
 // import VioletBadge from './components/VioletBadge';
 
 // Axios
-import axios from 'axios';
+// import axios from 'axios';
+import axios from "@/utils/axios";
 
 // Utils
 import { mapData } from '@/utils/convertDataFunc';
@@ -48,7 +49,7 @@ export default function PageTen({ setPage }: Props) {
   const [energyUsage, setEnergyUsage] = useState<number>(0);
 
   const sendFunction = () => {
-    axios.post("http://159.69.19.171/api/v1/carbonFootPrint", data)
+    axios.post("/api/v1/carbonFootPrint", data)
       .then((response) => {
         const data = response.data;
         var allSum = 0;

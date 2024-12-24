@@ -230,7 +230,7 @@ export const mapData = (data: any) => {
       gardenWatering: data.water_usage
         .filter((item: any) => item.name == "gardening-water")
         .map((item: any) => {
-          return { daysPerWeek: item.value, averageDuration: item.frequency };
+          return { averageDuration: item.value, daysPerWeek: item.frequency };
         })[0] || { daysPerWeek: 0, averageDuration: 0 },
     },
   };
