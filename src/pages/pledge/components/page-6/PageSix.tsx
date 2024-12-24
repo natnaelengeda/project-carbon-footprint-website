@@ -6,6 +6,10 @@ import PagesLayout from "../../layouts/PagesLayout";
 // Mantine
 import { Slider, Tooltip } from "@mantine/core";
 
+// State
+import { useDispatch } from "react-redux";
+import { updateFoodWastage } from "@/state/pledge";
+
 // App Asset
 import AppAsset from "@/core/AppAsset";
 
@@ -20,10 +24,15 @@ interface Props {
 export default function PageSix({ setPage }: Props) {
   const [slider, setSlider] = useState<number>(1);
 
+  const dispatch = useDispatch();
+
   const updateSlider = (value: number) => {
     setSlider(value);
-
+    dispatch(updateFoodWastage({
+      food_wastage: value
+    }))
   }
+
 
   return (
     <PagesLayout>

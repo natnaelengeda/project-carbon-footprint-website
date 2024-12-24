@@ -1,12 +1,15 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 
 // Mantine
 import { Slider } from "@mantine/core";
 
+// State
+import { useDispatch } from "react-redux";
+import { addWaste, deleteWaste } from "@/state/pledge";
+
 // Components
 import CheckboxComponent from "@/pages/carbonfootprint/components/CheckboxComponent";
 import ArrowComponent from "@/pages/carbonfootprint/components/ArrowComponent";
-
 
 // Interface
 interface Props {
@@ -18,9 +21,34 @@ export default function WeeklyCollection({ opened, setOpened }: Props) {
   const [selected, setSelected] = useState<boolean>(false);
   const [slider, setSlider] = useState<number>(0);
 
+  const dispatch = useDispatch();
+
   const updateSlider = (value: number) => {
     setSlider(value)
+    dispatch(
+      addWaste({
+        id: 1,
+        name: "weekly-collection",
+        value: value,
+      }));
   }
+
+  // Update Main State
+  useEffect(() => {
+    if (selected) {
+      dispatch(
+        addWaste({
+          id: 1,
+          name: "weekly-collection",
+          value: 1,
+        }));
+    } else {
+      dispatch(
+        deleteWaste({
+          id: 1,
+        }));
+    }
+  }, [selected]);
 
   return (
     <div

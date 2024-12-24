@@ -1,7 +1,11 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 // Mantine
 import { Slider } from "@mantine/core";
+
+// State
+import { useDispatch } from "react-redux";
+import { addWaterUsage, deleteWaterUsage } from "@/state/pledge";
 
 // Components
 import CheckboxComponent from "@/pages/carbonfootprint/components/CheckboxComponent";
@@ -19,14 +23,46 @@ export default function Showers({ opened, setOpened }: Props) {
   const [slider, setSlider] = useState<number>(1);
   const [slider1, setSlider1] = useState<number>(1);
 
+  const dispatch = useDispatch();
 
   const updateSlider = (value: number) => {
     setSlider(value);
+    dispatch(
+      addWaterUsage({
+        id: 2,
+        name: "showers",
+        value: value,
+        frequency: slider1
+      }))
   }
 
   const updateSlider1 = (value: number) => {
     setSlider1(value);
+    dispatch(
+      addWaterUsage({
+        id: 2,
+        name: "showers",
+        value: slider,
+        frequency: value,
+      }))
   }
+
+  useEffect(() => {
+    if (selected) {
+      dispatch(
+        addWaterUsage({
+          id: 2,
+          name: "showers",
+          value: 1,
+        }))
+    } else {
+      dispatch(
+        deleteWaterUsage({
+          id: 2
+        })
+      )
+    }
+  }, [selected]);
 
   return (
     <div

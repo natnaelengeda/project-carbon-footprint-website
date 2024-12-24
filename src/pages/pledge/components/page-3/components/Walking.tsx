@@ -1,7 +1,11 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 // Mantine
 import { Slider } from '@mantine/core';
+
+// State
+import { useDispatch } from 'react-redux';
+import { addTransportationMode, deleteTransportationMode } from '@/state/pledge';
 
 // Components
 import CheckboxComponent from '@/pages/carbonfootprint/components/CheckboxComponent';
@@ -19,15 +23,51 @@ export default function Walking({ opened, setOpened }: Props) {
   const [slider1, setSlider1] = useState<number>(1);
   const [slider2, setSlider2] = useState<number>(1);
 
+  // State
+  const dispatch = useDispatch();
+
   const updateSlider1 = (value: number) => {
     setSlider1(value);
-
+    dispatch(
+      addTransportationMode({
+        id: 4,
+        name: 'walking',
+        selected: selected,
+        value: value,
+      })
+    );
   }
 
   const updateSlider2 = (value: number) => {
     setSlider2(value);
-
+    dispatch(
+      addTransportationMode({
+        id: 4,
+        name: 'walking',
+        selected: selected,
+        frequency: value,
+      })
+    );
   }
+
+  useEffect(() => {
+    if (selected) {
+      dispatch(
+        addTransportationMode({
+          id: 4,
+          name: 'walking',
+          selected: selected,
+          value: 1,
+        })
+      )
+    } else {
+      dispatch(
+        deleteTransportationMode({
+          id: 4
+        })
+      )
+    }
+  }, [selected]);
 
   return (
     <div

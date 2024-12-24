@@ -3,6 +3,9 @@ import { persistReducer, persistStore } from "redux-persist";
 
 // States
 import CarbonfootprintReducer from "./state/carbon";
+import PledgeReducer from "./state/pledge";
+
+// Storage
 import storage from "redux-persist/lib/storage";
 
 const CarbonfootprintConfig = {
@@ -10,11 +13,18 @@ const CarbonfootprintConfig = {
   storage,
 };
 
+const PledgeConfig = {
+  key: "pledge-state",
+  storage,
+}
+
 const persistedCarbonfootprintReducer = persistReducer(CarbonfootprintConfig, CarbonfootprintReducer);
+const persistedPledgeReducer = persistReducer(PledgeConfig, PledgeReducer);
 
 export const store = configureStore({
   reducer: {
     carbon: persistedCarbonfootprintReducer,
+    pledge: persistedPledgeReducer,
   },
   middleware: (getDefaultMiddlware) =>
     getDefaultMiddlware({

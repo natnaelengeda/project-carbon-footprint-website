@@ -1,4 +1,6 @@
 import AppAsset from "@/core/AppAsset";
+import { clearPledge } from "@/state/pledge";
+import { useDispatch } from "react-redux";
 
 // Interface
 interface Props {
@@ -6,6 +8,8 @@ interface Props {
 }
 
 export default function PageEleven({ setPage }: Props) {
+  const dispatch = useDispatch();
+
   return (
     <div
       className="w-full h-full min-h-screen flex flex-col items-center justify-start pt-12 md:pt-[159px] px-2 md:px-0">
@@ -34,7 +38,10 @@ export default function PageEleven({ setPage }: Props) {
       {/* Button */}
       <div className="mt-52 md:mt-[575px]">
         <button
-          onClick={() => setPage(0)}
+          onClick={() => {
+            dispatch(clearPledge());
+            setPage(0);
+          }}
           className="w-full md:w-[276.68px] h-14 md:h-[98.6px] border-2 border-primary text-primary text-lg md:text-[34.56px] rounded-full px-6">
           Start again
         </button>

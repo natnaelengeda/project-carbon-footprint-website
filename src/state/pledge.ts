@@ -1,4 +1,3 @@
-import { RootState } from "@/store";
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 
@@ -63,49 +62,39 @@ interface WaterUsage {
   frequency?: number;
 }
 
-
-export interface CarbonState {
+export interface PledgeState {
   id: string;
   name: string;
-  housing_type: string;
   house_hold_energy: HouseholdEnergy[];
   transportation_mode: Transportation[];
   diet: Diet[];
+  food_wastage: number;
   waste: WasteDisposal[];
   water_usage: WaterUsage[];
-  food_wastage: number;
 }
 
-// Define the initial state
-const initialState: CarbonState = {
+// Define initial state
+const initialState: PledgeState = {
   id: "",
   name: "",
-  housing_type: "",
   house_hold_energy: [],
   transportation_mode: [],
   diet: [],
+  food_wastage: 0,
   waste: [],
   water_usage: [],
-  food_wastage: 0,
 };
 
-
-
-export const carbonSlice = createSlice({
-  name: "carbon",
+// Create a slice
+export const pledgeSlice = createSlice({
+  name: "pledge",
   initialState,
   reducers: {
-    // Add or update name and id
+    // Add or Update Name and Id
     addName: (state, action: PayloadAction<{ id: string; name: string }>) => {
       state.id = action.payload.id;
       state.name = action.payload.name;
     },
-
-    // Add or update housing type
-    addHousingType: (state, action: PayloadAction<{ housing_type: string }>) => {
-      state.housing_type = action.payload.housing_type;
-    },
-
 
     // House Hold Energy
     addHouseholdEnergy: (state, action: PayloadAction<Partial<HouseholdEnergy> & { id: number }>) => {
@@ -160,6 +149,13 @@ export const carbonSlice = createSlice({
       }
     },
 
+    // Remove household energy
+    deleteHouseholdEnergy: (state, action: PayloadAction<{ id: number }>) => {
+      state.house_hold_energy = state.house_hold_energy.filter(
+        (item) => item.id !== action.payload.id
+      );
+    },
+
     deleteHouseholdEnergyCategory: (
       state,
       action: PayloadAction<{ parent_id: number; category_id: number }>
@@ -180,15 +176,9 @@ export const carbonSlice = createSlice({
       }
     },
 
-    // Remove household energy
-    deleteHouseholdEnergy: (state, action: PayloadAction<{ id: number }>) => {
-      state.house_hold_energy = state.house_hold_energy.filter(
-        (item) => item.id !== action.payload.id
-      );
-    },
-
-
     // Transportation Mode
+
+    // Add or Update Transportation Mode
     addTransportationMode: (state, action: PayloadAction<Partial<Transportation> & { id: number }>) => {
       const existingIndex = state.transportation_mode.findIndex(
         (transport) => transport.id === action.payload.id
@@ -335,6 +325,11 @@ export const carbonSlice = createSlice({
       );
     },
 
+    // Food Wastage
+    updateFoodWastage: (state, action: PayloadAction<{ food_wastage: number }>) => {
+      state.food_wastage = action.payload.food_wastage
+    },
+
     // Water Usate
     addWaterUsage: (
       state,
@@ -370,41 +365,22 @@ export const carbonSlice = createSlice({
       );
     },
 
-    // Food Wastage
-    updateFoodWastage: (state, action: PayloadAction<{ food_wastage: number }>) => {
-      state.food_wastage = action.payload.food_wastage
-    },
 
-    // Clear all state fields
-    clearEverything: (state) => {
+    clearPledge: (state) => {
       state.id = "";
       state.name = "";
-      state.housing_type = "";
       state.house_hold_energy = [];
       state.transportation_mode = [];
       state.diet = [];
       state.waste = [];
       state.water_usage = [];
       state.food_wastage = 0;
-    },
-  },
+    }
+  }
 });
-
-
-export const selectHouseholdEnergy = (state: RootState) =>
-  state.carbon.house_hold_energy;
-
-export const selectHouseholdEnergyById = (
-  state: RootState,
-  id: number
-) => state.carbon.house_hold_energy.find((item) => item.id === id);
 
 export const {
   addName,
-  clearEverything,
-
-  // Housing Type
-  addHousingType,
 
   // House Hold Energy
   addHouseholdEnergy,
@@ -426,13 +402,14 @@ export const {
   addWaste,
   deleteWaste,
 
+  // Food Wastage
+  updateFoodWastage,
+
   // Water Usage
   addWaterUsage,
   deleteWaterUsage,
 
-  // Food Wastage
-  updateFoodWastage
-
-} = carbonSlice.actions;
-export const selectCarbon = (state: { carbon: CarbonState; }) => state.carbon;
-export default carbonSlice.reducer;
+  clearPledge
+} = pledgeSlice.actions;
+export const selectPledge = (state: { pledge: PledgeState }) => state.pledge;
+export default pledgeSlice.reducer;

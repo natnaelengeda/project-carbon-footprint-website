@@ -24,7 +24,6 @@ interface Props {
 export default function PageTwo({ setPage }: Props) {
   const [opened, setOpened] = useState<string>("heating-cooling");
 
-
   return (
     <PagesLayout>
       <div

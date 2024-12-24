@@ -1,4 +1,11 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+
+// Mantine
+import { useDispatch } from 'react-redux';
+import {
+  addWaste,
+  deleteWaste
+} from '@/state/pledge';
 
 // AppAsset
 import AppAsset from '@/core/AppAsset';
@@ -22,6 +29,69 @@ export default function Recycle({ opened, setOpened }: Props) {
   const [plasticSelected, setPlasticSelected] = useState<boolean>(false);
   const [bottleSelected, setBottleSelected] = useState<boolean>(false);
   const [metalSelected, setMetalSelected] = useState<boolean>(false);
+
+  const dispatch = useDispatch();
+
+  // Update Main State
+  useEffect(() => {
+    if (selected) {
+      dispatch(
+        addWaste({
+          id: 2,
+          name: "recycling-habits",
+          option: "yes",
+          value: 1,
+        })
+      )
+    } else {
+      dispatch(
+        deleteWaste({
+          id: 2
+        })
+      )
+    }
+  }, [selected]);
+
+  useEffect(() => {
+    if (selectedValue == "yes") {
+      dispatch(
+        addWaste(
+          {
+            id: 2,
+            name: "recycling-habits",
+            option: "yes",
+            value: 1,
+          }
+        )
+      )
+    } else if (selectedValue == "no") {
+      dispatch(
+        addWaste(
+          {
+            id: 2,
+            name: "recycling-habits",
+            option: "no",
+            value: 1,
+          }
+        )
+      )
+    }
+  }, [selectedValue]);
+
+  // Update Everything
+  useEffect(() => {
+    dispatch(
+      addWaste({
+        id: 2,
+        name: "recycling-habits",
+        option: "yes",
+        value: 1,
+        paper: paperSelected,
+        plastic: plasticSelected,
+        bottle: bottleSelected,
+        metal: metalSelected,
+      }));
+  }, [paperSelected, plasticSelected, bottleSelected, metalSelected]);
 
 
   return (

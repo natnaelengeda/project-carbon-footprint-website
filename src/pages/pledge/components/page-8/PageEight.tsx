@@ -3,9 +3,9 @@
 import PagesLayout from "../../layouts/PagesLayout";
 
 // Components
-import NavigationComponent from "../NavigationComponent";
 import TopSection from "./components/TopSection";
 import BottomSection from "./components/BottomSection";
+import NavigationComponent from "../NavigationComponent";
 
 // Interface
 interface Props {

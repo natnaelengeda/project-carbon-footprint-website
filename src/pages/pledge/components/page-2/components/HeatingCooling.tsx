@@ -1,7 +1,11 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 // Mantine
 import { Slider } from '@mantine/core';
+
+// State
+import { useDispatch } from 'react-redux';
+import { addHouseholdEnergy, deleteHouseholdEnergy } from '@/state/pledge';
 
 // Components
 import ArrowComponent from '@/pages/carbonfootprint/components/ArrowComponent';
@@ -23,13 +27,91 @@ export default function HeatingCooling({ opened, setOpened }: Props) {
   const [electricAirConditioning, setElectricAirConditioning] = useState<number>(1);
   const [charcoal, setCharcoal] = useState<number>(1);
 
+  const dispatch = useDispatch();
+
   const updateElectricAirConditioning = (value: number) => {
     setElectricAirConditioning(value);
+    dispatch(
+      addHouseholdEnergy({
+        id: 1,
+        name: "heating-cooling",
+        selected: true,
+        category: [
+          {
+            id: 1,
+            name: "electric_air_conditioning",
+            selected: true,
+            value: value
+          },
+        ],
+      }));
   }
 
   const updateCharcoal = (value: number) => {
     setCharcoal(value);
+    dispatch(
+      addHouseholdEnergy({
+        id: 1,
+        name: "heating-cooling",
+        selected: true,
+        category: [
+          {
+            id: 2,
+            name: "charcoal",
+            selected: true,
+            value: value
+          },
+        ],
+      })
+    );
   }
+
+  useEffect(() => {
+    if (selectedType == "electric-air-conditioning") {
+      dispatch(
+        addHouseholdEnergy({
+          id: 1,
+          name: "heating-cooling",
+          selected: true,
+          category: [
+            { id: 1, name: "electric_air_conditioning", selected: true, value: 1 },
+          ],
+        })
+      );
+    } else if (selectedType == "charcoal") {
+      dispatch(
+        addHouseholdEnergy({
+          id: 1,
+          name: "heating-cooling",
+          selected: true,
+          category: [
+            { id: 2, name: "charcoal", selected: true, value: 1 },
+          ],
+        })
+      );
+    }
+  }, [selectedType]);
+
+  // Update Main Parent
+  useEffect(() => {
+
+    if (selected == true) {
+      dispatch(
+        addHouseholdEnergy({
+          id: 1,
+          name: "heating-cooling",
+          selected: true,
+          category: [
+            { id: 1, name: "electric_air_conditioning", selected: true, value: 1 },
+          ],
+        })
+      );
+    } else {
+      dispatch(
+        deleteHouseholdEnergy({ id: 1 })
+      );
+    }
+  }, [selected]);
 
   return (
     <div
@@ -81,7 +163,7 @@ export default function HeatingCooling({ opened, setOpened }: Props) {
             className='w-full h-auto pl-2 pr-5 md:pr-32 flex flex-col items-start justify-start g'>
             {/* Text */}
             <p className="text-[#B7B7B7] text-lg md:text-[24px] pb-2">
-              Select hourly usage per day
+              Select hourly usage per day you pledge to reduce to
             </p>
 
             <Slider
@@ -120,7 +202,6 @@ export default function HeatingCooling({ opened, setOpened }: Props) {
           </div>
 
           {/* Form */}
-
           <div
             style={{
               display: selectedType == "charcoal" ? "block" : "none"
@@ -128,7 +209,7 @@ export default function HeatingCooling({ opened, setOpened }: Props) {
             className='w-full h-auto pl-2 pr-5 md:pr-32 flex flex-col items-start justify-start g'>
             {/* Text */}
             <p className="text-[#B7B7B7] text-lg md:text-[24px] pb-2">
-              Select hourly usage per day
+              Select hourly usage per day you pledge to reduce to
             </p>
 
             <Slider
@@ -156,34 +237,6 @@ export default function HeatingCooling({ opened, setOpened }: Props) {
             />
           </div>
 
-        </div>
-
-        {/* None */}
-        <div
-          className='w-full flex flex-col items-start justify-start gap-8'>
-
-          {/* Select Option */}
-          <div
-            className='flex flex-row items-start justify-start gap-[20px]'>
-            <img
-              onClick={() => setSelectedType("none")}
-              src={selectedType == "none" ? AppAsset.RadioOnIcon : AppAsset.RadioOffIcon}
-              className='w-7 md:w-[28px] md:h-[28px] object-contain cursor-pointer' />
-            <p
-              className='text-xl md:text-[26px] font-normal'>
-              I don't use any energy for heating/cooling
-            </p>
-          </div>
-
-          {/* Form */}
-          <div
-            className='w-full h-auto hidden'>
-            <input
-              type="text"
-              placeholder='Enter hourly usage per day'
-              className='w-full h-16 rounded-xl border border-[#CBCBCB] px-5 text-[24px]' />
-
-          </div>
         </div>
 
       </div>

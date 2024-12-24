@@ -50,7 +50,6 @@ export default function Vegitable({ opened, setOpened }: Props) {
     }
   }, [selected]);
 
-
   return (
     <div
       className='w-full h-auto flex flex-col items-start justify-start gap-3'>

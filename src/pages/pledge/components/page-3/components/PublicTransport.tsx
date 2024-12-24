@@ -1,8 +1,16 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 // Mantine
 import { Slider } from '@mantine/core';
 
+// State
+import { useDispatch } from 'react-redux';
+import {
+  addTransportationMode,
+  addTransportCategory,
+  deleteTransportaionCategory,
+  deleteTransportationMode,
+} from '@/state/pledge';
 // AppAsset
 import AppAsset from '@/core/AppAsset';
 
@@ -34,40 +42,213 @@ export default function PublicTransport({ opened, setOpened }: Props) {
   const [trainSlider1, setTrainSlider1] = useState<number>(0);
   const [rideSlider1, setRideSlider1] = useState<number>(0);
 
+  // State
+  const dispatch = useDispatch();
+
   const updateBusSlider = (value: number) => {
     setBusSlider(value);
+    dispatch(
+      addTransportCategory({
+        parent_id: 2,
+        category_id: 1,
+        name: "bus",
+        value: value,
+      })
+    );
   }
 
   const updaterBusSlider1 = (value: number) => {
     setBusSlider1(value);
+    dispatch(
+      addTransportCategory({
+        parent_id: 2,
+        category_id: 1,
+        name: "bus",
+        frequency: value
+      })
+    );
   }
 
   const updateTaxiSlider = (value: number) => {
     setTaxiSlider(value);
+    dispatch(
+      addTransportCategory({
+        parent_id: 2,
+        category_id: 2,
+        name: "taxi",
+        value: value,
+      })
+    );
   }
 
   const updateTaxiSlider1 = (value: number) => {
     setTaxiSlider1(value);
+    dispatch(
+      addTransportCategory({
+        parent_id: 2,
+        category_id: 2,
+        name: "taxi",
+        frequency: value
+      })
+    );
   }
 
   const updateTrainSlider = (value: number) => {
     setTrainSlider(value);
-
+    dispatch(
+      addTransportCategory({
+        parent_id: 2,
+        category_id: 3,
+        name: "train",
+        value: value,
+      })
+    );
 
   }
 
   const updateTrainSlider1 = (value: number) => {
     setTrainSlider1(value);
+    dispatch(
+      addTransportCategory({
+        parent_id: 2,
+        category_id: 3,
+        name: "train",
+        frequency: value
+      })
+    );
   }
 
   const updateRideSlider = (value: number) => {
     setRideSlider(value);
+    dispatch(
+      addTransportCategory({
+        parent_id: 2,
+        category_id: 4,
+        name: "ride",
+        value: value,
+      })
+    );
   }
 
   const updateRideSlider1 = (value: number) => {
     setRideSlider1(value);
-
+    dispatch(
+      addTransportCategory({
+        parent_id: 2,
+        category_id: 4,
+        name: "ride",
+        frequency: value
+      })
+    );
   }
+
+  // Update The Main Parent
+  useEffect(() => {
+    if (selected) {
+      dispatch(
+        addTransportationMode({
+          id: 2,
+          name: "public-transport",
+          selected: selected,
+          value: 1,
+        })
+      );
+    } else {
+      dispatch(
+        deleteTransportationMode({
+          id: 2
+        })
+      );
+    }
+  }, [selected]);
+
+  // Update The Bus
+  useEffect(() => {
+    if (busSelected) {
+      dispatch(
+        addTransportCategory({
+          parent_id: 2,
+          category_id: 1,
+          name: "bus",
+          value: 1,
+          frequency: 1
+        })
+      );
+    } else {
+      dispatch(
+        deleteTransportaionCategory({
+          parent_id: 2,
+          category_id: 1
+        })
+      )
+    }
+  }, [busSelected]);
+
+  // Update Taxi State
+  useEffect(() => {
+    if (taxiSelected) {
+      dispatch(
+        addTransportCategory({
+          parent_id: 2,
+          category_id: 2,
+          name: "taxi",
+          value: 1,
+          frequency: 1
+        })
+      );
+    } else {
+      dispatch(
+        deleteTransportaionCategory({
+          parent_id: 2,
+          category_id: 2,
+        })
+      );
+    }
+  }, [taxiSelected]);
+
+  // Train State
+  useEffect(() => {
+    if (trainSelected) {
+      dispatch(
+        addTransportCategory({
+          parent_id: 2,
+          category_id: 3,
+          name: "train",
+          value: 1,
+          frequency: 1
+        })
+      );
+    } else {
+      dispatch(
+        deleteTransportaionCategory({
+          parent_id: 2,
+          category_id: 3,
+        })
+      )
+    }
+  }, [trainSelected]);
+
+  // Ride State
+  useEffect(() => {
+    if (rideSelected) {
+      dispatch(
+        addTransportCategory({
+          parent_id: 2,
+          category_id: 4,
+          name: "ride",
+          value: 1,
+          frequency: 1
+        })
+      );
+    } else {
+      dispatch(
+        deleteTransportaionCategory({
+          parent_id: 2,
+          category_id: 4,
+        })
+      )
+    }
+  }, [rideSelected]);
 
 
   return (

@@ -11,8 +11,6 @@ import { useDispatch } from "react-redux";
 import ArrowComponent from "../../ArrowComponent";
 import CheckboxComponent from "../../CheckboxComponent";
 
-
-
 // Interface
 interface Props {
   opened: string;

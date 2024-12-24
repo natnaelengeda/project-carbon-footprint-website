@@ -17,13 +17,11 @@ interface Props {
   setOpened: React.Dispatch<React.SetStateAction<string>>;
 }
 
-
 export default function Garden({ opened, setOpened }: Props) {
   const [selected, setSelected] = useState<boolean>(false);
 
   const [slider, setSlider] = useState<number>(1);
   const [slider1, setSlider1] = useState<number>(1);
-
 
   const dispatch = useDispatch();
 

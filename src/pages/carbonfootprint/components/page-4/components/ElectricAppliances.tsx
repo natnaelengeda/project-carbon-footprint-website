@@ -39,6 +39,7 @@ export default function ElectricAppliances({ opened, setOpened }: Props) {
   const [ironSlider, setIronSlider] = useState<number>(0);
 
   const dispatch = useDispatch();
+  
   const carbon = useSelector((state: { carbon: CarbonState }) => state.carbon);
   const heatingCoolingEnergy = useSelector((state: any) =>
     selectHouseholdEnergyById(state, 3) // Replace '1' with the ID you want

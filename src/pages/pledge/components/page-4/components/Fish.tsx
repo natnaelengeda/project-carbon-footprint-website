@@ -1,12 +1,15 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 // Mantine
 import { Slider } from '@mantine/core';
 
+// state
+import { useDispatch } from 'react-redux';
+import { addDiet, deleteDiet } from '@/state/pledge';
+
 // Compnoents
 import CheckboxComponent from '@/pages/carbonfootprint/components/CheckboxComponent';
 import ArrowComponent from '@/pages/carbonfootprint/components/ArrowComponent';
-
 
 // Interface
 interface Props {
@@ -18,11 +21,38 @@ export default function Fish({ opened, setOpened }: Props) {
   const [selected, setSelected] = useState<boolean>(false);
   const [slider, setSlider] = useState<number>(1);
 
+
+  const dispatch = useDispatch();
+
   const updateSlider = (value: number) => {
     setSlider(value);
-
+    dispatch(
+      addDiet({
+        id: 4,
+        name: "fish",
+        selected: true,
+        value: value,
+      }));
   }
 
+  useEffect(() => {
+    if (selected) {
+      dispatch(
+        addDiet({
+          id: 4,
+          name: "fish",
+          selected: true,
+          value: 1,
+        })
+      )
+    } else {
+      dispatch(
+        deleteDiet({
+          id: 4
+        })
+      )
+    }
+  }, [selected]);
   return (
     <div
       className='w-full h-auto flex flex-col items-start justify-start gap-3'>

@@ -1,13 +1,15 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 // Mantine
 import { Slider } from "@mantine/core";
 
+// State
+import { useDispatch } from "react-redux";
+import { addDiet, deleteDiet } from "@/state/pledge";
+
 // Components
 import CheckboxComponent from "@/pages/carbonfootprint/components/CheckboxComponent";
 import ArrowComponent from "@/pages/carbonfootprint/components/ArrowComponent";
-
-// Components
 
 // Interface
 interface Props {
@@ -19,10 +21,37 @@ export default function Meat({ opened, setOpened }: Props) {
   const [selected, setSelected] = useState<boolean>(false);
   const [slider, setSlider] = useState<number>(1);
 
+  const dispatch = useDispatch();
 
   const updateSlider = (value: number) => {
     setSlider(value);
+    dispatch(
+      addDiet({
+        id: 3,
+        name: "meat",
+        selected: true,
+        value: value,
+      }));
   }
+
+  useEffect(() => {
+    if (selected) {
+      dispatch(
+        addDiet({
+          id: 3,
+          name: "meat",
+          selected: true,
+          value: 1,
+        })
+      )
+    } else {
+      dispatch(
+        deleteDiet({
+          id: 3
+        })
+      )
+    }
+  }, [selected]);
 
 
   return (
@@ -58,7 +87,8 @@ export default function Meat({ opened, setOpened }: Props) {
           <div
             className="w-full h-auto flex flex-col items-start justify-start gap-2">
             {/* Text */}
-            <p className="text-[#B7B7B7] text-lg md:text-[24px]">
+            <p
+              className="text-[#B7B7B7] text-lg md:text-[24px]">
               Select days usage per week
             </p>
             <Slider

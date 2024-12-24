@@ -50,6 +50,7 @@ export default function Clothes({ opened, setOpened }: Props) {
       )
     }
   }, [selected]);
+
   return (
     <div
       className='w-full h-auto flex flex-col items-start justify-start gap-5'>

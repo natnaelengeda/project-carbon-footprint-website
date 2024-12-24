@@ -1,7 +1,17 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 // Mantine
 import { Slider } from "@mantine/core";
+
+// State
+import { useDispatch } from "react-redux";
+import {
+  addTransportationMode,
+  addTransportCategory,
+  deleteTransportaionCategory,
+  deleteTransportationMode,
+} from "@/state/pledge";
+
 
 // App Asset
 import AppAsset from "@/core/AppAsset";
@@ -19,7 +29,6 @@ interface Props {
 export default function Automotives({ opened, setOpened }: Props) {
   const [selected, setSelected] = useState<boolean>(false);
 
-
   const [gasPoweredSelected, setGasPowerSelected] = useState<boolean>(false);
   const [gasPoweredSlider, setGasPoweredSlider] = useState<number>(1);
   const [gasPoweredSlider1, setGasPoweredSlider1] = useState<number>(1);
@@ -32,36 +41,166 @@ export default function Automotives({ opened, setOpened }: Props) {
   const [hybridPoweredSlider, setHybridPoweredSlider] = useState<number>(1);
   const [hybridPoweredSlider1, setHybridPoweredSlider1] = useState<number>(1);
 
+  // State
+  const dispatch = useDispatch();
 
   const updateGasSliderFunction = (value: number) => {
     setGasPoweredSlider(value);
-
+    dispatch(
+      addTransportCategory({
+        parent_id: 1,
+        category_id: 1,
+        name: "gas-powered",
+        value: value,
+      })
+    );
   }
 
   const updateGasSliderFunction1 = (value: number) => {
     setGasPoweredSlider1(value);
-
+    dispatch(
+      addTransportCategory({
+        parent_id: 1,
+        category_id: 1,
+        name: "gas-powered",
+        frequency: value,
+      })
+    );
   }
 
   const updateElectricSliderFunction = (value: number) => {
     setElectricPoweredSlider(value);
-
+    dispatch(
+      addTransportCategory({
+        parent_id: 1,
+        category_id: 2,
+        name: "electric-powered",
+        value: value,
+      })
+    );
   }
 
   const updateElectricSLiderFunction1 = (value: number) => {
     setElectricPoweredSlider1(value);
-
+    dispatch(
+      addTransportCategory({
+        parent_id: 1,
+        category_id: 2,
+        name: "electric-powered",
+        frequency: value,
+      })
+    );
   }
 
   const updateHybridSliderFunction = (value: number) => {
     setHybridPoweredSlider(value);
-
+    dispatch(
+      addTransportCategory({
+        parent_id: 1,
+        category_id: 3,
+        name: "hybrid-powered",
+        value: value,
+      })
+    );
   }
 
   const updateHybridSLiderFunction1 = (value: number) => {
     setHybridPoweredSlider1(value);
-
+    dispatch(
+      addTransportCategory({
+        parent_id: 1,
+        category_id: 3,
+        name: "hybrid-powered",
+        frequency: value,
+      })
+    );
   }
+
+  // Update The main Parent
+  useEffect(() => {
+    if (selected) {
+      dispatch(
+        addTransportationMode({
+          id: 1,
+          name: "automobile",
+          selected: selected,
+          value: 1,
+        })
+      );
+    } else {
+      dispatch(
+        deleteTransportationMode({
+          id: 1
+        })
+      );
+    }
+  }, [selected]);
+
+  // Update the Gas Powered
+  useEffect(() => {
+    if (gasPoweredSelected) {
+      dispatch(
+        addTransportCategory({
+          parent_id: 1,
+          category_id: 1,
+          name: "gas-powered",
+          value: 1,
+          frequency: 1,
+        })
+      );
+    } else {
+      dispatch(
+        deleteTransportaionCategory({
+          parent_id: 1,
+          category_id: 1
+        })
+      )
+    }
+  }, [gasPoweredSelected]);
+
+  // Update Electric Powered
+  useEffect(() => {
+    if (electricPoweredSelected) {
+      dispatch(
+        addTransportCategory({
+          parent_id: 1,
+          category_id: 2,
+          name: "electric-powered",
+          value: 1,
+          frequency: 1,
+        })
+      );
+    } else {
+      dispatch(
+        deleteTransportaionCategory({
+          parent_id: 1,
+          category_id: 2
+        })
+      )
+    }
+  }, [electricPoweredSelected]);
+
+  // Update Hybrid Powered
+  useEffect(() => {
+    if (hybridPowredSelected) {
+      dispatch(
+        addTransportCategory({
+          parent_id: 1,
+          category_id: 3,
+          name: "hybrid-powered",
+          value: 1,
+          frequency: 1,
+        })
+      );
+    } else {
+      dispatch(
+        deleteTransportaionCategory({
+          parent_id: 1,
+          category_id: 3
+        })
+      )
+    }
+  }, [hybridPowredSelected]);
 
 
   return (

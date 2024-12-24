@@ -1,7 +1,16 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 // Mantine
 import { Slider } from '@mantine/core';
+
+// State
+import { useDispatch } from 'react-redux';
+import {
+  addHouseholdEnegryCategory,
+  addHouseholdEnergy,
+  deleteHouseholdEnergy,
+  deleteHouseholdEnergyCategory
+} from '@/state/pledge';
 
 // AppAsset
 import AppAsset from '@/core/AppAsset';
@@ -32,25 +41,167 @@ export default function LightBulbs({ opened, setOpened }: Props) {
   const [florescent, setFlorescent] = useState<boolean>(false);
   const [florescentSlider, setFlorescentSlider] = useState<number>(0);
 
+  // State
+  const dispatch = useDispatch();
 
   const updateIncandescentSlider = (value: number) => {
     setIncandescentSlider(value);
+    dispatch(
+      addHouseholdEnegryCategory({
+        parent_id: 4,
+        category_id: 1,
+        id: 1,
+        name: "light-bulb-incandecent",
+        selected: true,
+        value: value
+      })
+    );
   }
 
   const updateLedSlider = (value: number) => {
     setLedSlider(value);
-
+    dispatch(
+      addHouseholdEnegryCategory({
+        parent_id: 4,
+        category_id: 2,
+        id: 2,
+        name: "light-bulb-led",
+        selected: true,
+        value: value
+      })
+    );
   }
 
   const updateCflSlider = (value: number) => {
     setCflSlider(value);
-
+    dispatch(
+      addHouseholdEnegryCategory({
+        parent_id: 4,
+        category_id: 3,
+        id: 3,
+        name: "light-bulb-cfl",
+        selected: true,
+        value: value,
+      })
+    );
   }
 
   const updateFlorescentSlider = (value: number) => {
     setFlorescentSlider(value);
-
+    dispatch(
+      addHouseholdEnegryCategory({
+        parent_id: 4,
+        category_id: 4,
+        id: 4,
+        name: "light-bulb-florecent",
+        selected: true,
+        value: value
+      })
+    );
   }
+
+
+  useEffect(() => {
+    if (selected == true) {
+      dispatch(
+        addHouseholdEnergy({
+          id: 4,
+          name: "light-bulbs",
+          selected: true,
+          value: 1,
+        })
+      )
+    } else {
+      dispatch(
+        deleteHouseholdEnergy({ id: 4 })
+      )
+    }
+  }, [selected]);
+
+  // Incandecent State
+  useEffect(() => {
+    if (incandescent) {
+      dispatch(
+        addHouseholdEnegryCategory({
+          parent_id: 4,
+          category_id: 1,
+          id: 1,
+          name: "light-bulb-incandecent",
+          selected: true,
+          value: 1
+        })
+      );
+    } else {
+      deleteHouseholdEnergyCategory({
+        parent_id: 4,
+        category_id: 1
+      })
+    }
+  }, [incandescent]);
+
+  // LED State
+  useEffect(() => {
+    if (led) {
+      dispatch(
+        addHouseholdEnegryCategory({
+          parent_id: 4,
+          category_id: 2,
+          id: 2,
+          name: "light-bulb-led",
+          selected: true,
+          value: 1
+        })
+      );
+    } else {
+      deleteHouseholdEnergyCategory({
+        parent_id: 4,
+        category_id: 2,
+      })
+    }
+  }, [led]);
+
+  // CFL State
+  useEffect(() => {
+    if (cfl) {
+      dispatch(
+        addHouseholdEnegryCategory({
+          parent_id: 4,
+          category_id: 3,
+          id: 3,
+          name: "light-bulb-cfl",
+          selected: true,
+          value: 1
+        })
+      );
+    } else {
+      deleteHouseholdEnergyCategory({
+        parent_id: 4,
+        category_id: 3,
+      })
+    }
+  }, [cfl]);
+
+  // Flourescent State
+  useEffect(() => {
+    if (florescent) {
+      dispatch(
+        addHouseholdEnegryCategory({
+          parent_id: 4,
+          category_id: 4,
+          id: 4,
+          name: "light-bulb-florecent",
+          selected: true,
+          value: 1
+        })
+      );
+    } else {
+      deleteHouseholdEnergyCategory({
+        parent_id: 4,
+        category_id: 4,
+      })
+    }
+  }, [florescent]);
+
 
   return (
     <div
@@ -72,7 +223,6 @@ export default function LightBulbs({ opened, setOpened }: Props) {
           selected={selected} />
 
       </div>
-
 
       {/* Bottom Content */}
       <div

@@ -1,12 +1,15 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 // Mantine
 import { Slider } from "@mantine/core";
 
+// State
+import { useDispatch } from "react-redux";
+import { addWaterUsage, deleteWaterUsage } from "@/state/pledge";
+
 // Components
 import CheckboxComponent from "@/pages/carbonfootprint/components/CheckboxComponent";
 import ArrowComponent from "@/pages/carbonfootprint/components/ArrowComponent";
-
 
 // Interface
 interface Props {
@@ -18,12 +21,34 @@ export default function Clothes({ opened, setOpened }: Props) {
   const [selected, setSelected] = useState<boolean>(false);
   const [slider, setSlider] = useState<number>(1);
 
-
+  const dispatch = useDispatch();
 
   const updateSlider = (value: number) => {
     setSlider(value);
-
+    dispatch(
+      addWaterUsage({
+        id: 1,
+        name: "washing-clothes",
+        value: value,
+      }))
   }
+
+  useEffect(() => {
+    if (selected) {
+      dispatch(
+        addWaterUsage({
+          id: 1,
+          name: "washing-clothes",
+          value: 1,
+        }))
+    } else {
+      dispatch(
+        deleteWaterUsage({
+          id: 1
+        })
+      )
+    }
+  }, [selected]);
 
   return (
     <div

@@ -1,12 +1,15 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 // Mantine
 import { Slider } from '@mantine/core';
 
+// State
+import { useDispatch } from 'react-redux';
+import { addWaterUsage, deleteWaterUsage } from '@/state/pledge';
+
 // Components
 import CheckboxComponent from '@/pages/carbonfootprint/components/CheckboxComponent';
 import ArrowComponent from '@/pages/carbonfootprint/components/ArrowComponent';
-
 
 // Interface
 interface Props {
@@ -20,15 +23,46 @@ export default function Garden({ opened, setOpened }: Props) {
   const [slider, setSlider] = useState<number>(1);
   const [slider1, setSlider1] = useState<number>(1);
 
+  const dispatch = useDispatch();
+
   const updateSlider = (value: number) => {
     setSlider(value);
-
+    dispatch(
+      addWaterUsage({
+        id: 3,
+        name: "gardening-water",
+        value: value,
+        frequency: slider1
+      }))
   }
 
   const updateSlider1 = (value: number) => {
     setSlider1(value);
-
+    dispatch(
+      addWaterUsage({
+        id: 3,
+        name: "gardening-water",
+        value: slider,
+        frequency: value,
+      }))
   }
+
+  useEffect(() => {
+    if (selected) {
+      dispatch(
+        addWaterUsage({
+          id: 3,
+          name: "gardening-water",
+          value: 1,
+        }))
+    } else {
+      dispatch(
+        deleteWaterUsage({
+          id: 1
+        })
+      )
+    }
+  }, [selected]);
 
   return (
     <div

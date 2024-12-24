@@ -1,10 +1,16 @@
-import {  useState } from 'react';
+import { useEffect, useState } from 'react';
+
+// Mantine
+import { Slider } from '@mantine/core';
+
+// State
+import { useDispatch } from 'react-redux';
+import { addDiet, deleteDiet } from '@/state/pledge';
 
 // Components
-
-import { Slider } from '@mantine/core';
 import CheckboxComponent from '@/pages/carbonfootprint/components/CheckboxComponent';
 import ArrowComponent from '@/pages/carbonfootprint/components/ArrowComponent';
+
 
 // Interface
 interface Props {
@@ -16,11 +22,38 @@ export default function Vegitable({ opened, setOpened }: Props) {
   const [selected, setSelected] = useState<boolean>(false);
   const [slider, setSlider] = useState<number>(1);
 
+  const dispatch = useDispatch();
 
   const updateSlider = (value: number) => {
     setSlider(value);
-
+    dispatch(
+      addDiet({
+        id: 2,
+        name: "vegitable",
+        selected: true,
+        value: value,
+      })
+    )
   }
+
+  useEffect(() => {
+    if (selected) {
+      dispatch(
+        addDiet({
+          id: 2,
+          name: "vegitable",
+          selected: true,
+          value: 1,
+        })
+      )
+    } else {
+      dispatch(
+        deleteDiet({
+          id: 2
+        })
+      )
+    }
+  }, [selected]);
 
   return (
     <div
