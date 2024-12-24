@@ -15,7 +15,7 @@ import PageTen from "./components/Page-10";
 import PageEleven from "./components/page-11";
 
 export default function Pledge() {
-  const [page, setPage] = useState<number>(8);
+  const [page, setPage] = useState<number>(10);
 
   return (
     <div

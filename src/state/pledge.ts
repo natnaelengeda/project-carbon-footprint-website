@@ -90,6 +90,11 @@ export const pledgeSlice = createSlice({
   name: "pledge",
   initialState,
   reducers: {
+
+    updatePledgeId(state, action: PayloadAction<{ id: string }>) {
+      state.id = action.payload.id;
+    },
+
     // Add or Update Name and Id
     addName: (state, action: PayloadAction<{ id: string; name: string }>) => {
       state.id = action.payload.id;
@@ -381,6 +386,7 @@ export const pledgeSlice = createSlice({
 
 export const {
   addName,
+  updatePledgeId,
 
   // House Hold Energy
   addHouseholdEnergy,

@@ -6,8 +6,14 @@ import { Slider } from '@mantine/core';
 // AppAsset
 import AppAsset from '@/core/AppAsset';
 
+// interface 
+interface Props {
+  treeCount: number;
+  handleTreeCountUpdate: (value: number) => void;
+  setOption: React.Dispatch<React.SetStateAction<boolean>>;
+}
 
-export default function Options() {
+export default function Options({ treeCount, handleTreeCountUpdate, setOption }: Props) {
   const [selectedOption, setSelectedOption] = useState<boolean>(true);
 
   return (
@@ -20,7 +26,10 @@ export default function Options() {
         <div
           className='flex flex-row items-center justify-start gap-2 md:gap-5'>
           <img
-            onClick={() => setSelectedOption(true)}
+            onClick={() => {
+              setSelectedOption(true);
+              setOption(true);
+            }}
             src={selectedOption ? AppAsset.RadioOnIcon : AppAsset.RadioOffIcon}
             className='w-5 md:w-[36px] h-auto object-contain' />
           <p className='text-lg md:text-[30px] font-normal'>Yes, I pledge to plant 12 trees this year.</p>
@@ -31,7 +40,10 @@ export default function Options() {
           <div
             className='flex flex-row items-center justify-start gap-2 md:gap-5'>
             <img
-              onClick={() => setSelectedOption(false)}
+              onClick={() => {
+                setSelectedOption(false);
+                setOption(false);
+              }}
               src={!selectedOption ? AppAsset.RadioOnIcon : AppAsset.RadioOffIcon}
               className='w-5 md:w-[36px] h-auto object-contain' />
             <p className='text-lg md:text-[30px] font-normal'>I will plant 8 trees this year.</p>
@@ -43,6 +55,8 @@ export default function Options() {
             }}
             className='w-full'>
             <Slider
+              value={treeCount}
+              onChange={handleTreeCountUpdate}
               className="w-full"
               color="#35D36A"
               size="xl"

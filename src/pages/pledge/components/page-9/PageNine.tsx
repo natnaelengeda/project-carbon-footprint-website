@@ -1,7 +1,11 @@
-import React from 'react'
+import { useState } from 'react';
 
 // Page Layout
 import PagesLayout from "../../layouts/PagesLayout";
+
+// State
+import { useDispatch, useSelector } from 'react-redux';
+import { PledgeState, updatePledgeId } from '@/state/pledge';
 
 // AppAsset
 import AppAsset from '@/core/AppAsset';
@@ -9,12 +13,51 @@ import AppAsset from '@/core/AppAsset';
 // Components
 import Options from './components/Options';
 
+// Axios
+import axios from "@/utils/axios";
+
+// Utils
+import { mapDataPledge } from '@/utils/mapDataPledge';
+
 // Interface
 interface Props {
   setPage: React.Dispatch<React.SetStateAction<number>>;
 }
 
 export default function PageNine({ setPage }: Props) {
+  const [option, setOption] = useState<boolean>(true);
+  const [treeCount, setTreeCount] = useState<number>(1);
+
+  const handleTreeCountUpdate = (value: number) => {
+    setTreeCount(value);
+  }
+
+  const dispatch = useDispatch();
+  const pledge = useSelector((state: { pledge: PledgeState }) => state.pledge);
+
+  const handlePledge = () => {
+    var data: any = [];
+
+    if (option) {
+      data = mapDataPledge(pledge, 12);
+    } else {
+      data = mapDataPledge(pledge, treeCount);
+    }
+    console.log(data);
+    axios.post("/api/v1/pledge", data)
+      .then((response) => {
+        const status = response.status;
+        if (status == 201) {
+          dispatch(
+            updatePledgeId({
+              id: response.data.data.endUser
+            }));
+          setPage(10);
+        }
+      }).catch((error) => {
+        console.error(error);
+      });
+  }
 
   return (
     <PagesLayout>
@@ -50,14 +93,17 @@ export default function PageNine({ setPage }: Props) {
         </div>
 
         {/* Options */}
-        <Options />
+        <Options
+          treeCount={treeCount}
+          handleTreeCountUpdate={handleTreeCountUpdate}
+          setOption={setOption} />
 
         {/* Navigation */}
         <div
           className="w-full flex items-center justify-center pt-20 md:pt-[165px]">
           <button
             onClick={() => {
-              setPage(10);
+              handlePledge();
             }}
             className='md:w-[283.32px] md:h-[100px] rounded-full bg-primary text-white flex flex-row items-center justify-center gap-3 px-6 py-3'>
             <p className='text-lg md:text-[34.56px] font-semibold'>Continue</p>
