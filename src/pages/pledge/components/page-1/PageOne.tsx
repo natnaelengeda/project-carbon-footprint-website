@@ -16,7 +16,7 @@ import toast from "react-hot-toast";
 import { generateRandomId } from "@/utils/idGenerator";
 import { generateRandomName } from "@/utils/randomNameGenerator";
 import { useDispatch } from "react-redux";
-import { addName } from "@/state/pledge";
+import { addHouseholdEnegryCategory, addHouseholdEnergy, addName } from "@/state/pledge";
 
 // Interface
 interface Props {
@@ -63,8 +63,223 @@ export default function PageOne({ setPage }: Props) {
     axios.get(`/api/v1/endUser/last24hours?search=${name}`)
       .then((response) => {
         setSearchData(response.data);
-      })
+      }).catch((error) => {
+        console.error(error);
+      });
+  }
 
+  const getUserDetails = (id: string) => {
+    axios.get(`/api/v1/carbonFootPrint/endUser/676ea4fe0a21a0dcd886801c`)
+      .then((response) => {
+        const data = response.data.data;
+        const values = response.data.value;
+
+        const houseHoldEnergy = values.householdEnergy;
+        const transportationMode = values.transportationMode;
+        const diet = values.dietAndFood;
+        const waste = values.wasteDisposal;
+        const water = values.waterUsage;
+        const housingType = values.housingType;
+        const foodWastage = values.foodWastage;
+
+
+        // console.log(houseHoldEnergy);
+
+        // House Hold Energy
+        // Heating and Cooling
+        houseHoldEnergy.heatingAndCooling.map((item: any) => {
+          if (item.type == "electric") {
+            dispatch(
+              addHouseholdEnergy({
+                id: 1,
+                name: "heating-cooling",
+                selected: true,
+                category: [
+                  {
+                    id: 1,
+                    name: "electric_air_conditioning",
+                    selected: true,
+                    value: item.hourlyUsagePerDay,
+                  },
+                ],
+              }));
+          } else if (item.type == "charcoal") {
+            dispatch(
+              addHouseholdEnergy({
+                id: 1,
+                name: "heating-cooling",
+                selected: true,
+                category: [
+                  {
+                    id: 1,
+                    name: "charcoal",
+                    selected: true,
+                    value: item.hourlyUsagePerDay,
+                  },
+                ],
+              }));
+          }
+        });
+
+        // Electric Appliances
+        houseHoldEnergy.electricAppliance.map((item: any) => {
+          if (item.type == "tv") {
+            dispatch(
+              addHouseholdEnergy({
+                id: 3,
+                name: "electric-appliances",
+                selected: true,
+                value: 1
+              }));
+
+            dispatch(
+              addHouseholdEnegryCategory({
+                parent_id: 3,
+                category_id: 1,
+                id: 1,
+                name: "electric-appliances-tv",
+                selected: true,
+                value: item.hourlyUsagePerDay,
+                frequency: item.frequencyperWeek
+              }));
+          }
+
+          if (item.type == "washingMachine") {
+            dispatch(
+              addHouseholdEnergy({
+                id: 3,
+                name: "electric-appliances",
+                selected: true,
+                value: 1
+              }));
+
+            dispatch(
+              addHouseholdEnegryCategory({
+                parent_id: 3,
+                category_id: 2,
+                id: 2,
+                name: "electric-appliances-washing-machine",
+                selected: true,
+                value: item.hourlyUsagePerDay,
+                frequency: item.frequencyperWeek
+              }));
+          }
+
+          if (item.type == "iron") {
+            dispatch(
+              addHouseholdEnergy({
+                id: 3,
+                name: "electric-appliances",
+                selected: true,
+                value: 1
+              }));
+
+            dispatch(
+              addHouseholdEnegryCategory({
+                parent_id: 3,
+                category_id: 3,
+                id: 3,
+                name: "electric-appliances-iron-clothes",
+                selected: true,
+                value: item.hourlyUsagePerDay,
+                frequency: item.frequencyperWeek
+              })
+            );
+          }
+        });
+
+        // Cooking
+        houseHoldEnergy.cooking.map((item: any) => {
+          console.log(item)
+          if (item.type == "electric") {
+            dispatch(
+              addHouseholdEnergy({
+                id: 2,
+                name: "cooking",
+                selected: true,
+                value: 1
+              }));
+
+            dispatch(
+              addHouseholdEnegryCategory({
+                parent_id: 2,
+                category_id: 1,
+                id: 1,
+                name: "cooking-electric-stove",
+                selected: true,
+                value: item.hourlyUsagePerDay,
+              })
+            );
+          }
+        })
+
+        // LighgBulbs
+        houseHoldEnergy.lightBulbs.map((item: any) => {
+          if (item.type == "incandescent") {
+            dispatch(
+              addHouseholdEnergy({
+                id: 4,
+                name: "light-bulbs",
+                selected: true,
+                value: 1,
+              }));
+
+            dispatch(
+              addHouseholdEnegryCategory({
+                parent_id: 4,
+                category_id: 1,
+                id: 1,
+                name: "light-bulb-incandecent",
+                selected: true,
+                value: item.hourlyUsagePerDay,
+              }));
+          }
+
+          if (item.type == "fluorescent") {
+            dispatch(
+              addHouseholdEnergy({
+                id: 4,
+                name: "light-bulbs",
+                selected: true,
+                value: 1,
+              }));
+
+            dispatch(
+              addHouseholdEnegryCategory({
+                parent_id: 4,
+                category_id: 4,
+                id: 4,
+                name: "light-bulb-florecent",
+                selected: true,
+                value: item.hourlyUsagePerDay
+              })
+            );
+
+
+          }
+        })
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      }).catch((error) => {
+        console.error(error);
+      })
   }
 
   useEffect(() => {
@@ -72,7 +287,8 @@ export default function PageOne({ setPage }: Props) {
   }, []);
 
   return (
-    <div className="w-full h-full min-h-screen flex flex-col items-center justify-start pt-10 md:pt-[220px] gap- md:gap-[63px]">
+    <div
+      className="w-full h-full min-h-screen flex flex-col items-center justify-start pt-10 md:pt-[220px] gap- md:gap-[63px]">
 
       {/* Title */}
       <div
@@ -132,7 +348,10 @@ export default function PageOne({ setPage }: Props) {
                 return (
                   <div
                     key={index}
-                    onClick={() => setSelectedUser(user)}
+                    onClick={() => {
+                      setSelectedUser(user)
+                      // fetchUsersByName(user._id);
+                    }}
                     className="w-full h-14 md:h-[82px] bg-[#35D36A1A] flex flex-row items-center justify-between border border-primary rounded-[10px] px-4 md:px-[38px]">
                     <p
                       className="text-lg md:text-[30px] font-semibold">
@@ -174,13 +393,14 @@ export default function PageOne({ setPage }: Props) {
         <button
           onClick={() => {
             if (selectedUser) {
+              getUserDetails(selectedUser._id);
               dispatch(
                 addName({
-                  id: id,
+                  id: selectedUser._id,
                   name: selectedUser.name,
                 }));
 
-              setPage(2);
+              // setPage(2);
             } else {
               toast.error("Please select a user to continue or click skip");
             }

@@ -4,12 +4,13 @@ import { useEffect, useState } from 'react';
 import { Slider } from '@mantine/core';
 
 // State
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   addHouseholdEnegryCategory,
   addHouseholdEnergy,
   deleteHouseholdEnergy,
-  deleteHouseholdEnergyCategory
+  deleteHouseholdEnergyCategory,
+  PledgeState
 } from '@/state/pledge';
 
 // AppAsset
@@ -31,6 +32,7 @@ export default function LightBulbs({ opened, setOpened }: Props) {
   // Bulb Types
   const [incandescent, setIncandescent] = useState<boolean>(false);
   const [incandescentSlider, setIncandescentSlider] = useState<number>(0);
+  const [incandecentMax, setIncandecentMax] = useState<number | null>(null);
 
   const [led, setLed] = useState<boolean>(false);
   const [ledSlider, setLedSlider] = useState<number>(0);
@@ -40,22 +42,44 @@ export default function LightBulbs({ opened, setOpened }: Props) {
 
   const [florescent, setFlorescent] = useState<boolean>(false);
   const [florescentSlider, setFlorescentSlider] = useState<number>(0);
+  const [floresentMax, setFloresentMax] = useState<number | null>(null);
 
   // State
   const dispatch = useDispatch();
+  const pledge = useSelector((state: { pledge: PledgeState }) => state.pledge);
+  const houseHoldEnergy = pledge.house_hold_energy;
 
   const updateIncandescentSlider = (value: number) => {
-    setIncandescentSlider(value);
-    dispatch(
-      addHouseholdEnegryCategory({
-        parent_id: 4,
-        category_id: 1,
-        id: 1,
-        name: "light-bulb-incandecent",
-        selected: true,
-        value: value
-      })
-    );
+    if (incandecentMax == null) {
+      setIncandescentSlider(value);
+      dispatch(
+        addHouseholdEnegryCategory({
+          parent_id: 4,
+          category_id: 1,
+          id: 1,
+          name: "light-bulb-incandecent",
+          selected: true,
+          value: value
+        })
+      );
+    } else {
+      if (value > incandecentMax) {
+
+      } else {
+        setIncandescentSlider(value);
+        dispatch(
+          addHouseholdEnegryCategory({
+            parent_id: 4,
+            category_id: 1,
+            id: 1,
+            name: "light-bulb-incandecent",
+            selected: true,
+            value: value
+          })
+        );
+      }
+    }
+
   }
 
   const updateLedSlider = (value: number) => {
@@ -87,103 +111,8 @@ export default function LightBulbs({ opened, setOpened }: Props) {
   }
 
   const updateFlorescentSlider = (value: number) => {
-    setFlorescentSlider(value);
-    dispatch(
-      addHouseholdEnegryCategory({
-        parent_id: 4,
-        category_id: 4,
-        id: 4,
-        name: "light-bulb-florecent",
-        selected: true,
-        value: value
-      })
-    );
-  }
-
-
-  useEffect(() => {
-    if (selected == true) {
-      dispatch(
-        addHouseholdEnergy({
-          id: 4,
-          name: "light-bulbs",
-          selected: true,
-          value: 1,
-        })
-      )
-    } else {
-      dispatch(
-        deleteHouseholdEnergy({ id: 4 })
-      )
-    }
-  }, [selected]);
-
-  // Incandecent State
-  useEffect(() => {
-    if (incandescent) {
-      dispatch(
-        addHouseholdEnegryCategory({
-          parent_id: 4,
-          category_id: 1,
-          id: 1,
-          name: "light-bulb-incandecent",
-          selected: true,
-          value: 1
-        })
-      );
-    } else {
-      deleteHouseholdEnergyCategory({
-        parent_id: 4,
-        category_id: 1
-      })
-    }
-  }, [incandescent]);
-
-  // LED State
-  useEffect(() => {
-    if (led) {
-      dispatch(
-        addHouseholdEnegryCategory({
-          parent_id: 4,
-          category_id: 2,
-          id: 2,
-          name: "light-bulb-led",
-          selected: true,
-          value: 1
-        })
-      );
-    } else {
-      deleteHouseholdEnergyCategory({
-        parent_id: 4,
-        category_id: 2,
-      })
-    }
-  }, [led]);
-
-  // CFL State
-  useEffect(() => {
-    if (cfl) {
-      dispatch(
-        addHouseholdEnegryCategory({
-          parent_id: 4,
-          category_id: 3,
-          id: 3,
-          name: "light-bulb-cfl",
-          selected: true,
-          value: 1
-        })
-      );
-    } else {
-      deleteHouseholdEnergyCategory({
-        parent_id: 4,
-        category_id: 3,
-      })
-    }
-  }, [cfl]);
-
-  // Flourescent State
-  useEffect(() => {
-    if (florescent) {
+    if (floresentMax == null) {
+      setFlorescentSlider(value);
       dispatch(
         addHouseholdEnegryCategory({
           parent_id: 4,
@@ -191,17 +120,152 @@ export default function LightBulbs({ opened, setOpened }: Props) {
           id: 4,
           name: "light-bulb-florecent",
           selected: true,
-          value: 1
-        })
-      );
+          value: value
+        }));
     } else {
-      deleteHouseholdEnergyCategory({
-        parent_id: 4,
-        category_id: 4,
-      })
-    }
-  }, [florescent]);
+      if (value >= floresentMax) {
 
+      } else {
+        setFlorescentSlider(value);
+        dispatch(
+          addHouseholdEnegryCategory({
+            parent_id: 4,
+            category_id: 4,
+            id: 4,
+            name: "light-bulb-florecent",
+            selected: true,
+            value: value
+          }));
+      }
+    }
+
+  }
+
+
+  // useEffect(() => {
+  //   if (selected == true) {
+  //     dispatch(
+  //       addHouseholdEnergy({
+  //         id: 4,
+  //         name: "light-bulbs",
+  //         selected: true,
+  //         value: 1,
+  //       }));
+  //   } else {
+  //     dispatch(
+  //       deleteHouseholdEnergy({ id: 4 })
+  //     )
+  //   }
+  // }, [selected]);
+
+  // Incandecent State
+  // useEffect(() => {
+  //   if (incandescent) {
+  //     dispatch(
+  //       addHouseholdEnegryCategory({
+  //         parent_id: 4,
+  //         category_id: 1,
+  //         id: 1,
+  //         name: "light-bulb-incandecent",
+  //         selected: true,
+  //         value: 1
+  //       })
+  //     );
+  //   } else {
+  //     deleteHouseholdEnergyCategory({
+  //       parent_id: 4,
+  //       category_id: 1
+  //     })
+  //   }
+  // }, [incandescent]);
+
+  // LED State
+  // useEffect(() => {
+  //   if (led) {
+  //     dispatch(
+  //       addHouseholdEnegryCategory({
+  //         parent_id: 4,
+  //         category_id: 2,
+  //         id: 2,
+  //         name: "light-bulb-led",
+  //         selected: true,
+  //         value: 1
+  //       })
+  //     );
+  //   } else {
+  //     deleteHouseholdEnergyCategory({
+  //       parent_id: 4,
+  //       category_id: 2,
+  //     })
+  //   }
+  // }, [led]);
+
+  // CFL State
+  // useEffect(() => {
+  //   if (cfl) {
+  //     dispatch(
+  //       addHouseholdEnegryCategory({
+  //         parent_id: 4,
+  //         category_id: 3,
+  //         id: 3,
+  //         name: "light-bulb-cfl",
+  //         selected: true,
+  //         value: 1
+  //       })
+  //     );
+  //   } else {
+  //     deleteHouseholdEnergyCategory({
+  //       parent_id: 4,
+  //       category_id: 3,
+  //     })
+  //   }
+  // }, [cfl]);
+
+  // Flourescent State
+  // useEffect(() => {
+  //   if (florescent) {
+  //     dispatch(
+  //       addHouseholdEnegryCategory({
+  //         parent_id: 4,
+  //         category_id: 4,
+  //         id: 4,
+  //         name: "light-bulb-florecent",
+  //         selected: true,
+  //         value: 1
+  //       })
+  //     );
+  //   } else {
+  //     deleteHouseholdEnergyCategory({
+  //       parent_id: 4,
+  //       category_id: 4,
+  //     })
+  //   }
+  // }, [florescent]);
+
+
+  useEffect(() => {
+    const lightBulbs = houseHoldEnergy.filter((item: any) => item.name == "light-bulbs");
+
+    if (lightBulbs.length != 0) {
+      setSelected(true);
+
+      lightBulbs[0]?.category?.map((item) => {
+        console.log(item);
+        if (item.name == "light-bulb-incandecent") {
+          setIncandescent(true);
+          setIncandecentMax(item.value);
+          setIncandescentSlider(item.value);
+        }
+
+        if (item.name == "light-bulb-florecent") {
+          setFlorescent(true);
+          setFloresentMax(item.value);
+          setFlorescentSlider(item.value);
+        }
+      })
+
+    }
+  }, []);
 
   return (
     <div

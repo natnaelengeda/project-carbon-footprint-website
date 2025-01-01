@@ -11,6 +11,10 @@ export default function Root() {
 
     if (page == "carbonfootprint") {
       navigate("/carbonfootprint");
+    } else if (page == "pledge") {
+      navigate("/pledge");
+    } else if (page == "interactive-qa") {
+      navigate("/interactive-qa");
     }
     if (page == null) {
       toast("Choose from the Options Bellow");

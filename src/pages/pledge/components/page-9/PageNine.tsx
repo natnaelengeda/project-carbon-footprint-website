@@ -43,7 +43,7 @@ export default function PageNine({ setPage }: Props) {
     } else {
       data = mapDataPledge(pledge, treeCount);
     }
-    console.log(data);
+
     axios.post("/api/v1/pledge", data)
       .then((response) => {
         const status = response.status;
@@ -79,7 +79,7 @@ export default function PageNine({ setPage }: Props) {
             className='w-full md:w-[738px] h-auto flex flex-col items-center'>
             <p
               className='text-2xl md:text-[56px] font-bold text-center md:leading-[50px]'>
-              Great! You Just Saved <span className='text-primary'>23 out of 35 Trees</span> from Burning.
+              Great! You Just Saved <span className='text-primary'>23 out of {(pledge.carbon_footprint / 167).toFixed(0)} Trees</span> from Burning.
             </p>
           </div>
 

@@ -4,21 +4,23 @@ import { useState, useEffect } from 'react';
 interface Props {
   page: number;
   setPage: React.Dispatch<React.SetStateAction<number>>;
+  duration: number;
+  timeLeft: number;
+  setTimeLeft: React.Dispatch<React.SetStateAction<number>>;
+  questionLength: number;
   handleNextQuestion: () => void;
   checkAnswer: () => void;
 }
 
-export default function Timer({ page, setPage, handleNextQuestion, checkAnswer }: Props) {
+export default function Timer({ page, setPage, duration, questionLength, timeLeft, setTimeLeft, handleNextQuestion, checkAnswer }: Props) {
   const width = window.innerWidth;
-
-  // Duration
-  const duration = 20;
-  const [timeLeft, setTimeLeft] = useState(duration);
 
   // Progress calculation
   const radius = width > 768 ? 150 : 50; // Circle radius
   const circumference = 2 * Math.PI * radius;
   const progress = ((duration - timeLeft) / duration) * circumference;
+
+  // Question Counter
 
   useEffect(() => {
     if (timeLeft <= 0) return;
@@ -30,14 +32,10 @@ export default function Timer({ page, setPage, handleNextQuestion, checkAnswer }
     return () => clearInterval(timer);
   }, [timeLeft]);
 
-  console.log(page);
   // Update Time when reacher 0
   useEffect(() => {
     if (timeLeft === 0) {
-      handleNextQuestion();
-      // setPage((prev) => prev + 1);
       checkAnswer();
-      setTimeLeft(duration);
     }
   }, [timeLeft, setPage, duration]);
 

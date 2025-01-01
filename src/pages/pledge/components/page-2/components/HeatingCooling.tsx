@@ -4,8 +4,8 @@ import React, { useEffect, useState } from 'react'
 import { Slider } from '@mantine/core';
 
 // State
-import { useDispatch } from 'react-redux';
-import { addHouseholdEnergy, deleteHouseholdEnergy } from '@/state/pledge';
+import { useDispatch, useSelector } from 'react-redux';
+import { addHouseholdEnergy, deleteHouseholdEnergy, PledgeState } from '@/state/pledge';
 
 // Components
 import ArrowComponent from '@/pages/carbonfootprint/components/ArrowComponent';
@@ -13,6 +13,7 @@ import CheckboxComponent from '@/pages/carbonfootprint/components/CheckboxCompon
 
 // AppAsset
 import AppAsset from '@/core/AppAsset';
+import toast from 'react-hot-toast';
 
 interface Props {
   opened: string;
@@ -27,24 +28,60 @@ export default function HeatingCooling({ opened, setOpened }: Props) {
   const [electricAirConditioning, setElectricAirConditioning] = useState<number>(1);
   const [charcoal, setCharcoal] = useState<number>(1);
 
+  // SlidersMax 
+  const [electricMax, setElectricMax] = useState<number | null>(null);
+
   const dispatch = useDispatch();
 
+  const pledge = useSelector((state: { pledge: PledgeState }) => state.pledge);
+  const houseHoldEnergy = pledge.house_hold_energy;
+
+  const primary_pledge = useSelector((state: { pledge: PledgeState, old_pledge: string }) => state.pledge.old_pledge);
+  // const old_pledge = JSON.parse(primary_pledge);
+  // console.log(old_pledge)
+
+  // const house_hold_energy = old_pledge.householdEnergy;
+  // const heating_and_cooling = house_hold_energy.heatingAndCooling;
+
   const updateElectricAirConditioning = (value: number) => {
-    setElectricAirConditioning(value);
-    dispatch(
-      addHouseholdEnergy({
-        id: 1,
-        name: "heating-cooling",
-        selected: true,
-        category: [
-          {
+    // console.log(electricMax)
+    if (electricMax == null) {
+      setElectricAirConditioning(value);
+      dispatch(
+        addHouseholdEnergy({
+          id: 1,
+          name: "heating-cooling",
+          selected: true,
+          category: [
+            {
+              id: 1,
+              name: "electric_air_conditioning",
+              selected: true,
+              value: value
+            },
+          ],
+        }));
+    } else {
+      if (value >= electricMax + 1) {
+        // toast("Can not go above your previous foot print");
+      } else {
+        setElectricAirConditioning(value);
+        dispatch(
+          addHouseholdEnergy({
             id: 1,
-            name: "electric_air_conditioning",
+            name: "heating-cooling",
             selected: true,
-            value: value
-          },
-        ],
-      }));
+            category: [
+              {
+                id: 1,
+                name: "electric_air_conditioning",
+                selected: true,
+                value: value
+              },
+            ],
+          }));
+      }
+    }
   }
 
   const updateCharcoal = (value: number) => {
@@ -66,52 +103,130 @@ export default function HeatingCooling({ opened, setOpened }: Props) {
     );
   }
 
-  useEffect(() => {
-    if (selectedType == "electric-air-conditioning") {
-      dispatch(
-        addHouseholdEnergy({
-          id: 1,
-          name: "heating-cooling",
-          selected: true,
-          category: [
-            { id: 1, name: "electric_air_conditioning", selected: true, value: 1 },
-          ],
-        })
-      );
-    } else if (selectedType == "charcoal") {
-      dispatch(
-        addHouseholdEnergy({
-          id: 1,
-          name: "heating-cooling",
-          selected: true,
-          category: [
-            { id: 2, name: "charcoal", selected: true, value: 1 },
-          ],
-        })
-      );
-    }
-  }, [selectedType]);
+  // useEffect(() => {
+
+  //   if (selectedType == "electric-air-conditioning") {
+  //     dispatch(
+  //       addHouseholdEnergy({
+  //         id: 1,
+  //         name: "heating-cooling",
+  //         selected: true,
+  //         category: [
+  //           { id: 1, name: "electric_air_conditioning", selected: true, value: 1 },
+  //         ],
+  //       })
+  //     );
+  //   } else if (selectedType == "charcoal") {
+  //     dispatch(
+  //       addHouseholdEnergy({
+  //         id: 1,
+  //         name: "heating-cooling",
+  //         selected: true,
+  //         category: [
+  //           { id: 2, name: "charcoal", selected: true, value: 1 },
+  //         ],
+  //       })
+  //     );
+  //   }
+  // }, [selectedType]);
 
   // Update Main Parent
-  useEffect(() => {
+  // useEffect(() => {
 
-    if (selected == true) {
-      dispatch(
-        addHouseholdEnergy({
-          id: 1,
-          name: "heating-cooling",
-          selected: true,
-          category: [
-            { id: 1, name: "electric_air_conditioning", selected: true, value: 1 },
-          ],
-        })
-      );
-    } else {
-      dispatch(
-        deleteHouseholdEnergy({ id: 1 })
-      );
+  //   if (selected == true) {
+  //     dispatch(
+  //       addHouseholdEnergy({
+  //         id: 1,
+  //         name: "heating-cooling",
+  //         selected: true,
+  //         category: [
+  //           { id: 1, name: "electric_air_conditioning", selected: true, value: 1 },
+  //         ],
+  //       })
+  //     );
+  //   } else {
+  //     dispatch(
+  //       deleteHouseholdEnergy({ id: 1 })
+  //     );
+  //   }
+  // }, [selected]);
+
+
+  // Check if The State is Already There
+  // useEffect(() => {
+  //   const house_hold_energy = pledge.house_hold_energy;
+  //   const heating_and_cooling = house_hold_energy.map((item) => {
+  //     // console.log(item)
+  //   });
+  //   // console.log(heating_and_cooling);
+
+  // }, []);
+
+
+  useEffect(() => {
+    // console.log(heating_and_cooling[0]);
+    // if (heating_and_cooling) {
+    //   setSelected(true);
+    //   dispatch(
+    //     addHouseholdEnergy({
+    //       id: 1,
+    //       name: "heating-cooling",
+    //       selected: true,
+    //       category: [
+    //         { id: 1, name: "electric_air_conditioning", selected: true, value: 1 },
+    //       ],
+    //     })
+    //   );
+    // }
+
+    // if (heating_and_cooling[0].type == "electric") {
+    // setElectricAirConditioning(heating_and_cooling[0].hourlyUsagePerDay);
+    // setElectricMax(heating_and_cooling[0].hourlyUsagePerDay);
+    // addHouseholdEnergy({
+    //   id: 1,
+    //   name: "heating-cooling",
+    //   selected: true,
+    //   category: [
+    //     {
+    //       id: 1,
+    //       name: "electric_air_conditioning",
+    //       selected: true, value: 1
+    //     },
+    //   ],
+    // })
+    // }
+  }, []);
+
+  useEffect(() => {
+    const heatingCooling = houseHoldEnergy.filter((item: any) => item.name == "heating-cooling");
+
+    if (heatingCooling.length != 0) {
+      setSelected(true);
+
+      heatingCooling[0]?.category?.map((item) => {
+        if (item.name == "electric_air_conditioning") {
+          setSelectedType("electric-air-conditioning");
+          setElectricAirConditioning(item.value);
+          setElectricMax(item.value);
+          console.log("Electric Max", item.value)
+          dispatch(
+            addHouseholdEnergy({
+              id: 1,
+              name: "heating-cooling",
+              selected: true,
+              category: [
+                {
+                  id: 1,
+                  name: "electric_air_conditioning",
+                  selected: true,
+                  value: item.value
+                },
+              ],
+            }));
+        }
+      })
     }
-  }, [selected]);
+  }, []);
 
   return (
     <div
@@ -181,8 +296,7 @@ export default function HeatingCooling({ opened, setOpened }: Props) {
                 { value: 16, label: '16' },
                 { value: 20, label: '20' },
                 { value: 24, label: '24' },
-              ]}
-            />
+              ]} />
 
           </div>
         </div>

@@ -1,35 +1,45 @@
+import { useEffect, useState } from "react";
+
+// Axios
+import axios from "@/utils/axios";
+
+
 export interface ParticipantData {
   userId: string;
+  name: string;
   score: number;
   isCurrentUser?: boolean;
 }
 
-export const leaderboardData: ParticipantData[] = [
-  { userId: "User 67534", score: 95 },
-  { userId: "User 67534", score: 92 },
-  { userId: "User 67534", score: 91 },
-  { userId: "User 8893", score: 89 },
-  { userId: "User 8893", score: 86, isCurrentUser: true },
-  { userId: "User 8893", score: 84 },
-  { userId: "User 8893", score: 83 },
-  { userId: "User 8893", score: 80 },
-  { userId: "User 8893", score: 79 },
-  { userId: "User 8893", score: 76 }
-];
-
 // Interface
 interface Props {
   setPage: React.Dispatch<React.SetStateAction<number>>;
+  score: number;
 }
 
-export default function LeadersBoard({ setPage }: Props) {
+export default function LeadersBoard({ score, setPage }: Props) {
+  const [leaderboardData, setLeaderboardData] = useState<ParticipantData[]>([]);
+
+  const fetchLeaderboardData = () => {
+    axios.get("/api/v1/questionAttempts/top10")
+      .then((response) => {
+        console.log(response.data);
+        setLeaderboardData(response.data);
+      });
+  }
+
+  useEffect(() => {
+    fetchLeaderboardData();
+  }, []);
+
   return (
     <div className="flex overflow-hidden flex-col justify-center items-center px-20 py-48 bg-white text-slate-900 max-md:px-5 max-md:py-24">
       <div className="flex flex-col items-center w-full max-w-[853px] max-md:max-w-full">
         <div className="text-6xl font-bold text-center max-md:max-w-full max-md:text-4xl">
           Top 10 Participants
         </div>
-        <LeaderboardTable participants={leaderboardData} />
+        <LeaderboardTable
+          participants={leaderboardData} />
         <div className="py-10">
           <button
             onClick={() => {
@@ -60,13 +70,15 @@ export function LeaderboardTable({ participants }: LeaderboardTableProps) {
         <div className="self-stretch my-auto w-[280px]">Top 10 Users</div>
         <div className="self-stretch my-auto w-[150px]">Score</div>
       </div>
-      {participants.map((participant, index) => (
-        <LeaderboardRow
-          key={`${participant.userId}-${index}`}
-          participant={participant}
-          index={index}
-        />
-      ))}
+      {
+        participants.map((participant, index) => (
+          <LeaderboardRow
+            key={`${participant.userId}-${index}`}
+            participant={participant}
+            index={index}
+          />
+        ))
+      }
     </div>
   );
 }
@@ -84,7 +96,7 @@ export function LeaderboardRow({ participant, index }: LeaderboardRowProps) {
   return (
     <div className={`${baseClasses} ${userClasses}`}>
       <div className="self-stretch my-auto w-[280px]">
-        {participant.isCurrentUser ? `${participant.userId} (You)` : participant.userId}
+        {participant.isCurrentUser ? `${participant.name} (You)` : participant.name}
       </div>
       <div className="self-stretch my-auto w-[150px]">{participant.score}</div>
     </div>

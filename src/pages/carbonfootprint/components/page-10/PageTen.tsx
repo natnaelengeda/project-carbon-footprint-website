@@ -93,6 +93,78 @@ export default function PageTen({ setPage }: Props) {
     { label: 'Energy Usage', percentage: energyUsage }
   ];
 
+  const findLowest = () => {
+
+    const data: any = {
+      Water: waterUsage,
+      Food: foodWaste,
+      Transport: transport,
+      Diet: diet,
+      Waste: waste,
+      Energy: energyUsage,
+    };
+
+    const minValue = Math.min(...Object.values(data));
+    const lowestKeys = Object.keys(data).filter((key) => data[key] === minValue);
+
+    return lowestKeys; // Returns an array of names with the lowest value
+  };
+
+  const BadgeCalculator = () => {
+    const lowest = findLowest();
+
+    if (lowest.includes('Water')) {
+      return (<img src={AppAsset.BlueBadge} className="w-80 h-80 md:w-[598px] md:h-[527px] object-contain" />);
+    }
+
+    if (lowest.includes('Transport')) {
+      return (<img src={AppAsset.GreenBadge} className="w-80 h-80 md:w-[598px] md:h-[527px] object-contain" />);
+    }
+
+    if (lowest.includes('Diet')) {
+      return (<img src={AppAsset.GreenBadge} className="w-80 h-80 md:w-[598px] md:h-[527px] object-contain" />);
+    }
+
+    if (lowest.includes('Waste')) {
+      return (<img src={AppAsset.VioletBadge} className="w-80 h-80 md:w-[598px] md:h-[527px] object-contain" />);
+    }
+
+    if (lowest.includes('Energy')) {
+      return (<img src={AppAsset.LightGreenBadge} className="w-80 h-80 md:w-[598px] md:h-[527px] object-contain" />);
+    }
+
+    if (lowest.includes('Food')) {
+      return (<img src={AppAsset.LightGreenBadge} className="w-80 h-80 md:w-[598px] md:h-[527px] object-contain" />);
+    }
+  }
+
+  const getLowestName = () => {
+    const lowest = findLowest();
+
+    if (lowest.includes('Water')) {
+      return "Aqua - Warrior";
+    }
+
+    if (lowest.includes('Transport')) {
+      return ("Eco - Warrior");
+    }
+
+    if (lowest.includes('Diet')) {
+      return ("Eco - Warrios");
+    }
+
+    if (lowest.includes('Waste')) {
+      return "Waste - Warrior";
+    }
+
+    if (lowest.includes('Energy')) {
+      return "Power Saver Pro";
+    }
+
+    if (lowest.includes('Food')) {
+      return "Power Saver Pro";
+    }
+  }
 
   useEffect(() => {
     sendFunction();
@@ -114,9 +186,12 @@ export default function PageTen({ setPage }: Props) {
                 className='w-full h-full'
                 borderRadius={20} />
             </div> :
-            <img
-              src={AppAsset.BlueBadge}
-              className="w-80 h-80 md:w-[598px] md:h-[527px] object-contain" />
+            <>
+              {BadgeCalculator()}
+            </>
+          // <img
+          // src={AppAsset.BlueBadge}
+          // className="w-80 h-80 md:w-[598px] md:h-[527px] object-contain" />
         }
       </div>
 
@@ -132,8 +207,8 @@ export default function PageTen({ setPage }: Props) {
             </div>
           </div> :
           <div className="w-full h-auto flex flex-col items-center justify-start gap-5 md:gap-[52px] ">
-            <p className="text-primary-blue text-4xl md:text-[64px] font-bold">Aqua - Warrior</p>
-            <p className="text-xl md:text-[28px]">Congrats, You Got the "Aqua - Warrior" Badge!</p>
+            <p className="text-primary-blue text-4xl md:text-[64px] font-bold">{getLowestName()}</p>
+            <p className="text-xl md:text-[28px]">Congrats, You Got the "{getLowestName()}" Badge!</p>
           </div>
       }
 

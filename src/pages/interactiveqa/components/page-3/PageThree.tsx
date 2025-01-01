@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 // Page Layout
 import PagesLayout from "../../layouts/PagesLayout";
@@ -12,7 +12,16 @@ import AppAsset from "@/core/AppAsset";
 // Styles
 import "./styles/styles.css";
 
-const questions = [
+// Interface
+interface Props {
+  page: number;
+  setPage: React.Dispatch<React.SetStateAction<number>>;
+  questions: any[];
+  answers: { [key: number]: number };
+  setAnswers: React.Dispatch<React.SetStateAction<{ [key: number]: number }>>;
+}
+
+const questionsCAR = [
   {
     id: 1,
     type: "General Awareness Questions (1/15)",
@@ -135,15 +144,157 @@ const questions = [
   },
 ]
 
-// Interface
-interface Props {
-  page: number;
-  setPage: React.Dispatch<React.SetStateAction<number>>;
-}
+const colors = [
+  "#CB6EDC", // Question 1
+  "#FFA034", // Question 2
+  "#3449FF", // Question 3
+  "#1B9AAA", // Question 4
+  "#E94F37", // Question 5
+  "#FFB000", // Question 6
+  "#8E44AD", // Question 7
+  "#2980B9", // Question 8
+  "#27AE60", // Question 9
+  "#2C3E50"  // Question 10
+];
 
-export default function PageThree({ page, setPage }: Props) {
-  const [answers, setAnswers] = useState<{ [key: number]: number }>({});
+// const questions = [
+//   {
+//     _id: "676a8b25ba2d2f8f2d154186",
+//     category: "Transportation",
+//     difficulty: "Medium",
+//     translations: [
+//       {
+//         language: "English",
+//         question: "What is the main source of renewable energy?",
+//         options: [
+//           {
+//             text: "Solar",
+//             isCorrect: true,
+//             explanation: "Solar energy is the main source of renewable energy.",
+//             _id: "676a8b25ba2d2f8f2d154188"
+//           },
+//           {
+//             text: "Coal",
+//             isCorrect: false,
+//             explanation: "Coal is not renewable energy.",
+//             _id: "676a8b25ba2d2f8f2d154189"
+//           },
+//           {
+//             text: "Oil",
+//             isCorrect: false,
+//             explanation: "Oil is a fossil fuel, not renewable energy.",
+//             _id: "676a8b25ba2d2f8f2d15418a"
+//           },
+//           {
+//             text: "Natural Gas",
+//             isCorrect: false,
+//             explanation: "Natural gas is not a renewable energy source.",
+//             _id: "676a8b25ba2d2f8f2d15418b"
+//           }
+//         ],
+//         _id: "676a8b25ba2d2f8f2d154187"
+//       }
+//     ],
+//     createdAt: "2024-12-24T10:21:25.299Z",
+//     updatedAt: "2024-12-24T10:21:25.299Z",
+//     __v: 0
+//   },
+//   {
+//     _id: "676d8b25ba2d2f8f2d154186",
+//     category: "Transportation",
+//     difficulty: "Easy",
+//     translations: [
+//       {
+//         language: "English",
+//         question: "What is the fastest mode of transportation?",
+//         options: [
+//           {
+//             text: "Airplane",
+//             isCorrect: true,
+//             explanation: "Airplanes are currently the fastest mode of transportation.",
+//             _id: "676d8b25ba2d2f8f2d154188"
+//           },
+//           {
+//             text: "Train",
+//             isCorrect: false,
+//             explanation: "Trains are fast, but not faster than airplanes.",
+//             _id: "676d8b25ba2d2f8f2d154189"
+//           },
+//           {
+//             text: "Car",
+//             isCorrect: false,
+//             explanation: "Cars are slower compared to airplanes.",
+//             _id: "676d8b25ba2d2f8f2d15418a"
+//           },
+//           {
+//             text: "Bicycle",
+//             isCorrect: false,
+//             explanation: "Bicycles are much slower than airplanes.",
+//             _id: "676d8b25ba2d2f8f2d15418b"
+//           }
+//         ],
+//         _id: "676d8b25ba2d2f8f2d154187"
+//       }
+//     ],
+//     createdAt: "2024-12-25T10:00:00.000Z",
+//     updatedAt: "2024-12-25T10:00:00.000Z",
+//     __v: 0
+//   },
+//   {
+//     _id: "676e8b25ba2d2f8f2d154186",
+//     category: "Environment",
+//     difficulty: "Medium",
+//     translations: [
+//       {
+//         language: "English",
+//         question: "What is the most eco-friendly mode of transportation?",
+//         options: [
+//           {
+//             text: "Bicycle",
+//             isCorrect: true,
+//             explanation: "Bicycles have no emissions and are eco-friendly.",
+//             _id: "676e8b25ba2d2f8f2d154188"
+//           },
+//           {
+//             text: "Car",
+//             isCorrect: false,
+//             explanation: "Cars emit greenhouse gases, making them less eco-friendly.",
+//             _id: "676e8b25ba2d2f8f2d154189"
+//           },
+//           {
+//             text: "Train",
+//             isCorrect: false,
+//             explanation: "Trains are more eco-friendly than cars but not as much as bicycles.",
+//             _id: "676e8b25ba2d2f8f2d15418a"
+//           },
+//           {
+//             text: "Airplane",
+//             isCorrect: false,
+//             explanation: "Airplanes have high carbon emissions, making them less eco-friendly.",
+//             _id: "676e8b25ba2d2f8f2d15418b"
+//           }
+//         ],
+//         _id: "676e8b25ba2d2f8f2d154187"
+//       }
+//     ],
+//     createdAt: "2024-12-25T10:05:00.000Z",
+//     updatedAt: "2024-12-25T10:05:00.000Z",
+//     __v: 0
+//   }
+// ];
+
+export default function PageThree({ page, setPage, answers, setAnswers, questions }: Props) {
+  const [colorStep, setColorStep] = useState<number>(0);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+  const [incorrect, setIncorrect] = useState(false);
+
+  // Timer
+  const duration = 20;
+  const [timeLeft, setTimeLeft] = useState(duration);
+
+  // Question Length 
+  const questionLength = questions.length;
+
   const [currentQuestionA, setCurruentQuestion] = useState({
     question: 0,
     answer: 0,
@@ -166,14 +317,24 @@ export default function PageThree({ page, setPage }: Props) {
 
   const handleNextQuestion = () => {
     setCurrentQuestionIndex(prevIndex => prevIndex + 1);
+    setColorStep(colorStep + 1);
     setClick(1);
+    setIncorrect(false);
+    setTimeLeft(duration);
   };
 
   const checkAnswer = () => {
-    console.log(currentQuestionA);
-    setClick(2);
+    if (!answers || Object.keys(answers).length === 0) {
+      console.log("Empty Answers");
+      setIncorrect(true);
+      setClick(2);
+    } else {
+      console.log("Answers are present");
+      setClick(2);
+    }
   }
-  const currentQuestion = questions[currentQuestionIndex];
+
+  const currentQuestion: any = questions && questions[currentQuestionIndex];
 
   return (
     <PagesLayout>
@@ -188,49 +349,58 @@ export default function PageThree({ page, setPage }: Props) {
           <Timer
             page={page}
             setPage={setPage}
-            handleNextQuestion={handleNextQuestion} 
-            checkAnswer={checkAnswer}/>
+            duration={duration}
+            timeLeft={timeLeft}
+            setTimeLeft={setTimeLeft}
+            handleNextQuestion={handleNextQuestion}
+            questionLength={questionLength}
+            checkAnswer={checkAnswer} />
 
           {/* Type */}
           <div
             className="flex flex-row items-center justify-start gap-2 md:gap-[20px]">
             <div
               style={{
-                backgroundColor: currentQuestion.color
+                backgroundColor: colors[colorStep]
               }}
               className={`w-[50px] h-[12px] `}>
             </div>
             <div>
-              <p className="text-xl md:text-[36px] font-semibold">{currentQuestion.type}</p>
+              <p
+                className="text-xl md:text-[36px] font-semibold">
+                {currentQuestion.category}
+              </p>
             </div>
           </div>
 
           {/* Question */}
           <div className="px-3 md:px-0">
             <h1
-              className="text-2xl md:text-[48px] font-bold md:leading-10">{currentQuestion.question}</h1>
+              className="text-2xl md:text-[48px] font-bold md:leading-10">
+              {currentQuestion.translations[0].question}
+            </h1>
           </div>
 
           {/* Choices */}
           <div
             className="w-full h-auto flex flex-col items-start justify-start gap-5 md:gap-[60px] px-3 md:px-0">
             {
-              currentQuestion.choices.map((choice, index) => {
+              currentQuestion.translations[0].options.map((choice: any, index: number) => {
                 return (
                   <div
                     key={index}
                     className="w-full h-auto flex flex-row items-start justify-start gap-3 md:gap-[20px]">
                     <label
-                      key={choice.id}
+                      key={choice._id}
                       className="w-full h-auto flex flex-row items-center md:items-start justify-start gap-3 md:gap-[20px] custom-radio">
                       <input
                         type="radio"
-                        name={`question-${currentQuestion.id}`}
-                        value={choice.id}
-                        checked={answers[currentQuestion.id] === choice.id}
+                        name={`question-${currentQuestion._id}`}
+                        value={choice._id}
+                        checked={answers[currentQuestion._id] === choice._id}
                         onChange={() => {
                           if (click == 1) {
-                            handleAnswerChange(currentQuestion.id, choice.id)
+                            handleAnswerChange(currentQuestion._id, choice._id)
                           }
                         }}
                       />
@@ -242,20 +412,31 @@ export default function PageThree({ page, setPage }: Props) {
                         {choice.text}
                         {
                           click == 2 &&
-                          currentQuestionA.answer == choice.id &&
+                          currentQuestionA.answer == choice._id &&
                           <>
                             <div
                               className="pt-5">
                               <p><span className={`${choice.isCorrect ? "text-primary" : "text-red-500"} font-bold`}>{choice.isCorrect ? "Correct: " : "Incorrect Answer: "}</span> {choice.explanation}</p>
                             </div>
                           </>
-
+                        }
+                        {
+                          // click == 2 &&
                         }
                       </span>
                     </label>
                   </div>
                 );
               })
+            }
+          </div>
+          <div>
+            {
+              incorrect &&
+              <div
+                className="w-full h-auto rounded-lg">
+                <p className="text-2xl md:text-[30px]"><span className="font-bold text-red-500">Incorrect Answer:</span> Empty Answers</p>
+              </div>
             }
           </div>
         </div>
@@ -281,16 +462,17 @@ export default function PageThree({ page, setPage }: Props) {
                   }
                 }}
                 className="flex flex-row items-center justify-center md:w-[220.32px] md:h-[100px] bg-primary rounded-full text-white px-3 md:px-0 py-2 md:py-0 gap-2">
-                {click == 1 ?
-                  <>
-                    <p className="text-xl md:text-[34px]">Submit</p>
-                  </> :
-                  <>
-                    <p className="text-xl md:text-[34px]">Next</p>
-                    <img
-                      className="w-6 md:w-[34.56px] h-auto object-contain"
-                      src={AppAsset.RightArrowIcon} />
-                  </>
+                {
+                  click == 1 ?
+                    <>
+                      <p className="text-xl md:text-[34px]">Submit</p>
+                    </> :
+                    <>
+                      <p className="text-xl md:text-[34px]">Next</p>
+                      <img
+                        className="w-6 md:w-[34.56px] h-auto object-contain"
+                        src={AppAsset.RightArrowIcon} />
+                    </>
                 }
 
               </button>

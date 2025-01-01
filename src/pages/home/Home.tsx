@@ -85,15 +85,10 @@ export default function Home() {
             className="w-auto h-auto md:w-[325px] md:h-[76px] border border-primary bg-white text-primary font-semibold rounded-full md:rounded-full text-lg md:text-[26px] px-5 md:px-0 py-2 md:py-4 hover:opacity-80 flex flex-row items-center justify-center gap-3">
             <p>Personal Pledge</p>
             <img src={AppAsset.RightArrowGreenicon}
-              className="w-[36px] object-contain"
-            />
+              className="w-[36px] object-contain" />
           </button>
-
-
         </div>
-
       </div>
-
     </div>
   )
 }

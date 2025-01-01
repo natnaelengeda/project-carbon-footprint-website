@@ -71,6 +71,10 @@ export interface PledgeState {
   food_wastage: number;
   waste: WasteDisposal[];
   water_usage: WaterUsage[];
+  trees: number;
+  carbon_footprint: number;
+  new_carbon_footprint: number;
+  old_pledge: string;
 }
 
 // Define initial state
@@ -83,6 +87,10 @@ const initialState: PledgeState = {
   food_wastage: 0,
   waste: [],
   water_usage: [],
+  trees: 0,
+  carbon_footprint: 0,
+  new_carbon_footprint: 0,
+  old_pledge: "",
 };
 
 // Create a slice
@@ -99,6 +107,22 @@ export const pledgeSlice = createSlice({
     addName: (state, action: PayloadAction<{ id: string; name: string }>) => {
       state.id = action.payload.id;
       state.name = action.payload.name;
+    },
+
+    addCarbonFootPrint: (state, action: PayloadAction<{ data: number }>) => {
+      state.carbon_footprint = action.payload.data;
+    },
+
+    addNewCarbonFootPrint: (state, action: PayloadAction<{ data: number }>) => {
+      state.new_carbon_footprint = action.payload.data;
+    },
+
+    addTrees: (state, action: PayloadAction<{ data: number }>) => {
+      state.trees = action.payload.data;
+    },
+
+    addOldPledge: (state, action: PayloadAction<{ pledge: string }>) => {
+      state.old_pledge = action.payload.pledge;
     },
 
     // House Hold Energy
@@ -370,7 +394,6 @@ export const pledgeSlice = createSlice({
       );
     },
 
-
     clearPledge: (state) => {
       state.id = "";
       state.name = "";
@@ -380,9 +403,16 @@ export const pledgeSlice = createSlice({
       state.waste = [];
       state.water_usage = [];
       state.food_wastage = 0;
+      state.carbon_footprint = 0;
+      state.new_carbon_footprint = 0;
+      state.trees = 0;
     }
   }
 });
+
+export const getCarbonFootPrint = (state: PledgeState) => {
+  return state.carbon_footprint;
+}
 
 export const {
   addName,
@@ -415,7 +445,14 @@ export const {
   addWaterUsage,
   deleteWaterUsage,
 
-  clearPledge
+  clearPledge,
+
+  // Carbon Footprint
+  addCarbonFootPrint,
+  addNewCarbonFootPrint,
+  addTrees,
+  addOldPledge,
+
 } = pledgeSlice.actions;
 export const selectPledge = (state: { pledge: PledgeState }) => state.pledge;
 export default pledgeSlice.reducer;

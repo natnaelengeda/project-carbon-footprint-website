@@ -1,5 +1,7 @@
-import AppAsset from '@/core/AppAsset';
 import React from 'react'
+
+// AppAsset
+import AppAsset from '@/core/AppAsset';
 
 interface Props {
   selected: boolean;
@@ -12,6 +14,9 @@ interface Props {
 export default function CheckboxComponent({ selected, location, setSelected, setOpened, text }: Props) {
   return (
     <div
+      onClick={() => {
+        setOpened(location);
+      }}
       className='flex flex-row items-center justify-start gap-4 md:gap-[30px]'>
       <img
         onClick={() => {

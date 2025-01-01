@@ -63,7 +63,7 @@ export default function Vegitable({ opened, setOpened }: Props) {
           setSelected={setSelected}
           setOpened={setOpened}
           location="vegitables"
-          text='Vegetables' />
+          text='Plant Based Food' />
 
         {/* Arrow */}
         <ArrowComponent

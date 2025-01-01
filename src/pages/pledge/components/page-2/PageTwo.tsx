@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 // Layout
 import PagesLayout from "../../layouts/PagesLayout";
@@ -6,15 +6,33 @@ import PagesLayout from "../../layouts/PagesLayout";
 // Tooltip
 import { Tooltip } from "@mantine/core";
 
-// Components
-import HeatingCooling from "./components/HeatingCooling";
-import Cooking from "./components/Cooking";
+// Axios
+import axios from "@/utils/axios";
 
-// Appasset
-import AppAsset from "@/core/AppAsset";
+// State
+import {
+  useDispatch,
+  useSelector,
+} from "react-redux";
+
+// Components
+import Cooking from "./components/Cooking";
 import ElectricAppliances from "./components/ElectricAppliances";
 import LightBulbs from "./components/LightBulbs";
 import NavigationComponent from "../NavigationComponent";
+import HeatingCooling from "./components/HeatingCooling";
+
+// Appasset
+import AppAsset from "@/core/AppAsset";
+import {
+  addTrees,
+  // addCarbonFootPrint,
+  addNewCarbonFootPrint,
+  addOldPledge,
+  addHouseholdEnergy,
+} from "@/state/pledge";
+import TopDetail from "../TopDetail";
+import { pledgeCalculator } from "@/utils/pledgeCalculator";
 
 // Interface
 interface Props {
@@ -23,6 +41,101 @@ interface Props {
 
 export default function PageTwo({ setPage }: Props) {
   const [opened, setOpened] = useState<string>("heating-cooling");
+
+  const dispatch = useDispatch();
+
+  const pledge = useSelector((state: any) => state.pledge);
+  const houseHoldEnergy = pledge.house_hold_energy;
+
+  // useEffect(() => {
+  //   // axios.get(`/api/v1/carbonFootPrint/endUser/${pledge.id}`)
+  //   axios.get(`/api/v1/carbonFootPrint/endUser/676d52bb12f7fc69a005f00b`)
+  //     .then((response) => {
+
+  //       const data = response.data.data;
+  //       const values = response.data.value;
+
+  //       const house_hold_energy = values.householdEnergy;
+
+
+  //       if (house_hold_energy.heatingAndCooling) {
+  //         const firstItem = house_hold_energy.heatingAndCooling[0];
+
+  //         if (firstItem.type == "electric") {
+  //           dispatch(
+  //             addHouseholdEnergy({
+  //               id: 1,
+  //               name: "heating-cooling",
+  //               selected: true,
+  //               category: [
+  //                 {
+  //                   id: 1,
+  //                   name: "electric_air_conditioning",
+  //                   selected: true,
+  //                   value: firstItem.hourlyUsagePerDay,
+  //                 },
+  //               ],
+  //             })
+  //           )
+  //         } else if (firstItem.type == "charcoal") {
+  //           dispatch(
+  //             addHouseholdEnergy({
+  //               id: 1,
+  //               name: "heating-cooling",
+  //               selected: true,
+  //               category: [
+  //                 {
+  //                   id: 1,
+  //                   name: "charcoal",
+  //                   selected: true,
+  //                   value: firstItem.hourlyUsagePerDay,
+  //                 },
+  //               ],
+  //             })
+  //           )
+  //         }
+  //       }
+
+
+
+  //       // house_hold_energy.map((item) => {
+  //       //   console.log(item);
+  //       // })
+
+
+  //       // const regular_values = response.data.value;
+  //       // const values = JSON.stringify(response.data.value);
+  //       // const sum: any = Object.values(data).reduce((acc: any, value: any) => acc + (value || 0), 0);
+  //       // const trees = sum / 167;
+
+
+  //       // console.log(regular_values);
+
+  //       // dispatch(
+  //       //   addHouseholdEnergy({
+
+  //       //   })
+  //       // )
+
+
+  //       // dispatch(
+  //       //   addNewCarbonFootPrint({
+  //       //     data: sum,
+  //       //   }));
+
+  //       // dispatch(
+  //       //   addTrees({
+  //       //     data: parseInt(trees.toFixed(0)),
+  //       //   }));
+
+  //       // dispatch(
+  //       //   addOldPledge({
+  //       //     pledge: values
+  //       //   }));
+
+  //     });
+  // }, []);
+
 
   return (
     <PagesLayout>
@@ -58,15 +171,12 @@ export default function PageTwo({ setPage }: Props) {
                   src={AppAsset.InformationGreenIcon}
                   className='w-[36px] h-[36px] object-contain' />
               </Tooltip>
-              <p className="text-xl md:text-[32px] text-[#B7B7B7]">
-                Your carbon footprint of <b className="font-bold text-black">500 Kg CO2e</b> as a result of your household energy usage is equivalent to burning <b className="font-bold text-black">10 trees</b>.
-              </p>
+              <TopDetail />
             </div>
 
             <div className="pt-2 md:pt-10">
               <p className="font-semibold text-xl md:text-[30px]">What do you pledge to reduce this effect?</p>
             </div>
-
           </div>
 
 
@@ -85,9 +195,9 @@ export default function PageTwo({ setPage }: Props) {
               setOpened={setOpened} />
 
             {/* Electric Appliances */}
-            <ElectricAppliances
+            {/* <ElectricAppliances
               opened={opened}
-              setOpened={setOpened} />
+              setOpened={setOpened} /> */}
 
             {/* Light Bulbs */}
             <LightBulbs

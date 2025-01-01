@@ -13,6 +13,7 @@ import Recycle from "./components/Recycle";
 
 // AppAsset
 import AppAsset from "@/core/AppAsset";
+import TopDetail from "../TopDetail";
 
 
 // Interface
@@ -57,9 +58,7 @@ export default function PageFive({ setPage }: Props) {
                   src={AppAsset.InformationGreenIcon}
                   className='w-[36px] h-[36px] object-contain' />
               </Tooltip>
-              <p className="text-xl md:text-[32px] text-[#B7B7B7]">
-                Your carbon footprint of <b className="font-bold text-black">500 Kg CO2e</b> as a result of your household energy usage is equivalent to burning <b className="font-bold text-black">10 trees</b>.
-              </p>
+              <TopDetail/>
             </div>
 
             <div className="pt-2 md:pt-10">
