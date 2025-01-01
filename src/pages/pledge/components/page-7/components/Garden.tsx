@@ -4,8 +4,12 @@ import { useEffect, useState } from 'react'
 import { Slider } from '@mantine/core';
 
 // State
-import { useDispatch } from 'react-redux';
-import { addWaterUsage, deleteWaterUsage } from '@/state/pledge';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  addWaterUsage,
+  //  deleteWaterUsage,
+  PledgeState
+} from '@/state/pledge';
 
 // Components
 import CheckboxComponent from '@/pages/carbonfootprint/components/CheckboxComponent';
@@ -21,48 +25,101 @@ export default function Garden({ opened, setOpened }: Props) {
   const [selected, setSelected] = useState<boolean>(false);
 
   const [slider, setSlider] = useState<number>(1);
+  const [sliderMax, setSlidermax] = useState<number | null>(null);
+
   const [slider1, setSlider1] = useState<number>(1);
+  const [sliderMax1, setSliderMax1] = useState<number | null>(null);
+
 
   const dispatch = useDispatch();
+  const pledge = useSelector((state: { pledge: PledgeState }) => state.pledge);
+  const water = pledge.water_usage;
 
   const updateSlider = (value: number) => {
-    setSlider(value);
-    dispatch(
-      addWaterUsage({
-        id: 3,
-        name: "gardening-water",
-        value: value,
-        frequency: slider1
-      }))
-  }
+    if (sliderMax == null) {
 
-  const updateSlider1 = (value: number) => {
-    setSlider1(value);
-    dispatch(
-      addWaterUsage({
-        id: 3,
-        name: "gardening-water",
-        value: slider,
-        frequency: value,
-      }))
-  }
-
-  useEffect(() => {
-    if (selected) {
+      setSlider(value);
       dispatch(
         addWaterUsage({
           id: 3,
           name: "gardening-water",
-          value: 1,
-        }))
+          value: value,
+          frequency: slider1
+        }));
     } else {
-      dispatch(
-        deleteWaterUsage({
-          id: 1
-        })
-      )
+      if (value > sliderMax) {
+
+      } else {
+        setSlider(value);
+        dispatch(
+          addWaterUsage({
+            id: 3,
+            name: "gardening-water",
+            value: value,
+            frequency: slider1
+          }));
+      }
     }
-  }, [selected]);
+  }
+
+  const updateSlider1 = (value: number) => {
+    if (sliderMax1 == null) {
+
+      setSlider1(value);
+      dispatch(
+        addWaterUsage({
+          id: 3,
+          name: "gardening-water",
+          value: slider,
+          frequency: value,
+        }));
+    } else {
+      if (value > sliderMax1) {
+
+      } else {
+
+        setSlider1(value);
+        dispatch(
+          addWaterUsage({
+            id: 3,
+            name: "gardening-water",
+            value: slider,
+            frequency: value,
+          }));
+      }
+    }
+
+  }
+
+  useEffect(() => {
+    const gardening = water.filter((item: any) => item.name == "gardening-water")
+
+    if (gardening.length != 0) {
+      setSelected(true);
+      if (gardening) {
+        setSlider(gardening[0].value ?? 1);
+        setSlidermax(gardening[0].value ?? 1);
+        setSlider1(gardening[0].frequency ?? 1);
+        setSliderMax1(gardening[0].frequency ?? 1);
+      }
+    }
+
+
+    // if (selected) {
+    //   dispatch(
+    //     addWaterUsage({
+    //       id: 3,
+    //       name: "gardening-water",
+    //       value: 1,
+    //     }))
+    // } else {
+    //   dispatch(
+    //     deleteWaterUsage({
+    //       id: 1
+    //     })
+    //   )
+    // }
+  }, []);
 
   return (
     <div

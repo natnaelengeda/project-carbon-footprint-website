@@ -5,7 +5,11 @@ import { Slider } from "@mantine/core";
 
 // State
 import { useDispatch, useSelector } from "react-redux";
-import { addWaste, deleteWaste, PledgeState } from "@/state/pledge";
+import {
+  addWaste,
+  // deleteWaste,
+  PledgeState
+} from "@/state/pledge";
 
 // Components
 import CheckboxComponent from "@/pages/carbonfootprint/components/CheckboxComponent";

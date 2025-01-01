@@ -6,10 +6,10 @@ import { Slider } from "@mantine/core";
 // State
 import { useDispatch, useSelector } from "react-redux";
 import {
-  addTransportationMode,
+  // addTransportationMode,
   addTransportCategory,
-  deleteTransportaionCategory,
-  deleteTransportationMode,
+  // deleteTransportaionCategory,
+  // deleteTransportationMode,
   PledgeState,
 } from "@/state/pledge";
 

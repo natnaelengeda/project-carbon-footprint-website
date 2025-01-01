@@ -5,7 +5,11 @@ import { Slider } from '@mantine/core';
 
 // State
 import { useDispatch, useSelector } from 'react-redux';
-import { addHouseholdEnergy, deleteHouseholdEnergy, PledgeState } from '@/state/pledge';
+import {
+  addHouseholdEnergy,
+  // deleteHouseholdEnergy,
+  PledgeState
+} from '@/state/pledge';
 
 // Components
 import ArrowComponent from '@/pages/carbonfootprint/components/ArrowComponent';
@@ -13,7 +17,7 @@ import CheckboxComponent from '@/pages/carbonfootprint/components/CheckboxCompon
 
 // AppAsset
 import AppAsset from '@/core/AppAsset';
-import toast from 'react-hot-toast';
+// import toast from 'react-hot-toast';
 
 interface Props {
   opened: string;
@@ -36,7 +40,7 @@ export default function HeatingCooling({ opened, setOpened }: Props) {
   const pledge = useSelector((state: { pledge: PledgeState }) => state.pledge);
   const houseHoldEnergy = pledge.house_hold_energy;
 
-  const primary_pledge = useSelector((state: { pledge: PledgeState, old_pledge: string }) => state.pledge.old_pledge);
+  // const primary_pledge = useSelector((state: { pledge: PledgeState, old_pledge: string }) => state.pledge.old_pledge);
   // const old_pledge = JSON.parse(primary_pledge);
   // console.log(old_pledge)
 

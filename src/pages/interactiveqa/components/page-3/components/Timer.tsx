@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 
 // Interface
 interface Props {
@@ -14,6 +14,12 @@ interface Props {
 
 export default function Timer({ page, setPage, duration, questionLength, timeLeft, setTimeLeft, handleNextQuestion, checkAnswer }: Props) {
   const width = window.innerWidth;
+
+  if (false) {
+    console.log(questionLength);
+    handleNextQuestion();
+    console.log(page);
+  }
 
   // Progress calculation
   const radius = width > 768 ? 150 : 50; // Circle radius

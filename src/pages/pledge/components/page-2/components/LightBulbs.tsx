@@ -7,8 +7,8 @@ import { Slider } from '@mantine/core';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   addHouseholdEnegryCategory,
-  addHouseholdEnergy,
-  deleteHouseholdEnergy,
+  // addHouseholdEnergy,
+  // deleteHouseholdEnergy,
   deleteHouseholdEnergyCategory,
   PledgeState
 } from '@/state/pledge';
@@ -36,9 +36,11 @@ export default function LightBulbs({ opened, setOpened }: Props) {
 
   const [led, setLed] = useState<boolean>(false);
   const [ledSlider, setLedSlider] = useState<number>(0);
+  const [ledMax, setLedMax] = useState<number | null>(null);
 
   const [cfl, setCfl] = useState<boolean>(false);
   const [cflSlider, setCflSlider] = useState<number>(0);
+  const [cflMax, setCflMax] = useState<number | null>(null);
 
   const [florescent, setFlorescent] = useState<boolean>(false);
   const [florescentSlider, setFlorescentSlider] = useState<number>(0);
@@ -83,31 +85,65 @@ export default function LightBulbs({ opened, setOpened }: Props) {
   }
 
   const updateLedSlider = (value: number) => {
-    setLedSlider(value);
-    dispatch(
-      addHouseholdEnegryCategory({
-        parent_id: 4,
-        category_id: 2,
-        id: 2,
-        name: "light-bulb-led",
-        selected: true,
-        value: value
-      })
-    );
+    if (ledMax == null) {
+      setLedSlider(value);
+      dispatch(
+        addHouseholdEnegryCategory({
+          parent_id: 4,
+          category_id: 2,
+          id: 2,
+          name: "light-bulb-led",
+          selected: true,
+          value: value
+        }));
+    } else {
+      if (value > ledMax) {
+
+      } else {
+        setLedSlider(value);
+        dispatch(
+          addHouseholdEnegryCategory({
+            parent_id: 4,
+            category_id: 2,
+            id: 2,
+            name: "light-bulb-led",
+            selected: true,
+            value: value
+          }));
+      }
+    }
+
   }
 
   const updateCflSlider = (value: number) => {
-    setCflSlider(value);
-    dispatch(
-      addHouseholdEnegryCategory({
-        parent_id: 4,
-        category_id: 3,
-        id: 3,
-        name: "light-bulb-cfl",
-        selected: true,
-        value: value,
-      })
-    );
+    if (cflMax == null) {
+      setCflSlider(value);
+      dispatch(
+        addHouseholdEnegryCategory({
+          parent_id: 4,
+          category_id: 3,
+          id: 3,
+          name: "light-bulb-cfl",
+          selected: true,
+          value: value,
+        }));
+    } else {
+      if (value > cflMax) {
+
+      } else {
+        setCflSlider(value);
+        dispatch(
+          addHouseholdEnegryCategory({
+            parent_id: 4,
+            category_id: 3,
+            id: 3,
+            name: "light-bulb-cfl",
+            selected: true,
+            value: value,
+          }));
+      }
+    }
+
   }
 
   const updateFlorescentSlider = (value: number) => {
@@ -159,88 +195,88 @@ export default function LightBulbs({ opened, setOpened }: Props) {
   // }, [selected]);
 
   // Incandecent State
-  // useEffect(() => {
-  //   if (incandescent) {
-  //     dispatch(
-  //       addHouseholdEnegryCategory({
-  //         parent_id: 4,
-  //         category_id: 1,
-  //         id: 1,
-  //         name: "light-bulb-incandecent",
-  //         selected: true,
-  //         value: 1
-  //       })
-  //     );
-  //   } else {
-  //     deleteHouseholdEnergyCategory({
-  //       parent_id: 4,
-  //       category_id: 1
-  //     })
-  //   }
-  // }, [incandescent]);
+  useEffect(() => {
+    if (incandescent) {
+      dispatch(
+        addHouseholdEnegryCategory({
+          parent_id: 4,
+          category_id: 1,
+          id: 1,
+          name: "light-bulb-incandecent",
+          selected: true,
+          value: 1
+        })
+      );
+    } else {
+      deleteHouseholdEnergyCategory({
+        parent_id: 4,
+        category_id: 1
+      })
+    }
+  }, [incandescent]);
 
   // LED State
-  // useEffect(() => {
-  //   if (led) {
-  //     dispatch(
-  //       addHouseholdEnegryCategory({
-  //         parent_id: 4,
-  //         category_id: 2,
-  //         id: 2,
-  //         name: "light-bulb-led",
-  //         selected: true,
-  //         value: 1
-  //       })
-  //     );
-  //   } else {
-  //     deleteHouseholdEnergyCategory({
-  //       parent_id: 4,
-  //       category_id: 2,
-  //     })
-  //   }
-  // }, [led]);
+  useEffect(() => {
+    if (led) {
+      dispatch(
+        addHouseholdEnegryCategory({
+          parent_id: 4,
+          category_id: 2,
+          id: 2,
+          name: "light-bulb-led",
+          selected: true,
+          value: 1
+        })
+      );
+    } else {
+      deleteHouseholdEnergyCategory({
+        parent_id: 4,
+        category_id: 2,
+      })
+    }
+  }, [led]);
 
   // CFL State
-  // useEffect(() => {
-  //   if (cfl) {
-  //     dispatch(
-  //       addHouseholdEnegryCategory({
-  //         parent_id: 4,
-  //         category_id: 3,
-  //         id: 3,
-  //         name: "light-bulb-cfl",
-  //         selected: true,
-  //         value: 1
-  //       })
-  //     );
-  //   } else {
-  //     deleteHouseholdEnergyCategory({
-  //       parent_id: 4,
-  //       category_id: 3,
-  //     })
-  //   }
-  // }, [cfl]);
+  useEffect(() => {
+    if (cfl) {
+      dispatch(
+        addHouseholdEnegryCategory({
+          parent_id: 4,
+          category_id: 3,
+          id: 3,
+          name: "light-bulb-cfl",
+          selected: true,
+          value: 1
+        })
+      );
+    } else {
+      deleteHouseholdEnergyCategory({
+        parent_id: 4,
+        category_id: 3,
+      })
+    }
+  }, [cfl]);
 
   // Flourescent State
-  // useEffect(() => {
-  //   if (florescent) {
-  //     dispatch(
-  //       addHouseholdEnegryCategory({
-  //         parent_id: 4,
-  //         category_id: 4,
-  //         id: 4,
-  //         name: "light-bulb-florecent",
-  //         selected: true,
-  //         value: 1
-  //       })
-  //     );
-  //   } else {
-  //     deleteHouseholdEnergyCategory({
-  //       parent_id: 4,
-  //       category_id: 4,
-  //     })
-  //   }
-  // }, [florescent]);
+  useEffect(() => {
+    if (florescent) {
+      dispatch(
+        addHouseholdEnegryCategory({
+          parent_id: 4,
+          category_id: 4,
+          id: 4,
+          name: "light-bulb-florecent",
+          selected: true,
+          value: 1
+        })
+      );
+    } else {
+      deleteHouseholdEnergyCategory({
+        parent_id: 4,
+        category_id: 4,
+      })
+    }
+  }, [florescent]);
 
 
   useEffect(() => {
@@ -250,7 +286,6 @@ export default function LightBulbs({ opened, setOpened }: Props) {
       setSelected(true);
 
       lightBulbs[0]?.category?.map((item) => {
-        console.log(item);
         if (item.name == "light-bulb-incandecent") {
           setIncandescent(true);
           setIncandecentMax(item.value);
@@ -262,6 +297,19 @@ export default function LightBulbs({ opened, setOpened }: Props) {
           setFloresentMax(item.value);
           setFlorescentSlider(item.value);
         }
+
+        if (item.name == "light-bulb-cfl") {
+          setCfl(true);
+          setCflSlider(item.value);
+          setCflMax(item.value);
+        }
+
+        if (item.name == "light-bulb-led") {
+          setLed(true);
+          setLedSlider(item.value);
+          setLedMax(item.value);
+        }
+
       })
 
     }

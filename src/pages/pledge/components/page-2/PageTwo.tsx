@@ -1,4 +1,7 @@
-import { useEffect, useState } from "react";
+import {
+  // useEffect,
+  useState
+} from "react";
 
 // Layout
 import PagesLayout from "../../layouts/PagesLayout";
@@ -7,13 +10,13 @@ import PagesLayout from "../../layouts/PagesLayout";
 import { Tooltip } from "@mantine/core";
 
 // Axios
-import axios from "@/utils/axios";
+// import axios from "@/utils/axios";
 
 // State
-import {
-  useDispatch,
-  useSelector,
-} from "react-redux";
+// import {
+// useDispatch,
+// useSelector,
+// } from "react-redux";
 
 // Components
 import Cooking from "./components/Cooking";
@@ -24,15 +27,15 @@ import HeatingCooling from "./components/HeatingCooling";
 
 // Appasset
 import AppAsset from "@/core/AppAsset";
-import {
-  addTrees,
-  // addCarbonFootPrint,
-  addNewCarbonFootPrint,
-  addOldPledge,
-  addHouseholdEnergy,
-} from "@/state/pledge";
+// import {
+// addTrees,
+// addCarbonFootPrint,
+// addNewCarbonFootPrint,
+// addOldPledge,
+// addHouseholdEnergy,
+// } from "@/state/pledge";
 import TopDetail from "../TopDetail";
-import { pledgeCalculator } from "@/utils/pledgeCalculator";
+// import { pledgeCalculator } from "@/utils/pledgeCalculator";
 
 // Interface
 interface Props {
@@ -42,10 +45,10 @@ interface Props {
 export default function PageTwo({ setPage }: Props) {
   const [opened, setOpened] = useState<string>("heating-cooling");
 
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
-  const pledge = useSelector((state: any) => state.pledge);
-  const houseHoldEnergy = pledge.house_hold_energy;
+  // const pledge = useSelector((state: any) => state.pledge);
+  // const houseHoldEnergy = pledge.house_hold_energy;
 
   // useEffect(() => {
   //   // axios.get(`/api/v1/carbonFootPrint/endUser/${pledge.id}`)

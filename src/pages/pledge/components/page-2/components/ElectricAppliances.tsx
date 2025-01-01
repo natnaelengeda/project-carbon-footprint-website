@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { Slider } from '@mantine/core';
 
 // State
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 // Components
 import CheckboxComponent from '@/pages/carbonfootprint/components/CheckboxComponent';
@@ -12,7 +12,13 @@ import ArrowComponent from '@/pages/carbonfootprint/components/ArrowComponent';
 
 // App Asset
 import AppAsset from '@/core/AppAsset';
-import { addHouseholdEnegryCategory, addHouseholdEnergy, deleteHouseholdEnergy, deleteHouseholdEnergyCategory } from '@/state/pledge';
+import {
+  addHouseholdEnegryCategory,
+  // addHouseholdEnergy,
+  // deleteHouseholdEnergy,
+  deleteHouseholdEnergyCategory,
+  PledgeState
+} from '@/state/pledge';
 
 // Interface
 interface Props {
@@ -25,92 +31,204 @@ export default function ElectricAppliances({ opened, setOpened }: Props) {
 
   const [tvSelected, setTvSelected] = useState<boolean>(false);
   const [tvSlider, setTvSlider] = useState<number>(0);
+  const [tvSliderMax, setTvSliderMax] = useState<number | null>(null);
 
   const [washingSelected, setWashingSelected] = useState<boolean>(false);
   const [washingMachineSlider, setWashingMachineSlider] = useState<number>(0);
+  const [washingMachineSliderMax, setWashingMachineSliderMax] = useState<number | null>(null);
   const [washingMachineSlider1, setWashingMachineSlider1] = useState<number>(0);
+  const [washingMachineSlider1Max, setWashingMachineSlider1Max] = useState<number | null>(null);
 
   const [ironSelected, setIronSelected] = useState<boolean>(false);
   const [ironSlider, setIronSlider] = useState<number>(0);
+  const [ironSliderMax, setIronSliderMax] = useState<number | null>(null);
 
   const dispatch = useDispatch();
+  const pledge = useSelector((state: { pledge: PledgeState }) => state.pledge);
+  const houseHoldEnergy = pledge.house_hold_energy;
 
   const updateTVSlider = (value: number) => {
-    setTvSlider(value);
-    dispatch(
-      addHouseholdEnegryCategory({
-        parent_id: 3,
-        category_id: 1,
-        id: 1,
-        name: "electric-appliances-tv",
-        selected: true,
-        value: value
-      })
-    );
+    if (tvSliderMax == null) {
+      setTvSlider(value);
+      dispatch(
+        addHouseholdEnegryCategory({
+          parent_id: 3,
+          category_id: 1,
+          id: 1,
+          name: "electric-appliances-tv",
+          selected: true,
+          value: value
+        })
+      );
+    } else {
+      if (value > tvSlider) {
+
+      } else {
+        setTvSlider(value);
+        dispatch(
+          addHouseholdEnegryCategory({
+            parent_id: 3,
+            category_id: 1,
+            id: 1,
+            name: "electric-appliances-tv",
+            selected: true,
+            value: value
+          }));
+      }
+    }
+
   }
 
   const updateWashingMachineSlider = (value: number) => {
-    setWashingMachineSlider(value);
-    dispatch(
-      addHouseholdEnegryCategory({
-        parent_id: 3,
-        category_id: 2,
-        id: 2,
-        name: "electric-appliances-washing-machine",
-        selected: true,
-        value: washingMachineSlider1,
-        frequency: value
-      })
-    );
+    if (washingMachineSliderMax == null) {
+      setWashingMachineSlider(value);
+      dispatch(
+        addHouseholdEnegryCategory({
+          parent_id: 3,
+          category_id: 2,
+          id: 2,
+          name: "electric-appliances-washing-machine",
+          selected: true,
+          value: washingMachineSlider1,
+          frequency: value
+        }));
+    } else {
+      if (value > washingMachineSlider) {
+
+      } else {
+        setWashingMachineSlider(value);
+        dispatch(
+          addHouseholdEnegryCategory({
+            parent_id: 3,
+            category_id: 2,
+            id: 2,
+            name: "electric-appliances-washing-machine",
+            selected: true,
+            value: washingMachineSlider1,
+            frequency: value
+          }));
+      }
+    }
+
   }
 
   const updateWashingMachineSlider1 = (value: number) => {
-    setWashingMachineSlider1(value);
-    dispatch(
-      addHouseholdEnegryCategory({
-        parent_id: 3,
-        category_id: 2,
-        id: 2,
-        name: "electric-appliances-washing-machine",
-        selected: true,
-        frequency: washingMachineSlider,
-        value: value
-      })
-    );
+    if (washingMachineSlider1Max == null) {
+      setWashingMachineSlider1(value);
+      dispatch(
+        addHouseholdEnegryCategory({
+          parent_id: 3,
+          category_id: 2,
+          id: 2,
+          name: "electric-appliances-washing-machine",
+          selected: true,
+          frequency: washingMachineSlider,
+          value: value
+        }));
+    } else {
+      if (value > washingMachineSlider1Max) {
+
+      } else {
+        setWashingMachineSlider1(value);
+        dispatch(
+          addHouseholdEnegryCategory({
+            parent_id: 3,
+            category_id: 2,
+            id: 2,
+            name: "electric-appliances-washing-machine",
+            selected: true,
+            frequency: washingMachineSlider,
+            value: value
+          }));
+      }
+    }
+
   }
 
   const updateIronSlider = (value: number) => {
-    setIronSlider(value);
-    dispatch(
-      addHouseholdEnegryCategory({
-        parent_id: 3,
-        category_id: 3,
-        id: 3,
-        name: "electric-appliances-iron-clothes",
-        selected: true,
-        value: value
-      })
-    );
+    if (ironSliderMax == null) {
+      setIronSlider(value);
+      dispatch(
+        addHouseholdEnegryCategory({
+          parent_id: 3,
+          category_id: 3,
+          id: 3,
+          name: "electric-appliances-iron-clothes",
+          selected: true,
+          value: value
+        })
+      );
+    } else {
+      if (value > ironSliderMax) {
+
+      } else {
+        setIronSlider(value);
+        dispatch(
+          addHouseholdEnegryCategory({
+            parent_id: 3,
+            category_id: 3,
+            id: 3,
+            name: "electric-appliances-iron-clothes",
+            selected: true,
+            value: value
+          })
+        );
+      }
+    }
+
   }
 
 
   // Main Selet State
   useEffect(() => {
-    if (selected == true) {
-      dispatch(
-        addHouseholdEnergy({
-          id: 3,
-          name: "electric-appliances",
-          selected: true,
-          value: 1
-        })
-      )
-    } else {
-      dispatch(
-        deleteHouseholdEnergy({ id: 3 })
-      )
+    const electricAppliances = houseHoldEnergy.filter((item) => item.name == "electric-appliances");
+
+    if (electricAppliances.length != 0) {
+      setSelected(true);
+
+      electricAppliances[0]?.category?.map((category) => {
+
+
+        if (category.name == "electric-appliances-tv") {
+          setTvSelected(true);
+          setTvSlider(category.value);
+          setTvSliderMax(category.value);
+        }
+
+        if (category.name == "electric-appliances-washing-machine") {
+
+          setWashingSelected(true);
+          setWashingMachineSlider(category.frequency ?? 1);
+          setWashingMachineSliderMax(category.frequency ?? 1);
+          setWashingMachineSlider1(category.value);
+          setWashingMachineSlider1Max(category.value);
+        }
+
+        if (category.name == "electric-appliances-iron-clothes") {
+          setIronSelected(true);
+          setIronSlider(category.value);
+          setIronSliderMax(category.value);
+        }
+      })
+
     }
-  }, [selected]);
+
+    // if (selected == true) {
+    //   dispatch(
+    //     addHouseholdEnergy({
+    //       id: 3,
+    //       name: "electric-appliances",
+    //       selected: true,
+    //       value: 1
+    //     })
+    //   )
+    // } else {
+    //   dispatch(
+    //     deleteHouseholdEnergy({ id: 3 })
+    //   )
+    // }
+
+  }, []);
 
 
   // TV State
@@ -123,8 +241,7 @@ export default function ElectricAppliances({ opened, setOpened }: Props) {
           id: 1,
           name: "electric-appliances-tv",
           selected: true,
-          value: 1,
-          frequency: 1,
+          value: tvSlider,
         })
       );
     } else {
@@ -148,7 +265,8 @@ export default function ElectricAppliances({ opened, setOpened }: Props) {
           id: 2,
           name: "electric-appliances-washing-machine",
           selected: true,
-          value: 1
+          value: washingMachineSlider1,
+          frequency: washingMachineSlider
         })
       );
     } else {
@@ -161,6 +279,7 @@ export default function ElectricAppliances({ opened, setOpened }: Props) {
     }
   }, [washingSelected]);
 
+
   // Ironing Cloths State
   useEffect(() => {
     if (ironSelected) {
@@ -171,7 +290,7 @@ export default function ElectricAppliances({ opened, setOpened }: Props) {
           id: 3,
           name: "electric-appliances-iron-clothes",
           selected: true,
-          value: 1
+          value: ironSlider
         })
       );
     } else {

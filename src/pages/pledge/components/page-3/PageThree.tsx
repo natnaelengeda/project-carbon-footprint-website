@@ -24,8 +24,7 @@ interface Props {
 }
 
 export default function PageThree({ setPage }: Props) {
-  // const [opened, setOpened] = useState<string>("own-automobile");
-  const [opened, setOpened] = useState<string>("walking");
+  const [opened, setOpened] = useState<string>("own-automobile");
 
   return (
     <PagesLayout>

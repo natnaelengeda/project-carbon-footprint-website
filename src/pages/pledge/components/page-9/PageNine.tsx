@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 // Page Layout
 import PagesLayout from "../../layouts/PagesLayout";
@@ -18,6 +18,7 @@ import axios from "@/utils/axios";
 
 // Utils
 import { mapDataPledge } from '@/utils/mapDataPledge';
+import { CalculateCarbonFootPrint } from '@/utils/CarbonFootPrintCalculator';
 
 // Interface
 interface Props {
@@ -25,6 +26,8 @@ interface Props {
 }
 
 export default function PageNine({ setPage }: Props) {
+  const [sum, setSum] = useState<number>(0);
+  const [trees, setTrees] = useState<number>(0);
   const [option, setOption] = useState<boolean>(true);
   const [treeCount, setTreeCount] = useState<number>(1);
 
@@ -59,6 +62,16 @@ export default function PageNine({ setPage }: Props) {
       });
   }
 
+  useEffect(() => {
+    const sum = CalculateCarbonFootPrint(pledge);
+    setSum(sum);
+
+  }, [pledge]);
+
+  useEffect(() => {
+    setTrees(sum / 167);
+  }, [sum]);
+
   return (
     <PagesLayout>
       <div className='w-full h-full flex flex-col items-center justify-start'>
@@ -79,7 +92,7 @@ export default function PageNine({ setPage }: Props) {
             className='w-full md:w-[738px] h-auto flex flex-col items-center'>
             <p
               className='text-2xl md:text-[56px] font-bold text-center md:leading-[50px]'>
-              Great! You Just Saved <span className='text-primary'>23 out of {(pledge.carbon_footprint / 167).toFixed(0)} Trees</span> from Burning.
+              Great! You Just Saved <span className='text-primary'>{trees.toFixed(0)} out of {(pledge.carbon_footprint / 167).toFixed(0)} Trees</span> from Burning.
             </p>
           </div>
 

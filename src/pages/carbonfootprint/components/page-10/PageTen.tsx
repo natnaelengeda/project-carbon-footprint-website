@@ -104,7 +104,7 @@ export default function PageTen({ setPage }: Props) {
       Energy: energyUsage,
     };
 
-    const minValue = Math.min(...Object.values(data));
+    const minValue = Math.min(...Object.values(data).map(value => value as number));
     const lowestKeys = Object.keys(data).filter((key) => data[key] === minValue);
 
     return lowestKeys; // Returns an array of names with the lowest value

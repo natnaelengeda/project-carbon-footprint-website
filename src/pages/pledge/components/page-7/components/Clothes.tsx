@@ -5,7 +5,11 @@ import { Slider } from "@mantine/core";
 
 // State
 import { useDispatch, useSelector } from "react-redux";
-import { addWaterUsage, deleteWaterUsage, PledgeState } from "@/state/pledge";
+import {
+  addWaterUsage,
+  // deleteWaterUsage,
+  PledgeState
+} from "@/state/pledge";
 
 // Components
 import CheckboxComponent from "@/pages/carbonfootprint/components/CheckboxComponent";
@@ -64,7 +68,6 @@ export default function Clothes({ opened, setOpened }: Props) {
       }
     }
 
-    console.log(clothes)
 
     // if (selected) {
     //   dispatch(

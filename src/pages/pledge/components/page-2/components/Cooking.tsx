@@ -7,8 +7,8 @@ import { Slider } from '@mantine/core';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   addHouseholdEnegryCategory,
-  addHouseholdEnergy,
-  deleteHouseholdEnergy,
+  // addHouseholdEnergy,
+  // deleteHouseholdEnergy,
   deleteHouseholdEnergyCategory,
   PledgeState
 } from '@/state/pledge';
@@ -19,7 +19,7 @@ import ArrowComponent from '@/pages/carbonfootprint/components/ArrowComponent';
 
 // App Asset
 import AppAsset from '@/core/AppAsset';
-import toast from 'react-hot-toast';
+// import toast from 'react-hot-toast';
 
 
 interface Props {
@@ -33,11 +33,14 @@ export default function Cooking({ opened, setOpened }: Props) {
   const [stoveSelected, setStoveSelected] = useState<boolean>(false);
   const [stoveSlider, setStoveSlider] = useState<number>(0);
   const [stoveMax, setStoveMax] = useState<number | null>(null);
+
   const [charcoalSelected, setCharcoalSelected] = useState<boolean>(false);
   const [charcoalSlider, setCharcoalSlider] = useState<number>(0);
+  const [charcoalMax, setCharcoalMax] = useState<number | null>(null);
 
   const [gasSelected, setGasSelected] = useState<boolean>(false);
   const [gasSlider, setGasSlider] = useState<number>(0);
+  const [gasMax, setGasMax] = useState<number | null>(null);
 
   // State
   const dispatch = useDispatch();
@@ -79,31 +82,65 @@ export default function Cooking({ opened, setOpened }: Props) {
   }
 
   const updateCharcoalSlider = (value: number) => {
-    setCharcoalSlider(value);
-    dispatch(
-      addHouseholdEnegryCategory({
-        parent_id: 2,
-        category_id: 2,
-        id: 2,
-        name: "cooking-charcoal",
-        selected: true,
-        value: value
-      })
-    );
+    if (charcoalMax == null) {
+      setCharcoalSlider(value);
+      dispatch(
+        addHouseholdEnegryCategory({
+          parent_id: 2,
+          category_id: 2,
+          id: 2,
+          name: "cooking-charcoal",
+          selected: true,
+          value: value
+        }));
+    } else {
+      if (value > charcoalMax) {
+        // toast("Can not go above your previous foot print");
+      } else {
+        setCharcoalSlider(value);
+        dispatch(
+          addHouseholdEnegryCategory({
+            parent_id: 2,
+            category_id: 2,
+            id: 2,
+            name: "cooking-charcoal",
+            selected: true,
+            value: value
+          }));
+      }
+    }
+
   }
 
   const updateGasSlider = (value: number) => {
-    setGasSlider(value);
-    dispatch(
-      addHouseholdEnegryCategory({
-        parent_id: 2,
-        category_id: 3,
-        id: 3,
-        name: "cooking-gas-stove",
-        selected: true,
-        value: value
-      })
-    );
+    if (gasMax == null) {
+      setGasSlider(value);
+      dispatch(
+        addHouseholdEnegryCategory({
+          parent_id: 2,
+          category_id: 3,
+          id: 3,
+          name: "cooking-gas-stove",
+          selected: true,
+          value: value
+        }));
+    } else {
+      if (value > gasMax) {
+        // toast("Can not go above your previous foot print");
+      } else {
+        setGasSlider(value);
+        dispatch(
+          addHouseholdEnegryCategory({
+            parent_id: 2,
+            category_id: 3,
+            id: 3,
+            name: "cooking-gas-stove",
+            selected: true,
+            value: value
+          }));
+      }
+    }
+
   }
 
 
@@ -125,51 +162,74 @@ export default function Cooking({ opened, setOpened }: Props) {
   // }, [selected]);
 
   // // Update for Stove Selection
-  // useEffect(() => {
-  //   if (stoveSelected == true) {
-  //     dispatch(
-  //       addHouseholdEnegryCategory({
-  //         parent_id: 2,
-  //         category_id: 1,
-  //         id: 1,
-  //         name: "cooking-electric-stove",
-  //         selected: true,
-  //         value: 1
-  //       })
-  //     );
-  //   } else {
-  //     dispatch(
-  //       deleteHouseholdEnergyCategory({
-  //         parent_id: 2,
-  //         category_id: 1,
-  //       })
-  //     )
-  //   }
-  // }, [stoveSelected]);
+  useEffect(() => {
+    if (stoveSelected == true) {
+      dispatch(
+        addHouseholdEnegryCategory({
+          parent_id: 2,
+          category_id: 1,
+          id: 1,
+          name: "cooking-electric-stove",
+          selected: true,
+          value: 1
+        })
+      );
+    } else {
+      dispatch(
+        deleteHouseholdEnergyCategory({
+          parent_id: 2,
+          category_id: 1,
+        })
+      )
+    }
+  }, [stoveSelected]);
 
   // // Update for Charcoal Selection
-  // useEffect(() => {
-  //   if (charcoalSelected) {
-  //     dispatch(
-  //       addHouseholdEnegryCategory({
-  //         parent_id: 2,
-  //         category_id: 2,
-  //         id: 2,
-  //         name: "cooking-charcoal",
-  //         selected: true,
-  //         value: 1
-  //       })
-  //     );
-  //   } else {
-  //     dispatch(
-  //       deleteHouseholdEnergyCategory({
-  //         parent_id: 2,
-  //         category_id: 2
-  //       })
-  //     )
-  //   }
+  useEffect(() => {
+    if (charcoalSelected) {
+      dispatch(
+        addHouseholdEnegryCategory({
+          parent_id: 2,
+          category_id: 2,
+          id: 2,
+          name: "cooking-charcoal",
+          selected: true,
+          value: 1
+        })
+      );
+    } else {
+      dispatch(
+        deleteHouseholdEnergyCategory({
+          parent_id: 2,
+          category_id: 2
+        })
+      )
+    }
 
-  // }, [charcoalSelected]);
+  }, [charcoalSelected]);
+
+  // Update for Gas Selection
+  useEffect(() => {
+    if (gasSelected) {
+      dispatch(
+        addHouseholdEnegryCategory({
+          parent_id: 2,
+          category_id: 3,
+          id: 3,
+          name: "cooking-gas-stove",
+          selected: true,
+          value: 1
+        })
+      );
+    } else {
+      dispatch(
+        deleteHouseholdEnergyCategory({
+          parent_id: 2,
+          category_id: 3
+        })
+      )
+    }
+  }, [gasSelected]);
 
   useEffect(() => {
     const cooking = houseHoldEnergy.filter((item: any) => item.name == "cooking");
@@ -179,39 +239,26 @@ export default function Cooking({ opened, setOpened }: Props) {
 
       cooking[0]?.category?.map((item) => {
         if (item.name == "cooking-electric-stove") {
-          console.log(item);
           setStoveSelected(true);
           setStoveMax(item.value);
           setStoveSlider(item.value);
-          // setStove
-
         }
+
+        if (item.name == "cooking-charcoal") {
+          setCharcoalSelected(true);
+          setCharcoalSlider(item.value);
+          setCharcoalMax(item.value);
+        }
+
+        if (item.name == "cooking-gas-stove") {
+          setGasSelected(true);
+          setGasSlider(item.value);
+          setGasMax(item.value);
+        }
+
       })
     }
   }, []);
-
-  // Update for Gas Selection
-  // useEffect(() => {
-  //   if (gasSelected) {
-  //     dispatch(
-  //       addHouseholdEnegryCategory({
-  //         parent_id: 2,
-  //         category_id: 3,
-  //         id: 3,
-  //         name: "cooking-gas-stove",
-  //         selected: true,
-  //         value: 1
-  //       })
-  //     );
-  //   } else {
-  //     dispatch(
-  //       deleteHouseholdEnergyCategory({
-  //         parent_id: 2,
-  //         category_id: 3
-  //       })
-  //     )
-  //   }
-  // }, [gasSelected]);
 
 
   return (

@@ -20,6 +20,10 @@ interface Props {
 export default function LeadersBoard({ score, setPage }: Props) {
   const [leaderboardData, setLeaderboardData] = useState<ParticipantData[]>([]);
 
+  if (false) {
+    console.log(score);
+  }
+
   const fetchLeaderboardData = () => {
     axios.get("/api/v1/questionAttempts/top10")
       .then((response) => {

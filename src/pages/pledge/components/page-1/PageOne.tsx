@@ -17,6 +17,7 @@ import { generateRandomId } from "@/utils/idGenerator";
 import { generateRandomName } from "@/utils/randomNameGenerator";
 import { useDispatch } from "react-redux";
 import {
+  addCarbonFootPrint,
   addDiet,
   addHouseholdEnegryCategory,
   addHouseholdEnergy,
@@ -49,6 +50,7 @@ export default function PageOne({ setPage }: Props) {
   const [selectedUser, setSelectedUser] = useState<UserType | null>(null);
   const [searchName, setSearchName] = useState("");
   const [searchData, setSearchData] = useState([]);
+  // const [sumOldData, setSumOldData] = useState<number>(0);
 
   const [loading, setLoading] = useState(true);
 
@@ -81,6 +83,17 @@ export default function PageOne({ setPage }: Props) {
     axios.get(`/api/v1/carbonFootPrint/endUser/${id}`)
       .then((response) => {
         const values = response.data.value;
+        const data = response.data.data;
+
+        var sum = 0;
+        sum = data.dietAndFood + data.foodWastage + data.householdEnergy + data.transportationMode + data.wasteDisposal + data.waterusage;
+
+        dispatch(
+          addCarbonFootPrint({
+            data: sum
+          }));
+
+        console.log(sum)
 
         const houseHoldEnergy = values.householdEnergy;
         const transportationMode = values.transportationMode;
@@ -145,7 +158,6 @@ export default function PageOne({ setPage }: Props) {
                 name: "electric-appliances-tv",
                 selected: true,
                 value: item.hourlyUsagePerDay,
-                frequency: item.frequencyperWeek
               }));
           }
 
@@ -459,7 +471,6 @@ export default function PageOne({ setPage }: Props) {
             })
           )
         }
-
 
         // Meat
         if (diet.meat) {
