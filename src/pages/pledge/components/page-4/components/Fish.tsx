@@ -4,8 +4,8 @@ import { useEffect, useState } from 'react'
 import { Slider } from '@mantine/core';
 
 // state
-import { useDispatch } from 'react-redux';
-import { addDiet, deleteDiet } from '@/state/pledge';
+import { useDispatch, useSelector } from 'react-redux';
+import { addDiet, deleteDiet, PledgeState } from '@/state/pledge';
 
 // Compnoents
 import CheckboxComponent from '@/pages/carbonfootprint/components/CheckboxComponent';
@@ -19,40 +19,68 @@ interface Props {
 
 export default function Fish({ opened, setOpened }: Props) {
   const [selected, setSelected] = useState<boolean>(false);
-  const [slider, setSlider] = useState<number>(1);
 
+  const [slider, setSlider] = useState<number>(1);
+  const [sliderMax, setSliderMax] = useState<number | null>(null);
 
   const dispatch = useDispatch();
 
-  const updateSlider = (value: number) => {
-    setSlider(value);
-    dispatch(
-      addDiet({
-        id: 4,
-        name: "fish",
-        selected: true,
-        value: value,
-      }));
-  }
+  const pledge = useSelector((state: { pledge: PledgeState }) => state.pledge);
+  const diet = pledge.diet;
 
-  useEffect(() => {
-    if (selected) {
+  const updateSlider = (value: number) => {
+    if (sliderMax == null) {
+      setSlider(value);
       dispatch(
         addDiet({
           id: 4,
           name: "fish",
           selected: true,
-          value: 1,
-        })
-      )
+          value: value,
+        }));
     } else {
-      dispatch(
-        deleteDiet({
-          id: 4
-        })
-      )
+      if (value > sliderMax) {
+
+      } else {
+        setSlider(value);
+        dispatch(
+          addDiet({
+            id: 4,
+            name: "fish",
+            selected: true,
+            value: value,
+          }));
+      }
     }
-  }, [selected]);
+  }
+
+  useEffect(() => {
+    const fish = diet.filter((item: any) => item.name == "fish")
+
+    if (fish.length != 0) {
+      setSelected(true);
+      if (fish) {
+        setSlider(fish[0].value);
+        setSliderMax(fish[0].value);
+      }
+    }
+    // if (selected) {
+    //   dispatch(
+    //     addDiet({
+    //       id: 4,
+    //       name: "fish",
+    //       selected: true,
+    //       value: 1,
+    //     })
+    //   )
+    // } else {
+    //   dispatch(
+    //     deleteDiet({
+    //       id: 4
+    //     })
+    //   )
+    // }
+  }, []);
   return (
     <div
       className='w-full h-auto flex flex-col items-start justify-start gap-3'>

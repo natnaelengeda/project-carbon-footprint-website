@@ -23,6 +23,11 @@ export const CalculateCarbonFootPrint = (pledge: PledgeState) => {
         if (category.name == "electric_air_conditioning") {
           sum += category.value * electricCarbonEmitedKgPerKwh * 1.5 * year;
         }
+
+        if (category.name == "charcoal") {
+          sum += category.value * electricCarbonEmitedKgPerKwh * 0.58 * year;
+        }
+
       })
     }
 
@@ -31,6 +36,14 @@ export const CalculateCarbonFootPrint = (pledge: PledgeState) => {
       item.category.map((category: any) => {
         if (category.name == "cooking-electric-stove") {
           sum += category.value * electricCarbonEmitedKgPerKwh * 0.58 * year;
+        }
+
+        if (category.name == "cooking-charcoal") {
+          sum += category.value * electricCarbonEmitedKgPerKwh * 0.58 * year;
+        }
+
+        if (category.name == "cooking-gas-stove") {
+          sum += category.value * electricCarbonEmitedKgPerKwh * 0.189 * year;
         }
       })
     }
@@ -43,13 +56,13 @@ export const CalculateCarbonFootPrint = (pledge: PledgeState) => {
         }
 
         if (category.name == "electric-appliances-washing-machine") {
-          var frequencyperWeek = item.frequency ? item.frequency : 3;
-          sum += item.value * frequencyperWeek * 0.5 * electricCarbonEmitedKgPerKwh * week;
+          var frequencyperWeek = category.frequency ? category.frequency : 3;
+          sum += category.value * 0.5 * electricCarbonEmitedKgPerKwh * week;
         }
 
         if (category.name == "electric-appliances-iron-clothes") {
-          var frequencyperWeek = item.frequency ? item.frequency : 3;
-          sum += item.value * frequencyperWeek * electricCarbonEmitedKgPerKwh * 1.1 * week;
+          var frequencyperWeek = category.frequency ? category.frequency : 3;
+          sum += category.value * frequencyperWeek * electricCarbonEmitedKgPerKwh * 1.1 * week;
         }
       });
     }
@@ -57,17 +70,28 @@ export const CalculateCarbonFootPrint = (pledge: PledgeState) => {
     // Light Bulbs
     if (item.name == "light-bulbs") {
       item.category.map((category: any) => {
+
         if (category.name == "light-bulb-incandecent") {
-          sum += 10 * electricCarbonEmitedKgPerKwh * 0.04 * year;
+          sum += category.value * electricCarbonEmitedKgPerKwh * 0.04 * year;
         }
 
         if (category.name == "light-bulb-florecent") {
-          sum += item.value * electricCarbonEmitedKgPerKwh * 0.036 * year;
-          // console.log("Light Bulb Florecent", category)
+          sum += category.value * electricCarbonEmitedKgPerKwh * 0.036 * year;
+        }
+
+        if (category.name == "light-bulb-led") {
+          sum += category.value * electricCarbonEmitedKgPerKwh * 0.007 * year;
+        }
+
+        if (category.name == "light-bulb-cfl") {
+          sum += category.value * electricCarbonEmitedKgPerKwh * 0.013 * year;
         }
       })
     }
   });
+
+
+  
 
   return sum;
 }

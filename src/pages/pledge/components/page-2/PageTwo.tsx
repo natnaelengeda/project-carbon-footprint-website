@@ -195,9 +195,9 @@ export default function PageTwo({ setPage }: Props) {
               setOpened={setOpened} />
 
             {/* Electric Appliances */}
-            {/* <ElectricAppliances
+            <ElectricAppliances
               opened={opened}
-              setOpened={setOpened} /> */}
+              setOpened={setOpened} />
 
             {/* Light Bulbs */}
             <LightBulbs

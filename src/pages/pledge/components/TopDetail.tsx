@@ -16,8 +16,6 @@ export default function TopDetail() {
   const pledge = useSelector((state: { pledge: PledgeState }) => state.pledge);
   // const trees = useSelector((state: { pledge: any; trees: number }) => state.pledge.trees);
 
-
-
   // console.log(houseHoldEnergy);
 
 
@@ -35,10 +33,10 @@ export default function TopDetail() {
     <p className="text-xl md:text-[32px] text-[#B7B7B7]">
       Your carbon footprint of
       <b
-        className="font-bold text-black"> {sum} Kg CO2e </b>
+        className="font-bold text-black"> {sum.toFixed(2)} Kg CO2e </b>
       as a result of your household energy usage is equivalent to burning
       <b
-        className="font-bold text-black"> {trees} trees
+        className="font-bold text-black"> {trees.toFixed(2)} trees
       </b>.
     </p>
   )

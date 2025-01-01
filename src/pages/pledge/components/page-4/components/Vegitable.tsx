@@ -4,8 +4,8 @@ import { useEffect, useState } from 'react';
 import { Slider } from '@mantine/core';
 
 // State
-import { useDispatch } from 'react-redux';
-import { addDiet, deleteDiet } from '@/state/pledge';
+import { useDispatch, useSelector } from 'react-redux';
+import { addDiet, deleteDiet, PledgeState } from '@/state/pledge';
 
 // Components
 import CheckboxComponent from '@/pages/carbonfootprint/components/CheckboxComponent';
@@ -20,40 +20,69 @@ interface Props {
 
 export default function Vegitable({ opened, setOpened }: Props) {
   const [selected, setSelected] = useState<boolean>(false);
+
   const [slider, setSlider] = useState<number>(1);
+  const [sliderMax, setSliderMax] = useState<number | null>(null);
 
   const dispatch = useDispatch();
 
-  const updateSlider = (value: number) => {
-    setSlider(value);
-    dispatch(
-      addDiet({
-        id: 2,
-        name: "vegitable",
-        selected: true,
-        value: value,
-      })
-    )
-  }
+  const pledge = useSelector((state: { pledge: PledgeState }) => state.pledge);
+  const diet = pledge.diet;
 
-  useEffect(() => {
-    if (selected) {
+  const updateSlider = (value: number) => {
+    if (sliderMax == null) {
+      setSlider(value);
       dispatch(
         addDiet({
           id: 2,
           name: "vegitable",
           selected: true,
-          value: 1,
-        })
-      )
+          value: value,
+        }));
     } else {
-      dispatch(
-        deleteDiet({
-          id: 2
-        })
-      )
+      if (value > sliderMax) {
+
+      } else {
+        setSlider(value);
+        dispatch(
+          addDiet({
+            id: 2,
+            name: "vegitable",
+            selected: true,
+            value: value,
+          }));
+      }
     }
-  }, [selected]);
+
+  }
+
+  useEffect(() => {
+    const vegitable = diet.filter((item: any) => item.name == "vegitable")
+
+    if (vegitable.length != 0) {
+      setSelected(true);
+      if (vegitable) {
+        setSlider(vegitable[0].value);
+        setSliderMax(vegitable[0].value);
+      }
+    }
+    // if (selected) {
+    //   dispatch(
+    //     addDiet({
+    //       id: 2,
+    //       name: "vegitable",
+    //       selected: true,
+    //       value: 1,
+    //     })
+    //   )
+    // } else {
+    //   dispatch(
+    //     deleteDiet({
+    //       id: 2
+    //     })
+    //   )
+    // }
+  }, []);
 
   return (
     <div

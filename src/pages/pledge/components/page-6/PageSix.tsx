@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 // Page Layout
 import PagesLayout from "../../layouts/PagesLayout";
@@ -7,8 +7,8 @@ import PagesLayout from "../../layouts/PagesLayout";
 import { Slider, Tooltip } from "@mantine/core";
 
 // State
-import { useDispatch } from "react-redux";
-import { updateFoodWastage } from "@/state/pledge";
+import { useDispatch, useSelector } from "react-redux";
+import { PledgeState, updateFoodWastage } from "@/state/pledge";
 
 // App Asset
 import AppAsset from "@/core/AppAsset";
@@ -24,16 +24,37 @@ interface Props {
 
 export default function PageSix({ setPage }: Props) {
   const [slider, setSlider] = useState<number>(1);
+  const [sliderMax, setSliderMax] = useState<number | null>(null);
 
   const dispatch = useDispatch();
+  const pledge = useSelector((state: { pledge: PledgeState }) => state.pledge);
+  const foodWaste = pledge.food_wastage;
 
   const updateSlider = (value: number) => {
-    setSlider(value);
-    dispatch(updateFoodWastage({
-      food_wastage: value
-    }))
+    if (sliderMax == null) {
+      setSlider(value);
+      dispatch(updateFoodWastage({
+        food_wastage: value
+      }))
+    } else {
+      if (value > sliderMax) {
+
+      } else {
+        setSlider(value);
+        dispatch(updateFoodWastage({
+          food_wastage: value
+        }))
+      }
+    }
+
   }
 
+  useEffect(() => {
+    if (foodWaste) {
+      setSlider(foodWaste);
+      setSliderMax(foodWaste);
+    }
+  }, []);
 
   return (
     <PagesLayout>
@@ -69,7 +90,7 @@ export default function PageSix({ setPage }: Props) {
                   src={AppAsset.InformationGreenIcon}
                   className='w-[36px] h-[36px] object-contain' />
               </Tooltip>
-              <TopDetail/>
+              <TopDetail />
             </div>
 
             <div className="pt-2 md:pt-10">

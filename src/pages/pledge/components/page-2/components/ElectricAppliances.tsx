@@ -58,7 +58,8 @@ export default function ElectricAppliances({ opened, setOpened }: Props) {
         id: 2,
         name: "electric-appliances-washing-machine",
         selected: true,
-        value: value
+        value: washingMachineSlider1,
+        frequency: value
       })
     );
   }
@@ -72,7 +73,8 @@ export default function ElectricAppliances({ opened, setOpened }: Props) {
         id: 2,
         name: "electric-appliances-washing-machine",
         selected: true,
-        frequency: value
+        frequency: washingMachineSlider,
+        value: value
       })
     );
   }
@@ -121,7 +123,8 @@ export default function ElectricAppliances({ opened, setOpened }: Props) {
           id: 1,
           name: "electric-appliances-tv",
           selected: true,
-          value: 1
+          value: 1,
+          frequency: 1,
         })
       );
     } else {

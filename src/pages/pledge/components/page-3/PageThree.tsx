@@ -24,7 +24,8 @@ interface Props {
 }
 
 export default function PageThree({ setPage }: Props) {
-  const [opened, setOpened] = useState<string>("own-automobile");
+  // const [opened, setOpened] = useState<string>("own-automobile");
+  const [opened, setOpened] = useState<string>("walking");
 
   return (
     <PagesLayout>
@@ -60,7 +61,7 @@ export default function PageThree({ setPage }: Props) {
                   src={AppAsset.InformationGreenIcon}
                   className='w-[36px] h-[36px] object-contain' />
               </Tooltip>
-              <TopDetail/>
+              <TopDetail />
             </div>
 
             <div className="pt-2 md:pt-10">

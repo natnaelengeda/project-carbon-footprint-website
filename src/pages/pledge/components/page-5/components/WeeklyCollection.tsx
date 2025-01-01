@@ -4,8 +4,8 @@ import { useEffect, useState } from "react"
 import { Slider } from "@mantine/core";
 
 // State
-import { useDispatch } from "react-redux";
-import { addWaste, deleteWaste } from "@/state/pledge";
+import { useDispatch, useSelector } from "react-redux";
+import { addWaste, deleteWaste, PledgeState } from "@/state/pledge";
 
 // Components
 import CheckboxComponent from "@/pages/carbonfootprint/components/CheckboxComponent";
@@ -19,36 +19,67 @@ interface Props {
 
 export default function WeeklyCollection({ opened, setOpened }: Props) {
   const [selected, setSelected] = useState<boolean>(false);
+
   const [slider, setSlider] = useState<number>(0);
+  const [sliderMax, setSliderMax] = useState<number | null>(null);
 
   const dispatch = useDispatch();
 
-  const updateSlider = (value: number) => {
-    setSlider(value)
-    dispatch(
-      addWaste({
-        id: 1,
-        name: "weekly-collection",
-        value: value,
-      }));
-  }
+  const pledge = useSelector((state: { pledge: PledgeState }) => state.pledge);
+  const waste = pledge.waste;
 
-  // Update Main State
-  useEffect(() => {
-    if (selected) {
+  const updateSlider = (value: number) => {
+    if (sliderMax == null) {
+      setSlider(value)
       dispatch(
         addWaste({
           id: 1,
           name: "weekly-collection",
-          value: 1,
+          value: value,
         }));
     } else {
-      dispatch(
-        deleteWaste({
-          id: 1,
-        }));
+      if (value > sliderMax) {
+
+      } else {
+        setSlider(value)
+        dispatch(
+          addWaste({
+            id: 1,
+            name: "weekly-collection",
+            value: value,
+          }));
+      }
     }
-  }, [selected]);
+
+
+  }
+
+  // Update Main State
+  useEffect(() => {
+    const weeklyCollection = waste.filter((item: any) => item.name == "weekly-collection");
+
+    if (weeklyCollection.length != 0) {
+      setSelected(true);
+      if (weeklyCollection) {
+        setSlider(weeklyCollection[0].value);
+        setSliderMax(weeklyCollection[0].value);
+      }
+    }
+
+    // if (selected) {
+    //   dispatch(
+    //     addWaste({
+    //       id: 1,
+    //       name: "weekly-collection",
+    //       value: 1,
+    //     }));
+    // } else {
+    //   dispatch(
+    //     deleteWaste({
+    //       id: 1,
+    //     }));
+    // }
+  }, []);
 
   return (
     <div

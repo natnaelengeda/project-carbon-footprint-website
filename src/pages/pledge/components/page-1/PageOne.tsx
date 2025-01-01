@@ -16,7 +16,17 @@ import toast from "react-hot-toast";
 import { generateRandomId } from "@/utils/idGenerator";
 import { generateRandomName } from "@/utils/randomNameGenerator";
 import { useDispatch } from "react-redux";
-import { addHouseholdEnegryCategory, addHouseholdEnergy, addName } from "@/state/pledge";
+import {
+  addDiet,
+  addHouseholdEnegryCategory,
+  addHouseholdEnergy,
+  addName,
+  addTransportationMode,
+  addTransportCategory,
+  addWaste,
+  addWaterUsage,
+  updateFoodWastage
+} from "@/state/pledge";
 
 // Interface
 interface Props {
@@ -54,7 +64,6 @@ export default function PageOne({ setPage }: Props) {
   }
 
   const updateSearchInput = (e: any) => {
-    console.log(e.target.value);
     setSearchName(e.target.value);
     fetchUsersByName(e.target.value);
   }
@@ -69,21 +78,17 @@ export default function PageOne({ setPage }: Props) {
   }
 
   const getUserDetails = (id: string) => {
-    axios.get(`/api/v1/carbonFootPrint/endUser/676ea4fe0a21a0dcd886801c`)
+    axios.get(`/api/v1/carbonFootPrint/endUser/${id}`)
       .then((response) => {
-        const data = response.data.data;
         const values = response.data.value;
 
         const houseHoldEnergy = values.householdEnergy;
         const transportationMode = values.transportationMode;
         const diet = values.dietAndFood;
         const waste = values.wasteDisposal;
-        const water = values.waterUsage;
-        const housingType = values.housingType;
         const foodWastage = values.foodWastage;
+        const water = values.waterUsage;
 
-
-        // console.log(houseHoldEnergy);
 
         // House Hold Energy
         // Heating and Cooling
@@ -190,7 +195,6 @@ export default function PageOne({ setPage }: Props) {
 
         // Cooking
         houseHoldEnergy.cooking.map((item: any) => {
-          console.log(item)
           if (item.type == "electric") {
             dispatch(
               addHouseholdEnergy({
@@ -254,28 +258,317 @@ export default function PageOne({ setPage }: Props) {
                 value: item.hourlyUsagePerDay
               })
             );
-
-
           }
         })
 
+        // Transportation Mode
+        // AutoMobile
+        transportationMode.ownAutomobile.map((item: any) => {
+          if (item.type == "gasPowered") {
+            dispatch(
+              addTransportationMode({
+                id: 1,
+                name: "automobile",
+                selected: true,
+                value: 1,
+              })
+            );
+
+            dispatch(
+              addTransportCategory({
+                parent_id: 1,
+                category_id: 1,
+                name: "gas-powered",
+                value: item.distance,
+                frequency: item.frequencyperWeek,
+              })
+            );
+          }
+
+          if (item.type == "electricPowered") {
+            dispatch(
+              addTransportationMode({
+                id: 1,
+                name: "automobile",
+                selected: true,
+                value: 1,
+              })
+            );
+
+            dispatch(
+              addTransportCategory({
+                parent_id: 1,
+                category_id: 2,
+                name: "electric-powered",
+                value: item.distance,
+                frequency: item.frequencyperWeek,
+              })
+            );
+          }
+
+          if (item.type == "hybrid") {
+            dispatch(
+              addTransportationMode({
+                id: 1,
+                name: "automobile",
+                selected: true,
+                value: 1,
+              })
+            );
+            dispatch(
+              addTransportCategory({
+                parent_id: 1,
+                category_id: 3,
+                name: "hybrid-powered",
+                value: item.distance,
+                frequency: item.frequencyperWeek,
+              })
+            );
+          }
+        });
+
+        // Public Transport
+        transportationMode.publicTransport.map((item: any) => {
+
+          if (item.type == "bus") {
+            dispatch(
+              addTransportationMode({
+                id: 2,
+                name: "public-transport",
+                selected: true,
+                value: 1,
+              }));
+
+            dispatch(
+              addTransportCategory({
+                parent_id: 2,
+                category_id: 1,
+                name: "bus",
+                value: item.distance,
+                frequency: item.frequencyperWeek,
+              }));
+          }
+
+          if (item.type == "taxi") {
+            dispatch(
+              addTransportationMode({
+                id: 2,
+                name: "public-transport",
+                selected: true,
+                value: 1,
+              }));
+
+            dispatch(
+              addTransportCategory({
+                parent_id: 2,
+                category_id: 2,
+                name: "taxi",
+                value: item.distance,
+                frequency: item.frequencyperWeek,
+              }));
+          }
 
 
+          if (item.type == "train") {
+            dispatch(
+              addTransportationMode({
+                id: 2,
+                name: "public-transport",
+                selected: true,
+                value: 1,
+              }));
+
+            dispatch(
+              addTransportCategory({
+                parent_id: 2,
+                category_id: 3,
+                name: "train",
+                value: item.distance,
+                frequency: item.frequencyperWeek,
+              }));
+          }
 
 
+          if (item.type == "ride") {
+            dispatch(
+              addTransportationMode({
+                id: 2,
+                name: "public-transport",
+                selected: true,
+                value: 1,
+              }));
+
+            dispatch(
+              addTransportCategory({
+                parent_id: 2,
+                category_id: 4,
+                name: "ride",
+                value: item.distance,
+                frequency: item.frequencyperWeek,
+              }));
+          }
+
+        });
+
+        // Bicycle
+        transportationMode.bicycle.map((item: any) => {
+          dispatch(
+            addTransportationMode({
+              id: 3,
+              name: "bicycle",
+              selected: true,
+              value: item.distance,
+              frequency: item.frequencyperWeek,
+            })
+          );
+        });
+
+        // Walking
+        transportationMode.walking.map((item: any) => {
+          dispatch(
+            addTransportationMode({
+              id: 4,
+              name: 'walking',
+              selected: true,
+              value: item.distance,
+              frequency: item.frequencyperWeek,
+            })
+          )
+        })
+
+        // Diet and Food
+        //  Poultry
+        if (diet.poultry) {
+          dispatch(
+            addDiet({
+              id: 1,
+              name: "poultry",
+              selected: true,
+              value: diet.poultry.weeklyUsage,
+            }));
+        }
+
+        // Vegitable
+        if (diet.vegetable) {
+          dispatch(
+            addDiet({
+              id: 2,
+              name: "vegitable",
+              selected: true,
+              value: diet.vegetable.weeklyUsage,
+            })
+          )
+        }
 
 
+        // Meat
+        if (diet.meat) {
+          dispatch(
+            addDiet({
+              id: 3,
+              name: "meat",
+              selected: true,
+              value: diet.meat.weeklyUsage,
+            })
+          )
+        }
 
+        // Fish
+        if (diet.fish) {
+          dispatch(
+            addDiet({
+              id: 4,
+              name: "fish",
+              selected: true,
+              value: diet.fish.weeklyUsage,
+            }))
+        }
 
+        // Waste Disposal
+        // Weekly Collection
+        if (waste.weeklyCollection) {
+          dispatch(
+            addWaste({
+              id: 1,
+              name: "weekly-collection",
+              value: waste.weeklyCollection.frequency,
+            }));
+        }
 
+        // Recycling Habits
+        if (waste.recycleHabit) {
+          if (waste.recycleHabit == "yes") {
+            dispatch(
+              addWaste(
+                {
+                  id: 2,
+                  name: "recycling-habits",
+                  option: "yes",
+                  value: 1,
+                }));
 
+            dispatch(
+              addWaste({
+                id: 2,
+                name: "recycling-habits",
+                option: "yes",
+                value: 1,
+                paper: waste.recycleMaterials.includes("paper") ? true : false,
+                plastic: waste.recycleMaterials.includes("plastic") ? true : false,
+                bottle: waste.recycleMaterials.includes("bottle") ? true : false,
+                metal: waste.recycleMaterials.includes("metal") ? true : false,
+              }));
 
+          } else {
+            dispatch(
+              addWaste({
+                id: 2,
+                name: "recycling-habits",
+                option: "no",
+                value: 1,
+              }))
+          }
+        }
 
+        // Food Wastage
+        if (foodWastage) {
+          dispatch(updateFoodWastage({
+            food_wastage: foodWastage
+          }))
+        }
 
+        // Water Usage
+        // Washing CLothes
+        if (water.washingClothes) {
+          dispatch(
+            addWaterUsage({
+              id: 1,
+              name: "washing-clothes",
+              value: water.washingClothes.frequencyperWeek,
+            }))
+        }
 
+        // Showers
+        if (water.showers) {
+          dispatch(
+            addWaterUsage({
+              id: 2,
+              name: "showers",
+              value: water.showers.averageDuration,
+              frequency: water.showers.daysPerWeek,
+            }))
+        }
 
-
-
+        // Gardeing
+        if (water.gardenWatering) {
+          dispatch(
+            addWaterUsage({
+              id: 3,
+              name: "gardening-water",
+              value: water.gardenWatering.averageDuration,
+              frequency: water.gardenWatering.daysPerWeek,
+            }))
+        }
 
       }).catch((error) => {
         console.error(error);
@@ -400,7 +693,7 @@ export default function PageOne({ setPage }: Props) {
                   name: selectedUser.name,
                 }));
 
-              // setPage(2);
+              setPage(2);
             } else {
               toast.error("Please select a user to continue or click skip");
             }

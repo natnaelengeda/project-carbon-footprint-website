@@ -4,8 +4,8 @@ import { useEffect, useState } from "react";
 import { Slider } from "@mantine/core";
 
 // State
-import { useDispatch } from "react-redux";
-import { addWaterUsage, deleteWaterUsage } from "@/state/pledge";
+import { useDispatch, useSelector } from "react-redux";
+import { addWaterUsage, deleteWaterUsage, PledgeState } from "@/state/pledge";
 
 // Components
 import CheckboxComponent from "@/pages/carbonfootprint/components/CheckboxComponent";
@@ -19,36 +19,68 @@ interface Props {
 
 export default function Clothes({ opened, setOpened }: Props) {
   const [selected, setSelected] = useState<boolean>(false);
+
   const [slider, setSlider] = useState<number>(1);
+  const [sliderMax, setSliderMax] = useState<number | null>(null);
 
   const dispatch = useDispatch();
 
-  const updateSlider = (value: number) => {
-    setSlider(value);
-    dispatch(
-      addWaterUsage({
-        id: 1,
-        name: "washing-clothes",
-        value: value,
-      }))
-  }
+  const pledge = useSelector((state: { pledge: PledgeState }) => state.pledge);
+  const water = pledge.water_usage;
 
-  useEffect(() => {
-    if (selected) {
+  const updateSlider = (value: number) => {
+    if (sliderMax == null) {
+      setSlider(value);
       dispatch(
         addWaterUsage({
           id: 1,
           name: "washing-clothes",
-          value: 1,
-        }))
+          value: value,
+        }));
     } else {
-      dispatch(
-        deleteWaterUsage({
-          id: 1
-        })
-      )
+      if (value > sliderMax) {
+
+      } else {
+        setSlider(value);
+        dispatch(
+          addWaterUsage({
+            id: 1,
+            name: "washing-clothes",
+            value: value,
+          }));
+      }
     }
-  }, [selected]);
+
+  }
+
+  useEffect(() => {
+    const clothes = water.filter((item: any) => item.name == "washing-clothes")
+
+    if (clothes.length != 0) {
+      setSelected(true);
+      if (clothes) {
+        setSlider(clothes[0].value ?? 1);
+        setSliderMax(clothes[0].value ?? 1);
+      }
+    }
+
+    console.log(clothes)
+
+    // if (selected) {
+    //   dispatch(
+    //     addWaterUsage({
+    //       id: 1,
+    //       name: "washing-clothes",
+    //       value: 1,
+    //     }))
+    // } else {
+    //   dispatch(
+    //     deleteWaterUsage({
+    //       id: 1
+    //     })
+    //   )
+    // }
+  }, []);
 
   return (
     <div

@@ -4,8 +4,8 @@ import { useEffect, useState } from "react";
 import { Slider } from "@mantine/core";
 
 // State
-import { useDispatch } from "react-redux";
-import { addDiet, deleteDiet } from "@/state/pledge";
+import { useDispatch, useSelector } from "react-redux";
+import { addDiet, deleteDiet, PledgeState } from "@/state/pledge";
 
 // Components
 import CheckboxComponent from "@/pages/carbonfootprint/components/CheckboxComponent";
@@ -19,39 +19,69 @@ interface Props {
 
 export default function Meat({ opened, setOpened }: Props) {
   const [selected, setSelected] = useState<boolean>(false);
+
   const [slider, setSlider] = useState<number>(1);
+  const [sliderMax, setSliderMax] = useState<number | null>(null);
 
   const dispatch = useDispatch();
 
-  const updateSlider = (value: number) => {
-    setSlider(value);
-    dispatch(
-      addDiet({
-        id: 3,
-        name: "meat",
-        selected: true,
-        value: value,
-      }));
-  }
+  const pledge = useSelector((state: { pledge: PledgeState }) => state.pledge);
+  const diet = pledge.diet;
 
-  useEffect(() => {
-    if (selected) {
+  const updateSlider = (value: number) => {
+    if (sliderMax == null) {
+      setSlider(value);
       dispatch(
         addDiet({
           id: 3,
           name: "meat",
           selected: true,
-          value: 1,
-        })
-      )
+          value: value,
+        }));
     } else {
-      dispatch(
-        deleteDiet({
-          id: 3
-        })
-      )
+      if (value > sliderMax) {
+
+      } else {
+        setSlider(value);
+        dispatch(
+          addDiet({
+            id: 3,
+            name: "meat",
+            selected: true,
+            value: value,
+          }));
+      }
     }
-  }, [selected]);
+
+  }
+
+  useEffect(() => {
+    const meat = diet.filter((item: any) => item.name == "meat")
+
+    if (meat.length != 0) {
+      setSelected(true);
+      if (meat) {
+        setSlider(meat[0].value);
+        setSliderMax(meat[0].value);
+      }
+    }
+    // if (selected) {
+    //   dispatch(
+    //     addDiet({
+    //       id: 3,
+    //       name: "meat",
+    //       selected: true,
+    //       value: 1,
+    //     })
+    //   )
+    // } else {
+    //   dispatch(
+    //     deleteDiet({
+    //       id: 3
+    //     })
+    //   )
+    // }
+  }, []);
 
 
   return (
