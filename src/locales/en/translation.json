@@ -1,0 +1,16 @@
+{
+  "carbon": {
+    "welcome": "Welcome",
+    "lang": "English",
+    "start": "Start",
+    "choose_language": "Choose language",
+    "project_title_1": "to Project Carbon Lorem Ipsum",
+    "project_description_1_1": "Lorem ipsum dolor sit amet consectetur. Consectetur",
+    "project_description_1_2": "ultricies vel massa pretium. Ornare sollicitudin."
+  },
+  "pledge": {
+    "welcome": "welcome",
+    "lang": "English",
+    "start": "Start"
+  }
+}

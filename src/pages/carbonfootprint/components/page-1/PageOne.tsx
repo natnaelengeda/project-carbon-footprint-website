@@ -1,5 +1,8 @@
 import { useState } from 'react';
 
+// Language
+import { useTranslation } from 'react-i18next';
+
 // Import Swiper React components
 import { Swiper, SwiperSlide } from 'swiper/react';
 
@@ -19,6 +22,11 @@ interface Props {
 export default function PageOne({ setPage }: Props) {
   const [currentSlider, setCurrentSlider] = useState<number>(0);
 
+  // React Language Packaged;
+  const { t } = useTranslation();
+
+  const savedlanguages = JSON.parse(localStorage.getItem("language") || "");
+
   return (
     <div
       className="w-full h-full mx-auto 2xl:container flex flex-col items-center justify-start gap-5 py-10 md:py-20">
@@ -30,8 +38,8 @@ export default function PageOne({ setPage }: Props) {
           src={AppAsset.Logo}
           className="w-20 h-20 md:w-32 md:h-32 object-contain" />
         <div className="h-auto flex flex-col items-center justify-start gap-5 md:gap-10">
-          <p className="text-2xl md:text-[86px] font-semibold">Welcome,</p>
-          <p className="text-[#BBBBBB] text-lg md:text-[36px] font-normal">to Project Carbon Lorem Ipsum</p>
+          <p className="text-2xl md:text-[86px] font-semibold">   {t("carbon.choose_language", { lng: savedlanguages.carbon })}</p>
+          <p className="text-[#BBBBBB] text-lg md:text-[36px] font-normal">{t("carbon.project_title_1", { lng: savedlanguages.carbon })}</p>
         </div>
       </div>
 
@@ -86,8 +94,8 @@ export default function PageOne({ setPage }: Props) {
       {/* Note */}
       <div
         className="w-auto flex flex-col items-center justify-start text-lg md:text-[28px] pt-7 md:pt-20 text-center">
-        <p>Lorem ipsum dolor sit amet consectetur. Consectetur</p>
-        <p>ultricies vel massa pretium. Ornare sollicitudin.</p>
+        <p>{t("carbon.project_description_1_1", { lng: savedlanguages.carbon })}</p>
+        <p>{t("carbon.project_description_1_2", { lng: savedlanguages.carbon })}</p>
       </div>
 
       {/* Buttons */}

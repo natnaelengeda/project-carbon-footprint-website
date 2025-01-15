@@ -1,0 +1,16 @@
+{
+  "carbon": {
+    "welcome": "እንኳን ደህና መጣህ",
+    "lang": "Amharic",
+    "start": "ጀምር",
+    "choose_language": "ቋንቋ ይምረጡ",
+    "project_title_1": "ወደ ፕሮጀክት ካርቦን Lorem Ipsum",
+    "project_description_1_1": "ደንበኛው በመከተላቸው በጣም ደስተኛ ነው። ይከተላል",
+    "project_description_1_2": "ultries ወይም የጅምላ ዋጋ. ያጌጠ እንክብካቤ."
+  },
+  "pledge": {
+    "welcome": "welcome",
+    "lang": "Amharic",
+    "start": "ጀምር"
+  }
+}

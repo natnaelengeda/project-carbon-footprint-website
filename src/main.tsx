@@ -19,6 +19,9 @@ import { Provider } from 'react-redux';
 import { persistor, store } from "./store";
 import { PersistGate } from 'redux-persist/integration/react';
 
+// Languages
+import "./i18n"; // Import i18n configuration
+
 // Styles
 import "./index.css";
 import "./styles/tailwind.css";
