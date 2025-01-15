@@ -106,7 +106,7 @@ export default function PageOne({ setPage }: Props) {
             setPage(2);
           }}
           className="md:w-[245px] md:h-[88.9px] bg-primary text-white font-semibold rounded-full text-lg md:text-3xl px- py-4 hover:opacity-80 flex items-center justify-center gap-3 px-5 md:px-0">
-          Start
+          {t("carbon.start", { lng: savedlanguages.carbon })}
           <img
             src={AppAsset.RightArrowIcon}
             className="w-5 md:w-10 h-auto object-contain" />
