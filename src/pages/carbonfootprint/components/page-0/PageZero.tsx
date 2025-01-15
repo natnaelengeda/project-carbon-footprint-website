@@ -30,7 +30,12 @@ export default function PageZero({ setPage }: Props) {
 
   // Restore Languages On App Load
   useEffect(() => {
-    const savedlanguages = JSON.parse(localStorage.getItem("language") || "");
+    const defaultLanguage = JSON.stringify({
+      carbon: "en",
+      pledge: "en"
+    });
+
+    const savedlanguages = JSON.parse(localStorage.getItem("language") || defaultLanguage);
     if (savedlanguages) {
       if (savedlanguages.carbon == "am") {
         setLanguage("amharic")
