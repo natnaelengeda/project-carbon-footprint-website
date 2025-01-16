@@ -26,6 +26,7 @@ import AppAsset from '@/core/AppAsset';
 // Utils
 import { generateRandomId } from '@/utils/idGenerator';
 import { generateRandomName } from '@/utils/randomNameGenerator';
+import { useTranslation } from 'react-i18next';
 
 // Interface
 interface Props {
@@ -36,6 +37,11 @@ export default function PageTwo({ setPage }: Props) {
   // New Values
   const [name, setName] = useState<string>("");
   const id = generateRandomId();
+
+  // React Language Packaged;
+  const { t } = useTranslation();
+
+  const savedlanguages = JSON.parse(localStorage.getItem("language") || "");
 
   // State
   const dispatch = useDispatch();
@@ -93,14 +99,14 @@ export default function PageTwo({ setPage }: Props) {
           {/* Note */}
           <div
             className="w-auto flex flex-col items-center justify-start font-semibold text-[30px] md:text-[48px] pt-5 md:pt-20">
-            <p>Would you mind sharing your </p>
-            <p>name? (Optional)</p>
+            <p> {t("carbon.would_you_mind_sharing_your_name_1", { lng: savedlanguages.carbon })}</p>
+            <p> {t("carbon.would_you_mind_sharing_your_name_2", { lng: savedlanguages.carbon })}</p>
           </div>
 
           {/* TextInput */}
           <div className="w-full flex flex-col items-center justify-start gap-5 pt-2 md:pt-10 px-5">
             <TextInput
-              placeholder="Eg. John Doe"
+              placeholder={t("carbon.name_eg", { lng: savedlanguages.carbon })}
               value={name}
               onChange={onNameChange}
               size={

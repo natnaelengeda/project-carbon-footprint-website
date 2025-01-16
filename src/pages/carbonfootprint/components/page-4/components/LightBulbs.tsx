@@ -15,19 +15,20 @@ import {
   deleteHouseholdEnergyCategory,
 } from '@/state/carbon';
 
-// Components
-import CheckboxComponent from '../../CheckboxComponent'
-import ArrowComponent from '../../ArrowComponent';
+// Translation
+import { useTranslation } from 'react-i18next';
+
+// AppAsset
 import AppAsset from '@/core/AppAsset';
 
-// Interface
-interface Props {
-  opened: string;
-  setOpened: React.Dispatch<React.SetStateAction<string>>;
-}
 
-export default function LightBulbs({ opened, setOpened }: Props) {
+export default function LightBulbs() {
   const [selected, setSelected] = useState<boolean>(false);
+
+  // React Language Packaged;
+  const { t } = useTranslation();
+  const savedlanguages = JSON.parse(localStorage.getItem("language") || "");
+
 
   // State
   const dispatch = useDispatch();
@@ -48,6 +49,7 @@ export default function LightBulbs({ opened, setOpened }: Props) {
 
   const updateIncandescentSlider = (value: number) => {
     setIncandescentSlider(value);
+    setIncandescent(true);
     dispatch(
       addHouseholdEnegryCategory({
         parent_id: 4,
@@ -62,6 +64,7 @@ export default function LightBulbs({ opened, setOpened }: Props) {
 
   const updateLedSlider = (value: number) => {
     setLedSlider(value);
+    setLed(true);
     dispatch(
       addHouseholdEnegryCategory({
         parent_id: 4,
@@ -76,6 +79,7 @@ export default function LightBulbs({ opened, setOpened }: Props) {
 
   const updateCflSlider = (value: number) => {
     setCflSlider(value);
+    setCfl(true);
     dispatch(
       addHouseholdEnegryCategory({
         parent_id: 4,
@@ -90,6 +94,7 @@ export default function LightBulbs({ opened, setOpened }: Props) {
 
   const updateFlorescentSlider = (value: number) => {
     setFlorescentSlider(value);
+    setFlorescent(true);
     dispatch(
       addHouseholdEnegryCategory({
         parent_id: 4,
@@ -205,36 +210,29 @@ export default function LightBulbs({ opened, setOpened }: Props) {
 
   return (
     <div
-      className='w-full h-auto flex flex-col items-start justify-start'>
+      className='w-full md:w-[885px] h-auto flex flex-col items-start justify-start gap-2 md:gap-5'>
       {/* Top Content */}
       <div
         className='w-full h-auto flex flex-row items-center justify-between'>
 
-        {/* Check Box */}
-        <CheckboxComponent
-          selected={selected}
-          setSelected={setSelected}
-          setOpened={setOpened}
-          location="light-bulbs"
-          text="Light Bulbs" />
-
-        {/* Arrow */}
-        <ArrowComponent
-          selected={selected} />
+        <div
+          className='flex flex-row items-center justify-start gap-4 md:gap-[30px]'>
+          <p
+            className='text-2xl md:text-[44px] font-normal'>
+            {t("carbon.light_bulbs", { lng: savedlanguages.carbon })}
+          </p>
+        </div>
 
       </div>
 
 
       {/* Bottom Content */}
       <div
-        style={{
-          display: opened == "light-bulbs" ? "flex" : "none"
-        }}
-        className='w-full h-auto flex flex-col items-start justify-start pt-3 pl-5 md:pl-10 gap-5 md:gap-7'>
+        className='w-full h-auto flex flex-col items-start justify-start pt-3 pl-5 md:pl-10 gap-5 md:gap-10'>
 
         {/* Incandecent */}
         <div
-          className='w-full flex flex-col items-start justify-start gap-2 pt-5'>
+          className='w-full flex flex-col items-start justify-start gap-2 md:gap-5 pt-5'>
 
           {/* Select Option */}
           <div
@@ -242,24 +240,24 @@ export default function LightBulbs({ opened, setOpened }: Props) {
             <img
               onClick={() => setIncandescent(!incandescent)}
               src={incandescent ? AppAsset.CheckedIcon : AppAsset.UncheckedIcon}
-              className='w-7 md:w-[28px] md:h-[28px] object-contain cursor-pointer' />
-            <p className='text-xl md:text-[26px] font-normal'>Incandecent Light Bulb</p>
+              className='w-7 md:w-[36px] md:h-[36px] object-contain cursor-pointer' />
+            <p
+              className='text-xl md:text-[40px] font-normal'>
+              {t("carbon.incandecent_light_bulb", { lng: savedlanguages.carbon })}
+            </p>
           </div>
 
           {/* Form - TV */}
           <div
-            style={{
-              display: incandescent ? "block" : "none"
-            }}
             className='w-full h-auto pl-2 pr-5 md:pr-32 flex flex-col items-start justify-start g'>
 
             {/* Text */}
-            <p
-              className="text-[#B7B7B7] text-lg md:text-[24px] pb-2">
-              Select hourly usage per day
+            <p className="text-[#B7B7B7] text-lg md:text-[30px] pb-2 md:pb-4">
+              {t("carbon.select_hourly_usage_per_day", { lng: savedlanguages.carbon })}
             </p>
 
             <Slider
+              className='w-full'
               value={incandescentSlider}
               onChange={updateIncandescentSlider}
               color="#35D36A"
@@ -282,7 +280,7 @@ export default function LightBulbs({ opened, setOpened }: Props) {
 
         {/* LED  */}
         <div
-          className='w-full flex flex-col items-start justify-start gap-2 '>
+          className='w-full flex flex-col items-start justify-start gap-2 md:gap-5'>
 
           {/* Select Option */}
           <div
@@ -290,24 +288,24 @@ export default function LightBulbs({ opened, setOpened }: Props) {
             <img
               onClick={() => setLed(!led)}
               src={led ? AppAsset.CheckedIcon : AppAsset.UncheckedIcon}
-              className='w-7 md:w-[28px] md:h-[28px] object-contain cursor-pointer' />
-            <p className='text-xl md:text-[26px] font-normal'>LED Light Bulb</p>
+              className='w-7 md:w-[36px] md:h-[36px] object-contain cursor-pointer' />
+            <p
+              className='text-xl md:text-[40px] font-normal'>
+              {t("carbon.led_light_bulb", { lng: savedlanguages.carbon })}
+            </p>
           </div>
 
           {/* Form - LED Light Bulb */}
           <div
-            style={{
-              display: led ? "block" : "none"
-            }}
             className='w-full h-auto pl-2 pr-5 md:pr-32 flex flex-col items-start justify-start g'>
 
             {/* Text */}
-            <p
-              className="text-[#B7B7B7] text-lg md:text-[24px] pb-2">
-              Select hourly usage per day
+            <p className="text-[#B7B7B7] text-lg md:text-[30px] pb-2 md:pb-4">
+              {t("carbon.select_hourly_usage_per_day", { lng: savedlanguages.carbon })}
             </p>
 
             <Slider
+              className='w-full'
               value={ledSlider}
               onChange={updateLedSlider}
               color="#35D36A"
@@ -330,7 +328,7 @@ export default function LightBulbs({ opened, setOpened }: Props) {
 
         {/* CFL  */}
         <div
-          className='w-full flex flex-col items-start justify-start gap-2 '>
+          className='w-full flex flex-col items-start justify-start gap-2 md:gap-5'>
 
           {/* Select Option */}
           <div
@@ -338,24 +336,24 @@ export default function LightBulbs({ opened, setOpened }: Props) {
             <img
               onClick={() => setCfl(!cfl)}
               src={cfl ? AppAsset.CheckedIcon : AppAsset.UncheckedIcon}
-              className='w-7 md:w-[28px] md:h-[28px] object-contain cursor-pointer' />
-            <p className='text-xl md:text-[26px] font-normal'>CFL Light Bulb</p>
+              className='w-7 md:w-[36px] md:h-[36px] object-contain cursor-pointer' />
+            <p
+              className='text-xl md:text-[40px] font-normal'>
+              {t("carbon.cfl_light_bulb", { lng: savedlanguages.carbon })}
+            </p>
           </div>
 
           {/* Form - LED Light Bulb */}
           <div
-            style={{
-              display: cfl ? "block" : "none"
-            }}
             className='w-full h-auto pl-2 pr-5 md:pr-32 flex flex-col items-start justify-start g'>
 
             {/* Text */}
-            <p
-              className="text-[#B7B7B7] text-lg md:text-[24px] pb-2">
-              Select hourly usage per day
+            <p className="text-[#B7B7B7] text-lg md:text-[30px] pb-2 md:pb-4">
+              {t("carbon.select_hourly_usage_per_day", { lng: savedlanguages.carbon })}
             </p>
 
             <Slider
+              className='w-full'
               value={cflSlider}
               onChange={updateCflSlider}
               color="#35D36A"
@@ -378,7 +376,7 @@ export default function LightBulbs({ opened, setOpened }: Props) {
 
         {/* Flurecent */}
         <div
-          className='w-full flex flex-col items-start justify-start gap-2'>
+          className='w-full flex flex-col items-start justify-start gap-2 md:gap-5'>
 
           {/* Select Option */}
           <div
@@ -386,24 +384,24 @@ export default function LightBulbs({ opened, setOpened }: Props) {
             <img
               onClick={() => setFlorescent(!florescent)}
               src={florescent ? AppAsset.CheckedIcon : AppAsset.UncheckedIcon}
-              className='w-7 md:w-[28px] md:h-[28px] object-contain cursor-pointer' />
-            <p className='text-xl md:text-[26px] font-normal'>Fluorescent Light Bulb</p>
+              className='w-7 md:w-[36px] md:h-[36px] object-contain cursor-pointer' />
+            <p
+              className='text-xl md:text-[40px] font-normal'>
+              {t("carbon.florecent_light_bulb", { lng: savedlanguages.carbon })}
+            </p>
           </div>
 
           {/* Form - LED Light Bulb */}
           <div
-            style={{
-              display: florescent ? "block" : "none"
-            }}
             className='w-full h-auto pl-2 pr-5 md:pr-32 flex flex-col items-start justify-start g'>
 
             {/* Text */}
-            <p
-              className="text-[#B7B7B7] text-lg md:text-[24px] pb-2">
-              Select hourly usage per day
+            <p className="text-[#B7B7B7] text-lg md:text-[30px] pb-2 md:pb-4">
+              {t("carbon.select_hourly_usage_per_day", { lng: savedlanguages.carbon })}
             </p>
 
             <Slider
+              className='w-full'
               value={florescentSlider}
               onChange={updateFlorescentSlider}
               color="#35D36A"

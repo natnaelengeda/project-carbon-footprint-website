@@ -1,3 +1,4 @@
+import Devools from "@/tools/Devools";
 import { useEffect } from "react";
 import toast from "react-hot-toast";
 
@@ -24,8 +25,9 @@ export default function Root() {
 
   return (
     <div
-      className="w-full h-full min-h-screen flex flex-col items-start justify-start">
+      className="relative w-full h-full min-h-screen flex flex-col items-start justify-start">
       <Outlet />
+      <Devools />
     </div>
   )
 }

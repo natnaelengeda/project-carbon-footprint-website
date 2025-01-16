@@ -14,18 +14,13 @@ import {
   selectHouseholdEnergyById
 } from '@/state/carbon';
 
-// Components
-import CheckboxComponent from '../../CheckboxComponent'
-import ArrowComponent from '../../ArrowComponent';
+// Lanuage
+import { useTranslation } from 'react-i18next';
+
+// AppAsset
 import AppAsset from '@/core/AppAsset';
 
-// Interface
-interface Props {
-  opened: string;
-  setOpened: React.Dispatch<React.SetStateAction<string>>;
-}
-
-export default function ElectricAppliances({ opened, setOpened }: Props) {
+export default function ElectricAppliances() {
   const [selected, setSelected] = useState<boolean>(false);
 
   const [tvSelected, setTvSelected] = useState<boolean>(false);
@@ -38,8 +33,13 @@ export default function ElectricAppliances({ opened, setOpened }: Props) {
   const [ironSelected, setIronSelected] = useState<boolean>(false);
   const [ironSlider, setIronSlider] = useState<number>(0);
 
+
+  // React Language Packaged;
+  const { t } = useTranslation();
+  const savedlanguages = JSON.parse(localStorage.getItem("language") || "");
+
   const dispatch = useDispatch();
-  
+
   const carbon = useSelector((state: { carbon: CarbonState }) => state.carbon);
   const heatingCoolingEnergy = useSelector((state: any) =>
     selectHouseholdEnergyById(state, 3) // Replace '1' with the ID you want
@@ -47,6 +47,7 @@ export default function ElectricAppliances({ opened, setOpened }: Props) {
 
   const updateTVSlider = (value: number) => {
     setTvSlider(value);
+    setTvSelected(true);
     dispatch(
       addHouseholdEnegryCategory({
         parent_id: 3,
@@ -61,6 +62,7 @@ export default function ElectricAppliances({ opened, setOpened }: Props) {
 
   const updateWashingMachineSlider = (value: number) => {
     setWashingMachineSlider(value);
+    setWashingSelected(true);
     dispatch(
       addHouseholdEnegryCategory({
         parent_id: 3,
@@ -75,6 +77,7 @@ export default function ElectricAppliances({ opened, setOpened }: Props) {
 
   const updateWashingMachineSlider1 = (value: number) => {
     setWashingMachineSlider1(value);
+    setWashingSelected(true);
     dispatch(
       addHouseholdEnegryCategory({
         parent_id: 3,
@@ -89,6 +92,7 @@ export default function ElectricAppliances({ opened, setOpened }: Props) {
 
   const updateIronSlider = (value: number) => {
     setIronSlider(value);
+    setIronSelected(true);
     dispatch(
       addHouseholdEnegryCategory({
         parent_id: 3,
@@ -202,31 +206,24 @@ export default function ElectricAppliances({ opened, setOpened }: Props) {
 
   return (
     <div
-      className='w-full h-auto flex flex-col items-start justify-start'>
+      className='w-full md:w-[885px] h-auto flex flex-col items-start justify-start gap-2 md:gap-5'>
       {/* Top Content */}
       <div
         className='w-full h-auto flex flex-row items-center justify-between'>
 
-        {/* Check Box */}
-        <CheckboxComponent
-          selected={selected}
-          setSelected={setSelected}
-          setOpened={setOpened}
-          location="electric-appliances"
-          text="Electric Appliances" />
-
-        {/* Arrow */}
-        <ArrowComponent
-          selected={selected} />
+        <div
+          className='flex flex-row items-center justify-start gap-4 md:gap-[30px]'>
+          <p
+            className='text-2xl md:text-[44px] font-normal'>
+            {t("carbon.electric_appliances", { lng: savedlanguages.carbon })}
+          </p>
+        </div>
       </div>
 
 
       {/* Bottom Content */}
       <div
-        style={{
-          display: opened == "electric-appliances" ? "flex" : "none"
-        }}
-        className='w-full h-auto flex flex-col items-start justify-start pl-5 md:pl-16 gap-5 md:gap-7'>
+        className='w-full h-auto flex flex-col items-start justify-start pl-5 md:pl-16 gap-5 md:gap-12'>
 
 
         {/* TV */}
@@ -239,24 +236,25 @@ export default function ElectricAppliances({ opened, setOpened }: Props) {
             <img
               onClick={() => setTvSelected(!tvSelected)}
               src={tvSelected ? AppAsset.CheckedIcon : AppAsset.UncheckedIcon}
-              className='w-7 md:w-[28px] md:h-[28px] object-contain cursor-pointer' />
-            <p className='text-xl md:text-[26px] font-normal'>TV</p>
+              className='w-7 md:w-[36px] md:h-[36px] object-contain cursor-pointer' />
+            <p
+              className='text-xl md:text-[40px] font-normal'>
+              {t("carbon.tv", { lng: savedlanguages.carbon })}
+            </p>
           </div>
 
           {/* Form - TV */}
           <div
-            style={{
-              display: tvSelected ? "block" : "none"
-            }}
             className='w-full h-auto pl-2 pr-5 md:pr-32 flex flex-col items-start justify-start g'>
 
             {/* Text */}
             <p
-              className="text-[#B7B7B7] text-lg md:text-[24px] pb-2">
-              Select hourly usage per day
+              className="text-[#B7B7B7] text-lg md:text-[30px] pb-2 md:pb-4">
+              {t("carbon.select_hourly_usage_per_day", { lng: savedlanguages.carbon })}
             </p>
 
             <Slider
+              className='w-full'
               value={tvSlider}
               onChange={updateTVSlider}
               color="#35D36A"
@@ -292,15 +290,15 @@ export default function ElectricAppliances({ opened, setOpened }: Props) {
             <img
               onClick={() => setWashingSelected(!washingSelected)}
               src={washingSelected ? AppAsset.CheckedIcon : AppAsset.UncheckedIcon}
-              className='w-7 md:w-[28px] md:h-[28px] object-contain cursor-pointer' />
-            <p className='text-xl md:text-[26px] font-normal'>Washing Machine</p>
+              className='w-7 md:w-[36px] md:h-[36px] object-contain cursor-pointer' />
+            <p
+              className='text-xl md:text-[40px] font-normal'>
+              {t("carbon.washing_machine", { lng: savedlanguages.carbon })}
+            </p>
           </div>
 
           {/* Form - Washing Machine */}
           <div
-            style={{
-              display: washingSelected ? "flex" : "none"
-            }}
             className='w-full h-auto pl-2 pr-5 md:pr-32 flex flex-col items-start justify-start gap-5 md:gap-6'>
 
             {/* Frequency */}
@@ -308,9 +306,8 @@ export default function ElectricAppliances({ opened, setOpened }: Props) {
               className='w-full h-auto flex flex-col items-start justify-start'>
 
               {/* Text */}
-              <p
-                className="text-[#B7B7B7] text-lg md:text-[24px] pb-2">
-                Select Frequency
+              <p className="text-[#B7B7B7] text-lg md:text-[30px] pb-2 md:pb-4">
+                {t("carbon.select_frequency", { lng: savedlanguages.carbon })}
               </p>
 
               <Slider
@@ -338,9 +335,8 @@ export default function ElectricAppliances({ opened, setOpened }: Props) {
               className='w-full h-auto flex flex-col items-start justify-start'>
 
               {/* Text */}
-              <p
-                className="text-[#B7B7B7] text-lg md:text-[24px] pb-2">
-                Select Average Usage in Hour
+              <p className="text-[#B7B7B7] text-lg md:text-[30px] pb-2 md:pb-4">
+                {t("carbon.select_hourly_usage_per_day", { lng: savedlanguages.carbon })}
               </p>
 
               <Slider
@@ -376,24 +372,24 @@ export default function ElectricAppliances({ opened, setOpened }: Props) {
             <img
               onClick={() => setIronSelected(!ironSelected)}
               src={ironSelected ? AppAsset.CheckedIcon : AppAsset.UncheckedIcon}
-              className='w-7 md:w-[28px] md:h-[28px] object-contain cursor-pointer' />
-            <p className='text-xl md:text-[26px] font-normal'>Ironing Cloths</p>
+              className='w-7 md:w-[36px] md:h-[36px] object-contain cursor-pointer' />
+            <p
+              className='text-xl md:text-[40px] font-normal'>
+              {t("carbon.ironing_cloths", { lng: savedlanguages.carbon })}
+            </p>
           </div>
 
           {/* Form - Electric Air Conditionint */}
           <div
-            style={{
-              display: ironSelected ? "block" : "none"
-            }}
             className='w-full h-auto pl-2 pr-5 md:pr-32 flex flex-col items-start justify-start g'>
 
             {/* Text */}
-            <p
-              className="text-[#B7B7B7] text-lg md:text-[24px] pb-2">
-              Select hourly usage per day
+            <p className="text-[#B7B7B7] text-lg md:text-[30px] pb-2 md:pb-4">
+              {t("carbon.select_hourly_usage_per_day", { lng: savedlanguages.carbon })}
             </p>
 
             <Slider
+              className='w-full'
               value={ironSlider}
               onChange={updateIronSlider}
               color="#35D36A"

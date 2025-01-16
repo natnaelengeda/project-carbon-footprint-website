@@ -11,6 +11,9 @@ import {
 // Components
 import NavigationComponent from '../NavigationComponent';
 
+// Language
+import { useTranslation } from 'react-i18next';
+
 // State
 import {
   useDispatch,
@@ -33,6 +36,11 @@ export default function PageThree({ setPage }: Props) {
   const width = window.innerWidth;
 
   const [value, setValue] = useState("appartment");
+
+  // React Language Packaged;
+  const { t } = useTranslation();
+
+  const savedlanguages = JSON.parse(localStorage.getItem("language") || "");
 
   // State
   const dispatch = useDispatch();
@@ -74,7 +82,9 @@ export default function PageThree({ setPage }: Props) {
 
           {/* Note */}
           <div className="w-auto flex flex-row items-center justify-center gap-3 font-semibold text-2xl md:text-[48px] pt-20">
-            <p>What is your housing type?</p>
+            <p>
+              {t("carbon.what_is_your_housing_type", { lng: savedlanguages.carbon })}
+            </p>
             <Tooltip
               label="What is the type of house you live in?">
               <img
@@ -98,25 +108,28 @@ export default function PageThree({ setPage }: Props) {
                   color={`var(--main-color)`}
                   value="appartment"
                   size={width > 768 ? "xl" : "md"}
-                  label="Apartment" />
+                  label={t("carbon.apartment", { lng: savedlanguages.carbon })} />
                 <Radio
                   iconColor=""
                   color={`var(--main-color)`}
                   value="condo"
                   size={width > 768 ? "xl" : "md"}
-                  label="Condo" />
+                  label={t("carbon.condo", { lng: savedlanguages.carbon })} />
+
                 <Radio
                   iconColor=""
                   color={`var(--main-color)`}
                   value="villa"
                   size={width > 768 ? "xl" : "md"}
-                  label="Villa" />
+                  label={t("carbon.villa", { lng: savedlanguages.carbon })} />
+
                 <Radio
                   iconColor=""
                   color={`var(--main-color)`}
                   value="hut"
                   size={width > 768 ? "xl" : "md"}
-                  label="Hut" />
+                  label={t("carbon.hut", { lng: savedlanguages.carbon })} />
+
               </div>
             </RadioGroup>
           </div>

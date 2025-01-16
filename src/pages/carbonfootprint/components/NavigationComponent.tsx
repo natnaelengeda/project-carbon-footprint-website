@@ -1,4 +1,7 @@
 
+// Translation
+import { useTranslation } from 'react-i18next';
+
 // App Asset
 import AppAsset from '@/core/AppAsset';
 
@@ -7,29 +10,74 @@ interface Props {
   func: () => boolean;
   prevPage: number;
   nextPage: number;
+  sections?: number;
+  section?: number;
+  setSection?: React.Dispatch<React.SetStateAction<number>>;
 }
 
-export default function NavigationComponent({ setPage, func, prevPage, nextPage }: Props) {
+export default function NavigationComponent({ setPage, func, prevPage, nextPage, sections, section, setSection }: Props) {
+  // React Language Packaged;
+  const { t } = useTranslation();
+
+  const savedlanguages = JSON.parse(localStorage.getItem("language") || "");
+
   return (
     <div
-      className='w-full h-80 flex items-center justify-end px-5 md:px-40 gap-3 pb-10 md:pb-0'>
+      className='w-full h-80 flex items-center justify-end px-5 md:px-40 gap-3 md:gap-[32px] pb-10 md:pb-0'>
+
+      {/* Back Button */}
       <button
         onClick={() => {
-          setPage(prevPage);
+          if (section != null) {
+            if (section == 1) {
+              setPage(prevPage);
+            } else {
+              setSection!(section! - 1);
+            }
+          } else {
+            setPage(prevPage);
+          }
         }}
         className={`w-10 h-10 md:w-[100px] md:h-[100px] rounded-full border border-primary ${prevPage == 1 ? "hidden" : "flex"} items-center justify-center p-2 md:p-0`}>
         <img
           src={AppAsset.LeftArrowIcon}
           className='w-20 h-auto object-contain md:w-[40.56px] md:h-[40.56px]' />
       </button>
+
+      {/* Skip Button */}
       <button
         onClick={() => {
-          if (func()) {
+
+          if (sections != null) {
+            if (section == sections) {
+              setPage(nextPage);
+            } else {
+              setSection!(section! + 1);
+            }
+          } else {
+            setPage(nextPage);
+          }
+        }}
+        className='md:w-[159.32px] md:h-[100px] border border-primary rounded-full bg-white text-primary flex flex-row items-center justify-center gap-3 px-6 py-3'>
+        <p className='text-lg md:text-[34.56px] font-semibold'>{t("carbon.skip", { lng: savedlanguages.carbon })}</p>
+      </button>
+
+      {/* Next Button */}
+      <button
+        onClick={() => {
+
+          if (sections != null) {
+            if (section == sections) {
+              setPage(nextPage);
+            } else {
+              setSection!(section! + 1);
+            }
+          } else {
             setPage(nextPage);
           }
         }}
         className='md:w-[221.32px] md:h-[100px] rounded-full bg-primary text-white flex flex-row items-center justify-center gap-3 px-6 py-3'>
-        <p className='text-lg md:text-[34.56px] font-semibold'>Next</p>
+        <p className='text-lg md:text-[34.56px] font-semibold'>{t("carbon.next", { lng: savedlanguages.carbon })}</p>
         <img
           src={AppAsset.RightArrowIcon}
           className="w-6 md:w-10 h-auto object-contain" />

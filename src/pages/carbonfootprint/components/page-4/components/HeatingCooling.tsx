@@ -5,9 +5,8 @@ import {
   Slider,
 } from '@mantine/core';
 
-// Components
-import ArrowComponent from '../../ArrowComponent';
-import CheckboxComponent from '../../CheckboxComponent';
+// Language
+import { useTranslation } from 'react-i18next';
 
 // State
 import { useDispatch, useSelector } from 'react-redux';
@@ -21,14 +20,15 @@ import {
 // AppAsset
 import AppAsset from '@/core/AppAsset';
 
-interface Props {
-  opened: string;
-  setOpened: React.Dispatch<React.SetStateAction<string>>;
-}
 
-export default function HeatingCooling({ opened, setOpened }: Props) {
+export default function HeatingCooling() {
   const [selected, setSelected] = useState<boolean>(false);
   const [selectedType, setSelectedType] = useState<string>("electric-air-conditioning");
+
+  // React Language Packaged;
+  const { t } = useTranslation();
+
+  const savedlanguages = JSON.parse(localStorage.getItem("language") || "");
 
   // Sliders
   const [electricAirConditioning, setElectricAirConditioning] = useState<number>(1);
@@ -165,35 +165,30 @@ export default function HeatingCooling({ opened, setOpened }: Props) {
 
   return (
     <div
-      className='w-full h-auto flex flex-col items-start justify-start'>
+      className='w-full md:w-[885px] h-auto flex flex-col items-start justify-start'>
 
       {/* Top Content */}
       <div
         className='w-full h-auto flex flex-row items-center justify-between'>
 
-        {/* Check Box */}
-        <CheckboxComponent
-          selected={selected}
-          setSelected={setSelected}
-          setOpened={setOpened}
-          location="heating-cooling"
-          text="Heating / Cooling" />
+        <div
+          className='flex flex-row items-center justify-start gap-4 md:gap-[30px]'>
+          <p
+            className='text-2xl md:text-[44px] font-normal'>
+            {t("carbon.heating", { lng: savedlanguages.carbon })}
+          </p>
+        </div>
 
-        {/* Arrow */}
-        <ArrowComponent
-          selected={selected} />
+
       </div>
 
       {/* Bottom Context */}
       <div
-        style={{
-          display: opened == "heating-cooling" ? "flex" : "none"
-        }}
-        className='w-full h-auto flex flex-col items-start justify-start pl-5 md:pl-16 gap-7 md:gap-10'>
+        className='w-full h-auto flex flex-col items-start justify-start pl-5 md:pl-[44px] gap-7 md:gap-10'>
 
         {/* Electric Air Conditioning */}
         <div
-          className='w-full flex flex-col items-start justify-start gap-2 pt-4 md:pt-[48px]'>
+          className='w-full flex flex-col items-start justify-start gap-2 md:gap-5 pt-4 md:pt-[48px]'>
 
           {/* Select Option */}
           <div
@@ -201,19 +196,22 @@ export default function HeatingCooling({ opened, setOpened }: Props) {
             <img
               onClick={() => setSelectedType("electric-air-conditioning")}
               src={selectedType == "electric-air-conditioning" ? AppAsset.RadioOnIcon : AppAsset.RadioOffIcon}
-              className='w-7 md:w-[28px] md:h-[28px] object-contain cursor-pointer' />
-            <p className='text-xl md:text-[26px] font-normal'>Electric Air Conditioning</p>
+              className='w-7 md:w-[36px] md:h-[36px] object-contain cursor-pointer' />
+            <p
+              className='text-xl md:text-[40px] font-normal'>
+              {t("carbon.electric_air_conditioning", { lng: savedlanguages.carbon })}
+            </p>
           </div>
 
-          {/* Form - Electric Air Conditioning */}
+          {/* Form - Electric Air Heating */}
           <div
             style={{
               display: selectedType == "electric-air-conditioning" ? "block" : "none"
             }}
-            className='w-full h-auto pl-2 pr-5 md:pr-32 flex flex-col items-start justify-start g'>
+            className='w-full h-auto pl-2 pr-5 md:pr-32 flex flex-col items-start justify-start gap-2'>
             {/* Text */}
-            <p className="text-[#B7B7B7] text-lg md:text-[24px] pb-2">
-              Select hourly usage per day
+            <p className="text-[#B7B7B7] text-lg md:text-[30px] pb-2 md:pb-4">
+              {t("carbon.select_hourly_usage_per_day", { lng: savedlanguages.carbon })}
             </p>
 
             <Slider
@@ -247,8 +245,11 @@ export default function HeatingCooling({ opened, setOpened }: Props) {
             <img
               onClick={() => setSelectedType("charcoal")}
               src={selectedType == "charcoal" ? AppAsset.RadioOnIcon : AppAsset.RadioOffIcon}
-              className='w-7 md:w-[28px] md:h-[28px] object-contain cursor-pointer' />
-            <p className='text-xl md:text-[26px] font-normal'>Charcoal</p>
+              className='w-7 md:w-[36px] md:h-[36px] object-contain cursor-pointer' />
+            <p
+              className='text-xl md:text-[40px] font-normal'>
+              {t("carbon.charcoal", { lng: savedlanguages.carbon })}
+            </p>
           </div>
 
           {/* Form */}
@@ -259,8 +260,8 @@ export default function HeatingCooling({ opened, setOpened }: Props) {
             }}
             className='w-full h-auto pl-2 pr-5 md:pr-32 flex flex-col items-start justify-start g'>
             {/* Text */}
-            <p className="text-[#B7B7B7] text-lg md:text-[24px] pb-2">
-              Select hourly usage per day
+            <p className="text-[#B7B7B7] text-lg md:text-[30px] pb-2 md:pb-4">
+              {t("carbon.select_hourly_usage_per_day", { lng: savedlanguages.carbon })}
             </p>
 
             <Slider
@@ -283,7 +284,6 @@ export default function HeatingCooling({ opened, setOpened }: Props) {
                 { value: 10, label: '10' },
                 { value: 11, label: '11' },
                 { value: 12, label: '12' },
-
               ]}
             />
           </div>
@@ -300,10 +300,10 @@ export default function HeatingCooling({ opened, setOpened }: Props) {
             <img
               onClick={() => setSelectedType("none")}
               src={selectedType == "none" ? AppAsset.RadioOnIcon : AppAsset.RadioOffIcon}
-              className='w-7 md:w-[28px] md:h-[28px] object-contain cursor-pointer' />
+              className='w-7 md:w-[36px] md:h-[36px] object-contain cursor-pointer' />
             <p
-              className='text-xl md:text-[26px] font-normal'>
-              I don't use any energy for heating/cooling
+              className='text-xl md:text-[40px] font-normal'>
+              {t("carbon.i_dont_use_any_energy", { lng: savedlanguages.carbon })}
             </p>
           </div>
 
@@ -314,7 +314,6 @@ export default function HeatingCooling({ opened, setOpened }: Props) {
               type="text"
               placeholder='Enter hourly usage per day'
               className='w-full h-16 rounded-xl border border-[#CBCBCB] px-5 text-[24px]' />
-
           </div>
         </div>
 

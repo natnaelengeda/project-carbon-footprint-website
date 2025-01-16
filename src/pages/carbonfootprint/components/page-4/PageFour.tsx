@@ -2,17 +2,17 @@
 // Page Layout
 import PagesLayout from '../../layouts/PagesLayout'
 
-// Mantine 
-import {
-  Tooltip,
-} from '@mantine/core';
-
 // Components
 import HeatingCooling from './components/HeatingCooling';
 import Cooking from './components/Cooking';
 import ElectricAppliances from './components/ElectricAppliances';
 import LightBulbs from './components/LightBulbs';
 import NavigationComponent from '../NavigationComponent';
+
+import { useOrientation } from 'react-use';
+
+// Language
+import { useTranslation } from 'react-i18next';
 
 // State
 import { useSelector } from 'react-redux';
@@ -30,7 +30,13 @@ interface Props {
 }
 
 export default function PageFour({ setPage }: Props) {
-  const [opened, setOpened] = useState<string>("heating-cooling");
+  const [section, setSection] = useState<number>(4);
+
+  const { type } = useOrientation();
+
+  // Languages
+  const { t } = useTranslation();
+  const savedlanguages = JSON.parse(localStorage.getItem("language") || "");
 
   const carbon = useSelector((state: { carbon: CarbonState }) => state.carbon);
 
@@ -59,47 +65,36 @@ export default function PageFour({ setPage }: Props) {
             {/* Image */}
             <img
               src={AppAsset.BannerFour}
-              className="md:w-[550px] md:h-[550px] object-cover" />
+              className={`${type == "landscape-primary" ? "md:w-[400px] h-80 object-contain" : "md:w-[550px] md:h-[550px] object-cover"}`} />
           </div>
 
           {/* Note */}
-          <div className="w-auto flex flex-row items-center justify-center gap-3 font-semibold text-2xl md:text-[48px] pt-10 md:pt-20">
-            <div className='flex flex-col items-start justify-start'>
-              <p>What is your household energy </p>
-              <p>usage?</p>
-            </div>
-            <Tooltip
-              label="Lorem ipsum dolor sit amet consectetur. Ante ipsum gravida vestibulum leo.">
-              <img
-                src={AppAsset.InformationCircleIcon}
-                className='w-[36px] h-[36px] object-contain' />
-            </Tooltip>
-          </div>
+          <div className="w-full flex flex-row items-center justify-start gap-3 font-semibold text-2xl md:text-[48px] pt-10 md:pt-20 pl-4">
+            <div className='w-5 h-2 md:w-[30px] md:h-[8px] bg-[#D309FB]'>
 
+            </div>
+            <div
+              className='flex flex-row items-center justify-start'>
+              <p className='text-4xl md:text-[64px]'>
+                {t("carbon.house_hold_energy", { lng: savedlanguages.carbon })}
+              </p>
+            </div>
+
+          </div>
 
           {/* Content */}
           <div
             className="w-full flex flex-col items-start justify-start gap-5 pt-3 md:pt-10 px-4">
-
-            {/* Heating / Cooling */}
-            <HeatingCooling
-              opened={opened}
-              setOpened={setOpened} />
-
-            {/* Cooking */}
-            <Cooking
-              opened={opened}
-              setOpened={setOpened} />
-
-            {/* Electric Appliances */}
-            <ElectricAppliances
-              opened={opened}
-              setOpened={setOpened} />
-
-            {/* Light Bulbs */}
-            <LightBulbs
-              opened={opened}
-              setOpened={setOpened} />
+            {
+              section == 1 ?
+                <HeatingCooling /> :
+                section == 2 ?
+                  <Cooking /> :
+                  section == 3 ?
+                    <ElectricAppliances /> :
+                    section == 4 ?
+                      <LightBulbs /> : null
+            }
           </div>
         </div>
 
@@ -108,7 +103,11 @@ export default function PageFour({ setPage }: Props) {
           setPage={setPage}
           func={func}
           prevPage={3}
-          nextPage={5} />
+          nextPage={5}
+          sections={4}
+          section={section}
+          setSection={setSection} />
+
       </div>
     </PagesLayout>
   )

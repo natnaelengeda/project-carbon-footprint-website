@@ -1,0 +1,8 @@
+/* App.css */
+.with-border {
+  border: 1px solid black;
+}
+
+.no-border {
+  border: none;
+}

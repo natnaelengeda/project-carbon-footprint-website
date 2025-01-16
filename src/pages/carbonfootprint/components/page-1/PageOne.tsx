@@ -38,7 +38,7 @@ export default function PageOne({ setPage }: Props) {
           src={AppAsset.Logo}
           className="w-20 h-20 md:w-32 md:h-32 object-contain" />
         <div className="h-auto flex flex-col items-center justify-start gap-5 md:gap-10">
-          <p className="text-2xl md:text-[86px] font-semibold">   {t("carbon.choose_language", { lng: savedlanguages.carbon })}</p>
+          <p className="text-2xl md:text-[86px] font-semibold">{t("carbon.choose_language", { lng: savedlanguages.carbon })}</p>
           <p className="text-[#BBBBBB] text-lg md:text-[36px] font-normal">{t("carbon.project_title_1", { lng: savedlanguages.carbon })}</p>
         </div>
       </div>
