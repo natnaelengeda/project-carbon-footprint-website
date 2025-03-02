@@ -23,7 +23,7 @@ export default function Home() {
     <div
       style={{
         backgroundImage: `url(${AppAsset.Background})`,
-        backgroundSize: "contain",
+        backgroundSize: "cover",
         backgroundPosition: "center",
         backgroundRepeat: "no-repeat",
         backgroundAttachment: "contain",
