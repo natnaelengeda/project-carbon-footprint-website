@@ -141,7 +141,7 @@ export default function Home() {
           <button
             onClick={() => {
               navigate("/carbonfootprint");
-              // localStorage.setItem("page_type", "carbonfootprint");
+              localStorage.setItem("page_type", "carbonfootprint");
             }}
             className="w-auto h-auto md:w-[325px] md:h-[76px] border-2 border-primary bg-transparent text-primary font-semibold rounded-full md:rounded-full text-lg md:text-[26px] px-5 md:px-0 py-2 md:py-4 hover:bg-primary hover:text-white transition-all duration-300 flex flex-row items-center justify-center gap-3">
             <p>Carbon Footprint</p>
@@ -152,7 +152,7 @@ export default function Home() {
           <button
             onClick={() => {
               navigate("/interactive-qa");
-              // localStorage.setItem("page_type", "interactive-qa");
+              localStorage.setItem("page_type", "interactive-qa");
             }}
             className="w-auto h-auto md:w-[325px] md:h-[76px] border-2 border-primary bg-transparent text-primary font-semibold rounded-full md:rounded-full text-lg md:text-[26px] px-5 md:px-0 py-2 md:py-4 hover:bg-primary hover:text-white transition-all duration-300 flex flex-row items-center justify-center gap-3">
             <p>Interactive Q/A</p>
@@ -163,7 +163,7 @@ export default function Home() {
           <button
             onClick={() => {
               navigate("/pledge");
-              // localStorage.setItem("page_type", "pledge");
+              localStorage.setItem("page_type", "pledge");
             }}
             className="w-auto h-auto md:w-[325px] md:h-[76px] border-2 border-primary bg-transparent text-primary font-semibold rounded-full md:rounded-full text-lg md:text-[26px] px-5 md:px-0 py-2 md:py-4 hover:bg-primary hover:text-white transition-all duration-300 flex flex-row items-center justify-center gap-3">
             <p>Personal Pledge</p>
