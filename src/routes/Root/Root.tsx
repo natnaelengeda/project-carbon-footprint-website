@@ -9,9 +9,16 @@ export default function Root() {
 
   useEffect(() => {
     const page = localStorage.getItem("page_type");
+    const mode = localStorage.getItem("page_mode");
 
     if (page == "carbonfootprint") {
-      navigate("/carbonfootprint");
+
+      if (mode == "questions") {
+        navigate("/carbonfootprint/questions");
+      } else if (mode == "answers") {
+        navigate("/carbonfootprint/answers");
+      }
+      // navigate("/carbonfootprint");
     } else if (page == "pledge") {
       navigate("/pledge");
     } else if (page == "interactive-qa") {

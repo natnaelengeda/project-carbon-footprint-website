@@ -27,6 +27,7 @@ import "./index.css";
 import "./styles/tailwind.css";
 import '@mantine/core/styles.css';
 import 'react-loading-skeleton/dist/skeleton.css'
+import { SocketProvider } from './context/SocketProvider';
 
 const container = document.getElementById('root') as HTMLElement;
 
@@ -34,20 +35,25 @@ const container = document.getElementById('root') as HTMLElement;
 const root = ReactDOMClient.createRoot(container);
 
 function App() {
+  const url = import.meta.env.VITE_SERVER_URL;
+
   return (
     <Provider store={store}>
       <PersistGate
         loading={null}
         persistor={persistor}>
-        <MantineProvider>
-          <SkeletonTheme
-            baseColor="#11001415"
-            highlightColor="#35D36A">
-            <RouterProvider
-              router={router} />
-            <Toaster />
-          </SkeletonTheme>
-        </MantineProvider>
+        <SocketProvider
+          serverUrl={url}>
+          <MantineProvider>
+            <SkeletonTheme
+              baseColor="#11001415"
+              highlightColor="#35D36A">
+              <RouterProvider
+                router={router} />
+              <Toaster />
+            </SkeletonTheme>
+          </MantineProvider>
+        </SocketProvider>
       </PersistGate>
     </Provider>
   );

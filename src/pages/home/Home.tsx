@@ -3,21 +3,27 @@ import { useState } from "react";
 // React Router
 import { useNavigate } from "react-router-dom";
 
+// Components
+import QuestionsModal from "./components/QuestionsModal";
+
 // Swiper
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay } from 'swiper/modules';
 
+// Mantine
+import { useDisclosure } from '@mantine/hooks';
+
 // Import Swiper styles
 import 'swiper/css';
-
 
 // AppAsset
 import AppAsset from "@/core/AppAsset";
 
-
 export default function Home() {
   const navigate = useNavigate();
   const [currentSlider, setCurrentSlider] = useState<number>(0);
+  const [opened, { open, close }] = useDisclosure(false);
+
 
   return (
     <div
@@ -137,12 +143,8 @@ export default function Home() {
 
         {/* Buttons */}
         <div className="w-auto flex flex-col items-center justify-start gap-3 md:gap-10 pt-10">
-
           <button
-            onClick={() => {
-              navigate("/carbonfootprint");
-              localStorage.setItem("page_type", "carbonfootprint");
-            }}
+            onClick={open}
             className="w-auto h-auto md:w-[325px] md:h-[76px] border-2 border-primary bg-transparent text-primary font-semibold rounded-full md:rounded-full text-lg md:text-[26px] px-5 md:px-0 py-2 md:py-4 hover:bg-primary hover:text-white transition-all duration-300 flex flex-row items-center justify-center gap-3">
             <p>Carbon Footprint</p>
             <img src={AppAsset.RightArrowGreenicon}
@@ -172,6 +174,10 @@ export default function Home() {
           </button>
         </div>
       </div>
+
+      <QuestionsModal
+        opened={opened}
+        close={close} />
     </div>
   )
 }
