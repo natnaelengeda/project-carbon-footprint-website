@@ -14,7 +14,7 @@ export default function Devools() {
   const [opened, setOpened] = useState(false);
   const [activeBorder, setActiveBorder] = useState(false);
 
-  const { socket, isConnected } = useSocket();
+  const socket = useSocket();
 
   // Border Activate
   const activateBorder = () => {

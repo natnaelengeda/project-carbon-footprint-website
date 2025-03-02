@@ -19,12 +19,13 @@ export default function QuestionsModal({ opened, close }: IPageProps) {
   const [code, setCode] = useState<string>("");
   const navigate = useNavigate();
 
-  const { socket } = useSocket();
+  const socket = useSocket();
 
   const Sumbit = (page: string) => {
     try {
       localStorage.setItem("page_type", "carbonfootprint");
       localStorage.setItem("page_mode", page);
+      localStorage.setItem("room", code);
 
       if (page == "questions") {
         socket?.emit("page_mode", JSON.stringify({
@@ -40,6 +41,7 @@ export default function QuestionsModal({ opened, close }: IPageProps) {
           page_mode: "answers",
           unique_code: code
         }));
+
         navigate("/carbonfootprint/answers");
       }
 
