@@ -48,6 +48,7 @@ export default function LightBulbs() {
 
 
   const updateIncandescentSlider = (value: number) => {
+    setSelected(true);
     setIncandescentSlider(value);
     setIncandescent(true);
     dispatch(

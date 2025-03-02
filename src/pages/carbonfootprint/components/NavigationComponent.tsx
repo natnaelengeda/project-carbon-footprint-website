@@ -15,7 +15,7 @@ interface Props {
   setSection?: React.Dispatch<React.SetStateAction<number>>;
 }
 
-export default function NavigationComponent({ setPage, func, prevPage, nextPage, sections, section, setSection }: Props) {
+export default function NavigationComponent({ setPage, prevPage, nextPage, sections, section, setSection }: Props) {
   // React Language Packaged;
   const { t } = useTranslation();
 

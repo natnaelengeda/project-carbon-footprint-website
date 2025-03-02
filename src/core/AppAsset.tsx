@@ -14,6 +14,9 @@ import BannerEight from "@/assets/imgs/banner/banner-eight.svg";
 import BannerNine from "@/assets/imgs/banner/banner-nine.svg";
 import BannerTen from "@/assets/imgs/banner/banner-ten.svg";
 
+import Banner2 from "@/assets/imgs/banner/banner-2.svg";
+import Banner3 from "@/assets/imgs/banner/banner-3.svg";
+
 // Badges
 import BlueBadge from "@/assets/imgs/badges/blue-badge.svg";
 import GreenBadge from "@/assets/imgs/badges/green-badge.svg";
@@ -95,6 +98,9 @@ class AppAsset {
   static BannerEight = BannerEight;
   static BannerNine = BannerNine;
   static BannerTen = BannerTen;
+
+  static Banner2 = Banner2;
+  static Banner3 = Banner3;
 
   // Badges
   static BlueBadge = BlueBadge;

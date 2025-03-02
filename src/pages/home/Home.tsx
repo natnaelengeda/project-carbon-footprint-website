@@ -85,12 +85,12 @@ export default function Home() {
               </SwiperSlide>
               <SwiperSlide>
                 <img
-                  src={AppAsset.BannerTwo}
+                  src={AppAsset.Banner2}
                   className="w-full h-80 md:h-[35rem] object-contain" />
               </SwiperSlide>
               <SwiperSlide>
                 <img
-                  src={AppAsset.BannerThree}
+                  src={AppAsset.Banner3}
                   className="w-full h-80 md:h-[35rem] object-contain" />
               </SwiperSlide>
             </Swiper>
@@ -111,11 +111,28 @@ export default function Home() {
           </div>
 
           {/* Note */}
-          <div
-            className="w-auto flex flex-col items-center justify-start gap-5 text-lg md:text-[28px] pt-10 text-center pb-5">
-            <p>Calculate your footprint with ease. Earn eco-badges </p>
-            <p>and get tips to reduce your impact</p>
-          </div>
+          {
+            currentSlider == 0 ? (
+              <div
+                className="w-auto flex flex-col items-center justify-start gap-5 text-lg md:text-[28px] pt-10 text-center pb-5">
+                <p>Calculate your footprint with ease. Earn eco-badges </p>
+                <p>and get tips to reduce your impact</p>
+              </div>
+            ) : currentSlider == 1 ? (
+              <div
+                className="w-auto flex flex-col items-center justify-start gap-5 text-lg md:text-[28px] pt-10 text-center pb-5">
+                <p>Learn eco-tips with fun quizzes. Answer on tablets, see scores on</p>
+                <p>a leaderboard, and enjoy gamified visuals and feedback.</p>
+              </div>
+            ) : (
+              <div
+                className="w-auto flex flex-col items-center justify-start gap-5 text-lg md:text-[28px] pt-10 text-center pb-5">
+                <p>Commit to green actions. Track pledges with dynamic visuals, earn </p>
+                <p>badges, and learn eco-friendly facts in real-time.</p>
+              </div>
+            )
+
+          }
         </div>
 
         {/* Buttons */}
