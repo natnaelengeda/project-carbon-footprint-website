@@ -1,8 +1,5 @@
 import { useState } from "react";
 
-// AppAsset
-import AppAsset from "@/core/AppAsset";
-
 // Components
 import PageZero from "./components/page-0";
 import PageOne from "./components/page-1";

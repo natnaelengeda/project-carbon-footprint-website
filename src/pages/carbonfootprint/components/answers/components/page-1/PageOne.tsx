@@ -6,20 +6,20 @@ import { useTranslation } from 'react-i18next';
 // State
 import {
   useDispatch,
-  useSelector,
+  // useSelector,
 } from 'react-redux';
 
 import {
   addName,
-  CarbonState,
+  // CarbonState,
 } from '@/state/carbon';
 
 // Mantine
-import { TextInput } from '@mantine/core';
+// import { TextInput } from '@mantine/core';
 
 // Utils
 import { generateRandomId } from '@/utils/idGenerator';
-import { generateRandomName } from '@/utils/randomNameGenerator';
+// import { generateRandomName } from '@/utils/randomNameGenerator';
 
 // AppAsset
 import AppAsset from "@/core/AppAsset";
@@ -35,7 +35,7 @@ interface Props {
   setPage: React.Dispatch<React.SetStateAction<number>>;
 }
 
-export default function PageOne({ setPage }: Props) {
+export default function PageOne({  }: Props) {
   // New Values
   const [name, setName] = useState<string>("");
   const id = generateRandomId();
@@ -44,13 +44,13 @@ export default function PageOne({ setPage }: Props) {
   const { t } = useTranslation();
 
   // Width
-  const width = window.innerWidth;
+  // const width = window.innerWidth;
 
   const savedlanguages = JSON.parse(localStorage.getItem("language") || "");
 
   // State
   const dispatch = useDispatch();
-  const carbonData = useSelector((state: { carbon: CarbonState }) => state.carbon);
+  // const carbonData = useSelector((state: { carbon: CarbonState }) => state.carbon);
 
   // Socket
   const socket = useSocket();
@@ -69,18 +69,18 @@ export default function PageOne({ setPage }: Props) {
     }));
   }
 
-  const func = () => {
-    const newName = generateRandomName();
+  // const func = () => {
+  //   const newName = generateRandomName();
 
-    if (name.length > 0) return true;
-    else
-      dispatch(addName({
-        id: id,
-        name: newName,
-      }));
+  //   if (name.length > 0) return true;
+  //   else
+  //     dispatch(addName({
+  //       id: id,
+  //       name: newName,
+  //     }));
 
-    return true;
-  }
+  //   return true;
+  // }
 
 
   return (

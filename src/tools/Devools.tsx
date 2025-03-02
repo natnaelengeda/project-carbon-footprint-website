@@ -43,7 +43,7 @@ export default function Devools() {
 
 
   useEffect(() => {
-    socket?.on("connectionWorks", (data) => {
+    socket?.on("connectionWorks", () => {
       toast.success("Socket Connection Works");
     });
   }, [socket]);

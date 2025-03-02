@@ -11,7 +11,7 @@ import { useDispatch } from "react-redux";
 // State
 import {
   addName,
-  CarbonState,
+  // CarbonState,
 } from '@/state/carbon';
 
 // Interface
@@ -19,7 +19,7 @@ interface Props {
   setPage: React.Dispatch<React.SetStateAction<number>>;
 }
 
-export default function PageOne({ setPage }: Props) {
+export default function PageOne({  }: Props) {
   const [name, setName] = useState<string>("");
 
 
