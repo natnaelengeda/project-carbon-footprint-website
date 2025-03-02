@@ -76,6 +76,7 @@ export interface CarbonState {
   food_wastage: number;
 }
 
+
 // Define the initial state
 const initialState: CarbonState = {
   id: "",

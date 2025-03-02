@@ -1,6 +1,6 @@
 
 // Logo
-import Logo from "@/assets/imgs/logo/logo.svg";
+import Logo from "@/assets/imgs/logo/science-museum-logo.svg";
 
 // Banners
 import BannerOne from "@/assets/imgs/banner/banner-one.svg";
@@ -74,6 +74,9 @@ import WaterDroplet from "@/assets/icons/pledge/droplet.svg";
 
 // Tick
 import TickImage from "@/assets/imgs/Illustration.svg";
+
+// Background
+import Background from "@/assets/imgs/background/background.svg";
 
 
 class AppAsset {
@@ -152,6 +155,9 @@ class AppAsset {
   static WaterDroplet = WaterDroplet;
 
   static TickImage = TickImage;
+
+  // Background
+  static Background = Background;
 }
 
 export default AppAsset;
