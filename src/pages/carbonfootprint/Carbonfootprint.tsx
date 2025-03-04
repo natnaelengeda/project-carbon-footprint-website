@@ -18,7 +18,6 @@ import PageEleven from "./old/page-11";
 export default function CarbonFootPrint() {
   const [page, setPage] = useState<number>(0);
 
-
   return (
     <div className="w-full h-screen">
       {

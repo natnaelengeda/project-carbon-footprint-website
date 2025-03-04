@@ -6,32 +6,35 @@ import Devools from "@/tools/Devools";
 
 import { Outlet, useNavigate, useLocation, } from "react-router-dom";
 
+// Toast
+import toast from "react-hot-toast";
+
 export default function Root() {
   const navigate = useNavigate();
   const location = useLocation();
   const socket = useSocket();
 
   useEffect(() => {
-    // const page = localStorage.getItem("page_type");
-    // const mode = localStorage.getItem("page_mode");
+    const page = localStorage.getItem("page_type");
+    const mode = localStorage.getItem("page_mode");
 
-    // if (page == "carbonfootprint") {
-    //   if (mode == "questions") {
-    //     navigate("/carbonfootprint/questions");
-    //   } else if (mode == "answers") {
-    //     navigate("/carbonfootprint/answers");
-    //   }
-    //   // navigate("/carbonfootprint");
-    // } else if (page == "pledge") {
-    //   navigate("/pledge");
-    // } else if (page == "interactive-qa") {
-    //   navigate("/interactive-qa");
-    // }
+    if (page == "carbonfootprint") {
+      if (mode == "questions") {
+        navigate("/carbonfootprint/questions");
+      } else if (mode == "answers") {
+        navigate("/carbonfootprint/answers");
+      }
+      // navigate("/carbonfootprint");
+    } else if (page == "pledge") {
+      navigate("/pledge");
+    } else if (page == "interactive-qa") {
+      navigate("/interactive-qa");
+    }
 
-    // if (page == null) {
-    //   toast("Choose from the Options Bellow");
-    //   navigate("/");
-    // }
+    if (page == null) {
+      toast("Choose from the Options Bellow");
+      navigate("/");
+    }
   }, []);
 
   const checkPledge = () => {
@@ -54,8 +57,6 @@ export default function Root() {
     const room = queryParams.get('room');
 
     if (room) {
-      console.log(room);
-
       if (location.pathname == "/carbonfootprint/questions") {
         localStorage.setItem("page_type", "carbonfootprint");
         localStorage.setItem("page_mode", "questions");

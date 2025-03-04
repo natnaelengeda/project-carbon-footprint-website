@@ -18,7 +18,6 @@ interface Props {
   setPage: React.Dispatch<React.SetStateAction<number>>;
 }
 
-
 export default function PageZero({ setPage }: Props) {
   const [language, setLanguage] = useState("English");
   const mode = localStorage.getItem("page_mode");

@@ -84,6 +84,7 @@ export default function PageZero({ setPage }: Props) {
     socket?.emit("change-page-server-1", JSON.stringify({
       page_number: 1,
       mode: mode,
+      room:room,
     }));
   }
 

@@ -31,8 +31,13 @@ export function SocketProvider({
       console.log("Connected to Socket.io");
       console.log("Socket Id", newSocket.id);
 
-      newSocket.emit("join-room", "Join");
+      const room = localStorage.getItem("room");
 
+      console.log(room);
+
+      if (room) {
+        newSocket.emit("join-room", room);
+      }
     });
 
     setSocket(newSocket);
