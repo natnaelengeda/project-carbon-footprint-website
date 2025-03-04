@@ -29,13 +29,14 @@ import DefaultBackground from '../DefaultBackground';
 
 // Socket
 import { useSocket } from '@/context/SocketProvider';
+import NavComponent from '../../../NavComponent';
 
 // Interface
 interface Props {
   setPage: React.Dispatch<React.SetStateAction<number>>;
 }
 
-export default function PageThree({ }: Props) {
+export default function PageThree({ setPage }: Props) {
   // New Values
   const [name, setName] = useState<string>("");
   const id = generateRandomId();
@@ -85,25 +86,22 @@ export default function PageThree({ }: Props) {
 
   return (
     <DefaultBackground>
-      <div className="relative z-10 w-full h-full mx-auto 2xl:container flex flex-col items-center justify-center gap-5 py-10 md:py-20">
+      <div className="relative z-10 w-full h-full mx-auto  flex flex-col items-center justify-center gap-5 py-10 md:py-20">
 
         {/* TextInput */}
         <div
           className="w-full flex flex-col items-center justify-start gap-5 pt-2 md:pt-10 px-5">
-          <div className="relative w-full md:w-[35rem]">
-            <img
-              src={AppAsset.UserBlackIcon}
-              className="absolute left-3 top-1/2 -translate-y-1/2 w-8 h-8"
-            />
-            <input
-              type="text"
-              placeholder={t("carbon.name_eg", { lng: savedlanguages.carbon })}
-              value={name}
-              onChange={onNameChange}
-              className="w-full h-20 rounded-lg border-2 border-white bg-transparent text-xl text-white placeholder-white pl-14 pr-2" />
-          </div>
+          <p className='text-white text-4xl'>3</p>
 
 
+        </div>
+
+        <div
+          className='absolute bottom-0 right-0'>
+          <NavComponent
+            setPage={setPage}
+            nextPage={4} 
+            prevPage={2}/>
         </div>
       </div>
     </DefaultBackground>

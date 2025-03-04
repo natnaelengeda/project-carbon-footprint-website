@@ -1,14 +1,34 @@
-import React from 'react'
-
 // AppAsset
+import { useSocket } from "@/context/SocketProvider";
 import AppAsset from "@/core/AppAsset";
+import { useEffect } from "react";
 
 // Interface
 interface Props {
   children: React.ReactNode;
+  setPage: React.Dispatch<React.SetStateAction<number>>;
 }
 
-export default function DefaultBackground({ children }: Props) {
+export default function QuestionsLayout({ children, setPage }: Props) {
+  const socket = useSocket();
+
+  useEffect(() => {
+    socket?.on("page-next-client", (temp) => {
+      const data = JSON.parse(temp);
+      setPage(data.nextPage);
+    });
+
+    socket?.on("page-prev-client", (temp) => {
+      const data = JSON.parse(temp);
+      setPage(data.prevPage);
+    });
+
+    socket?.on("page-skip-client", (temp) => {
+      const data = JSON.parse(temp);
+      setPage(data.nextPage);
+    });
+  }, [socket]);
+
   return (
     <div
       style={{

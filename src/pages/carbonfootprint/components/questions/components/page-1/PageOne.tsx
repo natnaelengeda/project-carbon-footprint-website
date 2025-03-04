@@ -13,18 +13,18 @@ import {
   addName,
   // CarbonState,
 } from '@/state/carbon';
+import QuestionsLayout from "../QuestionsLayout";
 
 // Interface
 interface Props {
   setPage: React.Dispatch<React.SetStateAction<number>>;
 }
 
-export default function PageOne({  }: Props) {
+export default function PageOne({ setPage }: Props) {
   const [name, setName] = useState<string>("");
 
-
   const socket: any = useSocket();
-  
+
   // State
   const dispatch = useDispatch();
 
@@ -43,26 +43,10 @@ export default function PageOne({  }: Props) {
   }, [socket]);
 
   return (
-    <div
-      style={{
-        backgroundImage: `url(${AppAsset.Background})`,
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-        backgroundRepeat: "no-repeat",
-        backgroundAttachment: "contain",
-        position: "relative",
-      }}
-      className="w-full h-full min-h-screen font-Urbanist">
-
-      {/* Background Overlay */}
+    <QuestionsLayout
+      setPage={setPage}>
       <div
-        className="absolute inset-0"
-        style={{
-          backgroundColor: "rgba(0, 0, 0, 0.5)", // You can adjust the last value (0.5) to change opacity
-          zIndex: 1,
-        }}
-      />
-      <div className="relative z-10 w-full h-full mx-auto 2xl:container flex flex-col items-center justify-start gap-5 py-10 md:py-[89px]">
+        className="relative z-10 w-full h-full mx-auto 2xl:container flex flex-col items-center justify-start gap-5 py-10 md:py-[89px]">
 
         {/* Top */}
         <div
@@ -110,9 +94,7 @@ export default function PageOne({  }: Props) {
           </div>
 
         </div>
-
       </div>
-
-    </div>
+    </QuestionsLayout>
   )
 }

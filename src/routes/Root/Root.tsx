@@ -76,7 +76,7 @@ export default function Root() {
 
         socket?.emit("page_mode", JSON.stringify({
           page_type: "carbonfootprint",
-          page_mode: "questions",
+          page_mode: "answers",
           unique_code: room
         }));
       }

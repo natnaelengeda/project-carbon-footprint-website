@@ -29,16 +29,18 @@ import DefaultBackground from '../DefaultBackground';
 
 // Socket
 import { useSocket } from '@/context/SocketProvider';
+import NavComponent from '../../../NavComponent';
 
 // Interface
 interface Props {
   setPage: React.Dispatch<React.SetStateAction<number>>;
 }
 
-export default function PageOne({  }: Props) {
+export default function PageOne({ setPage }: Props) {
   // New Values
   const [name, setName] = useState<string>("");
   const id = generateRandomId();
+  const room = localStorage.getItem("room");
 
   // React Language Packaged;
   const { t } = useTranslation();
@@ -60,6 +62,7 @@ export default function PageOne({  }: Props) {
     socket?.emit("name-change-server-1", JSON.stringify({
       name: e.target.value,
       id: id,
+      room: room
     }));
 
     setName(e.target.value);
@@ -85,7 +88,8 @@ export default function PageOne({  }: Props) {
 
   return (
     <DefaultBackground>
-      <div className="relative z-10 w-full h-full mx-auto 2xl:container flex flex-col items-center justify-center gap-5 py-10 md:py-20">
+      <div
+        className="relative z-10 w-full h-full mx-auto  :container flex flex-col items-center justify-center gap-5 py-10 md:py-20">
 
         {/* TextInput */}
         <div
@@ -102,8 +106,14 @@ export default function PageOne({  }: Props) {
               onChange={onNameChange}
               className="w-full h-20 rounded-lg border-2 border-white bg-transparent text-xl text-white placeholder-white pl-14 pr-2" />
           </div>
+        </div>
 
-
+        <div
+          className='absolute bottom-0 right-0'>
+          <NavComponent
+            setPage={setPage}
+            nextPage={2}
+            prevPage={0} />
         </div>
       </div>
     </DefaultBackground>
