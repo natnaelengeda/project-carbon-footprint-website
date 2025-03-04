@@ -7,6 +7,8 @@ import Layout from '../Layout';
 import { ChangeEvent, useRef, useState } from 'react';
 import Keyboard from 'react-simple-keyboard';
 import { useTranslation } from 'react-i18next';
+import { useSelector } from 'react-redux';
+import { PledgeState } from '@/state/pledge';
 
 
 // Interface
@@ -24,6 +26,9 @@ export default function PageThree({ setPage }: Props) {
   const savedlanguages = JSON.parse(localStorage.getItem("language") || "");
 
   console.log(option);
+
+  const pledge = useSelector((state: { pledge: PledgeState }) => state.pledge);
+
 
   return (
     <Layout>
@@ -46,7 +51,7 @@ export default function PageThree({ setPage }: Props) {
           <img
             src={AppAsset.UserBlackIcon}
             className="w-7 md:w-[40px] object-contain" />
-          <p className="text-lg md:text-4xl text-white">Abebe130</p>
+          <p className="text-lg md:text-4xl text-white">{pledge.name ?? "Abebe"}</p>
         </div>
 
         <div className='w-full h-full flex flex-col items-center justify-start'>

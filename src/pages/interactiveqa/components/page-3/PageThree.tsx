@@ -1,7 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
 
-// Page Layout
-import PagesLayout from "../../layouts/PagesLayout";
 
 // Components
 import Timer from "./components/Timer";
@@ -24,28 +22,11 @@ interface Props {
 }
 
 
-const colors = [
-  "#CB6EDC", // Question 1
-  "#FFA034", // Question 2
-  "#3449FF", // Question 3
-  "#1B9AAA", // Question 4
-  "#E94F37", // Question 5
-  "#FFB000", // Question 6
-  "#8E44AD", // Question 7
-  "#2980B9", // Question 8
-  "#27AE60", // Question 9
-  "#2C3E50"  // Question 10
-];
-
-
 export default function PageThree({ page, setPage, answers, setAnswers, setQuestions, questions }: Props) {
   const [colorStep, setColorStep] = useState<number>(0);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [incorrect, setIncorrect] = useState(false);
   const [selectedChoice, setSelectedChoice] = useState<any>();
-
-  const [currentQuestionId, setCurrentQuestionId] = useState<number | null>(0);
-  const [currentAnswerId, setCurrentAnswerId] = useState<number | null>(0);
 
   const savedQuestions = localStorage.getItem("questions");
 

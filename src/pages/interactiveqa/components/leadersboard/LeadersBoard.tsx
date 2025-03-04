@@ -114,10 +114,6 @@ export default function LeadersBoard({ score, setPage, cuserId }: Props) {
 }
 
 
-interface LeaderboardTableProps {
-  participants: ParticipantData[];
-}
-
 export function LeaderboardTable({ participants, cuserId }: any) {
   return (
     <div className="flex overflow-hidden flex-col self-stretch mt-24 w-full text-3xl bg-white rounded-3xl border border-solid border-neutral-300 max-md:mt-10 max-md:max-w-full">
@@ -143,10 +139,6 @@ export function LeaderboardTable({ participants, cuserId }: any) {
   );
 }
 
-interface LeaderboardRowProps {
-  participant: ParticipantData;
-  index: number;
-}
 
 export function LeaderboardRow({ participant, index, cuserId }: any) {
   const baseClasses = "flex overflow-hidden flex-wrap gap-10 justify-between items-center px-24 py-7 w-full min-h-[86px] max-md:px-5 max-md:max-w-full";

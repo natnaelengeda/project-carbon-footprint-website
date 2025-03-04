@@ -41,6 +41,7 @@ export default function PageFour({ setPage }: Props) {
   const savedlanguages = JSON.parse(localStorage.getItem("language") || "");
 
 
+
   const onKeyPress = (button: string) => {
     if (button === "{shift}" || button === "{lock}") {
       setLayoutName(layoutName === "default" ? "shift" : "default");
@@ -108,7 +109,7 @@ export default function PageFour({ setPage }: Props) {
           <img
             src={AppAsset.UserBlackIcon}
             className="w-7 md:w-[40px] object-contain" />
-          <p className="text-lg md:text-4xl text-white">Abebe130</p>
+          <p className="text-lg md:text-4xl text-white">{pledge.name ?? "Abebe"}</p>
         </div>
 
         {/* Main */}

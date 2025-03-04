@@ -3,9 +3,9 @@ import { useEffect } from "react";
 // AppAsset
 import AppAsset from "@/core/AppAsset";
 import Layout from "../Layout";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
-import { clearPledge } from "@/state/pledge";
+import { clearPledge, PledgeState } from "@/state/pledge";
 import { useTranslation } from "react-i18next";
 
 // Interface
@@ -19,6 +19,8 @@ export default function PageFive({ setPage }: Props) {
   const { t } = useTranslation();
 
   const savedlanguages = JSON.parse(localStorage.getItem("language") || "");
+
+  const pledge = useSelector((state: { pledge: PledgeState }) => state.pledge);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -51,7 +53,7 @@ export default function PageFive({ setPage }: Props) {
           <img
             src={AppAsset.UserBlackIcon}
             className="w-7 md:w-[40px] object-contain" />
-          <p className="text-lg md:text-4xl text-white">Abebe130</p>
+          <p className="text-lg md:text-4xl text-white">{pledge.name ?? "Abebe"}</p>
         </div>
 
         {/* Main */}
