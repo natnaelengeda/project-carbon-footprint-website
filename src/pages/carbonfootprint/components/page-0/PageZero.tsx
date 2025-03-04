@@ -105,7 +105,7 @@ export default function PageZero({ setPage }: Props) {
           <button
             onClick={() => {
               setLanguage("amharic");
-              changeLanguage("carbon", "am");
+              changeLanguage("carbon",   "am");
             }}
             className={`w-full h-20 md:w-[650px] md:h-[88px] bg-[#35D36A73] flex flex-row items-center justify-start gap-5 md:gap-[32px] px-3 md:px-[33px] rounded-lg ${lanuage == "amharic" ? "border-4 border-black" : ""}`}>
             <img

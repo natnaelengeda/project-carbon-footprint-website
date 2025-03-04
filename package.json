@@ -29,6 +29,7 @@
     "react-loading-skeleton": "^3.5.0",
     "react-redux": "^9.2.0",
     "react-router-dom": "^7.0.2",
+    "react-simple-keyboard": "^3.8.51",
     "react-use": "^17.6.0",
     "recharts": "^2.15.0",
     "redux-persist": "^6.0.0",

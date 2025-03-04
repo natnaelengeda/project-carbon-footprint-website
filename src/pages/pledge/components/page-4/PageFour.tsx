@@ -1,21 +1,22 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 
-// Page Layout
-import PagesLayout from "../../layouts/PagesLayout";
+// State
+import { useSelector } from "react-redux";
 
-// Mantine
-import { Tooltip } from "@mantine/core";
+import { PledgeState } from "@/state/pledge";
+
+// Axios
+import axios from "@/utils/axios";
 
 // AppAsset
 import AppAsset from "@/core/AppAsset";
 
 // Components
-import NavigationComponent from "../NavigationComponent";
-import Poultry from "./components/Poultry";
-import Vegitable from "./components/Vegitable";
-import Meat from "./components/Meat";
-import Fish from "./components/Fish";
-import TopDetail from "../TopDetail";
+import Layout from "../Layout";
+
+// On Screen Keyboard
+import Keyboard from "react-simple-keyboard";
+import { useTranslation } from "react-i18next";
 
 // Interface
 interface Props {
@@ -23,84 +24,226 @@ interface Props {
 }
 
 export default function PageFour({ setPage }: Props) {
-  const [opened, setOpened] = useState<string>("poultry");
+  const [name, setName] = useState<string>('');
+  const [email, setEmail] = useState<string>('');
+  const [phoneNumber, setPhoneNumber] = useState<string>('');
+
+  const [step, setStep] = useState("name");
+  const keyboard = useRef<any>(null);
+
+  const [keyboardOn, setKeyboardOn] = useState<boolean>(false);
+  const [layoutName, setLayoutName] = useState("default");
+
+  const pledge = useSelector((state: { pledge: PledgeState }) => state.pledge);
+
+  const { t } = useTranslation();
+
+  const savedlanguages = JSON.parse(localStorage.getItem("language") || "");
+
+
+  const onKeyPress = (button: string) => {
+    if (button === "{shift}" || button === "{lock}") {
+      setLayoutName(layoutName === "default" ? "shift" : "default");
+    }
+    if (button === "{enter}") {
+      setKeyboardOn(false)
+    }
+  };
+
+  const changeInput = (e: any) => {
+
+    if (step == "name") {
+      setName(e);
+    }
+
+    if (step == "email") {
+      setEmail(e);
+    }
+
+    if (step == "phone") {
+      setPhoneNumber(e);
+    }
+  }
+
+
+
+  const submitFunction = () => {
+    console.log(name, email, phoneNumber);
+    setPage(5);
+
+    if (name == '' && email == '' && phoneNumber == '') {
+      setPage(5);
+    } else {
+      axios.post("/", {
+        id: pledge.id,
+        name: name,
+        email: email,
+        phoneNumber: phoneNumber
+      }).then((response) => {
+        console.log(response.data);
+        setPage(11);
+
+      })
+    }
+  }
 
   return (
-    <PagesLayout>
-      <div
-        className="relative w-full h-screen mx-auto 2xl:container flex flex-col items-center justify-between gap-5 py-10 md:py-20">
+    <Layout>
+      <div className="w-full h-full flex flex-col items-center justify-start relative z-10 text-white">
+        {/* Logo */}
+        <div
+          className='absolute top-0 left-0 z-20 pl-[50px] pt-[74px]'>
+          <img
+            style={{
+              width: "250px",
+              height: "167px",
+              objectFit: "contain"
+            }}
+            src={AppAsset.Logo}
+            className='' />
+        </div>
 
-        {/* Top Section */}
-        <div className='flex flex-col items-center justify-start gap-5'>
-          {/* Image Content */}
+        {/* User Name */}
+        <div className="absolute top-0 right-0 z-20 pr-[50px] pt-[120px] flex flex-row items-center justify-end gap-5">
+          <img
+            src={AppAsset.UserBlackIcon}
+            className="w-7 md:w-[40px] object-contain" />
+          <p className="text-lg md:text-4xl text-white">Abebe130</p>
+        </div>
+
+        {/* Main */}
+        <div
+          className="w-full h-auto flex flex-col items-center justify-start pt-10 md:pt-[400px] px-4 md:px-0">
+
+          {/* Text */}
           <div
-            className="w-full h-auto flex flex-col items-center justify-start gap-5 px-10">
-            {/* Image */}
-            <img
-              src={AppAsset.BannerSix}
-              className="md:w-[550px] md:h-[550px] object-cover" />
+            className="w-full md:w-[649px]">
+            <p
+              className="text-3xl md:text-[42px] md:leading-10 font-semibold">
+              {t("pledge.contactDetails", { lng: savedlanguages.pledge })}
+            </p>
           </div>
 
-          {/* Note */}
+          {/* Form */}
           <div
-            className="w-full md:w-[780px] flex flex-col items-start justify-start gap-5 md:gap-[41px] px-3 md:px-0">
+            className="w-full md:w-[649px] h-auto flex flex-col items-center justify-start pt-10 md:pt-[118px] gap-8 md:gap-[103px]">
 
-            <div className='flex flex-col items-start justify-start'>
-              <p className="text-3xl md:text-[48px] font-semibold">
-                Diet & Food Consumption
-              </p>
-            </div>
-
+            {/* Name */}
             <div
-              className="w-full flex flex-row items-start justify-start gap-2 md:gap-[26px]">
-              <Tooltip
-                label="Lorem ipsum dolor sit amet consectetur. Ante ipsum gravida vestibulum leo.">
-                <img
-                  src={AppAsset.InformationGreenIcon}
-                  className='w-[36px] h-[36px] object-contain' />
-              </Tooltip>
-              <TopDetail />
+              className="w-full flex flex-col items-start justify-start gap-3">
+              <label
+                className="text-lg md:text-[24px] font-normal">
+                {t("pledge.name", { lng: savedlanguages.pledge })}
+              </label>
+
+              <div
+                className="relative w-full h-12 md:h-[74px]">
+                <input
+                  onFocus={() => {
+                    setKeyboardOn(true);
+                    setStep("name");
+                    keyboard.current.clearInput();
+                  }}
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  type="text"
+                  placeholder="E.g. John Doe"
+                  className="bg-transparent relative w-full h-12 md:h-[74px] border border-[#B7B7B7] rounded-md text-xl px-3 pl-14" />
+                <div className="absolute top-0 left-0 w-20 h-full  flex items-center pl-3">
+                  <img
+                    src={AppAsset.UserBlackIcon}
+                    className=" w-5 md:w-[30px] h-auto object-contain" />
+                </div>
+              </div>
             </div>
 
-            <div className="pt-2 md:pt-10">
-              <p className="font-semibold text-xl md:text-[30px]">What do you pledge to reduce this effect?</p>
+            {/* Email */}
+            <div
+              className="w-full flex flex-col items-start justify-start gap-3">
+              <label
+                className="text-lg md:text-[24px] font-normal">
+                {t("pledge.email", { lng: savedlanguages.pledge })}
+              </label>
+
+              <div
+                className="relative w-full h-12 md:h-[74px]">
+                <input
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  onFocus={() => {
+                    setKeyboardOn(true);
+                    setStep("email");
+                    keyboard.current.clearInput();
+                  }}
+                  type="text"
+                  placeholder="example@example.com"
+                  className="bg-transparent relative w-full h-12 md:h-[74px] border border-[#B7B7B7] rounded-md text-xl px-3 pl-14" />
+                <div className="absolute top-0 left-0 w-20 h-full  flex items-center pl-3">
+                  <img
+                    src={AppAsset.MailIcon}
+                    className=" w-5 md:w-[30px] h-auto object-contain" />
+                </div>
+              </div>
             </div>
 
+            {/* Phone Number */}
+            <div
+              className="w-full flex flex-col items-start justify-start gap-3">
+              <label
+                className="text-lg md:text-[24px] font-normal">
+                {t("pledge.phone", { lng: savedlanguages.pledge })}
+              </label>
+
+              <div
+                className="relative w-full h-12 md:h-[74px]">
+                <input
+                  value={phoneNumber}
+                  onChange={(e) => setPhoneNumber(e.target.value)}
+                  onFocus={() => {
+                    setKeyboardOn(true);
+                    setStep("phone");
+                    keyboard.current.clearInput();
+                  }}
+                  type="text"
+                  placeholder="0911001415"
+                  className="bg-transparent relative w-full h-12 md:h-[74px] border border-[#B7B7B7] rounded-md text-xl px-3 pl-14" />
+                <div className="absolute top-0 left-0 w-20 h-full  flex items-center pl-3">
+                  <img
+                    src={AppAsset.PhoneIcon}
+                    className=" w-5 md:w-[30px] h-auto object-contain" />
+                </div>
+              </div>
+            </div>
           </div>
 
-
-          {/* Content */}
           <div
-            className="w-full flex flex-col items-start justify-start gap-8 pt-10 px-4">
+            className="w-full h-auto flex flex-col items-center justify-start pt-20 md:pt-[374px]">
+            <button
+              onClick={submitFunction}
+              className='md:w-[407px] md:h-[110px] rounded-full bg-primary text-white flex flex-row items-center justify-center gap-3 px-6 py-3'>
+              <p
+                className='text-lg md:text-[34px] font-semibold'>
+                {t("pledge.finishPledging", { lng: savedlanguages.pledge })}
+              </p>
 
-            {/* Poultry */}
-            <Poultry
-              opened={opened}
-              setOpened={setOpened} />
+            </button>
+          </div>
 
-            {/* Vegetables */}
-            <Vegitable
-              opened={opened}
-              setOpened={setOpened} />
-
-            {/* Meat */}
-            <Meat
-              opened={opened}
-              setOpened={setOpened} />
-
-            {/* Fish */}
-            <Fish
-              opened={opened}
-              setOpened={setOpened} />
-
+          <div
+            style={{
+              display: keyboardOn ? "flex" : "none"
+            }}
+            className="w-full absolute bottom-0 left-0 text-black">
+            <Keyboard
+              keyboardRef={r => (keyboard.current = r)}
+              layoutName={layoutName}
+              onChange={changeInput}
+              onKeyPress={onKeyPress}
+              onRender={() => console.log("Rendered")} />
           </div>
         </div>
 
-        {/* Navigation */}
-        <NavigationComponent
-          setPage={setPage}
-          nextPage={5} />
       </div>
-    </PagesLayout>
+    </Layout>
   )
 }

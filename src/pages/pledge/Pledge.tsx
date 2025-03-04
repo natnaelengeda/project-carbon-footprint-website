@@ -14,8 +14,18 @@ import PageNine from "./components/page-9";
 import PageTen from "./components/Page-10";
 import PageEleven from "./components/page-11";
 
+export interface ISkipUser {
+  householdEnergy: any;
+  transportationMode: any;
+  dietAndFood: any;
+  foodWastage: any;
+  wasteDisposal: any;
+  waterUsage: any;
+}
+
 export default function Pledge() {
   const [page, setPage] = useState<number>(0);
+  const [skipUserData, setSkipUserData] = useState<ISkipUser | []>([]);
 
   return (
     <div
@@ -24,9 +34,9 @@ export default function Pledge() {
         page == 0 ?
           <PageZero setPage={setPage} /> :
           page == 1 ?
-            <PageOne setPage={setPage} /> :
+            <PageOne setPage={setPage} setSkipUserData={setSkipUserData} /> :
             page == 2 ?
-              <PageTwo setPage={setPage} /> :
+              <PageTwo setPage={setPage} skipUserData={skipUserData} /> :
               page == 3 ?
                 <PageThree setPage={setPage} /> :
                 page == 4 ?

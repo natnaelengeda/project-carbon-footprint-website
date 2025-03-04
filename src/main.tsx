@@ -13,6 +13,7 @@ import { Toaster } from 'react-hot-toast';
 
 // Skeleton
 import { SkeletonTheme } from 'react-loading-skeleton'
+import { SocketProvider } from './context/SocketProvider';
 
 // State
 import { Provider } from 'react-redux';
@@ -27,7 +28,9 @@ import "./index.css";
 import "./styles/tailwind.css";
 import '@mantine/core/styles.css';
 import 'react-loading-skeleton/dist/skeleton.css'
-import { SocketProvider } from './context/SocketProvider';
+import 'react-simple-keyboard/build/css/index.css';
+
+
 
 const container = document.getElementById('root') as HTMLElement;
 

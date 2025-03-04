@@ -26,6 +26,7 @@ export default function PageOne({ setPage }: Props) {
   const { t } = useTranslation();
 
   const savedlanguages = JSON.parse(localStorage.getItem("language") || "");
+  
 
   return (
     <div

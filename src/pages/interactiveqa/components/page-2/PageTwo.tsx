@@ -142,7 +142,6 @@ export default function PageTwo({ setPage, setQuestions }: Props) {
             }}
             src={AppAsset.Logo}
             className='' />
-
         </div>
 
         {/* Title */}

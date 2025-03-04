@@ -1,219 +1,87 @@
-import {
-  // useEffect,
-  useState
-} from "react";
-
-// Layout
-import PagesLayout from "../../layouts/PagesLayout";
-
-// Tooltip
-import { Tooltip } from "@mantine/core";
-
-// Axios
-// import axios from "@/utils/axios";
-
-// State
-// import {
-// useDispatch,
-// useSelector,
-// } from "react-redux";
-
-// Components
-import Cooking from "./components/Cooking";
-import ElectricAppliances from "./components/ElectricAppliances";
-import LightBulbs from "./components/LightBulbs";
-import NavigationComponent from "../NavigationComponent";
-import HeatingCooling from "./components/HeatingCooling";
 
 // Appasset
 import AppAsset from "@/core/AppAsset";
-// import {
-// addTrees,
-// addCarbonFootPrint,
-// addNewCarbonFootPrint,
-// addOldPledge,
-// addHouseholdEnergy,
-// } from "@/state/pledge";
-import TopDetail from "../TopDetail";
-// import { pledgeCalculator } from "@/utils/pledgeCalculator";
+import Layout from "../Layout";
+import { useTranslation } from "react-i18next";
+import TopSection from "./components/TopSection";
+import { ISkipUser } from "../../Pledge";
+import Insights from "./components/TopSection/components/Insights";
 
 // Interface
 interface Props {
   setPage: React.Dispatch<React.SetStateAction<number>>;
+  skipUserData: ISkipUser | [];
 }
 
-export default function PageTwo({ setPage }: Props) {
-  const [opened, setOpened] = useState<string>("heating-cooling");
+export default function PageTwo({ setPage, skipUserData }: Props) {
 
-  // const dispatch = useDispatch();
+  // React Language Packaged;
+  const { t } = useTranslation();
+  const savedlanguages = JSON.parse(localStorage.getItem("language") || "");
 
-  // const pledge = useSelector((state: any) => state.pledge);
-  // const houseHoldEnergy = pledge.house_hold_energy;
-
-  // useEffect(() => {
-  //   // axios.get(`/api/v1/carbonFootPrint/endUser/${pledge.id}`)
-  //   axios.get(`/api/v1/carbonFootPrint/endUser/676d52bb12f7fc69a005f00b`)
-  //     .then((response) => {
-
-  //       const data = response.data.data;
-  //       const values = response.data.value;
-
-  //       const house_hold_energy = values.householdEnergy;
-
-
-  //       if (house_hold_energy.heatingAndCooling) {
-  //         const firstItem = house_hold_energy.heatingAndCooling[0];
-
-  //         if (firstItem.type == "electric") {
-  //           dispatch(
-  //             addHouseholdEnergy({
-  //               id: 1,
-  //               name: "heating-cooling",
-  //               selected: true,
-  //               category: [
-  //                 {
-  //                   id: 1,
-  //                   name: "electric_air_conditioning",
-  //                   selected: true,
-  //                   value: firstItem.hourlyUsagePerDay,
-  //                 },
-  //               ],
-  //             })
-  //           )
-  //         } else if (firstItem.type == "charcoal") {
-  //           dispatch(
-  //             addHouseholdEnergy({
-  //               id: 1,
-  //               name: "heating-cooling",
-  //               selected: true,
-  //               category: [
-  //                 {
-  //                   id: 1,
-  //                   name: "charcoal",
-  //                   selected: true,
-  //                   value: firstItem.hourlyUsagePerDay,
-  //                 },
-  //               ],
-  //             })
-  //           )
-  //         }
-  //       }
-
-
-
-  //       // house_hold_energy.map((item) => {
-  //       //   console.log(item);
-  //       // })
-
-
-  //       // const regular_values = response.data.value;
-  //       // const values = JSON.stringify(response.data.value);
-  //       // const sum: any = Object.values(data).reduce((acc: any, value: any) => acc + (value || 0), 0);
-  //       // const trees = sum / 167;
-
-
-  //       // console.log(regular_values);
-
-  //       // dispatch(
-  //       //   addHouseholdEnergy({
-
-  //       //   })
-  //       // )
-
-
-  //       // dispatch(
-  //       //   addNewCarbonFootPrint({
-  //       //     data: sum,
-  //       //   }));
-
-  //       // dispatch(
-  //       //   addTrees({
-  //       //     data: parseInt(trees.toFixed(0)),
-  //       //   }));
-
-  //       // dispatch(
-  //       //   addOldPledge({
-  //       //     pledge: values
-  //       //   }));
-
-  //     });
-  // }, []);
-
+  const pledgeTotalCalculation = localStorage.getItem("pledgeTotalCalculation");
 
   return (
-    <PagesLayout>
+    <Layout>
       <div
-        className="relative w-full h-screen mx-auto 2xl:container flex flex-col items-center justify-between gap-5 py-10 md:py-20">
-
-        {/* Top Section */}
-        <div className='flex flex-col items-center justify-start gap-5'>
-          {/* Image Content */}
-          <div
-            className="w-full h-auto flex flex-col items-center justify-start gap-5 px-10">
-            {/* Image */}
-            <img
-              src={AppAsset.BannerFour}
-              className="md:w-[550px] md:h-[550px] object-cover" />
-          </div>
-
-          {/* Note */}
-          <div
-            className="w-full md:w-[780px] flex flex-col items-start justify-start gap-5 md:gap-[41px] px-3 md:px-0">
-
-            <div className='flex flex-col items-start justify-start'>
-              <p className="text-3xl md:text-[48px] font-semibold">
-                Houshold Energy.
-              </p>
-            </div>
-
-            <div
-              className="w-full flex flex-row items-start justify-start gap-2 md:gap-[26px]">
-              <Tooltip
-                label="Lorem ipsum dolor sit amet consectetur. Ante ipsum gravida vestibulum leo.">
-                <img
-                  src={AppAsset.InformationGreenIcon}
-                  className='w-[36px] h-[36px] object-contain' />
-              </Tooltip>
-              <TopDetail />
-            </div>
-
-            <div className="pt-2 md:pt-10">
-              <p className="font-semibold text-xl md:text-[30px]">What do you pledge to reduce this effect?</p>
-            </div>
-          </div>
-
-
-          {/* Content */}
-          <div
-            className="w-full flex flex-col items-start justify-start gap-5 pt-3 md:pt-10 px-4">
-
-            {/* Heating / Cooling */}
-            <HeatingCooling
-              opened={opened}
-              setOpened={setOpened} />
-
-            {/* Cooking */}
-            <Cooking
-              opened={opened}
-              setOpened={setOpened} />
-
-            {/* Electric Appliances */}
-            <ElectricAppliances
-              opened={opened}
-              setOpened={setOpened} />
-
-            {/* Light Bulbs */}
-            <LightBulbs
-              opened={opened}
-              setOpened={setOpened} />
-          </div>
+        className="w-full h-full flex flex-col items-start justify-start relative z-10">
+        {/* Logo */}
+        <div
+          className='absolute top-0 left-0 z-20 pl-[50px] pt-[74px]'>
+          <img
+            style={{
+              width: "250px",
+              height: "167px",
+              objectFit: "contain"
+            }}
+            src={AppAsset.Logo}
+            className='' />
         </div>
 
-        {/* Navigation */}
-        <NavigationComponent
-          setPage={setPage}
-          nextPage={3} />
+        {/* User Name */}
+        <div className="absolute top-0 right-0 z-20 pr-[50px] pt-[120px] flex flex-row items-center justify-end gap-5">
+          <img
+            src={AppAsset.UserBlackIcon}
+            className="w-7 md:w-[40px] object-contain" />
+          <p className="text-lg md:text-4xl text-white">Abebe130</p>
+        </div>
+
+
+        {/* Main Content */}
+        <div
+          className="w-full h-full flex flex-col items-center justify-start text-white pt-[240px]">
+          <div>
+            <p
+              style={{
+                // lineHeight: 1
+              }}
+              className="text-[50px] text-center">{t("pledge.carbonFootprint", { lng: savedlanguages.pledge })}<br /> <span className="font-bold">{parseInt(pledgeTotalCalculation ?? "0").toFixed(0)} KG CO<sub>2</sub>-e</span> <br />{t("pledge.perYear", { lng: savedlanguages.pledge })}</p>
+          </div>
+
+          <div className="pt-20">
+            <TopSection
+              skipUserData={skipUserData} />
+          </div>
+
+          <div
+            className="pt-20">
+            <Insights />
+          </div>
+
+          <div className="pt-20">
+            <button
+              onClick={() => {
+                setPage(3);
+              }}
+              className='md:w-[261.32px] md:h-[100px] rounded-full bg-primary text-white flex flex-row items-center justify-center gap-3 px-6 py-3'>
+              <p className='text-lg md:text-[34.56px] font-semibold'>{t("pledge.continue", { lng: savedlanguages.pledge })}</p>
+              <img
+                src={AppAsset.RightArrowIcon}
+                className="w-6 md:w-10 h-auto object-contain" />
+            </button>
+          </div>
+        </div>
       </div>
-    </PagesLayout>
+    </Layout>
   )
 }

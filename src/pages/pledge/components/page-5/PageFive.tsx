@@ -1,20 +1,12 @@
-import { useState } from "react";
-
-// MAntine
-import { Tooltip } from "@mantine/core";
-
-// Page Layout
-import PagesLayout from "../../layouts/PagesLayout";
-
-// Components
-import NavigationComponent from "../NavigationComponent";
-import WeeklyCollection from "./components/WeeklyCollection";
-import Recycle from "./components/Recycle";
+import { useEffect } from "react";
 
 // AppAsset
 import AppAsset from "@/core/AppAsset";
-import TopDetail from "../TopDetail";
+import Layout from "../Layout";
+import { useDispatch } from "react-redux";
 
+import { clearPledge } from "@/state/pledge";
+import { useTranslation } from "react-i18next";
 
 // Interface
 interface Props {
@@ -22,73 +14,85 @@ interface Props {
 }
 
 export default function PageFive({ setPage }: Props) {
-  const [opened, setOpened] = useState<string>("weekly-collection");
+  const dispatch = useDispatch();
+
+  const { t } = useTranslation();
+
+  const savedlanguages = JSON.parse(localStorage.getItem("language") || "");
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setPage(0);
+    }, 30000);
+
+    return () => clearTimeout(timer);
+  }, []);
 
   return (
-    <PagesLayout>
+    <Layout>
       <div
-        className="relative w-full h-screen mx-auto 2xl:container flex flex-col items-center justify-between gap-5 py-10 md:py-20">
+        className="w-full h-full flex flex-col items-center justify-start relative z-10">
 
-        {/* Top Section */}
-        <div className='flex flex-col items-center justify-start gap-5'>
-          {/* Image Content */}
-          <div
-            className="w-full h-auto flex flex-col items-center justify-start gap-5 px-10">
-            {/* Image */}
-            <img
-              src={AppAsset.BannerEight}
-              className="md:w-[550px] md:h-[550px] object-cover" />
-          </div>
-
-          {/* Note */}
-          <div
-            className="w-full md:w-[780px] flex flex-col items-start justify-start gap-5 md:gap-[41px] px-3 md:px-0">
-
-            <div className='flex flex-col items-start justify-start'>
-              <p className="text-3xl md:text-[48px] font-semibold">
-                Waste Disposal
-              </p>
-            </div>
-
-            <div
-              className="w-full flex flex-row items-start justify-start gap-2 md:gap-[26px]">
-              <Tooltip
-                label="Lorem ipsum dolor sit amet consectetur. Ante ipsum gravida vestibulum leo.">
-                <img
-                  src={AppAsset.InformationGreenIcon}
-                  className='w-[36px] h-[36px] object-contain' />
-              </Tooltip>
-              <TopDetail/>
-            </div>
-
-            <div className="pt-2 md:pt-10">
-              <p className="font-semibold text-xl md:text-[30px]">What do you pledge to reduce this effect?</p>
-            </div>
-
-          </div>
-
-
-          {/* Content */}
-          <div
-            className="w-full flex flex-col items-start justify-start gap-5 pt-10 px-4">
-
-            {/* Weekly collection */}
-            <WeeklyCollection
-              opened={opened}
-              setOpened={setOpened} />
-
-            {/* Recycling Habits */}
-            <Recycle
-              opened={opened}
-              setOpened={setOpened} />
-          </div>
+        {/* Logo */}
+        <div
+          className='absolute top-0 left-0 z-20 pl-[50px] pt-[74px]'>
+          <img
+            style={{
+              width: "250px",
+              height: "167px",
+              objectFit: "contain"
+            }}
+            src={AppAsset.Logo}
+            className='' />
         </div>
 
-        {/* Navigation */}
-        <NavigationComponent
-          setPage={setPage}
-          nextPage={6} />
+        {/* User Name */}
+        <div className="absolute top-0 right-0 z-20 pr-[50px] pt-[120px] flex flex-row items-center justify-end gap-5">
+          <img
+            src={AppAsset.UserBlackIcon}
+            className="w-7 md:w-[40px] object-contain" />
+          <p className="text-lg md:text-4xl text-white">Abebe130</p>
+        </div>
+
+        {/* Main */}
+        <div
+          className="w-full h-full min-h-screen flex flex-col items-center justify-start pt-12 md:pt-[159px] px-2 md:px-0 text-white">
+
+          {/* Img */}
+          <img
+            className="w-52 h-auto md:w-[300px]"
+            src={AppAsset.TickImage} />
+
+          {/* Text */}
+          <div
+            className="w-full md:w-[817px] flex flex-col items-center justify-start pt-10 md:pt-[145px]">
+            <p
+              className="text-2xl md:text-[50px] font-bold md:leading-[50px] text-center">
+              {t("pledge.thankYouForYour", { lng: savedlanguages.pledge })}
+            </p>
+
+            <div className="w-full md:w-[730px] pt-10 md:pt-[93px]">
+              <p
+                className="text-lg md:text-[32px] text-white text-center md:leading-10">
+                {t("pledge.YourMakeDifferendce", { lng: savedlanguages.pledge })}
+              </p>
+            </div>
+          </div>
+
+          {/* Button */}
+          <div className="mt-52 md:mt-[575px]">
+            <button
+              onClick={() => {
+                dispatch(clearPledge());
+                setPage(0);
+              }}
+              className="w-full md:w-[276.68px] h-14 md:h-[98.6px] border-2 border-primary text-primary text-lg md:text-[34.56px] rounded-full px-6">
+              {t("pledge.startAgain", { lng: savedlanguages.pledge })}
+            </button>
+          </div>
+
+        </div>
       </div>
-    </PagesLayout>
+    </Layout>
   )
 }

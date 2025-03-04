@@ -73,7 +73,7 @@ import BoltIcon from "@/assets/icons/pledge/energy.svg";
 import BusIcon from "@/assets/icons/pledge/bus-01.svg";
 import VegiterianFoodIcon from "@/assets/icons/pledge/vegetarian-food.svg";
 import WatermelonIcon from "@/assets/icons/pledge/watermelon.svg";
-import WasteIcon from "@/assets/icons/pledge/delete-01.svg";
+import WasteIcon from "@/assets/icons/pledge/delete-01.png";
 import WaterDroplet from "@/assets/icons/pledge/droplet.svg";
 
 // Tick
@@ -82,7 +82,7 @@ import TickImage from "@/assets/imgs/Illustration.svg";
 // Background
 import Background from "@/assets/imgs/background/background.svg";
 import BackgroundHorizontal from "@/assets/imgs/background/bbg.png";
-
+import BackgroundVertical from "@/assets/imgs/background/bg-h.png";
 import SplashImage from "@/assets/imgs/splash-animation.svg";
 
 class AppAsset {
@@ -169,6 +169,7 @@ class AppAsset {
   // Background
   static Background = Background;
   static BackgroundHorizontal = BackgroundHorizontal;
+  static BackgroundVertical = BackgroundVertical;
   static SplashImage = SplashImage;
 }
 
