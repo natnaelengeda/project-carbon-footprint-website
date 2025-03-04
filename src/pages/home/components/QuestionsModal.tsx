@@ -50,8 +50,6 @@ export default function QuestionsModal({ opened, close }: IPageProps) {
     }
   };
 
-
-
   return (
     <Modal
       opened={opened}

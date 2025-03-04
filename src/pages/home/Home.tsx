@@ -24,7 +24,6 @@ export default function Home() {
   const [currentSlider, setCurrentSlider] = useState<number>(0);
   const [opened, { open, close }] = useDisclosure(false);
 
-
   return (
     <div
       style={{
@@ -137,7 +136,6 @@ export default function Home() {
                 <p>badges, and learn eco-friendly facts in real-time.</p>
               </div>
             )
-
           }
         </div>
 

@@ -4,6 +4,8 @@ import { useTranslation } from 'react-i18next';
 
 // App Asset
 import AppAsset from '@/core/AppAsset';
+import { useSocket } from '@/context/SocketProvider';
+import { useEffect, useState } from 'react';
 
 interface Props {
   setPage: React.Dispatch<React.SetStateAction<number>>;
@@ -16,10 +18,37 @@ interface Props {
 }
 
 export default function NavigationComponent({ setPage, prevPage, nextPage, sections, section, setSection }: Props) {
+  const [isNextClicked, setIsNextCliked] = useState(false);
+  const [isPrevClicked, setIsPrevClicked] = useState(false);
+
+  const room = localStorage.getItem("room");
+
   // React Language Packaged;
   const { t } = useTranslation();
-
   const savedlanguages = JSON.parse(localStorage.getItem("language") || "");
+
+  const socket = useSocket();
+
+
+  socket?.emit("change-page", JSON.stringify({
+
+  }));
+
+  useEffect(() => {
+    if (isNextClicked) {
+      socket?.emit("change-page-next", JSON.stringify({
+        pageName: nextPage,
+        room: room
+      }));
+    }
+    if (isPrevClicked) {
+      socket?.emit("change-page-prev", JSON.stringify({
+        pageName: prevPage,
+        room: room
+      }));
+    }
+
+  }, [isNextClicked, isPrevClicked]);
 
   return (
     <div
@@ -69,6 +98,7 @@ export default function NavigationComponent({ setPage, prevPage, nextPage, secti
           if (sections != null) {
             if (section == sections) {
               setPage(nextPage);
+              setIsNextCliked(true);
             } else {
               setSection!(section! + 1);
             }
