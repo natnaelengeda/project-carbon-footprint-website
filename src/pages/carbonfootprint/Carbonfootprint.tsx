@@ -1,18 +1,19 @@
 import { useState } from "react";
 
 // Pages
-import PageOne from "./components/page-1";
-import PageTwo from "./components/page-2";
-import PageThree from "./components/page-3";
-import PageFour from "./components/page-4";
-import PageFive from "./components/page-5";
-import PageSix from "./components/page-6";
-import PageSeven from "./components/page-7";
-import PageEight from "./components/page-8";
-import PageNine from "./components/page-9";
-import PageTen from "./components/page-10";
-import PageEleven from "./components/page-11";
-import PageZero from "./components/page-0";
+import PageZero from "./old/page-0";
+import PageOne from "./old/page-1";
+import PageTwo from "./old/page-2";
+import PageThree from "./old/page-3";
+import PageFour from "./old/page-4";
+import PageFive from "./old/page-5";
+import PageSix from "./old/page-6";
+import PageSeven from "./old/page-7";
+import PageEight from "./old/page-8";
+import PageNine from "./old/page-9";
+import PageTen from "./old/page-10";
+import PageEleven from "./old/page-11";
+
 
 export default function CarbonFootPrint() {
   const [page, setPage] = useState<number>(0);
