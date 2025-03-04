@@ -9,9 +9,10 @@ import LeadersBoard from "./components/leadersboard";
 
 export default function InteractiveQA() {
   const [page, setPage] = useState<number>(1);
-  const [questions, setQuestions] = useState<any[]>([]);
+  const [questions, setQuestions] = useState<any>(null);
   const [answers, setAnswers] = useState<{ [key: number]: number }>({});
   const [score, setScore] = useState<number>(0);
+  const [cuserId, setcUserId] = useState<number | null>(null);
 
   return (
     <div className="w-full h-screen">
@@ -30,17 +31,20 @@ export default function InteractiveQA() {
                 setPage={setPage}
                 questions={questions}
                 answers={answers}
-                setAnswers={setAnswers} /> :
+                setAnswers={setAnswers}
+                setQuestions={setQuestions} /> :
               page == 4 ?
                 <FinishedPage
                   setPage={setPage}
                   answers={answers}
                   questions={questions}
-                  setScore={setScore} /> :
+                  setScore={setScore}
+                  setcUserId={setcUserId} /> :
                 page == 5 ?
                   <LeadersBoard
                     score={score}
-                    setPage={setPage} /> : null
+                    setPage={setPage}
+                    cuserId={cuserId} /> : null
 
       }
     </div>

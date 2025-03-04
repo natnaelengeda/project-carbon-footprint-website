@@ -35,6 +35,7 @@ import ArrowUpIcon from "@/assets/icons/arrow-up-01.svg";
 import ArrowDownIcon from "@/assets/icons/arrow-down-01.svg";;
 
 import RadioOnIcon from "@/assets/icons/Radio on.svg";
+import RadioOneWHite from "@/assets/icons/Radio on White.svg"
 import RadioOffIcon from "@/assets/icons/Radio Off.svg";
 
 import UserBlackIcon from "@/assets/icons/user.svg";
@@ -80,7 +81,9 @@ import TickImage from "@/assets/imgs/Illustration.svg";
 
 // Background
 import Background from "@/assets/imgs/background/background.svg";
+import BackgroundHorizontal from "@/assets/imgs/background/bbg.png";
 
+import SplashImage from "@/assets/imgs/splash-animation.svg";
 
 class AppAsset {
   public constructor() { }
@@ -120,6 +123,7 @@ class AppAsset {
   static ArrowDownIcon = ArrowDownIcon;
 
   static RadioOnIcon = RadioOnIcon;
+  static RadioOneWHite = RadioOneWHite;
   static RadioOffIcon = RadioOffIcon
 
   static UserBlackIcon = UserBlackIcon;
@@ -164,6 +168,8 @@ class AppAsset {
 
   // Background
   static Background = Background;
+  static BackgroundHorizontal = BackgroundHorizontal;
+  static SplashImage = SplashImage;
 }
 
 export default AppAsset;

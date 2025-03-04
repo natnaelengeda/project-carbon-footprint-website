@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 // Axios
 import axios from "@/utils/axios";
 import { generateRandomName } from "@/utils/randomNameGenerator";
+import AppAsset from "@/core/AppAsset";
 
 export interface FeedbackCardProps {
   icon: string;
@@ -28,9 +29,10 @@ interface Props {
   answers: { [key: number]: number };
   questions: any[];
   setScore: React.Dispatch<React.SetStateAction<number>>;
+  setcUserId: any;
 }
 
-export default function FinishedPage({ setPage, answers, questions, setScore }: Props) {
+export default function FinishedPage({ setPage, answers, questions, setcUserId, setScore }: Props) {
   const [sum, setSum] = useState<number>(0);
   const [name, setName] = useState<string>("");
 
@@ -53,13 +55,13 @@ export default function FinishedPage({ setPage, answers, questions, setScore }: 
         if (choice._id === data[1]) {
           if (choice.isCorrect) {
             switch (difficulty) {
-              case "General":
+              case "Easy":
                 sum += 7.5;
                 break;
-              case "CarbonFootPrint":
+              case "Medium":
                 sum += 10;
                 break;
-              case "Action":
+              case "Difficult":
                 sum += 40 / 3;
                 break;
             }
@@ -80,6 +82,7 @@ export default function FinishedPage({ setPage, answers, questions, setScore }: 
         score: sum
       }).then((response) => {
         console.log(response.data);
+        setcUserId(response.data.data._id)
         setPage(5);
 
       })
@@ -89,38 +92,75 @@ export default function FinishedPage({ setPage, answers, questions, setScore }: 
         score: sum
       }).then((response) => {
         console.log(response.data);
+        setcUserId(response.data.data._id)
         setPage(5);
       })
     }
   }
-
 
   useEffect(() => {
     calculateAnswers();
   }, []);
 
   return (
-    <div className="flex overflow-hidden flex-col items-center px-20 pt-32 pb-64 bg-white max-md:px-5 max-md:py-24">
-      <div className="flex flex-col items-center w-full max-w-[844px] max-md:max-w-full">
+    <div
+      style={{
+        backgroundImage: `url(${AppAsset.BackgroundHorizontal})`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backgroundRepeat: "no-repeat",
+        backgroundAttachment: "contain",
+        position: "relative",
+      }}
+      className="w-full h-full min-h-screen flex overflow-hidden flex-row items-center px-20 bg-white">
+
+      {/* Background Overlay */}
+      <div
+        className="absolute inset-0"
+        style={{
+          backgroundColor: "rgba(0, 0, 0, 0.5)", // You can adjust the last value (0.5) to change opacity
+          zIndex: 1,
+        }} />
+
+      {/* Logo */}
+      <div
+        className='absolute top-0 left-0 z-20 pl-[5px] pt-[74px]'>
         <img
-          loading="lazy"
-          src="https://cdn.builder.io/api/v1/image/assets/TEMP/12f60cefd57c047360ce0e4f9f4ffe7dc4f91a8165bf1e281ae853005bd3baf4?placeholderIfAbsent=true&apiKey=3660c584904a4f1ba2f45407fc652aed"
-          alt="Score achievement illustration"
-          className="object-contain max-w-full aspect-[1.13] w-[478px]"
-        />
-        <ScoreDisplay score={`${sum.toFixed(0)}/100`} rank="Top 10" />
-        <FeedbackCard
-          icon="https://cdn.builder.io/api/v1/image/assets/TEMP/e2952fe080b06056b29e232a24c9c410477082b5cea70d57d58a4b8135ac6b84?placeholderIfAbsent=true&apiKey=3660c584904a4f1ba2f45407fc652aed"
-          message="This is the feedback for the user lorem ipsum dolor sit amet consectetur. Consectetur ultricies vel massa pretium. Ornare sollicitudin"
-        />
-        <div className="shrink-0 self-stretch mt-28 h-px border border-solid border-stone-300 max-md:mt-10 max-md:max-w-full" />
-        <NameInput
-          icon="https://cdn.builder.io/api/v1/image/assets/TEMP/c0a72960dcfdc9356eb65e447c185f4ca5ef6fe257066f3500c22b1d1cb2095d?placeholderIfAbsent=true&apiKey=3660c584904a4f1ba2f45407fc652aed"
-          placeholder="E.g. John Doe"
-          name={name}
-          setName={setName}
-          addData={addData}
-        />
+          style={{
+            width: "250px",
+            height: "167px",
+            objectFit: "contain"
+          }}
+          src={AppAsset.Logo}
+          className='' />
+      </div>
+
+
+      <div className="relative grid grid-cols-2 items-center w-full z-10">
+        {/* Left Side */}
+        <div className="w-full h-full flex flex-col items-center justify-start gap-5">
+          <img
+            loading="lazy"
+            src={AppAsset.SplashImage}
+            alt="Score achievement illustration"
+            className="object-contain max-w-full aspect-[1.13] w-[400px]"
+          />
+          <ScoreDisplay
+            score={`${sum.toFixed(0)}/100`}
+            rank="Top 10" />
+        </div>
+
+        {/* Right Side */}
+        <div className="w-full h-full flex flex-col items-center justify-end gap-5">
+          <NameInput
+            icon="https://cdn.builder.io/api/v1/image/assets/TEMP/c0a72960dcfdc9356eb65e447c185f4ca5ef6fe257066f3500c22b1d1cb2095d?placeholderIfAbsent=true&apiKey=3660c584904a4f1ba2f45407fc652aed"
+            placeholder="E.g. John Doe"
+            name={name}
+            setName={setName}
+            addData={addData}
+          />
+        </div>
+
       </div>
     </div>
   )
@@ -145,12 +185,12 @@ export const FeedbackCard: React.FC<FeedbackCardProps> = ({ icon, message }) => 
 
 export const NameInput: React.FC<NameInputProps> = ({ placeholder, icon, name, setName, addData }) => {
   return (
-    <div className="flex flex-col items-center mt-24 max-w-full w-[649px] max-md:mt-10">
-      <label htmlFor="nameInput" className="text-4xl font-medium leading-[58px] text-slate-900 max-md:max-w-full">
+    <div className="flex flex-col items-center mt-24 max-w-full w-[750px] max-md:mt-40">
+      <label htmlFor="nameInput" className="text-4xl md:text-[48px] font-medium leading-[58px] text-white max-md:max-w-full">
         Do you want to share your name to be on the leaderboard? (Optional)
       </label>
       <div
-        className="flex overflow-hidden gap-2.5 items-center px-6 py-6 mt-14 w-full text-2xl rounded-xl border border-solid border-zinc-400 max-w-[649px] text-zinc-400 max-md:px-5 max-md:mt-10 max-md:max-w-full">
+        className="flex overflow-hidden gap-2.5 items-center px-6 py-6 mt-14 w-full text-2xl rounded-xl border border-solid border-white max-w-[649px] text-white max-md:px-5 max-md:mt-10 max-md:max-w-full">
         <div className="flex gap-2.5 justify-center items-center self-stretch my-auto">
           <img
             loading="lazy"
@@ -170,11 +210,14 @@ export const NameInput: React.FC<NameInputProps> = ({ placeholder, icon, name, s
         </div>
       </div>
       <div
-        className="pt-10">
+        className="pt-80">
         <button
           onClick={addData}
-          className="flex flex-row items-center justify-center md:w-[220.32px] md:h-[100px] bg-primary rounded-full text-white px-3 md:px-0 py-2 md:py-0 gap-2 pt-10">
-          <p className="text-xl md:text-[34px]">Continue</p>
+          className="flex flex-row items-center justify-center md:w-[435.32px] md:h-[105px] bg-transparent border border-primary text-primary rounded-full px-3 md:px-0 py-2 md:py-0 gap-2 pt-10">
+          <p className="text-xl md:text-[34px]">See Leaderboard</p>
+          <img
+            src={AppAsset.RightArrowIcon}
+            className="w-[38px] h-[38px]" />
         </button>
       </div>
     </div>
@@ -184,12 +227,12 @@ export const NameInput: React.FC<NameInputProps> = ({ placeholder, icon, name, s
 export const ScoreDisplay: React.FC<ScoreDisplayProps> = ({ score, rank }) => {
   return (
     <>
-      <div className="mt-14 text-8xl font-bold text-center text-slate-900 max-md:mt-10 max-md:text-4xl">
+      <div className="mt-14 text-8xl font-bold text-center text-white max-md:mt-10 max-md:text-4xl">
         {score}
       </div>
-      <div className="mt-14 text-4xl text-center leading-[58px] text-slate-900 w-[562px] max-md:mt-10 max-md:max-w-full">
+      <div className="mt-14 text-4xl text-center leading-[58px] text-white w-[562px] max-md:mt-10 max-md:max-w-full">
         <span className="font-medium">Congrats! You're one of the</span>{" "}
-        <span className="font-bold text-slate-900">{rank}</span>{" "}
+        <span className="font-bold ">{rank}</span>{" "}
         <span className="font-medium">Participants</span>
       </div>
     </>

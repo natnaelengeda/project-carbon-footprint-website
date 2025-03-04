@@ -22,7 +22,7 @@ export default function Timer({ page, setPage, duration, questionLength, timeLef
   }
 
   // Progress calculation
-  const radius = width > 768 ? 150 : 50; // Circle radius
+  const radius = width > 768 ? 70 : 50; // Circle radius
   const circumference = 2 * Math.PI * radius;
   const progress = ((duration - timeLeft) / duration) * circumference;
 
@@ -48,7 +48,7 @@ export default function Timer({ page, setPage, duration, questionLength, timeLef
   return (
     <div className='w-full flex items-center justify-center'>
       <div
-        className="relative w-36 h-36 md:w-[343px] md:h-[343px] object-contain">
+        className="relative w-36 h-36 md:w-[200px] md:h-[200px] object-contain text-white">
         {/* Circular Progress */}
         <svg
           className="transform -rotate-90"
@@ -60,7 +60,7 @@ export default function Timer({ page, setPage, duration, questionLength, timeLef
             cy="50%"
             r={radius}
             stroke="#e0f2f1"
-            strokeWidth={width > 640 ? 40 : 10}
+            strokeWidth={width > 640 ? 15 : 10}
             fill="transparent"
           />
           {/* Animated Circle */}
@@ -69,7 +69,7 @@ export default function Timer({ page, setPage, duration, questionLength, timeLef
             cy="50%"
             r={radius}
             stroke="#10b981"
-            strokeWidth={width > 640 ? 30 : 10}
+            strokeWidth={width > 640 ? 10 : 10}
 
             fill="transparent"
             strokeLinecap="round"
@@ -83,11 +83,11 @@ export default function Timer({ page, setPage, duration, questionLength, timeLef
         <div
           className="absolute inset-0 flex flex-col justify-center items-center md:gap-5">
           <span
-            className="text-4xl md:text-[84.24px] font-bold text-gray-900">
+            className="text-4xl md:text-[70px] font-bold text-white">
             {timeLeft}
           </span>
           <span
-            className="text-sm md:text-[37px] text-gray-600 font-normal">
+            className="text-sm md:text-[20px] text-white font-normal">
             Seconds
           </span>
         </div>

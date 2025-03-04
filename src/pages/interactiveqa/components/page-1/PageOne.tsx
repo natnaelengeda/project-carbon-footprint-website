@@ -1,13 +1,7 @@
-import { useState } from 'react';
-
-// Import Swiper React components
-import { Swiper, SwiperSlide } from 'swiper/react';
+import { useState, useRef, useEffect } from 'react';
 
 // AppAsset
 import AppAsset from "@/core/AppAsset";
-
-// import required modules
-import { Autoplay } from 'swiper/modules';
 
 // Import Swiper styles
 import 'swiper/css';
@@ -17,92 +11,103 @@ interface Props {
 }
 
 export default function PageOne({ setPage }: Props) {
-  const [currentSlider, setCurrentSlider] = useState<number>(0);
+  const isKeyPressed = useRef(false);
+  const [key, setKey] = useState(null);
+
+
+  useEffect(() => {
+    if (isKeyPressed.current) {
+      console.log(key);
+      setPage(2)
+    }
+  }, [isKeyPressed.current]);
+
+  useEffect(() => {
+    const handleKeyDown = (event: any) => {
+      isKeyPressed.current = true;
+      setKey(event.key);
+    };
+
+    const handleKeyUp = () => {
+      isKeyPressed.current = false;
+      setKey(null);
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    window.addEventListener("keyup", handleKeyUp);
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+      window.removeEventListener("keyup", handleKeyUp);
+    };
+  }, []);
 
   return (
     <div
-      className="w-full h-full mx-auto 2xl:container flex flex-col items-center justify-start gap-5 py-10 md:py-20">
-
-      {/* Top Content */}
+      onClick={() => {
+        setPage(2);
+      }}
+      style={{
+        backgroundImage: `url(${AppAsset.BackgroundHorizontal})`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backgroundRepeat: "no-repeat",
+        backgroundAttachment: "contain",
+        position: "relative",
+      }}
+      className='relative w-full h-full min-h-screen text-white'>
+      {/* Background Overlay */}
       <div
-        className="flex flex-col items-center justify-center gap-5 md:gap-10">
-        <img
-          src={AppAsset.Logo}
-          className="w-20 h-20 md:w-32 md:h-32 object-contain" />
-        <div className="h-auto flex flex-col items-center justify-start gap-5 md:gap-10">
-          <p className="text-2xl md:text-[86px] font-semibold">Welcome,</p>
-          <p className="text-[#BBBBBB] text-lg md:text-[36px] font-normal">to Project Carbon Lorem Ipsum</p>
-        </div>
-      </div>
+        className="absolute inset-0"
+        style={{
+          backgroundColor: "rgba(0, 0, 0, 0.5)", // You can adjust the last value (0.5) to change opacity
+          zIndex: 1,
+        }} />
 
-      {/* Image Content */}
+
       <div
-        className="w-full h-auto flex flex-col items-center justify-start gap-5 px-3 md:px-10">
-        {/* Image */}
-        <Swiper
-          className='w-full'
-          spaceBetween={10}
-          slidesPerView={1}
-          autoplay={{
-            delay: 2500,
-            disableOnInteraction: false,
+        onKeyDown={() => {
+          setPage(2)
+        }}
+        className="relative w-full h-full mx-auto 2xl:container flex flex-col items-center justify-start gap-5 py-10 md:py-20 z-10">
+
+        {/* Top Content */}
+        <div
+          style={{
+            paddingTop: "300px"
           }}
-          onSlideChange={(e) => {
-            setCurrentSlider(e.activeIndex);
-          }}
-          modules={[Autoplay]}>
-          <SwiperSlide>
-            <img
-              src={AppAsset.BannerOne}
-              className="w-full h-80 md:h-[35rem] object-contain" />
-          </SwiperSlide>
-          <SwiperSlide>
-            <img
-              src={AppAsset.BannerTwo}
-              className="w-full h-80 md:h-[35rem] object-contain" />
-          </SwiperSlide>
-          <SwiperSlide>
-            <img
-              src={AppAsset.BannerThree}
-              className="w-full h-80 md:h-[35rem] object-contain" />
-          </SwiperSlide>
-        </Swiper>
-
-
-        {/* Pagination */}
-        <div className="w-60 h-10 flex flex-row items-center justify-center gap-4">
-          <div
-            className={`w-5 h-5 md:w-8 md:h-8 rounded-full transition-all ${currentSlider == 0 ? 'bg-primary' : 'bg-[#35D36A4D]'}`}>
-          </div>
-          <div
-            className={`w-5 h-5 md:w-8 md:h-8 rounded-full transition-all ${currentSlider == 1 ? 'bg-primary' : 'bg-[#35D36A4D]'}`}>
-          </div>
-          <div
-            className={`w-5 h-5 md:w-8 md:h-8 rounded-full transition-all ${currentSlider == 2 ? 'bg-primary' : 'bg-[#35D36A4D]'}`}>
-          </div>
-        </div>
-      </div>
-
-      {/* Note */}
-      <div
-        className="w-auto flex flex-col items-center justify-start text-lg md:text-[28px] pt-7 md:pt-20 text-center">
-        <p>Lorem ipsum dolor sit amet consectetur. Consectetur</p>
-        <p>ultricies vel massa pretium. Ornare sollicitudin.</p>
-      </div>
-
-      {/* Buttons */}
-      <div
-        className="w-auto flex flex-col items-center justify-start gap-10 pt-10 md:pt-40 pb-10 md:pb-0">
-        <button
-          onClick={() => {
-            setPage(2);
-          }}
-          className="md:w-[245px] md:h-[88.9px] bg-primary text-white font-semibold rounded-full text-lg md:text-3xl px- py-4 hover:opacity-80 flex items-center justify-center gap-3 px-5 md:px-0">
-          Start
+          className="flex flex-col items-center justify-center gap-5 md:gap-40">
           <img
-            src={AppAsset.RightArrowIcon}
-            className="w-5 md:w-10 h-auto object-contain" />
-        </button>
+            src={AppAsset.Logo}
+            width={300}
+            height={400}
+            className="object-contain" />
+          <div
+            className="h-auto flex flex-col items-center justify-start gap-5 md:gap-28 text-[64px]">
+            <p className="text-2xl md:text-[120px] font-semibold">Welcome to Interactive</p>
+            <p className="text-2xl md:text-[120px] font-semibold">Q/A</p>
+          </div>
+        </div>
+
+
+        {/* Buttons */}
+        <div
+          className="w-auto flex flex-col items-center justify-start gap-10 pt-10 md:pt-[27rem] pb-10 md:pb-0">
+          <button
+            onClick={() => {
+              setPage(2);
+            }}
+            style={{
+              width: "500px",
+              height: "150px",
+            }}
+            className=" bg-primary text-white font-semibold rounded-full text-lg md:text-[50px] px- py-4 hover:opacity-80 flex items-center justify-center gap-3 px-5 md:px-0">
+            Start Now
+            <img
+              src={AppAsset.RightArrowIcon}
+              className="w-5 md:w-10 h-auto object-contain" />
+          </button>
+        </div>
       </div>
     </div>
   )

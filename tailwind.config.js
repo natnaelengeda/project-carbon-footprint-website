@@ -6,6 +6,7 @@ export default {
     extend: {
       fontFamily: {
         Urbanist: ["Urbanist", "sans-serif"],
+        Shiromeda: ["Shiromeda", "sans-serif"],
       },
       colors: {
         // primary: {
@@ -56,6 +57,12 @@ export default {
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
+      },
+      screens: {
+        "3xl": "2000px", // Custom breakpoint after xl
+        "4xl": "2200px", // Custom breakpoint after xl
+        "5xl": "2400px", // Custom breakpoint after xl
+        "6xl": "2600px", // Custom breakpoint after xl
       },
     },
   },
