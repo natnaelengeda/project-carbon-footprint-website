@@ -19,32 +19,26 @@ interface Props {
   setPage: React.Dispatch<React.SetStateAction<number>>;
 }
 
-export default function PageForteen({setPage }: Props) {
+export default function PageForteen({ setPage }: Props) {
 
   return (
-    <QuestionsLayout 
-    setPage={setPage}>
-      <div className="relative z-10 w-full h-full mx-auto 2xl:container flex flex-col items-center justify-start gap-5 py-10 md:py-[89px]">
-
-        {/* Top */}
-        <div className='w-full flex flex-row items-center justify-start px-[106px]'>
-          <img
-            src={AppAsset.Logo}
-            style={{ width: '72px', height: '109px' }}
-            className="w-32 h-32 object-contain" />
-        </div>
+    <QuestionsLayout
+      setPage={setPage}>
+      <div className="relative z-10 w-full h-full mx-auto 2xl:container flex flex-col items-center justify-start gap-5 py-10 md:pt-[300px]">
 
         {/* Center */}
-        <div className='w-full flex flex-col items-center justify-center gap-14 pt-[18px]' style={{ lineHeight
-            : '30px' }}>
+        <div className='w-full flex flex-col items-center justify-center gap-14 pt-[18px]' style={{
+          lineHeight
+            : '30px'
+        }}>
 
           {/* Inserted List */}
           <div className="text-white text-left w-full max-w-[1200px] mx-auto px-[106px]" style={{ lineHeight: '50px' }}>
             <h2 className="text-6xl font-bold mb-8 text-center" style={{ lineHeight: '70px' }}>
-              Ethiopia's Carbon Footprint: 
+              Ethiopia's Carbon Footprint:
               <p>A Unique Perspective</p>
             </h2>
-        
+
             <div className="px-4">
               <p className="text-4xl mb-6 font-semibold">
                 Ethiopia has one of the lowest carbon footprints in the world. This is largely due to:
@@ -83,7 +77,7 @@ export default function PageForteen({setPage }: Props) {
                 <li className="flex items-center gap-6">
                   <div className="w-8 h-8">
                     <img src={AppAsset.populationGrowthIcon} alt="populationGrowthIcon" className="w-8 h-8" />
-                  </div> 
+                  </div>
                   <span className="text-3xl">Population growth</span>
                 </li>
                 <li className="flex items-center gap-6">
@@ -113,7 +107,7 @@ export default function PageForteen({setPage }: Props) {
                 <li className="flex items-center gap-6">
                   <div className="w-8 h-8">
                     <img src={AppAsset.ecoFriendlyIcon} alt="ecoFriendlyIcon" className="w-8 h-8" />
-                  </div> 
+                  </div>
                   <span className="text-3xl">Eco-friendly policies</span>
                 </li>
               </ul>

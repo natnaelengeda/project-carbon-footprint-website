@@ -11,7 +11,7 @@ import PageSix from "./components/page-6";
 import PageForteen from "./components/page-14";
 
 export default function Questions() {
-  const [page, setPage] = useState<number>(4);
+  const [page, setPage] = useState<number>(14);
 
   return (
     <div className="w-full h-screen">
@@ -29,7 +29,7 @@ export default function Questions() {
                   page == 5 ?
                     <PageFive setPage={setPage} /> :
                     page == 6 ?
-                      <PageSix setPage={setPage} /> : 
+                      <PageSix setPage={setPage} /> :
                       page == 14 ?
                         <PageForteen setPage={setPage} /> : null
       }
