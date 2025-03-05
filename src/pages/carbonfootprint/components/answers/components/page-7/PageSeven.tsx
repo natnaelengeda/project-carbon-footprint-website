@@ -27,8 +27,8 @@ export default function PageSeven({ setPage }: Props) {
           className='absolute bottom-0 right-0'>
           <NavComponent
             setPage={setPage}
-            nextPage={7}
-            prevPage={5} />
+            nextPage={8}
+            prevPage={6} />
         </div>
       </div>
     </DefaultBackground>
