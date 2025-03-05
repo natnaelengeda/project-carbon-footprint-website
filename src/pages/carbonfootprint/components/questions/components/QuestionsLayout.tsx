@@ -7,9 +7,10 @@ import { useEffect } from "react";
 interface Props {
   children: React.ReactNode;
   setPage: React.Dispatch<React.SetStateAction<number>>;
+  currPage?: number;
 }
 
-export default function QuestionsLayout({ children, setPage }: Props) {
+export default function QuestionsLayout({ children, setPage, currPage }: Props) {
   const socket = useSocket();
 
   useEffect(() => {
@@ -32,7 +33,7 @@ export default function QuestionsLayout({ children, setPage }: Props) {
   return (
     <div
       style={{
-        backgroundImage: `url(${AppAsset.Background})`,
+        backgroundImage: currPage ===3 ?`url(${AppAsset.Background})`:`url(${AppAsset.Background})`,
         backgroundSize: "cover",
         backgroundPosition: "center",
         backgroundRepeat: "no-repeat",

@@ -11,108 +11,122 @@ import { useDispatch } from "react-redux";
 // State
 import {
   addName,
-  // CarbonState,
 } from '@/state/carbon';
+import QuestionsLayout from "../QuestionsLayout";
 
 // Interface
 interface Props {
   setPage: React.Dispatch<React.SetStateAction<number>>;
 }
 
-export default function PageForteen({ }: Props) {
-  const [name, setName] = useState<string>("");
-
-
-  const socket: any = useSocket();
-
-  // State
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    socket?.on("name-change-client-1", (data: any) => {
-      const parsedData = JSON.parse(data);
-      const id = parsedData.id;
-      const name = parsedData.name;
-
-      setName(parsedData.name);
-      dispatch(addName({
-        id: id,
-        name: name,
-      }));
-    });
-  }, [socket]);
+export default function PageForteen({setPage }: Props) {
 
   return (
-    <div
-      style={{
-        backgroundImage: `url(${AppAsset.Background})`,
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-        backgroundRepeat: "no-repeat",
-        backgroundAttachment: "contain",
-        position: "relative",
-      }}
-      className="w-full h-full min-h-screen font-Urbanist">
-
-      {/* Background Overlay */}
-      <div
-        className="absolute inset-0"
-        style={{
-          backgroundColor: "rgba(0, 0, 0, 0.5)", // You can adjust the last value (0.5) to change opacity
-          zIndex: 1,
-        }}
-      />
+    <QuestionsLayout 
+    setPage={setPage}>
       <div className="relative z-10 w-full h-full mx-auto 2xl:container flex flex-col items-center justify-start gap-5 py-10 md:py-[89px]">
 
         {/* Top */}
-        <div
-          className='w-full flex flex-row items-center justify-start px-[106px]'>
+        <div className='w-full flex flex-row items-center justify-start px-[106px]'>
           <img
             src={AppAsset.Logo}
-            style={{
-              width: '72px',
-              height: '109px',
-            }}
+            style={{ width: '72px', height: '109px' }}
             className="w-32 h-32 object-contain" />
         </div>
 
         {/* Center */}
-        <div
-          className='w-full flex flex-col items-center justify-center gap-14 pt-[186px]'>
+        <div className='w-full flex flex-col items-center justify-center gap-14 pt-[18px]' style={{ lineHeight
+            : '30px' }}>
 
-          <img
-            src={AppAsset.BannerTwo}
-            style={{
-              width: '500px',
-              height: '500px'
-            }} />
+          {/* Inserted List */}
+          <div className="text-white text-left w-full max-w-[1200px] mx-auto px-[106px]" style={{ lineHeight: '50px' }}>
+            <h2 className="text-6xl font-bold mb-8 text-center" style={{ lineHeight: '70px' }}>
+              Ethiopia's Carbon Footprint: 
+              <p>A Unique Perspective</p>
+            </h2>
+        
+            <div className="px-4">
+              <p className="text-4xl mb-6 font-semibold">
+                Ethiopia has one of the lowest carbon footprints in the world. This is largely due to:
+              </p>
+              <ul className="space-y-6 pl-12 pr-4">
+                <li className="flex items-center gap-6">
+                  <div className="w-8 h-8">
+                    <img src={AppAsset.agricultureIcon} alt="agricultureIcon" className="w-8 h-8" />
+                  </div>
+                  <span className="text-3xl">Agricultural economy</span>
+                </li>
+                <li className="flex items-center gap-6">
+                  <div className="w-8 h-8">
+                    <img src={AppAsset.industryIcon} alt="industryIcon" className="w-8 h-8" />
+                  </div>
+                  <span className="text-3xl">Low industrialization</span>
+                </li>
+                <li className="flex items-center gap-6">
+                  <div className="w-8 h-8">
+                    <img src={AppAsset.renewableEnergyIcon} alt="renewableEnergyIcon" className="w-8 h-8" />
+                  </div>
+                  <span className="text-3xl">Use of renewable energy</span>
+                </li>
+              </ul>
 
-          <span
-            style={{
-              fontSize: '48px'
-            }}
-            className='flex flex-col items-center justify-center gap-2 text-white font-semibold'>
-            <h1
-              className=''>
-              Would you mind sharing your
-            </h1>
-            <h1>
-              name? (Optional)
-            </h1>
-          </span>
+              <p className="text-4xl mt-10 mb-6 font-semibold">
+                Despite the low emissions, Ethiopia faces challenges such as:
+              </p>
+              <ul className="space-y-6 pl-12 pr-4">
+                <li className="flex items-center gap-6">
+                  <div className="w-8 h-8">
+                    <img src={AppAsset.deforestationIcon} alt="deforestationIcon" className="w-8 h-8" />
+                  </div>
+                  <span className="text-3xl">Deforestation</span>
+                </li>
+                <li className="flex items-center gap-6">
+                  <div className="w-8 h-8">
+                    <img src={AppAsset.populationGrowthIcon} alt="populationGrowthIcon" className="w-8 h-8" />
+                  </div> 
+                  <span className="text-3xl">Population growth</span>
+                </li>
+                <li className="flex items-center gap-6">
+                  <div className="w-8 h-8">
+                    <img src={AppAsset.urbanizationIcon} alt="urbanizationIcon" className="w-8 h-8" />
+                  </div>
+                  <span className="text-3xl">Urbanization</span>
+                </li>
+              </ul>
 
-          {/* Name */}
-          <div className="w-full flex flex-col items-center justify-center gap-2">
-            <p className="text-white text-2xl md:text-[64px] font-semibold">
-              {name}
-              <span className="animate-pulse">_</span>
-            </p>
+              <p className="text-4xl mt-10 mb-6 font-semibold">
+                To sustain its low carbon footprint, Ethiopia is implementing strategies such as:
+              </p>
+              <ul className="space-y-6 pl-12 pr-4">
+                <li className="flex items-center gap-6">
+                  <div className="w-8 h-8">
+                    <img src={AppAsset.agricultureIcon} alt="Reforestation" className="w-8 h-8" />
+                  </div>
+                  <span className="text-3xl">Reforestation programs</span>
+                </li>
+                <li className="flex items-center gap-6">
+                  <div className="w-8 h-8">
+                    <img src={AppAsset.sustainableEnergyIcon} alt="sustainableEnergyIcon" className="w-8 h-8" />
+                  </div>
+                  <span className="text-3xl">Sustainable energy projects (hydropower, solar, and wind)</span>
+                </li>
+                <li className="flex items-center gap-6">
+                  <div className="w-8 h-8">
+                    <img src={AppAsset.ecoFriendlyIcon} alt="ecoFriendlyIcon" className="w-8 h-8" />
+                  </div> 
+                  <span className="text-3xl">Eco-friendly policies</span>
+                </li>
+              </ul>
+
+              <p className="text-4xl mt-10 leading-relaxed px-4 font-semibold">
+                Together, these efforts position Ethiopia as a leader in sustainable development while balancing economic growth with environmental stewardship.
+              </p>
+            </div>
           </div>
 
         </div>
 
       </div>
-
-    </div>
-  )
+    </QuestionsLayout>
+  );
 }
