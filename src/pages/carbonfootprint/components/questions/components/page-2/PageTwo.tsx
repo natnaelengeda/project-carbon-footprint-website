@@ -1,6 +1,7 @@
+import { useEffect, useState } from "react";
+
 // AppAsset
 import AppAsset from "@/core/AppAsset";
-import { useEffect, useState } from "react";
 
 // Socket
 import { useSocket } from "@/context/SocketProvider";
@@ -9,48 +10,107 @@ import { useSocket } from "@/context/SocketProvider";
 import { useDispatch } from "react-redux";
 
 // State
-import {
-  addName,
-  // CarbonState,
-} from '@/state/carbon';
+import { addHousingType, } from '@/state/carbon';
 import QuestionsLayout from "../QuestionsLayout";
+
+// Mantine
+import { Radio, RadioGroup, } from '@mantine/core';
+
+// Styles
+import classes from "./styles.module.css";
 
 // Interface
 interface Props {
   setPage: React.Dispatch<React.SetStateAction<number>>;
 }
 
-export default function PageTwo({setPage }: Props) {
-  const [name, setName] = useState<string>("");
-
-
+export default function PageTwo({ setPage }: Props) {
+  const [value, setValue] = useState("apartment");
   const socket: any = useSocket();
 
   // State
   const dispatch = useDispatch();
 
   useEffect(() => {
-    socket?.on("name-change-client-1", (data: any) => {
+    socket?.on("page-2-update-house-client", (data: any) => {
       const parsedData = JSON.parse(data);
-      const id = parsedData.id;
-      const name = parsedData.name;
+      setValue(parsedData.value)
 
-      setName(parsedData.name);
-      dispatch(addName({
-        id: id,
-        name: name,
+      dispatch(addHousingType({
+        housing_type: parsedData.value
       }));
     });
   }, [socket]);
 
   return (
     <QuestionsLayout
-    setPage={setPage}>
+      setPage={setPage}>
       <div
-        className="relative z-10 w-full h-full mx-auto 2xl:container flex flex-col items-center justify-start gap-5 py-10 md:py-[89px]">
+        className="relative z-10 w-full h-full mx-auto 2xl:container flex flex-col items-center justify-start gap-5 py-10 md:pt-[120px]">
+
+        {/* Image Content */}
+        <div
+          className="w-full h-auto flex flex-col items-center justify-start gap-5 px-10">
+          {/* Image */}
+          <img
+            src={AppAsset.BannerThree}
+            className="w-[550px] h-[550px] object-cover" />
+        </div>
+
+        {/* Note */}
+        <div
+          className="w-auto flex flex-row items-center justify-center gap-3 font-semibold text-2xl md:text-[64px] pt-20 text-white">
+          <p>
+            What is your housing type?
+          </p>
+        </div>
+
+        {/* Radio Input */}
+        <div
+          className="w-full flex flex-col items-center justify-start gap-5 pt-2 md:pt-[150px] px-10 md:px-4">
+          <RadioGroup
+            value={value}
+            onChange={setValue}
+            required>
+            <div
+              className='flex flex-col gap-20 text-white text-lg'>
+              <Radio
+                iconColor=""
+                classNames={{
+                  label: classes.label,
+                  body: classes.body
+                }}
+                color={`var(--main-color)`}
+                value="apartment"
+                size={"xl"}
+                label={"Apartment/Condiminium"} />
+              <Radio
+                iconColor=""
+                classNames={{
+                  label: classes.label,
+                  body: classes.body
+                }}
+                color={`var(--main-color)`}
+                value="house"
+                size={"xl"}
+                label={"House"} />
+
+            </div>
+          </RadioGroup>
+        </div>
+
+        {/* Selection Text */}
+        <div
+          className="w-full h-auto flex items-center justify-center text-white text-[45pt] pt-[500px]">
+          <p>You choose <span className="text-primary">{
+            value == "apartment" ?
+              "Apartment/Condiminium" :
+              "House"
+          }</span></p>
+
+        </div>
 
 
-        <p className="text-[80px] text-white">2</p>
 
       </div>
     </QuestionsLayout>

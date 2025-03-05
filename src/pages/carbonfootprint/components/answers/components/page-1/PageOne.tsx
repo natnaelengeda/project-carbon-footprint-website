@@ -37,10 +37,10 @@ interface Props {
 }
 
 export default function PageOne({ setPage }: Props) {
-  
+
   // New Values
   const [name, setName] = useState<string>("");
-  
+
   const id = generateRandomId();
   const newName = generateRandomName();
 
@@ -76,18 +76,18 @@ export default function PageOne({ setPage }: Props) {
     }));
   }
 
-  // const func = () => {
-  //   const newName = generateRandomName();
+  const func = () => {
+    const newName = generateRandomName();
 
-  //   if (name.length > 0) return true;
-  //   else
-  //     dispatch(addName({
-  //       id: id,
-  //       name: newName,
-  //     }));
+    if (name.length > 0) return true;
+    else
+      dispatch(addName({
+        id: id,
+        name: newName,
+      }));
 
-  //   return true;
-  // }
+    return false;
+  }
 
   useEffect(() => {
     if (carbonData.name) {
@@ -123,7 +123,9 @@ export default function PageOne({ setPage }: Props) {
           <NavComponent
             setPage={setPage}
             nextPage={2}
-            prevPage={0} />
+            prevPage={0}
+            currPage={1}
+            func={func} />
         </div>
       </div>
     </DefaultBackground>

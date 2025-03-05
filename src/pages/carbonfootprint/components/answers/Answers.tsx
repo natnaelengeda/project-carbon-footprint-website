@@ -10,7 +10,7 @@ import PageFive from './components/page-5';
 import PageSix from './components/page-6';
 
 export default function Answers() {
-  const [page, setPage] = useState<number>(1);
+  const [page, setPage] = useState<number>(2);
 
   return (
     <div className="w-full h-screen">
