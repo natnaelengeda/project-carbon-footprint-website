@@ -1,17 +1,5 @@
 // AppAsset
 import AppAsset from "@/core/AppAsset";
-import { useEffect, useState } from "react";
-
-// Socket
-import { useSocket } from "@/context/SocketProvider";
-
-// React Redux
-import { useDispatch } from "react-redux";
-
-// State
-import {
-  addName,
-} from '@/state/carbon';
 import QuestionsLayout from "../QuestionsLayout";
 
 // Interface

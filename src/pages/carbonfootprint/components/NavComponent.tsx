@@ -1,7 +1,4 @@
-import React, { useEffect, useState } from 'react';
-
-// Translation
-// import { useTranslation } from 'react-i18next';
+import React from 'react';
 
 // Redux
 import { useSelector } from 'react-redux';
@@ -12,9 +9,6 @@ import { useSocket } from '@/context/SocketProvider';
 
 // App Asset
 import AppAsset from '@/core/AppAsset'
-
-
-
 
 interface Props {
   setPage: React.Dispatch<React.SetStateAction<number>>;
@@ -37,7 +31,7 @@ export default function NavComponent({ setPage, func, currPage, nextPage, prevPa
     if (currPage == 1) {
       if (!func) {
         socket?.emit("page-next-server", JSON.stringify({
-          id:carbonData.id,
+          id: carbonData.id,
           name: carbonData.name,
           func: func,
           currPage: currPage,
@@ -59,22 +53,22 @@ export default function NavComponent({ setPage, func, currPage, nextPage, prevPa
   }
 
   const socketSkipPage = () => {
-    if(currPage == 1){
+    if (currPage == 1) {
       socket?.emit("page-skip-server", JSON.stringify({
-        id:carbonData.id,
+        id: carbonData.id,
         name: carbonData.name,
         func: func,
         currPage: currPage,
         nextPage: nextPage,
         room: room,
       }))
-    }else{
+    } else {
       socket?.emit("page-skip-server", JSON.stringify({
         nextPage: nextPage,
         room: room
       }))
     }
-    
+
   }
 
 
@@ -85,7 +79,7 @@ export default function NavComponent({ setPage, func, currPage, nextPage, prevPa
     }))
   }
 
- 
+
   return (
     <div
       className='w-full h-80 flex items-center justify-end px-5 md:px-40 gap-3 md:gap-[32px] pb-10 md:pb-0'>

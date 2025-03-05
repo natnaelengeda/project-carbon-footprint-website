@@ -1,34 +1,9 @@
-import React, { useState } from 'react'
-
-// Translation
-import { useTranslation } from 'react-i18next';
-
-// State
-import {
-  useDispatch,
-  // useSelector,
-} from 'react-redux';
-
-import {
-  addName,
-  // CarbonState,
-} from '@/state/carbon';
-
-// Mantine
-// import { TextInput } from '@mantine/core';
-
-// Utils
-import { generateRandomId } from '@/utils/idGenerator';
-// import { generateRandomName } from '@/utils/randomNameGenerator';
-
-// AppAsset
-import AppAsset from "@/core/AppAsset";
+import React from 'react'
 
 // Background
 import DefaultBackground from '../DefaultBackground';
 
 // Socket
-import { useSocket } from '@/context/SocketProvider';
 import NavComponent from '../../../NavComponent';
 
 // Interface
@@ -37,52 +12,6 @@ interface Props {
 }
 
 export default function PageFive({ setPage }: Props) {
-  // New Values
-  const [name, setName] = useState<string>("");
-  const id = generateRandomId();
-
-  // React Language Packaged;
-  const { t } = useTranslation();
-
-  // Width
-  // const width = window.innerWidth;
-
-  const savedlanguages = JSON.parse(localStorage.getItem("language") || "");
-
-  // State
-  const dispatch = useDispatch();
-  // const carbonData = useSelector((state: { carbon: CarbonState }) => state.carbon);
-
-  // Socket
-  const socket = useSocket();
-
-  const onNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-
-    socket?.emit("name-change-server-1", JSON.stringify({
-      name: e.target.value,
-      id: id,
-    }));
-
-    setName(e.target.value);
-    dispatch(addName({
-      id: id,
-      name: e.target.value,
-    }));
-  }
-
-  // const func = () => {
-  //   const newName = generateRandomName();
-
-  //   if (name.length > 0) return true;
-  //   else
-  //     dispatch(addName({
-  //       id: id,
-  //       name: newName,
-  //     }));
-
-  //   return true;
-  // }
-
 
   return (
     <DefaultBackground>
