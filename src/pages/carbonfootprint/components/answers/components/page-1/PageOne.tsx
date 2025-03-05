@@ -14,9 +14,6 @@ import {
   CarbonState,
 } from '@/state/carbon';
 
-// Mantine
-// import { TextInput } from '@mantine/core';
-
 // Utils
 import { generateRandomId } from '@/utils/idGenerator';
 import { generateRandomName } from '@/utils/randomNameGenerator';
@@ -42,7 +39,6 @@ export default function PageOne({ setPage }: Props) {
   const [name, setName] = useState<string>("");
 
   const id = generateRandomId();
-  const newName = generateRandomName();
 
   const room = localStorage.getItem("room");
 
