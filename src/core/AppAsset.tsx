@@ -41,6 +41,16 @@ import RadioOffIcon from "@/assets/icons/Radio Off.svg";
 import UserBlackIcon from "@/assets/icons/user.svg";
 import InformationCircleIcon from "@/assets/icons/information-circle.svg";
 
+// insight Icons
+import agricultureIcon from "@/assets/icons/smallIcons/plant-03.svg";
+import renewableEnergyIcon from "@/assets/icons/smallIcons/renewable-energy.svg";
+import deforestationIcon from "@/assets/icons/smallIcons/tree-02.svg";
+import populationGrowthIcon from "@/assets/icons/smallIcons/user-group.svg";
+import urbanizationIcon from "@/assets/icons/smallIcons/city-01.svg";
+import sustainableEnergyIcon from "@/assets/icons/smallIcons/sustainable-energy.svg";
+import ecoFriendlyIcon from "@/assets/icons/smallIcons/treatment.svg";
+import industryIcon from "@/assets/icons/smallIcons/factory.svg";
+
 // Stats Icon
 import StatsRecycleIcon from "@/assets/icons/stats/recycle-02.svg";
 import StatsCompostingIcon from "@/assets/icons/stats/plant-02.svg";
@@ -128,6 +138,16 @@ class AppAsset {
 
   static UserBlackIcon = UserBlackIcon;
   static InformationCircleIcon = InformationCircleIcon;
+
+  // insight Icons
+  static agricultureIcon = agricultureIcon;
+  static renewableEnergyIcon = renewableEnergyIcon;
+  static deforestationIcon = deforestationIcon;
+  static populationGrowthIcon = populationGrowthIcon;
+  static urbanizationIcon = urbanizationIcon;
+  static sustainableEnergyIcon = sustainableEnergyIcon;
+  static ecoFriendlyIcon = ecoFriendlyIcon; 
+  static industryIcon = industryIcon;
 
   // Stats Icons
   static StatsRecycleIcon = StatsRecycleIcon;
