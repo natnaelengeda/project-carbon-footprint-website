@@ -1,5 +1,3 @@
-// AppAsset
-import AppAsset from "@/core/AppAsset";
 import { useEffect, useState } from "react";
 
 // Socket
@@ -9,11 +7,9 @@ import { useSocket } from "@/context/SocketProvider";
 import { useDispatch } from "react-redux";
 
 // State
-import {
-  addName,
-  // CarbonState,
-} from '@/state/carbon';
+import { addName } from '@/state/carbon';
 import QuestionsLayout from "../QuestionsLayout";
+import AppAsset from "@/core/AppAsset";
 
 // Interface
 interface Props {
@@ -21,8 +17,12 @@ interface Props {
 }
 
 export default function PageFour({ setPage }: Props) {
-  const [name, setName] = useState<string>("");
 
+
+  const [selectedType, setSelectedType] = useState<string>("electric");
+  const [selectedTypes, setSelectedTypes] = useState<{}>([]);
+  const [selectedDays, setSelectedDays] = useState<number>(0);
+  const [selectedHours, setSelectedHours] = useState<number>(0);
 
   const socket: any = useSocket();
 
@@ -30,29 +30,84 @@ export default function PageFour({ setPage }: Props) {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    socket?.on("name-change-client-1", (data: any) => {
-      const parsedData = JSON.parse(data);
-      const id = parsedData.id;
-      const name = parsedData.name;
 
-      setName(parsedData.name);
-      dispatch(addName({
-        id: id,
-        name: name,
-      }));
-    });
   }, [socket]);
 
   return (
     <QuestionsLayout
-    setPage={setPage}>
+      setPage={setPage}>
       <div
-        className="relative z-10 w-full h-full mx-auto 2xl:container flex flex-col items-center justify-start gap-5 py-10 md:py-[89px]">
+        className="relative z-10 w-full h-full mx-auto 2xl:container flex flex-col items-center justify-start gap-5 py-10 md:pt-[200px]">
+
+        {/* Image Content */}
+        <div
+          className="w-full h-auto flex flex-col items-center justify-start gap-5 px-10">
+          {/* Image */}
+          <img
+            src={AppAsset.BannerFour}
+            className="w-[550px] h-[550px] object-cover" />
+        </div>
+
+        {/* Title */}
+        <div
+          className="w-full h-auto flex flex-col items-start justify-start pl-40 pt-28 text-white">
+          <div
+            className="flex flex-row items-center justify-start gap-5">
+            <div
+              className="w-10 h-3 bg-purple-500">
+            </div>
+            <p className="text-white text-[60px]">Household Energy</p>
+          </div>
+          <p className="text-[50px]">Cooking</p>
+        </div>
+
+        {/* Options */}
+        <div
+          className="w-full h-auto flex flex-col items-start justify-start pl-40 pt-20 gap-10">
+
+          {/* Electric Stove */}
+          <CheckboxComponent
+            setSelectedType={setSelectedType}
+            selectedType={selectedType}
+            type={"electric-stove"}
+            text={"Electric Stove"}
+            selectedDays={selectedDays}
+            selectedHours={selectedHours} />
 
 
-        <p className="text-[80px] text-white">4</p>
-
+        </div>
       </div>
     </QuestionsLayout>
   )
+}
+
+const CheckboxComponent = ({ setSelectedType, selectedType, type, text, selectedDays, selectedHours }: any) => {
+  return (
+    <div
+      className="w-full h-full flex flex-col items-start justify-start gap-5 text-white">
+      <div
+        className='flex flex-row items-center justify-start gap-3 md:gap-[20px] text-white'>
+        <img
+          onClick={() => setSelectedType(type)}
+          src={selectedType == type ? AppAsset.CheckedIcon : AppAsset.UncheckedIcon}
+          className='w-7 md:w-[36px] md:h-[36px] object-contain cursor-pointer' />
+        <p
+          className='text-xl md:text-[45px] font-normal'>
+          {text}
+        </p>
+      </div>
+
+      {/* Usage */}
+      <div
+        style={{
+          display: type == "none" ?
+            "none" :
+            type == selectedType ?
+              "flex" : "none"
+        }}
+        className="pr-10">
+        <p className="text-[30px]">You use <span className="text-primary">Electric Air Heating for {selectedDays} days</span> per week and <span className="text-primary">{selectedHours} hours per day</span></p>
+      </div>
+    </div>
+  );
 }
