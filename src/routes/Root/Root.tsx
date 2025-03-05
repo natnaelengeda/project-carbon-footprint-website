@@ -29,6 +29,8 @@ export default function Root() {
       navigate("/pledge");
     } else if (page == "interactive-qa") {
       navigate("/interactive-qa");
+    } else if (page == "pledgeStat") {
+      navigate("/pledgeStat");
     }
 
     if (page == null) {
@@ -84,9 +86,17 @@ export default function Root() {
     }
   }
 
+  const checkPledgeStat = () => {
+    if (location.pathname == "/pledgeStat") {
+      localStorage.setItem("page_type", "pledgeStat");
+      navigate("/pledgeStat");
+    }
+  }
+
   useEffect(() => {
     checkPledge();
     changeCarbonFootprintPage();
+    checkPledgeStat();
   }, [location.pathname]);
 
   return (
