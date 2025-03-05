@@ -50,7 +50,7 @@ export default function LeadersBoard({ score, setPage, cuserId }: Props) {
         backgroundAttachment: "contain",
         position: "relative",
       }}
-      className="w-full h-full min-h-screen">
+      className="w-full h-full min-h-screen pt-80">
 
       {/* Background Overlay */}
       <div
@@ -75,9 +75,9 @@ export default function LeadersBoard({ score, setPage, cuserId }: Props) {
       </div>
 
       <div
-        className="relative w-full  flex overflow-hidden flex-col justify-center items-center px-20 py-28 text-white max-md:px-5 max-md:pt-24 z-10">
-        <div className="w-full flex flex-row items-center  max-md:max-w-full">
-          <div className="w-full h-full flex flex-col items-start justify-start">
+        className="relative w-full flex overflow-hidden flex-col justify-start items-center px-20 text-white max-md:px-5 z-10">
+        <div className="w-full flex flex-row items-center max-md:max-w-full ">
+          <div className="w-full flex flex-col items-start justify-center">
             {
               leaderboardData &&
               <LeaderboardTable
@@ -88,7 +88,7 @@ export default function LeadersBoard({ score, setPage, cuserId }: Props) {
           </div>
 
           <div
-            className="w-full h-[40rem] flex flex-col items-center justify-center text-3xl xl:gap-[100px] pt-40">
+            className="w-full h-auto flex flex-col items-center justify-center text-3xl xl:gap-[100px]">
             <span className="flex flex-col items-center justify-center xl:text-[50px] gap-7">
               <p>Great job! Now share these</p>
               <p>results with your friends and </p>
