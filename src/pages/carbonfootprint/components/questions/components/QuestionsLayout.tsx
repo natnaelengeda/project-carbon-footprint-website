@@ -15,9 +15,10 @@ interface Props {
   children: React.ReactNode;
   setPage: React.Dispatch<React.SetStateAction<number>>;
   currPage?: number;
+  setSelectedComponent?: React.Dispatch<React.SetStateAction<number>>;
 }
 
-export default function QuestionsLayout({ children, setPage, currPage }: Props) {
+export default function QuestionsLayout({ children, setPage, currPage, setSelectedComponent }: Props) {
   const socket = useSocket();
   const carbon = useSelector((state: { carbon: CarbonState }) => state.carbon);
 
@@ -36,12 +37,24 @@ export default function QuestionsLayout({ children, setPage, currPage }: Props) 
       const data = JSON.parse(temp);
       setPage(data.nextPage);
     });
+
+    socket?.on("page-next-component-client", (temp) => {
+      const data = JSON.parse(temp);
+      console.log(data);
+      setSelectedComponent && setSelectedComponent(parseInt(data.currComponent) + 1);
+    })
+
+    socket?.on("page-prev-component-client", (temp) => {
+      const data = JSON.parse(temp);
+      setSelectedComponent && setSelectedComponent(data.currComponent - 1);
+    })
+
   }, [socket]);
 
   return (
     <div
       style={{
-        backgroundImage: currPage ===3 ?`url(${AppAsset.Background})`:`url(${AppAsset.Background})`,
+        backgroundImage: currPage === 3 ? `url(${AppAsset.Background})` : `url(${AppAsset.Background})`,
         backgroundSize: "cover",
         backgroundPosition: "center",
         backgroundRepeat: "no-repeat",

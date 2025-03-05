@@ -205,8 +205,6 @@ const CheckboxComponent = (
         })
       );
 
-
-
       updateSelectedDays({
         index: data.type == "electric-stove" ? 0 :
           data.type == "gas-stove" ? 1 :

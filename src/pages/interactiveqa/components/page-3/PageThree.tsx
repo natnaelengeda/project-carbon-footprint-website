@@ -102,7 +102,7 @@ export default function PageThree({ page, setPage, answers, setAnswers, setQuest
 
 
   // Timer
-  const duration = 10;
+  const duration = 20;
   const [timeLeft, setTimeLeft] = useState(duration);
 
   // Question Length 
@@ -213,7 +213,7 @@ export default function PageThree({ page, setPage, answers, setAnswers, setQuest
 
         {/* Questions */}
         <div
-          className="w-full md:w-[auto] flex flex-col items-start justify-start gap-4 md:gap-[60px] text-white">
+          className="w-full md:w-[auto] flex flex-col items-start justify-start gap-4 md:gap-[60px] text-white pt-[150px]">
 
 
           {/* Question */}
