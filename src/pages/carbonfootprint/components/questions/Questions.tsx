@@ -9,9 +9,10 @@ import PageFour from "./components/page-4";
 import PageFive from "./components/page-5";
 import PageSix from "./components/page-6";
 import PageForteen from "./components/page-14";
+import PageSeven from "./components/page-7";
 
 export default function Questions() {
-  const [page, setPage] = useState<number>(0);
+  const [page, setPage] = useState<number>(7);
 
   return (
     <div className="w-full h-screen">
@@ -30,8 +31,10 @@ export default function Questions() {
                     <PageFive setPage={setPage} /> :
                     page == 6 ?
                       <PageSix setPage={setPage} /> :
-                      page == 14 ?
-                        <PageForteen setPage={setPage} /> : null
+                      page == 7 ?
+                        <PageSeven setPage={setPage} /> :
+                        page == 14 ?
+                          <PageForteen setPage={setPage} /> : null
       }
     </div>
   )
