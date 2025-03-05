@@ -102,7 +102,7 @@ export default function PageThree({ page, setPage, answers, setAnswers, setQuest
 
 
   // Timer
-  const duration = 100;
+  const duration = 20;
   const [timeLeft, setTimeLeft] = useState(duration);
 
   // Question Length 
