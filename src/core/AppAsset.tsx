@@ -95,6 +95,10 @@ import BackgroundHorizontal from "@/assets/imgs/background/bbg.png";
 import BackgroundVertical from "@/assets/imgs/background/bg-h.png";
 import SplashImage from "@/assets/imgs/splash-animation.svg";
 
+// Pledge Ind
+import PledgersIcon from "@/assets/icons/smallIcons/user-multiple-02.svg";
+import TreesIcon from "@/assets/icons/smallIcons/tree-06.svg";
+
 class AppAsset {
   public constructor() { }
 
@@ -191,6 +195,10 @@ class AppAsset {
   static BackgroundHorizontal = BackgroundHorizontal;
   static BackgroundVertical = BackgroundVertical;
   static SplashImage = SplashImage;
+
+  // Pledge Ind
+  static PledgersIcon = PledgersIcon;
+  static TreesIcon = TreesIcon;
 }
 
 export default AppAsset;
