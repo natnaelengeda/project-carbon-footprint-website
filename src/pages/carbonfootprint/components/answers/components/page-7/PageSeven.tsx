@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 // Background
 import DefaultBackground from '../DefaultBackground';
@@ -186,12 +186,6 @@ const CheckboxComponent = ({ name, type, label, selectedPersonal, selectedPublic
   }
 
   const check: boolean = checkSelectedTypes();
-
-  useEffect(() => {
-    socket?.on("page-7-updatecheckbox", (temp: any) => {
-      const data = JSON.parse(temp);
-    })
-  }, [socket]);
 
   return (
     <div
