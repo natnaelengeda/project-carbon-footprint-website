@@ -20,14 +20,21 @@ export default function PageFour({ setPage }: Props) {
 
 
   const [selectedType, setSelectedType] = useState<string>("electric");
-  const [selectedTypes, setSelectedTypes] = useState<{}>([]);
-  const [selectedDays, setSelectedDays] = useState<number>(0);
-  const [selectedHours, setSelectedHours] = useState<number>(0);
+  const [selectedTypes, setSelectedTypes] = useState<string[]>([]);
+  const [selectedDays, setSelectedDays] = useState<number[]>([0, 0, 0, 0]);
+  const [selectedHours, setSelectedHours] = useState<number[]>([0, 0, 0, 0]);
 
   const socket: any = useSocket();
 
   // State
   const dispatch = useDispatch();
+
+  const buttons = [
+    { id: 0, name: "Electric Stove", type: "electric-stove" },
+    { id: 2, name: "Gas Stove", type: "gas-stove" },
+    { id: 3, name: "Charcoal Stove", type: "charcoal-stove" },
+    { id: 4, name: "Wood Stove", type: "wood-stove" },
+  ]
 
   useEffect(() => {
 
@@ -64,33 +71,61 @@ export default function PageFour({ setPage }: Props) {
         {/* Options */}
         <div
           className="w-full h-auto flex flex-col items-start justify-start pl-40 pt-20 gap-10">
-
-          {/* Electric Stove */}
-          <CheckboxComponent
-            setSelectedType={setSelectedType}
-            selectedType={selectedType}
-            type={"electric-stove"}
-            text={"Electric Stove"}
-            selectedDays={selectedDays}
-            selectedHours={selectedHours} />
-
-
+          {
+            buttons &&
+            buttons.map((button: { id: number, type: string, name: string }, index: number) => {
+              return (
+                <CheckboxComponent
+                  key={index}
+                  id={index}
+                  setSelectedType={setSelectedType}
+                  selectedTypes={selectedTypes}
+                  type={button.type}
+                  text={button.name}
+                  selectedDays={selectedDays}
+                  selectedHours={selectedHours}
+                  setSelectedTypes={setSelectedTypes} />
+              );
+            })
+          }
         </div>
       </div>
     </QuestionsLayout>
   )
 }
 
-const CheckboxComponent = ({ setSelectedType, selectedType, type, text, selectedDays, selectedHours }: any) => {
+const CheckboxComponent = ({ id, selectedTypes, type, text, selectedDays, selectedHours, setSelectedTypes }: any) => {
+  console.log(selectedDays[1]);
+
+  const checkSelectedTypes = () => {
+    return selectedTypes.includes(type);
+  }
+
+  const addRemoveTyeps = () => {
+    const check = selectedTypes.includes(type);
+    console.log(check);
+
+    if (check) {
+      const newSelectedTypes = selectedTypes.filter((item: any) => item !== type); // Remove the item immutably
+      setSelectedTypes(newSelectedTypes);
+    } else {
+      setSelectedTypes([...selectedTypes, type]); // Add the item immutably
+    }
+  }
+
+  const check: boolean = checkSelectedTypes();
+
   return (
     <div
       className="w-full h-full flex flex-col items-start justify-start gap-5 text-white">
       <div
         className='flex flex-row items-center justify-start gap-3 md:gap-[20px] text-white'>
         <img
-          onClick={() => setSelectedType(type)}
-          src={selectedType == type ? AppAsset.CheckedIcon : AppAsset.UncheckedIcon}
-          className='w-7 md:w-[36px] md:h-[36px] object-contain cursor-pointer' />
+          onClick={() => {
+            addRemoveTyeps();
+          }}
+          src={check ? AppAsset.CheckedIcon : AppAsset.UncheckedIcon}
+          className='w-7 md:w-[40px] md:h-[40px] object-contain cursor-pointer' />
         <p
           className='text-xl md:text-[45px] font-normal'>
           {text}
@@ -100,13 +135,10 @@ const CheckboxComponent = ({ setSelectedType, selectedType, type, text, selected
       {/* Usage */}
       <div
         style={{
-          display: type == "none" ?
-            "none" :
-            type == selectedType ?
-              "flex" : "none"
+          display: check ? "flex" : "none"
         }}
         className="pr-10">
-        <p className="text-[30px]">You use <span className="text-primary">Electric Air Heating for {selectedDays} days</span> per week and <span className="text-primary">{selectedHours} hours per day</span></p>
+        <p className="text-[30px]">You use <span className="text-primary">Electric Air Heating for {selectedDays[id]} days</span> per week and <span className="text-primary">{selectedHours[id]} hours per day</span></p>
       </div>
     </div>
   );
