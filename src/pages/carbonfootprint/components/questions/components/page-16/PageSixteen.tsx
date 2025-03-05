@@ -27,7 +27,7 @@ interface InData {
   type: string;
 }
 
-export default function PageFive({ setPage }: Props) {
+export default function PageSixteen({ setPage }: Props) {
 
   const [selectedTypes, setSelectedTypes] = useState<string[]>([]);
   const [selectedDays, setSelectedDays] = useState<number[]>([0, 0, 0, 0]);
@@ -37,7 +37,7 @@ export default function PageFive({ setPage }: Props) {
     { id: 0, name: "Iron", type: "iron" },
     { id: 1, name: "Fridge", type: "fridge" },
     { id: 2, name: "TV", type: "tv" },
-    { id: 3, name: "Water", type: "washing-machine" },
+    { id: 3, name: "Water Boiler", type: "water-boiler" },
   ];
 
   return (
@@ -51,7 +51,7 @@ export default function PageFive({ setPage }: Props) {
           className="w-full h-auto flex flex-col items-center justify-start gap-5 px-10">
           {/* Image */}
           <img
-            src={AppAsset.BannerFour}
+            src={AppAsset.BannerSixteen}
             className="w-[550px] h-[550px] object-cover" />
         </div>
 
@@ -63,32 +63,15 @@ export default function PageFive({ setPage }: Props) {
             <div
               className="w-10 h-3 bg-purple-500">
             </div>
-            <p className="text-white text-[60px]">Household Energy</p>
+            <p className="text-white text-[60px]">Diet and Food Consumption</p>
           </div>
-          <p className="text-[50px]">Electric Appliances</p>
+          <p className="text-[50px]">Poultry (Chicken)</p>
         </div>
 
         {/* Options */}
         <div
           className="w-full h-auto flex flex-col items-start justify-start pl-40 pt-20 gap-10">
-          {
-            buttons &&
-            buttons.map((button: { id: number, type: string, name: string }, index: number) => {
-              return (
-                <CheckboxComponent
-                  key={index}
-                  id={index}
-                  selectedTypes={selectedTypes}
-                  type={button.type}
-                  text={button.name}
-                  selectedDays={selectedDays}
-                  selectedHours={selectedHours}
-                  setSelectedTypes={setSelectedTypes}
-                  setSelectedDays={setSelectedDays}
-                  setSelectedHours={setSelectedHours} />
-              );
-            })
-          }
+          <p className="text-[30px] text-white">You use <span className="text-primary">Poultry (Chicken) for {selectedDays[0]} days</span> per week.</p>
         </div>
       </div>
     </QuestionsLayout>
@@ -252,7 +235,7 @@ const CheckboxComponent = (
           display: check ? "flex" : "none"
         }}
         className="pr-10">
-        <p className="text-[30px]">You use <span className="text-primary">Electric Appliances for {selectedDays[id]} days</span> per week and <span className="text-primary">{selectedHours[id]} hours per day</span></p>
+        <p className="text-[30px]">You use <span className="text-primary">Poultry '(Chicken)' for {selectedDays[id]} days</span> per week.</p>
       </div>
     </div>
   );

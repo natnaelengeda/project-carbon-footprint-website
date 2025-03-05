@@ -27,17 +27,19 @@ interface InData {
   type: string;
 }
 
-export default function PageFive({ setPage }: Props) {
+export default function PageTwentyOne({ setPage }: Props) {
 
   const [selectedTypes, setSelectedTypes] = useState<string[]>([]);
   const [selectedDays, setSelectedDays] = useState<number[]>([0, 0, 0, 0]);
   const [selectedHours, setSelectedHours] = useState<number[]>([0, 0, 0, 0]);
 
   const buttons = [
-    { id: 0, name: "Iron", type: "iron" },
-    { id: 1, name: "Fridge", type: "fridge" },
-    { id: 2, name: "TV", type: "tv" },
-    { id: 3, name: "Water", type: "washing-machine" },
+    { id: 0, name: "Plastics", type: "plastics" },
+    { id: 1, name: "Paper", type: "paper" },
+    { id: 2, name: "Glass/Bottle", type: "glass-bottle" },
+    { id: 3, name: "Organic Material", type: "organic-material" },
+    { id: 3, name: "Metals", type: "metals" },
+    { id: 3, name: "None", type: "none" },
   ];
 
   return (
@@ -51,8 +53,8 @@ export default function PageFive({ setPage }: Props) {
           className="w-full h-auto flex flex-col items-center justify-start gap-5 px-10">
           {/* Image */}
           <img
-            src={AppAsset.BannerFour}
-            className="w-[550px] h-[550px] object-cover" />
+            src={AppAsset.BannerTwentyOne}
+            className="w-[850px] h-[550px] object-cover" />
         </div>
 
         {/* Title */}
@@ -61,11 +63,11 @@ export default function PageFive({ setPage }: Props) {
           <div
             className="flex flex-row items-center justify-start gap-5">
             <div
-              className="w-10 h-3 bg-purple-500">
+              className="w-10 h-3 bg-pink-500">
             </div>
-            <p className="text-white text-[60px]">Household Energy</p>
+            <p className="text-white text-[60px]">Waste Disposal</p>
           </div>
-          <p className="text-[50px]">Electric Appliances</p>
+          <p className="text-[50px]">Recycling Habits</p>
         </div>
 
         {/* Options */}
@@ -252,7 +254,7 @@ const CheckboxComponent = (
           display: check ? "flex" : "none"
         }}
         className="pr-10">
-        <p className="text-[30px]">You use <span className="text-primary">Electric Appliances for {selectedDays[id]} days</span> per week and <span className="text-primary">{selectedHours[id]} hours per day</span></p>
+        <p className="text-[30px]">You dispose <span className="text-primary">Plastics for {selectedDays[id]} days</span> per week.</p>
       </div>
     </div>
   );

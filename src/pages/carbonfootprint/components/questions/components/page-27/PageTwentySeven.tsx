@@ -1,0 +1,17 @@
+import { Dispatch, SetStateAction } from "react";
+import QuestionsLayout from "../QuestionsLayout";
+
+interface Props {
+  setPage: Dispatch<SetStateAction<number>>;
+}
+
+export default function PageTwentySeven({ setPage }: Props) {
+  return (
+    <QuestionsLayout
+      currentPage={27}
+      setPage={setPage}
+    >
+      {/* Add your page content here */}
+    </QuestionsLayout>
+  );
+} 
