@@ -1,4 +1,3 @@
-
 // Logo
 import Logo from "@/assets/imgs/logo/science-museum-logo.svg";
 
@@ -16,6 +15,7 @@ import BannerTen from "@/assets/imgs/banner/banner-ten.svg";
 
 import Banner2 from "@/assets/imgs/banner/banner-2.svg";
 import Banner3 from "@/assets/imgs/banner/banner-3.svg";
+import BannerThirteen from "@/assets/imgs/banner/banner-13.svg";
 
 // Badges
 import BlueBadge from "@/assets/imgs/badges/blue-badge.svg";
@@ -32,10 +32,10 @@ import CheckedIcon from "@/assets/icons/checkmark-square.svg";
 import UncheckedIcon from "@/assets/icons/unchecked-checkmark-square.svg";
 
 import ArrowUpIcon from "@/assets/icons/arrow-up-01.svg";
-import ArrowDownIcon from "@/assets/icons/arrow-down-01.svg";;
+import ArrowDownIcon from "@/assets/icons/arrow-down-01.svg";
 
 import RadioOnIcon from "@/assets/icons/Radio on.svg";
-import RadioOneWHite from "@/assets/icons/Radio on White.svg"
+import RadioOneWHite from "@/assets/icons/Radio on White.svg";
 import RadioOffIcon from "@/assets/icons/Radio Off.svg";
 
 import UserBlackIcon from "@/assets/icons/user.svg";
@@ -86,7 +86,7 @@ import BackgroundVertical from "@/assets/imgs/background/bg-h.png";
 import SplashImage from "@/assets/imgs/splash-animation.svg";
 
 class AppAsset {
-  public constructor() { }
+  public constructor() {}
 
   static Logo = Logo;
 
@@ -101,6 +101,7 @@ class AppAsset {
   static BannerEight = BannerEight;
   static BannerNine = BannerNine;
   static BannerTen = BannerTen;
+  static BannerThirteen = BannerThirteen;
 
   static Banner2 = Banner2;
   static Banner3 = Banner3;
@@ -124,7 +125,7 @@ class AppAsset {
 
   static RadioOnIcon = RadioOnIcon;
   static RadioOneWHite = RadioOneWHite;
-  static RadioOffIcon = RadioOffIcon
+  static RadioOffIcon = RadioOffIcon;
 
   static UserBlackIcon = UserBlackIcon;
   static InformationCircleIcon = InformationCircleIcon;

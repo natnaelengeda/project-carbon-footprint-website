@@ -8,28 +8,33 @@ import PageThree from "./components/page-3";
 import PageFour from "./components/page-4";
 import PageFive from "./components/page-5";
 import PageSix from "./components/page-6";
+import PageThirteen from "./components/page-13";
+import PageTwelve from "./components/page-12";
 
 export default function Questions() {
-  const [page, setPage] = useState<number>(1);
+  const [page, setPage] = useState<number>(12);
 
   return (
     <div className="w-full h-screen">
-      {
-        page == 0 ?
-          <PageZero setPage={setPage} /> :
-          page == 1 ?
-            <PageOne setPage={setPage} /> :
-            page == 2 ?
-              <PageTwo setPage={setPage} /> :
-              page == 3 ?
-                <PageThree setPage={setPage} /> :
-                page == 4 ?
-                  <PageFour setPage={setPage} /> :
-                  page == 5 ?
-                    <PageFive setPage={setPage} /> :
-                    page == 6 ?
-                      <PageSix setPage={setPage} /> : null
-      }
+      {page == 0 ? (
+        <PageZero setPage={setPage} />
+      ) : page == 1 ? (
+        <PageOne setPage={setPage} />
+      ) : page == 2 ? (
+        <PageTwo setPage={setPage} />
+      ) : page == 3 ? (
+        <PageThree setPage={setPage} />
+      ) : page == 4 ? (
+        <PageFour setPage={setPage} />
+      ) : page == 5 ? (
+        <PageFive setPage={setPage} />
+      ) : page == 6 ? (
+        <PageSix setPage={setPage} />
+      ) : page == 13 ? (
+        <PageThirteen setPage={setPage} />
+      ) : page == 12 ? (
+        <PageTwelve setPage={setPage} />
+      ) : null}
     </div>
-  )
+  );
 }
