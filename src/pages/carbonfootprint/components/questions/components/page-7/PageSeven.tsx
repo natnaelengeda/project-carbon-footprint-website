@@ -1,18 +1,6 @@
 // AppAsset
 import AppAsset from "@/core/AppAsset";
-import { useEffect, useState } from "react";
 
-// Socket
-import { useSocket } from "@/context/SocketProvider";
-
-// React Redux
-import { useDispatch } from "react-redux";
-
-// State
-import {
-  addName,
-  // CarbonState,
-} from '@/state/carbon';
 
 // Interface
 interface Props {
@@ -20,28 +8,6 @@ interface Props {
 }
 
 export default function PageSeven({ }: Props) {
-  const [name, setName] = useState<string>("");
-
-
-  const socket: any = useSocket();
-
-  // State
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    socket?.on("name-change-client-1", (data: any) => {
-      const parsedData = JSON.parse(data);
-      const id = parsedData.id;
-      const name = parsedData.name;
-
-      setName(parsedData.name);
-      dispatch(addName({
-        id: id,
-        name: name,
-      }));
-    });
-  }, [socket]);
-
   return (
     <div
       style={{
@@ -104,7 +70,6 @@ export default function PageSeven({ }: Props) {
           {/* Name */}
           <div className="w-full flex flex-col items-center justify-center gap-2">
             <p className="text-white text-2xl md:text-[64px] font-semibold">
-              {name}
               <span className="animate-pulse">_</span>
             </p>
           </div>

@@ -7,8 +7,12 @@ import { useSocket } from "@/context/SocketProvider";
 import { useDispatch } from "react-redux";
 
 // State
-import { addName } from '@/state/carbon';
+import { addHouseholdEnegryCategory, addHouseholdEnergy } from '@/state/carbon';
+
+// Components
 import QuestionsLayout from "../QuestionsLayout";
+
+// AppAsset
 import AppAsset from "@/core/AppAsset";
 
 // Interface
@@ -16,29 +20,25 @@ interface Props {
   setPage: React.Dispatch<React.SetStateAction<number>>;
 }
 
+interface InData {
+  room: string;
+  slider1: number;
+  slider2: number;
+  type: string;
+}
+
 export default function PageFour({ setPage }: Props) {
 
-
-  const [selectedType, setSelectedType] = useState<string>("electric");
   const [selectedTypes, setSelectedTypes] = useState<string[]>([]);
   const [selectedDays, setSelectedDays] = useState<number[]>([0, 0, 0, 0]);
   const [selectedHours, setSelectedHours] = useState<number[]>([0, 0, 0, 0]);
 
-  const socket: any = useSocket();
-
-  // State
-  const dispatch = useDispatch();
-
   const buttons = [
     { id: 0, name: "Electric Stove", type: "electric-stove" },
-    { id: 2, name: "Gas Stove", type: "gas-stove" },
-    { id: 3, name: "Charcoal Stove", type: "charcoal-stove" },
-    { id: 4, name: "Wood Stove", type: "wood-stove" },
-  ]
-
-  useEffect(() => {
-
-  }, [socket]);
+    { id: 1, name: "Gas Stove", type: "gas-stove" },
+    { id: 2, name: "Charcoal Stove", type: "charcoal-stove" },
+    { id: 3, name: "Wood Stove", type: "wood-stove" },
+  ];
 
   return (
     <QuestionsLayout
@@ -78,13 +78,14 @@ export default function PageFour({ setPage }: Props) {
                 <CheckboxComponent
                   key={index}
                   id={index}
-                  setSelectedType={setSelectedType}
                   selectedTypes={selectedTypes}
                   type={button.type}
                   text={button.name}
                   selectedDays={selectedDays}
                   selectedHours={selectedHours}
-                  setSelectedTypes={setSelectedTypes} />
+                  setSelectedTypes={setSelectedTypes}
+                  setSelectedDays={setSelectedDays}
+                  setSelectedHours={setSelectedHours} />
               );
             })
           }
@@ -94,8 +95,36 @@ export default function PageFour({ setPage }: Props) {
   )
 }
 
-const CheckboxComponent = ({ id, selectedTypes, type, text, selectedDays, selectedHours, setSelectedTypes }: any) => {
-  console.log(selectedDays[1]);
+interface ICheckboxComponent {
+  id: number,
+  selectedTypes: string[],
+  type: string,
+  text: string,
+  selectedDays: number[],
+  selectedHours: number[],
+  setSelectedTypes: any,
+  setSelectedDays: any,
+  setSelectedHours: any,
+}
+
+const CheckboxComponent = (
+  {
+    id,
+    selectedTypes,
+    type,
+    text,
+    selectedDays,
+    selectedHours,
+    setSelectedTypes,
+    setSelectedDays,
+    setSelectedHours
+  }: ICheckboxComponent) => {
+
+  const socket: any = useSocket();
+
+  // State
+  const dispatch = useDispatch();
+
 
   const checkSelectedTypes = () => {
     return selectedTypes.includes(type);
@@ -113,7 +142,92 @@ const CheckboxComponent = ({ id, selectedTypes, type, text, selectedDays, select
     }
   }
 
+  const updateSelectedDays = ({ index, value }: { index: number, value: number }) => {
+    setSelectedDays((prevSelectedDays: any) => {
+      const newSelectedDays = [...prevSelectedDays];
+      newSelectedDays[index] = value;
+      return newSelectedDays;
+    });
+  };
+
+  const updateSelectedHours = ({ index, value }: { index: number, value: number }) => {
+    setSelectedHours((prevSelectedHours: any) => {
+      const newSelectedHours = [...prevSelectedHours];
+      newSelectedHours[index] = value;
+      return newSelectedHours;
+    });
+  };
+
   const check: boolean = checkSelectedTypes();
+
+  useEffect(() => {
+    socket?.on("page-update-slider-client", (temp: any) => {
+      const data: InData = JSON.parse(temp);
+
+      setSelectedTypes((prevSelectedTypes: any) => {
+        const checkSelected = prevSelectedTypes.includes(data.type);
+
+        if (!checkSelected) {
+          return [...prevSelectedTypes, data.type]; // Add the item immutably
+        }
+
+        return prevSelectedTypes;
+      });
+
+      dispatch(
+        addHouseholdEnergy({
+          id: 2,
+          name: "cooking",
+          selected: true,
+          value: 1
+        })
+      );
+
+      dispatch(
+        addHouseholdEnegryCategory({
+          parent_id: 2,
+          category_id:
+            data.type == "electric-stove" ? 1 :
+              data.type == "gas-stove" ? 2 :
+                data.type == "charcoal-stove" ? 3 :
+                  4,
+          id: data.type == "electric-stove" ? 1 :
+            data.type == "gas-stove" ? 2 :
+              data.type == "charcoal-stove" ? 3 :
+                4,
+          name: data.type == "electric-stove" ? "cooking-electric-stove" :
+            data.type == "gas-stove" ? "cooking-gas-stove" :
+              data.type == "charcoal-stove" ? "cooking-charcoal" :
+                "cooking-wood-stove",
+          selected: true,
+          value: data.slider1,
+          frequency: data.slider2,
+        })
+      );
+
+
+
+      updateSelectedDays({
+        index: data.type == "electric-stove" ? 0 :
+          data.type == "gas-stove" ? 1 :
+            data.type == "charcoal-stove" ? 2 :
+              data.type == "wood-stove" ? 3 : 0,
+        value: data.slider1
+      });
+
+      updateSelectedHours({
+        index: data.type == "electric-stove" ? 0 :
+          data.type == "gas-stove" ? 1 :
+            data.type == "charcoal-stove" ? 2 :
+              data.type == "wood-stove" ? 3 : 0,
+        value: data.slider2
+      });
+    });
+
+  }, [socket]);
+
+  console.log(selectedTypes)
+
 
   return (
     <div
