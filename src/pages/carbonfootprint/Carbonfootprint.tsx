@@ -16,7 +16,7 @@ import PageEleven from "./old/page-11";
 import PageTwelve from "./components/questions/components/page-12/PageTwelve";
 import PageThirteen from "./components/questions/components/page-13/PageThirteen";
 import PageFourteen from "./components/answers/components/page-14/PageFourteen";
-import PageFifteen from "./components/answers/components/page-15/PageFifteen";
+// import PageFifteen from "./components/answers/components/page-15/PageFifteen";
 
 export default function CarbonFootPrint() {
   const [page, setPage] = useState<number>(0);

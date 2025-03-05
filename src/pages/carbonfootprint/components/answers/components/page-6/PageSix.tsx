@@ -195,9 +195,9 @@ const SliderComponent = ({ id, selectedTypes, type, text, setSelectedTypes, curr
     }
   }
 
-  const addSelectedToTypes = () => {
-    setSelectedTypes([...selectedTypes, type]); // Add the item immutably
-  }
+  // const addSelectedToTypes = () => {
+  //   setSelectedTypes([...selectedTypes, type]); // Add the item immutably
+  // }
 
   const check: boolean = checkSelectedTypes();
 
