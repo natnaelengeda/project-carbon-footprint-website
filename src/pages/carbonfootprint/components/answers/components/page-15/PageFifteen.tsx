@@ -33,10 +33,9 @@ import { useSocket } from '@/context/SocketProvider';
 // Interface
 interface Props {
   setPage: React.Dispatch<React.SetStateAction<number>>;
-  personalTransports: string[];
 }
 
-export default function PageEight({ }: Props) {
+export default function PageFourteen({ }: Props) {
   // New Values
   const [name, setName] = useState<string>("");
   const id = generateRandomId();
@@ -106,7 +105,6 @@ export default function PageEight({ }: Props) {
 
 
         </div>
-
       </div>
     </DefaultBackground>
   )
