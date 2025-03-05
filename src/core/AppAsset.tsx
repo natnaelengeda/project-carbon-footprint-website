@@ -13,6 +13,7 @@ import BannerSeven from "@/assets/imgs/banner/banner-seven.svg";
 import BannerEight from "@/assets/imgs/banner/banner-eight.svg";
 import BannerNine from "@/assets/imgs/banner/banner-nine.svg";
 import BannerTen from "@/assets/imgs/banner/banner-ten.svg";
+import BannerCard from "@/assets/imgs/banner/banner-car.svg";
 
 import Banner2 from "@/assets/imgs/banner/banner-2.svg";
 import Banner3 from "@/assets/imgs/banner/banner-3.svg";
@@ -115,6 +116,7 @@ class AppAsset {
   static BannerEight = BannerEight;
   static BannerNine = BannerNine;
   static BannerTen = BannerTen;
+  static BannerCard = BannerCard;
 
   static Banner2 = Banner2;
   static Banner3 = Banner3;
@@ -150,7 +152,7 @@ class AppAsset {
   static populationGrowthIcon = populationGrowthIcon;
   static urbanizationIcon = urbanizationIcon;
   static sustainableEnergyIcon = sustainableEnergyIcon;
-  static ecoFriendlyIcon = ecoFriendlyIcon; 
+  static ecoFriendlyIcon = ecoFriendlyIcon;
   static industryIcon = industryIcon;
 
   // Stats Icons

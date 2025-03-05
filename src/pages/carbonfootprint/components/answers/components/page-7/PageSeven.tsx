@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 // Background
 import DefaultBackground from '../DefaultBackground';
@@ -12,9 +12,13 @@ import AppAsset from '@/core/AppAsset';
 // Interface
 interface Props {
   setPage: React.Dispatch<React.SetStateAction<number>>;
+  setPublicTransports: React.Dispatch<React.SetStateAction<string[]>>;
+  setPersonalTransports: React.Dispatch<React.SetStateAction<string[]>>;
+  personalTransports: string[];
+  pubilcTransports: string[]
 }
 
-export default function PageSeven({ setPage }: Props) {
+export default function PageSeven({ setPage, personalTransports, pubilcTransports, setPublicTransports, setPersonalTransports }: Props) {
   const [selectedPersonal, setSelectedPersonal] = useState<string[]>([]);
   const [selectedPublic, setSelectedPublic] = useState<string[]>([]);
 
@@ -30,6 +34,9 @@ export default function PageSeven({ setPage }: Props) {
     { id: 2, name: "Light-rail", label: "light-rail" },
     { id: 3, name: "Ride Hailing", label: "ride-hailing" },
   ];
+
+  useEffect(() => {
+  }, [selectedPersonal, selectedPublic]);
 
   return (
     <DefaultBackground>
@@ -71,7 +78,11 @@ export default function PageSeven({ setPage }: Props) {
                       selectedPersonal={selectedPersonal}
                       selectedPublic={selectedPublic}
                       setSelectedPersonal={setSelectedPersonal}
-                      setSelectedPublic={setSelectedPublic} />
+                      setSelectedPublic={setSelectedPublic}
+                      personalTransports={personalTransports}
+                      pubilcTransports={pubilcTransports}
+                      setPublicTransports={setPublicTransports}
+                      setPersonalTransports={setPersonalTransports} />
                   );
                 })
               }
@@ -99,7 +110,11 @@ export default function PageSeven({ setPage }: Props) {
                       selectedPersonal={selectedPersonal}
                       selectedPublic={selectedPublic}
                       setSelectedPersonal={setSelectedPersonal}
-                      setSelectedPublic={setSelectedPublic} />
+                      setSelectedPublic={setSelectedPublic}
+                      personalTransports={personalTransports}
+                      pubilcTransports={pubilcTransports}
+                      setPublicTransports={setPublicTransports}
+                      setPersonalTransports={setPersonalTransports} />
                   );
                 })
               }
@@ -107,14 +122,12 @@ export default function PageSeven({ setPage }: Props) {
           </div>
         </div>
 
-
-
         <div
           className='absolute bottom-0 right-0'>
           <NavComponent
             setPage={setPage}
-            nextPage={7}
-            prevPage={5} />
+            nextPage={8}
+            prevPage={6} />
         </div>
       </div>
     </DefaultBackground>
@@ -130,9 +143,25 @@ interface ICheckboxComponent {
   selectedPublic: any,
   setSelectedPersonal: any,
   setSelectedPublic: any,
+  personalTransports: any,
+  pubilcTransports: any,
+  setPublicTransports: any,
+  setPersonalTransports: any,
 }
 
-const CheckboxComponent = ({ name, type, label, selectedPersonal, selectedPublic, setSelectedPersonal, setSelectedPublic }: ICheckboxComponent) => {
+const CheckboxComponent = ({
+  name,
+  type,
+  label,
+  selectedPersonal,
+  selectedPublic,
+  setSelectedPersonal,
+  setSelectedPublic,
+  personalTransports,
+  pubilcTransports,
+  setPublicTransports,
+  setPersonalTransports
+}: ICheckboxComponent) => {
   const socket = useSocket();
   const room = localStorage.getItem("room");
 
@@ -143,8 +172,12 @@ const CheckboxComponent = ({ name, type, label, selectedPersonal, selectedPublic
       if (check) {
         const newSelectedTypes = selectedPersonal.filter((item: any) => item !== label); // Remove the item immutably
         setSelectedPersonal(newSelectedTypes);
+        // setPersonalTransports(newSelectedTypes)
+        setPersonalTransports(newSelectedTypes);
       } else {
         setSelectedPersonal([...selectedPersonal, label]); // Add the item immutably
+        // setPublicTransports([...selectedPersonal, label]); // Add the item immutably
+        setPersonalTransports([...personalTransports, label]);
       }
 
       socket?.emit("page-7-emit-checkbox-change-server", JSON.stringify({
@@ -162,8 +195,10 @@ const CheckboxComponent = ({ name, type, label, selectedPersonal, selectedPublic
       if (check) {
         const newSelectedTypes = selectedPublic.filter((item: any) => item !== label); // Remove the item immutably
         setSelectedPublic(newSelectedTypes);
+        setPublicTransports(newSelectedTypes);
       } else {
         setSelectedPublic([...selectedPublic, label]); // Add the item immutably
+        setPublicTransports([...pubilcTransports, label]);
       }
 
       socket?.emit("page-7-emit-checkbox-change-server", JSON.stringify({

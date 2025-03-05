@@ -1,110 +1,64 @@
-import React, { useState } from 'react'
-
-// Translation
-import { useTranslation } from 'react-i18next';
-
-// State
-import {
-  useDispatch,
-  // useSelector,
-} from 'react-redux';
-
-import {
-  addName,
-  // CarbonState,
-} from '@/state/carbon';
-
-// Mantine
-// import { TextInput } from '@mantine/core';
-
-// Utils
-import { generateRandomId } from '@/utils/idGenerator';
-// import { generateRandomName } from '@/utils/randomNameGenerator';
-
-// AppAsset
-import AppAsset from "@/core/AppAsset";
+import React, { useEffect, useState } from 'react'
 
 // Background
 import DefaultBackground from '../DefaultBackground';
 
-// Socket
-import { useSocket } from '@/context/SocketProvider';
+// Components
+import Automobile from './components/Automobile';
+import Motorcycle from './components/Motorcycle';
+import Bicycle from './components/Bicycle';
+
+// Nav Component
+import NavComponent from '../../../NavComponent';
+
 
 // Interface
 interface Props {
   setPage: React.Dispatch<React.SetStateAction<number>>;
+  personalTransports: string[];
 }
 
-export default function PageEight({ }: Props) {
-  // New Values
-  const [name, setName] = useState<string>("");
-  const id = generateRandomId();
+export default function PageEight({ setPage, personalTransports }: Props) {
+  const [selectedComponent, setSelectedComponent] = useState(0);
+  const [noOfPages, setNoOfPages] = useState(0);
 
-  // React Language Packaged;
-  const { t } = useTranslation();
+  const renderComponent = (label: string) => {
+    switch (label) {
+      case 'automobile':
+        return <Automobile />;
+      case 'motor-cycle':
+        return <Motorcycle />;
+      case 'bicycle':
+        return <Bicycle />;
+      default:
+        return null;
+    }
+  };
 
-  // Width
-  // const width = window.innerWidth;
-
-  const savedlanguages = JSON.parse(localStorage.getItem("language") || "");
-
-  // State
-  const dispatch = useDispatch();
-  // const carbonData = useSelector((state: { carbon: CarbonState }) => state.carbon);
-
-  // Socket
-  const socket = useSocket();
-
-  const onNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-
-    socket?.emit("name-change-server-1", JSON.stringify({
-      name: e.target.value,
-      id: id,
-    }));
-
-    setName(e.target.value);
-    dispatch(addName({
-      id: id,
-      name: e.target.value,
-    }));
-  }
-
-  // const func = () => {
-  //   const newName = generateRandomName();
-
-  //   if (name.length > 0) return true;
-  //   else
-  //     dispatch(addName({
-  //       id: id,
-  //       name: newName,
-  //     }));
-
-  //   return true;
-  // }
-
+  useEffect(() => {
+    if (personalTransports.length == 0) {
+      setPage(9);
+    }
+    setNoOfPages(personalTransports.length);
+  }, []);
 
   return (
     <DefaultBackground>
-      <div className="relative z-10 w-full h-full mx-auto 2xl:container flex flex-col items-center justify-center gap-5 py-10 md:py-20">
-
-        {/* TextInput */}
+      <div
+        className="relative z-10 w-full h-full mx-auto 2xl:container flex flex-col items-center justify-center gap-5 py-10 md:py-20">
+        {renderComponent(personalTransports[selectedComponent])}
         <div
-          className="w-full flex flex-col items-center justify-start gap-5 pt-2 md:pt-10 px-5">
-          <div className="relative w-full md:w-[35rem]">
-            <img
-              src={AppAsset.UserBlackIcon}
-              className="absolute left-3 top-1/2 -translate-y-1/2 w-8 h-8"
-            />
-            <input
-              type="text"
-              placeholder={t("carbon.name_eg", { lng: savedlanguages.carbon })}
-              value={name}
-              onChange={onNameChange}
-              className="w-full h-20 rounded-lg border-2 border-white bg-transparent text-xl text-white placeholder-white pl-14 pr-2" />
-          </div>
-
-
+          className='absolute bottom-0 right-0'>
+          <NavComponent
+            setPage={setPage}
+            nextPage={9}
+            prevPage={7}
+            currPage={8}
+            noOfPages={noOfPages}
+            selectedComponent={selectedComponent}
+            setSelectedComponent={setSelectedComponent} />
         </div>
+
       </div>
     </DefaultBackground>
   )

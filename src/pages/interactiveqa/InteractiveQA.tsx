@@ -9,6 +9,7 @@ import LeadersBoard from "./components/leadersboard";
 
 export default function InteractiveQA() {
   const [page, setPage] = useState<number>(1);
+
   const [questions, setQuestions] = useState<any>(null);
   const [answers, setAnswers] = useState<{ [key: number]: number }>({});
   const [score, setScore] = useState<number>(0);

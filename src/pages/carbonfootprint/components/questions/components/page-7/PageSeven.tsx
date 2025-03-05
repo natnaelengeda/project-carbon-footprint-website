@@ -8,9 +8,11 @@ import { useSocket } from "@/context/SocketProvider";
 // Interface
 interface Props {
   setPage: React.Dispatch<React.SetStateAction<number>>;
+  setPublicTransports: React.Dispatch<React.SetStateAction<string[]>>;
+  setPersonalTransports: React.Dispatch<React.SetStateAction<string[]>>;
 }
 
-export default function PageSeven({ setPage }: Props) {
+export default function PageSeven({ setPage, setPublicTransports, setPersonalTransports }: Props) {
   const [selectedPersonal, setSelectedPersonal] = useState<string[]>([]);
   const [selectedPublic, setSelectedPublic] = useState<string[]>([]);
 
@@ -26,6 +28,11 @@ export default function PageSeven({ setPage }: Props) {
     { id: 2, name: "Light-rail", label: "light-rail" },
     { id: 3, name: "Ride Hailing", label: "ride-hailing" },
   ];
+
+  useEffect(() => {
+    setPublicTransports(selectedPublic);
+    setPersonalTransports(selectedPersonal);
+  }, [selectedPersonal, selectedPublic]);
 
   return (
     <QuestionsLayout
@@ -47,13 +54,16 @@ export default function PageSeven({ setPage }: Props) {
 
         {/* Title */}
         <div
-          className="w-full h-auto flex flex-col items-start justify-start pl-40 text-white">
+          className="w-full h-auto flex flex-col items-start justify-start pl-20 text-white">
           <div
-            className="flex flex-row items-center justify-start gap-5">
+            className="flex flex-row items-start justify-start gap-5">
             <div
-              className="w-10 h-3 bg-orange-500">
+              className="w-10 h-3 bg-orange-500 mt-10">
             </div>
-            <p className="text-white text-[60px]">Transportation Mode</p>
+            <div className="flex flex-col items-start justify-start">
+              <p className="text-white text-[60px]">Transportation Mode</p>
+              <p className="text-white text-[40px]">Please provide your usual transportation option</p>
+            </div>
           </div>
         </div>
 

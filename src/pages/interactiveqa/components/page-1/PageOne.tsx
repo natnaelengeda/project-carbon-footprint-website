@@ -64,7 +64,6 @@ export default function PageOne({ setPage }: Props) {
           zIndex: 1,
         }} />
 
-
       <div
         onKeyDown={() => {
           setPage(2)
@@ -74,34 +73,34 @@ export default function PageOne({ setPage }: Props) {
         {/* Top Content */}
         <div
           style={{
-            paddingTop: "300px"
+            paddingTop: "20px"
           }}
           className="flex flex-col items-center justify-center gap-5 md:gap-40">
           <img
             src={AppAsset.Logo}
-            width={300}
-            height={400}
+            width={180}
+            height={180}
             className="object-contain" />
           <div
-            className="h-auto flex flex-col items-center justify-start gap-5 md:gap-28 text-[64px]">
-            <p className="text-2xl md:text-[120px] font-semibold">Welcome to Interactive</p>
-            <p className="text-2xl md:text-[120px] font-semibold">Q/A</p>
+            className="h-auto flex flex-col items-center justify-start gap-5 md:gap-16 text-[40px]">
+            <p className="text-2xl md:text-[70px] font-semibold">Welcome to Interactive</p>
+            <p className="text-2xl md:text-[70px] font-semibold">Q/A</p>
           </div>
         </div>
 
 
         {/* Buttons */}
         <div
-          className="w-auto flex flex-col items-center justify-start gap-10 pt-10 md:pt-[27rem] pb-10 md:pb-0">
+          className="w-auto flex flex-col items-center justify-start gap-10 pt-10 md:pt-[10rem] pb-10 md:pb-0">
           <button
             onClick={() => {
               setPage(2);
             }}
             style={{
-              width: "500px",
-              height: "150px",
+              width: "250px",
+              height: "100px",
             }}
-            className=" bg-primary text-white font-semibold rounded-full text-lg md:text-[50px] px- py-4 hover:opacity-80 flex items-center justify-center gap-3 px-5 md:px-0">
+            className=" bg-primary text-white font-semibold rounded-full text-lg md:text-[30px] px- py-4 hover:opacity-80 flex items-center justify-center gap-3 px-5 md:px-0">
             Start Now
             <img
               src={AppAsset.RightArrowIcon}
