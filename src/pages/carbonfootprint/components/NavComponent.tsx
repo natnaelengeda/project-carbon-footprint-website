@@ -3,33 +3,80 @@ import React, { useEffect, useState } from 'react';
 // Translation
 // import { useTranslation } from 'react-i18next';
 
+// Redux
+import { useSelector } from 'react-redux';
+import { CarbonState } from '@/state/carbon';
+
 // Socket
 import { useSocket } from '@/context/SocketProvider';
 
 // App Asset
-import AppAsset from '@/core/AppAsset';
+import AppAsset from '@/core/AppAsset'
+
+
 
 
 interface Props {
   setPage: React.Dispatch<React.SetStateAction<number>>;
-  // func: () => boolean;
+  func?: () => boolean;
   prevPage: number;
   nextPage: number;
+  currPage?: number;
   // sections?: number;
   // section?: number;
   // setSection?: React.Dispatch<React.SetStateAction<number>>;
 }
 
-export default function NavComponent({ setPage, nextPage, prevPage }: Props) {
+export default function NavComponent({ setPage, func, currPage, nextPage, prevPage }: Props) {
   const socket = useSocket();
   const room = localStorage.getItem("room");
 
+  const carbonData = useSelector((state: { carbon: CarbonState }) => state.carbon);
+
   const socketNextPage = () => {
-    socket?.emit("page-next-server", JSON.stringify({
-      nextPage: nextPage,
-      room: room,
-    }));
+    if (currPage == 1) {
+      if (!func) {
+        socket?.emit("page-next-server", JSON.stringify({
+          id:carbonData.id,
+          name: carbonData.name,
+          func: func,
+          currPage: currPage,
+          nextPage: nextPage,
+          room: room,
+        }));
+      } else {
+        socket?.emit("page-next-server", JSON.stringify({
+          nextPage: nextPage,
+          room: room,
+        }));
+      }
+    } else {
+      socket?.emit("page-next-server", JSON.stringify({
+        nextPage: nextPage,
+        room: room,
+      }));
+    }
   }
+
+  const socketSkipPage = () => {
+    if(currPage == 1){
+      socket?.emit("page-skip-server", JSON.stringify({
+        id:carbonData.id,
+        name: carbonData.name,
+        func: func,
+        currPage: currPage,
+        nextPage: nextPage,
+        room: room,
+      }))
+    }else{
+      socket?.emit("page-skip-server", JSON.stringify({
+        nextPage: nextPage,
+        room: room
+      }))
+    }
+    
+  }
+
 
   const socketPreviousPage = () => {
     socket?.emit("page-prev-server", JSON.stringify({
@@ -38,13 +85,7 @@ export default function NavComponent({ setPage, nextPage, prevPage }: Props) {
     }))
   }
 
-  const socketSkipPage = () => {
-    socket?.emit("page-skip-server", JSON.stringify({
-      nextPage: nextPage,
-      room: room
-    }))
-  }
-
+ 
   return (
     <div
       className='w-full h-80 flex items-center justify-end px-5 md:px-40 gap-3 md:gap-[32px] pb-10 md:pb-0'>
