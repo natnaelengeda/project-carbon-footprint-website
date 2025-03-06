@@ -51,7 +51,7 @@ export default function PageThirteen({ setPage }: Props) {
           className="w-full h-auto flex flex-col items-center justify-start gap-5 px-10">
           {/* Image */}
           <img
-            src={AppAsset.BannerEighteen}
+            src={AppAsset.BannerFish}
             className="w-[550px] h-[550px] object-cover" />
         </div>
 
@@ -65,7 +65,7 @@ export default function PageThirteen({ setPage }: Props) {
             </div>
             <p className="text-white text-[60px]">Diet and Food Consumption</p>
           </div>
-          <p className="text-[50px]">Meat</p>
+          <p className="text-[50px]">Fish</p>
         </div>
 
         {/* Options */}

@@ -25,7 +25,7 @@ import BannerTwelve from "@/assets/imgs/banner/banner-twelve.svg";
 import BannerThirteen from "@/assets/imgs/banner/banner-thirteen.svg";
 import BannerFourteen from "@/assets/imgs/banner/banner-fourteen.svg";
 import BannerFifteen from "@/assets/imgs/banner/banner-fifteen.svg";
-import BannerSixteen from "@/assets/imgs/banner/banner-sixteen.svg"; 
+import BannerSixteen from "@/assets/imgs/banner/banner-sixteen.svg";
 import BannerSeventeen from "@/assets/imgs/banner/banner-seventeen.svg";
 import BannerEighteen from "@/assets/imgs/banner/banner-eighteen.svg";
 import BannerNineteen from "@/assets/imgs/banner/banner-nineteen.svg";
@@ -37,6 +37,7 @@ import BannerTwentyFour from "@/assets/imgs/banner/banner-twenty-four.svg";
 import BannerTwentyFive from "@/assets/imgs/banner/banner-twenty-five.svg";
 import BannerTwentySix from "@/assets/imgs/banner/banner-twenty-six.svg";
 import BannerTwentySeven from "@/assets/imgs/banner/banner-twenty-seven.svg";
+import BannerFish from "@/assets/imgs/banner/banner-nineteen.svg";
 
 
 import Banner2 from "@/assets/imgs/banner/banner-2.svg";
@@ -148,6 +149,7 @@ class AppAsset {
   static BannerSmallCar = BannerSmallCar;
   static BannerTrain = BannerTrain;
   static BannerWalk = BannerWalk;
+  static BannerFish = BannerFish;
 
   static Banner2 = Banner2;
   static Banner3 = Banner3;

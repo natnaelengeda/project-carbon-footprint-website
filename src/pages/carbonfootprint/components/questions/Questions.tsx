@@ -11,8 +11,11 @@ import PageSix from "./components/page-6";
 import PageSeven from "./components/page-7";
 import PageEight from "./components/page-8";
 import PageNine from "./components/page-9";
-import PageForteen from "./components/page-14";
 import PageTen from "./components/page-10";
+import PageEleven from "./components/page-11";
+import PageTwelve from "./components/page-12";
+import PageThirteen from "./components/page-13";
+import PageForteen from "./components/page-14";
 import PageFifteen from "./components/page-15";
 import PageSixteen from "./components/page-16";
 import PageSeventeen from "./components/page-17";
@@ -27,7 +30,7 @@ import PageTwentyFour from "./components/page-24";
 
 
 export default function Questions() {
-  const [page, setPage] = useState<number>(10);
+  const [page, setPage] = useState<number>(20);
 
   const [personalTransports, setPersonalTransports] = useState<string[]>([]);
   const [pubilcTransports, setPublicTransports] = useState<string[]>([]);
@@ -65,14 +68,6 @@ export default function Questions() {
                             page == 10 ?
                               <PageTen
                                 setPage={setPage} /> :
-                              page == 7 ?
-                        <PageSeven setPage={setPage} /> :
-                        page == 8 ?
-                          <PageEight setPage={setPage} /> :
-                          page == 9 ?
-                            <PageNine setPage={setPage} /> :
-                            page == 10 ?
-                              <PageTen setPage={setPage} /> :
                               page == 11 ?
                                 <PageEleven setPage={setPage} /> :
                                 page == 12 ?
@@ -80,7 +75,7 @@ export default function Questions() {
                                   page == 13 ?
                                     <PageThirteen setPage={setPage} /> :
                                     page == 14 ?
-                                              <PageForteen setPage={setPage} /> :
+                                      <PageForteen setPage={setPage} /> :
                                       page == 15 ?
                                         <PageFifteen setPage={setPage} /> :
                                         page == 16 ?
@@ -92,21 +87,7 @@ export default function Questions() {
                                               page == 19 ?
                                                 <PageNineteen setPage={setPage} /> :
                                                 page == 20 ?
-                                                  <PageTwenty setPage={setPage} /> :
-                                                  page == 21 ?
-                                                    <PageTwentyOne setPage={setPage} /> :
-                                                    page == 22 ?
-                                                      <PageTwentyTwo setPage={setPage} /> :
-                                                      page == 23 ?
-                                                        <PageTwentyThree setPage={setPage} /> :
-                                                        page == 24 ?
-                                                          <PageTwentyFour setPage={setPage} /> :
-                                                          page == 25 ?
-                                                            <PageTwentyFive setPage={setPage} /> :
-                                                            page == 26 ?
-                                                              <PageTwentySix setPage={setPage} /> :
-                                                              page == 27 ?
-                                                                <PageTwentySeven setPage={setPage} /> : null
+                                                  <PageTwenty setPage={setPage} /> : null
       }
     </div>
   )
