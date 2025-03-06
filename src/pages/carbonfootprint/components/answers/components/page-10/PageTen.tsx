@@ -1,16 +1,20 @@
-// import React from 'react'
-
-import AppAsset from "@/core/AppAsset";
-import { Slider } from "@mantine/core";
 import { useState } from "react";
+
+// Slider
+import { Slider } from "@mantine/core";
+
+// Default Background
 import DefaultBackground from "../DefaultBackground";
+
+// App Asset
+import AppAsset from "@/core/AppAsset";
 
 // Interface
 interface Props {
   setPage: React.Dispatch<React.SetStateAction<number>>;
 }
 
-export default function PageTen({ }: Props) {
+export default function PageTen({ setPage }: Props) {
   const [selectedType, setSelectedType] = useState<string>("gas-powered");
   const [selectedKMs, setSelectedKMs] = useState<number>(0);
   const [selectedDays, setSelectedDays] = useState<number>(0);
@@ -23,11 +27,11 @@ export default function PageTen({ }: Props) {
 
   return (
     <DefaultBackground>
-      <div className='w-full h-full'>
+      <div className='w-full h-full relative z-10'>
 
         {/* Title */}
         <div
-          className="w-full h-auto flex flex-col items-start justify-start pl-40  text-white">
+          className="w-full h-auto flex flex-col items-start justify-start pl-40  text-white pt-[250px]">
           <div
             className="flex flex-row items-center justify-start gap-5">
             <div

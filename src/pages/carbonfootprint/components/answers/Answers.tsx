@@ -14,7 +14,7 @@ import PageNine from './components/page-9';
 import PageTen from './components/page-10';
 
 export default function Answers() {
-  const [page, setPage] = useState<number>(0);
+  const [page, setPage] = useState<number>(10);
 
   const [personalTransports, setPersonalTransports] = useState<string[]>([]);
   const [pubilcTransports, setPublicTransports] = useState<string[]>([]);
