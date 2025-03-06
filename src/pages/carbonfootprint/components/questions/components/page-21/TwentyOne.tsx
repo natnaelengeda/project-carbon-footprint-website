@@ -19,7 +19,7 @@ interface Props {
   setPage: React.Dispatch<React.SetStateAction<number>>;
 }
 
-export default function PageThirteen({}: Props) {
+export default function TwentyOne({ }: Props) {
   const [name, setName] = useState<string>("");
 
   const socket: any = useSocket();

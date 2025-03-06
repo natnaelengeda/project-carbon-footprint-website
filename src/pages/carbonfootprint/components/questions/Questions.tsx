@@ -9,7 +9,7 @@ import PageFour from "./components/page-4";
 import PageFive from "./components/page-5";
 import PageSix from "./components/page-6";
 import PageThirteen from "./components/page-13";
-import PageTwelve from "./components/page-12";
+import PageTwelve from "./components/page-21";
 
 export default function Questions() {
   const [page, setPage] = useState<number>(12);
