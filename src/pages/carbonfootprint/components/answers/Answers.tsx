@@ -52,7 +52,8 @@ export default function Answers() {
                               setPage={setPage}
                               pubilcTransports={pubilcTransports} /> :
                             page == 10 ?
-                              <PageTen setPage={setPage} /> : null
+                              <PageTen
+                                setPage={setPage} /> : null
 
       }
 

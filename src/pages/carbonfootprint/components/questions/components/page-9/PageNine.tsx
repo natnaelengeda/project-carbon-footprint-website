@@ -34,19 +34,21 @@ export default function PageNine({ setPage, pubilcTransports }: Props) {
     }
   };
 
-  useEffect(() => {
-    if (pubilcTransports.length == 0) {
-      setPage(10);
-    }
+  // useEffect(() => {
+  //   if (pubilcTransports.length == 0) {
+  //     setPage(10);
+  //   }
+  // }, []);
 
-  }, []);
   return (
     <QuestionsLayout
       setPage={setPage}
       setSelectedComponent={setSelectedComponent}>
       <div
         className="relative z-10 w-full h-full mx-auto 2xl:container flex flex-col items-center justify-center gap-5 py-10 md:py-20">
-        {renderComponent(pubilcTransports[selectedComponent])}
+        {/* {renderComponent(pubilcTransports[selectedComponent])} */}
+        <LightRail />
+
       </div>
     </QuestionsLayout>
   )

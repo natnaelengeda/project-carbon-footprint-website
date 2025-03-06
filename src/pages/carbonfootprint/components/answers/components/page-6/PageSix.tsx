@@ -16,16 +16,16 @@ interface Props {
 }
 
 export default function PageSix({ setPage }: Props) {
-// Values
-const [selectedTypes, setSelectedTypes] = useState<string[]>([]);
-const [currentlySelected, setCurrentlySelected] = useState<number>(0);
+  // Values
+  const [selectedTypes, setSelectedTypes] = useState<string[]>([]);
+  const [currentlySelected, setCurrentlySelected] = useState<number>(0);
 
-const buttons = [
-  { id: 0, name: "Incandescent Bulb", type: "incandescent-bulb" },
-  { id: 1, name: "Fluorescent Bulb", type: "fluorescent-bulb" },
-  { id: 2, name: "Compact Fluorescent Bulb", type: "compact-fluorescent-bulb" },
-  { id: 3, name: "LED Lighting", type: "led-lighting" },
-]
+  const buttons = [
+    { id: 0, name: "Incandescent Bulb", type: "incandescent-bulb" },
+    { id: 1, name: "Fluorescent Bulb", type: "fluorescent-bulb" },
+    { id: 2, name: "Compact Fluorescent Bulb", type: "compact-fluorescent-bulb" },
+    { id: 3, name: "LED Lighting", type: "led-lighting" },
+  ]
   return (
     <DefaultBackground>
       <div className="relative z-10 w-full h-full mx-auto flex flex-col items-center justify-start gap-5 py-10 md:py-20">
@@ -70,8 +70,8 @@ const buttons = [
           className='absolute bottom-0 right-0'>
           <NavComponent
             setPage={setPage}
-            nextPage={6}
-            prevPage={4} />
+            nextPage={7}
+            prevPage={5} />
         </div>
 
       </div>
@@ -114,17 +114,17 @@ const SliderComponent = ({ id, selectedTypes, type, text, setSelectedTypes, curr
         parent_id: 2,
         category_id:
           type === "incandescent-bulb" ? 1 :
-          type === "fluorescent-bulb" ? 2 :
-          type === "compact-fluorescent-bulb" ? 3 :
-          type === "led-lighting" ? 4 : 0,
+            type === "fluorescent-bulb" ? 2 :
+              type === "compact-fluorescent-bulb" ? 3 :
+                type === "led-lighting" ? 4 : 0,
         id: type === "incandescent-bulb" ? 1 :
           type === "fluorescent-bulb" ? 2 :
-          type === "compact-fluorescent-bulb" ? 3 :
-          type === "led-lighting" ? 4 : 0,
+            type === "compact-fluorescent-bulb" ? 3 :
+              type === "led-lighting" ? 4 : 0,
         name: type === "incandescent-bulb" ? "lighting-incandescent" :
           type === "fluorescent-bulb" ? "lighting-fluorescent" :
-          type === "compact-fluorescent-bulb" ? "lighting-compact-fluorescent" :
-          type === "led-lighting" ? "lighting-led" : "",
+            type === "compact-fluorescent-bulb" ? "lighting-compact-fluorescent" :
+              type === "led-lighting" ? "lighting-led" : "",
         selected: true,
         value: value,
         frequency: frequency
@@ -155,17 +155,17 @@ const SliderComponent = ({ id, selectedTypes, type, text, setSelectedTypes, curr
         parent_id: 2,
         category_id:
           type === "incandescent-bulb" ? 1 :
-          type === "fluorescent-bulb" ? 2 :
-          type === "compact-fluorescent-bulb" ? 3 :
-          type === "led-lighting" ? 4 : 0,
+            type === "fluorescent-bulb" ? 2 :
+              type === "compact-fluorescent-bulb" ? 3 :
+                type === "led-lighting" ? 4 : 0,
         id: type === "incandescent-bulb" ? 1 :
           type === "fluorescent-bulb" ? 2 :
-          type === "compact-fluorescent-bulb" ? 3 :
-          type === "led-lighting" ? 4 : 0,
+            type === "compact-fluorescent-bulb" ? 3 :
+              type === "led-lighting" ? 4 : 0,
         name: type === "incandescent-bulb" ? "lighting-incandescent" :
           type === "fluorescent-bulb" ? "lighting-fluorescent" :
-          type === "compact-fluorescent-bulb" ? "lighting-compact-fluorescent" :
-          type === "led-lighting" ? "lighting-led" : "",
+            type === "compact-fluorescent-bulb" ? "lighting-compact-fluorescent" :
+              type === "led-lighting" ? "lighting-led" : "",
         selected: true,
         value: value,
         frequency: frequency

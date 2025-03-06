@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 // Socket
 import { useSocket } from '@/context/SocketProvider';
@@ -8,9 +8,15 @@ import AppAsset from '@/core/AppAsset'
 
 
 export default function Automobile() {
-  // const [selectedType, setSelectedType] = useState<string>("electric");
-  // const [selectedDays, setSelectedDays] = useState<number>(0);
-  // const [selectedHours, setSelectedHours] = useState<number>(0);
+  const [selectedType, setSelectedType] = useState<string>("gas-powered");
+  const [selectedKMs, setSelectedKMs] = useState<number>(0);
+  const [selectedDays, setSelectedDays] = useState<number>(0);
+
+  const buttons = [
+    { id: 0, name: "Gas Powered", type: "gas-powered", extra: "Gas Powered Personal Vehicle - Automobile" },
+    { id: 1, name: "Electric Powered", type: "electric-powered", extra: "Electric Powered Personal Vehicle - Automobile" },
+    { id: 2, name: "Hybrid", type: "hybrid", extra: "Hybrid Personal Vehicle - Automobile" },
+  ];
 
   const socket: any = useSocket();
 
@@ -51,73 +57,58 @@ export default function Automobile() {
       {/* Options */}
       <div
         className="w-full h-auto flex flex-col items-start justify-start pl-40 pt-20 gap-16">
-
-        {/* <RadioButtonsComponent
-          setSelectedType={setSelectedType}
-          selectedType={selectedType}
-          type={"gas-powered"}
-          text={"Gas Powered"}
-          extraNote={"Gas Powered Personal Vehicle - Automobile"}
-          selectedDays={selectedDays}
-          selectedHours={selectedHours}
-        />
-
-        <RadioButtonsComponent
-          setSelectedType={setSelectedType}
-          selectedType={selectedType}
-          type={"electric-powered"}
-          text={"Electric Powered"}
-          extraNote={"Electric Powered Personal Vehicle - Automobile"}
-          selectedDays={selectedDays}
-          selectedHours={selectedHours}
-        />
-
-        <RadioButtonsComponent
-          setSelectedType={setSelectedType}
-          selectedType={selectedType}
-          type={"hybrid-powered"}
-          text={"Hybrid"}
-          extraNote={"Hybrid Personal Vehicle - Automobile"}
-          selectedDays={selectedDays}
-          selectedHours={selectedHours}
-        /> */}
-
-
+        {
+          buttons &&
+          buttons.map((button: { name: string, type: string, extra: string }, index: number) => {
+            return (
+              <RadioButtonsComponent
+                key={index}
+                setSelectedType={setSelectedType}
+                selectedType={selectedType}
+                type={button.type}
+                text={button.name}
+                extraNote={button.extra}
+                selectedDays={selectedDays}
+                selectedKMs={selectedKMs}
+              />
+            );
+          })
+        }
       </div>
-
-
+      
     </div>
   )
 }
 
-// const RadioButtonsComponent = ({ setSelectedType, selectedType, type, text, selectedDays, selectedHours, extraNote }: any) => {
-//   return (
-//     <div
-//       className="w-full h-full flex flex-col items-start justify-start gap-5 text-white">
-//       <div
-//         className='flex flex-row items-center justify-start gap-3 md:gap-[20px] text-white'>
-//         <img
-//           onClick={() => setSelectedType(type)}
-//           src={selectedType == type ? AppAsset.RadioOnIcon : AppAsset.RadioOffIcon}
-//           className='w-7 md:w-[36px] md:h-[36px] object-contain cursor-pointer' />
-//         <p
-//           className='text-xl md:text-[45px] font-normal'>
-//           {text}
-//         </p>
-//       </div>
+const RadioButtonsComponent = ({ setSelectedType, selectedType, type, text, selectedDays, selectedKMs, extraNote }: any) => {
 
-//       {/* Usage */}
-//       <div
-//         style={{
-//           display: type == "none" ?
-//             "none" :
-//             type == selectedType ?
-//               "flex" : "none"
-//         }}
-//         className="pr-10">
-//         <p
-//           className="text-[30px]">You use <span className="text-primary">{extraNote}{selectedDays} Kilometers</span> per week and <span className="text-primary">{selectedHours} days per week</span></p>
-//       </div>
-//     </div>
-//   );
-// }
+  return (
+    <div
+      className="w-full h-full flex flex-col items-start justify-start gap-5 text-white">
+      <div
+        className='flex flex-row items-center justify-start gap-3 md:gap-[20px] text-white'>
+        <img
+          onClick={() => setSelectedType(type)}
+          src={selectedType == type ? AppAsset.RadioOnIcon : AppAsset.RadioOffIcon}
+          className='w-7 md:w-[36px] md:h-[36px] object-contain cursor-pointer' />
+        <p
+          className='text-xl md:text-[45px] font-normal'>
+          {text}
+        </p>
+      </div>
+
+      {/* Usage */}
+      <div
+        style={{
+          display: type == "none" ?
+            "none" :
+            type == selectedType ?
+              "flex" : "none"
+        }}
+        className="pr-10">
+        <p
+          className="text-[30px]">You use <span className="text-primary">{extraNote}{selectedDays} Kilometers</span> per week and <span className="text-primary">{selectedKMs} days per week</span></p>
+      </div>
+    </div>
+  );
+}

@@ -36,9 +36,9 @@ export default function PageEight({ setPage, personalTransports }: Props) {
   };
 
   useEffect(() => {
-    if (personalTransports.length == 0) {
-      setPage(9);
-    }
+    // if (personalTransports.length == 0) {
+    //   setPage(9);
+    // }
   }, []);
 
   return (

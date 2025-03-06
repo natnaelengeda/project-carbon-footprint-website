@@ -1,34 +1,9 @@
-import React, { useState } from 'react'
+// import React from 'react'
 
-// Translation
-import { useTranslation } from 'react-i18next';
-
-// State
-import {
-  useDispatch,
-  // useSelector,
-} from 'react-redux';
-
-import {
-  addName,
-  // CarbonState,
-} from '@/state/carbon';
-
-// Mantine
-// import { TextInput } from '@mantine/core';
-
-// Utils
-import { generateRandomId } from '@/utils/idGenerator';
-// import { generateRandomName } from '@/utils/randomNameGenerator';
-
-// AppAsset
 import AppAsset from "@/core/AppAsset";
-
-// Background
-import DefaultBackground from '../DefaultBackground';
-
-// Socket
-import { useSocket } from '@/context/SocketProvider';
+import { Slider } from "@mantine/core";
+import { useState } from "react";
+import DefaultBackground from "../DefaultBackground";
 
 // Interface
 interface Props {
@@ -36,76 +11,158 @@ interface Props {
 }
 
 export default function PageTen({ }: Props) {
-  // New Values
-  const [name, setName] = useState<string>("");
-  const id = generateRandomId();
+  const [selectedType, setSelectedType] = useState<string>("gas-powered");
+  const [selectedKMs, setSelectedKMs] = useState<number>(0);
+  const [selectedDays, setSelectedDays] = useState<number>(0);
 
-  // React Language Packaged;
-  const { t } = useTranslation();
+  const [currentlySelected, setCurrentlySelected] = useState<number>(0);
 
-  // Width
-  // const width = window.innerWidth;
-
-  const savedlanguages = JSON.parse(localStorage.getItem("language") || "");
-
-  // State
-  const dispatch = useDispatch();
-  // const carbonData = useSelector((state: { carbon: CarbonState }) => state.carbon);
-
-  // Socket
-  const socket = useSocket();
-
-  const onNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-
-    socket?.emit("name-change-server-1", JSON.stringify({
-      name: e.target.value,
-      id: id,
-    }));
-
-    setName(e.target.value);
-    dispatch(addName({
-      id: id,
-      name: e.target.value,
-    }));
-  }
-
-  // const func = () => {
-  //   const newName = generateRandomName();
-
-  //   if (name.length > 0) return true;
-  //   else
-  //     dispatch(addName({
-  //       id: id,
-  //       name: newName,
-  //     }));
-
-  //   return true;
-  // }
-
+  const buttons = [
+    { id: 0, name: "Walking", type: "walking", extra: "Gas Powered Personal Vehicle - Automobile" },
+  ];
 
   return (
     <DefaultBackground>
-      <div className="relative z-10 w-full h-full mx-auto 2xl:container flex flex-col items-center justify-center gap-5 py-10 md:py-20">
+      <div className='w-full h-full'>
 
-        {/* TextInput */}
+        {/* Title */}
         <div
-          className="w-full flex flex-col items-center justify-start gap-5 pt-2 md:pt-10 px-5">
-          <div className="relative w-full md:w-[35rem]">
-            <img
-              src={AppAsset.UserBlackIcon}
-              className="absolute left-3 top-1/2 -translate-y-1/2 w-8 h-8"
-            />
-            <input
-              type="text"
-              placeholder={t("carbon.name_eg", { lng: savedlanguages.carbon })}
-              value={name}
-              onChange={onNameChange}
-              className="w-full h-20 rounded-lg border-2 border-white bg-transparent text-xl text-white placeholder-white pl-14 pr-2" />
+          className="w-full h-auto flex flex-col items-start justify-start pl-40  text-white">
+          <div
+            className="flex flex-row items-center justify-start gap-5">
+            <div
+              className="w-10 h-3 bg-purple-500">
+            </div>
+            <p className="text-white text-[60px]">Transportation Mode</p>
           </div>
-
-
+          <p className="text-[40px]">Walking</p>
         </div>
+
+
+        {/* Options */}
+        <div
+          className="w-full h-auto flex flex-col items-start justify-start pl-40 pt-20 gap-16">
+          {
+            buttons &&
+            buttons.map((button: { id: number, name: string, type: string, extra: string }, index: number) => {
+              return (
+                <RadioButtonsComponent
+                  key={index}
+                  id={index}
+                  index={index}
+                  setSelectedType={setSelectedType}
+                  selectedType={selectedType}
+                  type={button.type}
+                  text={button.name}
+                  extraNote={button.extra}
+                  selectedDays={selectedDays}
+                  selectedKMs={selectedKMs}
+                  currentlySelected={currentlySelected}
+                  setCurrentlySelected={setCurrentlySelected}
+                />
+              );
+            })
+          }
+        </div>
+
       </div>
     </DefaultBackground>
   )
+}
+
+
+const RadioButtonsComponent = ({ id, setSelectedType, selectedType, type, text, selectedDays, selectedKMs, extraNote, currentlySelected, setCurrentlySelected }: any) => {
+  const [kms, setKms] = useState<number>(0);
+  const [days, setDays] = useState<number>(0);
+
+  const updateSlider1 = (e: any) => {
+    setKms(e);
+  }
+
+  const updateSlider2 = (e: any) => {
+    setDays(e);
+  }
+
+  return (
+    <div
+      className="w-full h-full flex flex-col items-start justify-start gap-5 text-white">
+
+      <div
+        className='flex flex-row items-center justify-start gap-3 md:gap-[20px] text-white'>
+        <img
+          onClick={() => {
+            setSelectedType(type);
+            setCurrentlySelected(id);
+          }}
+          src={selectedType == type ? AppAsset.RadioOnIcon : AppAsset.RadioOffIcon}
+          className='w-7 md:w-[36px] md:h-[36px] object-contain cursor-pointer' />
+        <p
+          className='text-xl md:text-[45px] font-normal'>
+          {text}
+        </p>
+      </div>
+
+      {/* Days per week*/}
+      <div
+        style={{
+          display: currentlySelected == id ? "block" : "none"
+        }}
+        className='w-full h-auto pl-2 pr-5 md:pr-32 flex flex-col items-start justify-start gap-2 pt-10'>
+        {/* Text */}
+        <p className="text-[#efefef] text-lg md:text-[30px] pb-2 md:pb-4">
+          How many kilometers per day?
+        </p>
+
+        <Slider
+          value={kms}
+          onChange={updateSlider1}
+          className='w-full'
+          color="#35D36A"
+          size="xl"
+          min={0}
+          max={7}
+          marks={[
+            { value: 1, label: '1' },
+            { value: 2, label: '2' },
+            { value: 3, label: '3' },
+            { value: 4, label: '4' },
+            { value: 5, label: '5' },
+            { value: 6, label: '6' },
+            { value: 7, label: '7' },
+          ]}
+        />
+      </div>
+
+      {/* Hours Per Day*/}
+      <div
+        style={{
+          display: currentlySelected == id ? "block" : "none"
+        }}
+        className='w-full h-auto pl-2 pr-5 md:pr-32 flex flex-col items-start justify-start gap-2 pt-5'>
+        {/* Text */}
+        <p className="text-[#efefef] text-lg md:text-[30px] pb-2 md:pb-4">
+          How many days per week?
+        </p>
+
+        <Slider
+          value={days}
+          onChange={updateSlider2}
+          color="#35D36A"
+          size="xl"
+          className='w-full'
+          min={0}
+          max={24}
+          marks={[
+            { value: 1, label: '1' },
+            { value: 4, label: '4' },
+            { value: 8, label: '8' },
+            { value: 12, label: '12' },
+            { value: 16, label: '16' },
+            { value: 20, label: '20' },
+            { value: 24, label: '24' },
+          ]}
+        />
+      </div>
+    </div>
+  );
 }
