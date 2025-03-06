@@ -34,10 +34,8 @@ export default function PageEighteen({ setPage }: Props) {
   const [selectedHours, setSelectedHours] = useState<number[]>([0, 0, 0, 0]);
 
   const buttons = [
-    { id: 0, name: "Iron", type: "iron" },
-    { id: 1, name: "Fridge", type: "fridge" },
-    { id: 2, name: "TV", type: "tv" },
-    { id: 3, name: "Water Boiler", type: "water-boiler" },
+    { id: 0, name: "Washing Machine", type: "washing-machine" },
+    { id: 1, name: "Handwash", type: "hand-wash" },
   ];
 
   return (
@@ -51,7 +49,7 @@ export default function PageEighteen({ setPage }: Props) {
           className="w-full h-auto flex flex-col items-center justify-start gap-5 px-10">
           {/* Image */}
           <img
-            src={AppAsset.BannerEighteen}
+            src={AppAsset.BannerTwentyTwo}
             className="w-[550px] h-[550px] object-cover" />
         </div>
 
@@ -63,15 +61,32 @@ export default function PageEighteen({ setPage }: Props) {
             <div
               className="w-10 h-3 bg-pink-500">
             </div>
-            <p className="text-white text-[60px]">Diet and Food Consumption</p>
+            <p className="text-white text-[60px]">Water Usage</p>
           </div>
-          <p className="text-[50px]">Meat</p>
+          <p className="text-[50px]">Washing Clothes</p>
         </div>
 
         {/* Options */}
         <div
           className="w-full h-auto flex flex-col items-start justify-start pl-40 pt-20 gap-10">
-          <p className="text-[30px] text-white">You use <span className="text-primary">Meat for {selectedDays[0]} days</span> per week.</p>
+          {
+            buttons &&
+            buttons.map((button: { id: number, type: string, name: string }, index: number) => {
+              return (
+                <CheckboxComponent
+                  key={index}
+                  id={index}
+                  selectedTypes={selectedTypes}
+                  type={button.type}
+                  text={button.name}
+                  selectedDays={selectedDays}
+                  selectedHours={selectedHours}
+                  setSelectedTypes={setSelectedTypes}
+                  setSelectedDays={setSelectedDays}
+                  setSelectedHours={setSelectedHours} />
+              );
+            })
+          }
         </div>
       </div>
     </QuestionsLayout>
@@ -235,7 +250,7 @@ const CheckboxComponent = (
           display: check ? "flex" : "none"
         }}
         className="pr-10">
-        <p className="text-[30px]">You use <span className="text-primary">Poultry '(Chicken)' for {selectedDays[id]} days</span> per week.</p>
+        <p className="text-[30px]">You use <span className="text-primary">Water for {selectedDays[id]} days</span> per week.</p>
       </div>
     </div>
   );

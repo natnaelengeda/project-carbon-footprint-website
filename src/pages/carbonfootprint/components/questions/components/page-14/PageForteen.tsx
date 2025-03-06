@@ -1,114 +1,242 @@
+import { useEffect, useState } from "react";
+
+// Socket
+import { useSocket } from "@/context/SocketProvider";
+
+// React Redux
+import { useDispatch } from "react-redux";
+
+// State
+import { addHouseholdEnegryCategory, addHouseholdEnergy } from '@/state/carbon';
+
+// Components
+import QuestionsLayout from "../QuestionsLayout";
+
 // AppAsset
 import AppAsset from "@/core/AppAsset";
-import QuestionsLayout from "../QuestionsLayout";
 
 // Interface
 interface Props {
   setPage: React.Dispatch<React.SetStateAction<number>>;
 }
 
+interface InData {
+  room: string;
+  slider1: number;
+  slider2: number;
+  type: string;
+}
+
 export default function PageForteen({ setPage }: Props) {
+
+  const [selectedTypes, setSelectedTypes] = useState<string[]>([]);
+  const [selectedDays, setSelectedDays] = useState<number[]>([0, 0, 0, 0]);
+  const [selectedHours, setSelectedHours] = useState<number[]>([0, 0, 0, 0]);
+
+  const buttons = [
+    { id: 0, name: "Iron", type: "iron" },
+    { id: 1, name: "Fridge", type: "fridge" },
+    { id: 2, name: "TV", type: "tv" },
+    { id: 3, name: "Water Boiler", type: "water-boiler" },
+  ];
 
   return (
     <QuestionsLayout
       setPage={setPage}>
-      <div className="relative z-10 w-full h-full mx-auto 2xl:container flex flex-col items-center justify-start gap-5 py-10 md:pt-[300px]">
+      <div
+        className="relative z-10 w-full h-full mx-auto 2xl:container flex flex-col items-center justify-start gap-5 py-10 md:pt-[200px]">
 
-        {/* Center */}
-        <div className='w-full flex flex-col items-center justify-center gap-14 pt-[18px]' style={{
-          lineHeight
-            : '30px'
-        }}>
-
-          {/* Inserted List */}
-          <div className="text-white text-left w-full max-w-[1200px] mx-auto px-[106px]" style={{ lineHeight: '50px' }}>
-            <h2 className="text-6xl font-bold mb-8 text-center" style={{ lineHeight: '70px' }}>
-              Ethiopia's Carbon Footprint:
-              <p>A Unique Perspective</p>
-            </h2>
-
-            <div className="px-4">
-              <p className="text-4xl mb-6 font-semibold">
-                Ethiopia has one of the lowest carbon footprints in the world. This is largely due to:
-              </p>
-              <ul className="space-y-6 pl-12 pr-4">
-                <li className="flex items-center gap-6">
-                  <div className="w-8 h-8">
-                    <img src={AppAsset.agricultureIcon} alt="agricultureIcon" className="w-8 h-8" />
-                  </div>
-                  <span className="text-3xl">Agricultural economy</span>
-                </li>
-                <li className="flex items-center gap-6">
-                  <div className="w-8 h-8">
-                    <img src={AppAsset.industryIcon} alt="industryIcon" className="w-8 h-8" />
-                  </div>
-                  <span className="text-3xl">Low industrialization</span>
-                </li>
-                <li className="flex items-center gap-6">
-                  <div className="w-8 h-8">
-                    <img src={AppAsset.renewableEnergyIcon} alt="renewableEnergyIcon" className="w-8 h-8" />
-                  </div>
-                  <span className="text-3xl">Use of renewable energy</span>
-                </li>
-              </ul>
-
-              <p className="text-4xl mt-10 mb-6 font-semibold">
-                Despite the low emissions, Ethiopia faces challenges such as:
-              </p>
-              <ul className="space-y-6 pl-12 pr-4">
-                <li className="flex items-center gap-6">
-                  <div className="w-8 h-8">
-                    <img src={AppAsset.deforestationIcon} alt="deforestationIcon" className="w-8 h-8" />
-                  </div>
-                  <span className="text-3xl">Deforestation</span>
-                </li>
-                <li className="flex items-center gap-6">
-                  <div className="w-8 h-8">
-                    <img src={AppAsset.populationGrowthIcon} alt="populationGrowthIcon" className="w-8 h-8" />
-                  </div>
-                  <span className="text-3xl">Population growth</span>
-                </li>
-                <li className="flex items-center gap-6">
-                  <div className="w-8 h-8">
-                    <img src={AppAsset.urbanizationIcon} alt="urbanizationIcon" className="w-8 h-8" />
-                  </div>
-                  <span className="text-3xl">Urbanization</span>
-                </li>
-              </ul>
-
-              <p className="text-4xl mt-10 mb-6 font-semibold">
-                To sustain its low carbon footprint, Ethiopia is implementing strategies such as:
-              </p>
-              <ul className="space-y-6 pl-12 pr-4">
-                <li className="flex items-center gap-6">
-                  <div className="w-8 h-8">
-                    <img src={AppAsset.agricultureIcon} alt="Reforestation" className="w-8 h-8" />
-                  </div>
-                  <span className="text-3xl">Reforestation programs</span>
-                </li>
-                <li className="flex items-center gap-6">
-                  <div className="w-8 h-8">
-                    <img src={AppAsset.sustainableEnergyIcon} alt="sustainableEnergyIcon" className="w-8 h-8" />
-                  </div>
-                  <span className="text-3xl">Sustainable energy projects (hydropower, solar, and wind)</span>
-                </li>
-                <li className="flex items-center gap-6">
-                  <div className="w-8 h-8">
-                    <img src={AppAsset.ecoFriendlyIcon} alt="ecoFriendlyIcon" className="w-8 h-8" />
-                  </div>
-                  <span className="text-3xl">Eco-friendly policies</span>
-                </li>
-              </ul>
-
-              <p className="text-4xl mt-10 leading-relaxed px-4 font-semibold">
-                Together, these efforts position Ethiopia as a leader in sustainable development while balancing economic growth with environmental stewardship.
-              </p>
-            </div>
-          </div>
-
+        {/* Image Content */}
+        <div
+          className="w-full h-auto flex flex-col items-center justify-start gap-5 px-10">
+          {/* Image */}
+          <img
+            src={AppAsset.BannerEighteen}
+            className="w-[550px] h-[550px] object-cover" />
         </div>
 
+        {/* Title */}
+        <div
+          className="w-full h-auto flex flex-col items-start justify-start pl-40 pt-28 text-white">
+          <div
+            className="flex flex-row items-center justify-start gap-5">
+            <div
+              className="w-10 h-3 bg-pink-500">
+            </div>
+            <p className="text-white text-[60px]">Diet and Food Consumption</p>
+          </div>
+          <p className="text-[50px]">Meat</p>
+        </div>
+
+        {/* Options */}
+        <div
+          className="w-full h-auto flex flex-col items-start justify-start pl-40 pt-20 gap-10">
+          <p className="text-[30px] text-white">You use <span className="text-primary">Meat for {selectedDays[0]} days</span> per week.</p>
+        </div>
       </div>
     </QuestionsLayout>
+  )
+}
+
+interface ICheckboxComponent {
+  id: number,
+  selectedTypes: string[],
+  type: string,
+  text: string,
+  selectedDays: number[],
+  selectedHours: number[],
+  setSelectedTypes: any,
+  setSelectedDays: any,
+  setSelectedHours: any,
+}
+
+const CheckboxComponent = (
+  {
+    id,
+    selectedTypes,
+    type,
+    text,
+    selectedDays,
+    selectedHours,
+    setSelectedTypes,
+    setSelectedDays,
+    setSelectedHours
+  }: ICheckboxComponent) => {
+
+  const socket: any = useSocket();
+
+  // State
+  const dispatch = useDispatch();
+
+
+  const checkSelectedTypes = () => {
+    return selectedTypes.includes(type);
+  }
+
+  const addRemoveTyeps = () => {
+    const check = selectedTypes.includes(type);
+    console.log(check);
+
+    if (check) {
+      const newSelectedTypes = selectedTypes.filter((item: any) => item !== type); // Remove the item immutably
+      setSelectedTypes(newSelectedTypes);
+    } else {
+      setSelectedTypes([...selectedTypes, type]); // Add the item immutably
+    }
+  }
+
+  const updateSelectedDays = ({ index, value }: { index: number, value: number }) => {
+    setSelectedDays((prevSelectedDays: any) => {
+      const newSelectedDays = [...prevSelectedDays];
+      newSelectedDays[index] = value;
+      return newSelectedDays;
+    });
+  };
+
+  const updateSelectedHours = ({ index, value }: { index: number, value: number }) => {
+    setSelectedHours((prevSelectedHours: any) => {
+      const newSelectedHours = [...prevSelectedHours];
+      newSelectedHours[index] = value;
+      return newSelectedHours;
+    });
+  };
+
+  const check: boolean = checkSelectedTypes();
+
+  useEffect(() => {
+    socket?.on("page-update-slider-client", (temp: any) => {
+      const data: InData = JSON.parse(temp);
+
+      setSelectedTypes((prevSelectedTypes: any) => {
+        const checkSelected = prevSelectedTypes.includes(data.type);
+
+        if (!checkSelected) {
+          return [...prevSelectedTypes, data.type]; // Add the item immutably
+        }
+
+        return prevSelectedTypes;
+      });
+
+      dispatch(
+        addHouseholdEnergy({
+          id: 2,
+          name: "cooking",
+          selected: true,
+          value: 1
+        })
+      );
+
+      dispatch(
+        addHouseholdEnegryCategory({
+          parent_id: 2,
+          category_id:
+            data.type == "electric-stove" ? 1 :
+              data.type == "gas-stove" ? 2 :
+                data.type == "charcoal-stove" ? 3 :
+                  4,
+          id: data.type == "electric-stove" ? 1 :
+            data.type == "gas-stove" ? 2 :
+              data.type == "charcoal-stove" ? 3 :
+                4,
+          name: data.type == "electric-stove" ? "cooking-electric-stove" :
+            data.type == "gas-stove" ? "cooking-gas-stove" :
+              data.type == "charcoal-stove" ? "cooking-charcoal" :
+                "cooking-wood-stove",
+          selected: true,
+          value: data.slider1,
+          frequency: data.slider2,
+        })
+      );
+
+
+
+      updateSelectedDays({
+        index: data.type == "electric-stove" ? 0 :
+          data.type == "gas-stove" ? 1 :
+            data.type == "charcoal-stove" ? 2 :
+              data.type == "wood-stove" ? 3 : 0,
+        value: data.slider1
+      });
+
+      updateSelectedHours({
+        index: data.type == "electric-stove" ? 0 :
+          data.type == "gas-stove" ? 1 :
+            data.type == "charcoal-stove" ? 2 :
+              data.type == "wood-stove" ? 3 : 0,
+        value: data.slider2
+      });
+    });
+
+  }, [socket]);
+
+  console.log(selectedTypes)
+
+
+  return (
+    <div
+      className="w-full h-full flex flex-col items-start justify-start gap-5 text-white">
+      <div
+        className='flex flex-row items-center justify-start gap-3 md:gap-[20px] text-white'>
+        <img
+          onClick={() => {
+            addRemoveTyeps();
+          }}
+          src={check ? AppAsset.CheckedIcon : AppAsset.UncheckedIcon}
+          className='w-7 md:w-[40px] md:h-[40px] object-contain cursor-pointer' />
+        <p
+          className='text-xl md:text-[45px] font-normal'>
+          {text}
+        </p>
+      </div>
+
+      {/* Usage */}
+      <div
+        style={{
+          display: check ? "flex" : "none"
+        }}
+        className="pr-10">
+        <p className="text-[30px]">You use <span className="text-primary">Poultry '(Chicken)' for {selectedDays[id]} days</span> per week.</p>
+      </div>
+    </div>
   );
 }

@@ -51,7 +51,7 @@ export default function PageNineteen({ setPage }: Props) {
           className="w-full h-auto flex flex-col items-center justify-start gap-5 px-10">
           {/* Image */}
           <img
-            src={AppAsset.BannerNineteen}
+            src={AppAsset.BannerTwentyThree}
             className="w-[550px] h-[550px] object-cover" />
         </div>
 
@@ -63,15 +63,20 @@ export default function PageNineteen({ setPage }: Props) {
             <div
               className="w-10 h-3 bg-pink-500">
             </div>
-            <p className="text-white text-[60px]">Diet and Food Consumption</p>
+            <p className="text-white text-[60px]">Water Usage</p>
           </div>
-          <p className="text-[50px]">Fish</p>
+          <p className="text-[50px]">Showers</p>
         </div>
 
         {/* Options */}
         <div
           className="w-full h-auto flex flex-col items-start justify-start pl-40 pt-20 gap-10">
-          <p className="text-[30px] text-white">You use <span className="text-primary">Fish for {selectedDays[0]} days</span> per week.</p>
+          <p className="text-[30px]">
+            <span className="text-white">You use </span>
+            <span className="text-primary">Water for {selectedDays[0]} days</span>
+            <span className="text-white"> per week and </span>
+            <span className="text-primary">{selectedHours[0]} hours per day</span>
+          </p>
         </div>
       </div>
     </QuestionsLayout>
@@ -235,7 +240,7 @@ const CheckboxComponent = (
           display: check ? "flex" : "none"
         }}
         className="pr-10">
-        <p className="text-[30px]">You use <span className="text-primary">Poultry '(Chicken)' for {selectedDays[id]} days</span> per week.</p>
+        <p className="text-[30px]">You dispose <span className="text-primary">Waste for {selectedDays[id]} days</span> per week.</p>
       </div>
     </div>
   );

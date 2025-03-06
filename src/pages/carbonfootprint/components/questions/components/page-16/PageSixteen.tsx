@@ -51,8 +51,8 @@ export default function PageSixteen({ setPage }: Props) {
           className="w-full h-auto flex flex-col items-center justify-start gap-5 px-10">
           {/* Image */}
           <img
-            src={AppAsset.BannerSixteen}
-            className="w-[550px] h-[550px] object-cover" />
+            src={AppAsset.BannerTwenty}
+            className="w-[850px] h-[550px] object-cover" />
         </div>
 
         {/* Title */}
@@ -61,17 +61,17 @@ export default function PageSixteen({ setPage }: Props) {
           <div
             className="flex flex-row items-center justify-start gap-5">
             <div
-              className="w-10 h-3 bg-purple-500">
+              className="w-10 h-3 bg-pink-500">
             </div>
-            <p className="text-white text-[60px]">Diet and Food Consumption</p>
+            <p className="text-white text-[60px]">Waste Disposal</p>
           </div>
-          <p className="text-[50px]">Poultry (Chicken)</p>
+          <p className="text-[50px]">Waste</p>
         </div>
 
         {/* Options */}
         <div
           className="w-full h-auto flex flex-col items-start justify-start pl-40 pt-20 gap-10">
-          <p className="text-[30px] text-white">You use <span className="text-primary">Poultry (Chicken) for {selectedDays[0]} days</span> per week.</p>
+          <p className="text-[30px] text-white">You dispose <span className="text-primary">Waste for {selectedDays[0]} days</span> per week.</p>
         </div>
       </div>
     </QuestionsLayout>
@@ -235,7 +235,7 @@ const CheckboxComponent = (
           display: check ? "flex" : "none"
         }}
         className="pr-10">
-        <p className="text-[30px]">You use <span className="text-primary">Poultry '(Chicken)' for {selectedDays[id]} days</span> per week.</p>
+        <p className="text-[30px]">You dispose <span className="text-primary">Waste for {selectedDays[id]} days</span> per week.</p>
       </div>
     </div>
   );

@@ -31,7 +31,7 @@ import PageTwentySix from "./components/page-26";
 import PageTwentySeven from "./components/page-27";
 
 export default function Questions() {
-  const [page, setPage] = useState<number>(24);
+  const [page, setPage] = useState<number>(20);
 
   return (
     <div className="w-full h-screen">
@@ -48,50 +48,50 @@ export default function Questions() {
                   <PageFour setPage={setPage} /> :
                   page == 5 ?
                     <PageFive setPage={setPage} /> :
-                      page == 6 ?
-                        <PageSix setPage={setPage} /> :
+                    page == 6 ?
+                      <PageSix setPage={setPage} /> :
                       page == 7 ?
                         <PageSeven setPage={setPage} /> :
-                      page == 8 ?
-                        <PageEight setPage={setPage} /> :
-                      page == 9 ?
-                        <PageNine setPage={setPage} /> :
-                      page == 10 ?
-                        <PageTen setPage={setPage} /> :
-                      page == 11 ?
-                        <PageEleven setPage={setPage} /> :
-                      page == 12 ?
-                        <PageTwelve setPage={setPage} /> :
-                      page == 13 ?
-                        <PageThirteen setPage={setPage} /> :
-                      page == 14 ?
-                        <PageForteen setPage={setPage} /> :
-                      page == 15 ?
-                        <PageFifteen setPage={setPage} /> :
-                      page == 16 ?
-                        <PageSixteen setPage={setPage} /> :
-                      page == 17 ?
-                        <PageSeventeen setPage={setPage} /> :
-                      page == 18 ?
-                        <PageEighteen setPage={setPage} /> :
-                      page == 19 ?
-                        <PageNineteen setPage={setPage} /> :
-                      page == 20 ?
-                        <PageTwenty setPage={setPage} /> :
-                      page == 21 ?
-                        <PageTwentyOne setPage={setPage} /> :
-                      page == 22 ?
-                        <PageTwentyTwo setPage={setPage} /> :
-                      page == 23 ?
-                        <PageTwentyThree setPage={setPage} /> :
-                      page == 24 ?
-                        <PageTwentyFour setPage={setPage} /> :
-                      page == 25 ?
-                        <PageTwentyFive setPage={setPage} /> :
-                      page == 26 ?
-                        <PageTwentySix setPage={setPage} /> :
-                      page == 27 ?
-                        <PageTwentySeven setPage={setPage} /> : null
+                        page == 8 ?
+                          <PageEight setPage={setPage} /> :
+                          page == 9 ?
+                            <PageNine setPage={setPage} /> :
+                            page == 10 ?
+                              <PageTen setPage={setPage} /> :
+                              page == 11 ?
+                                <PageEleven setPage={setPage} /> :
+                                page == 12 ?
+                                  <PageTwelve setPage={setPage} /> :
+                                  page == 13 ?
+                                    <PageThirteen setPage={setPage} /> :
+                                    page == 14 ?
+                                      <PageForteen setPage={setPage} /> :
+                                      page == 15 ?
+                                        <PageFifteen setPage={setPage} /> :
+                                        page == 16 ?
+                                          <PageSixteen setPage={setPage} /> :
+                                          page == 17 ?
+                                            <PageSeventeen setPage={setPage} /> :
+                                            page == 18 ?
+                                              <PageEighteen setPage={setPage} /> :
+                                              page == 19 ?
+                                                <PageNineteen setPage={setPage} /> :
+                                                page == 20 ?
+                                                  <PageTwenty setPage={setPage} /> :
+                                                  page == 21 ?
+                                                    <PageTwentyOne setPage={setPage} /> :
+                                                    page == 22 ?
+                                                      <PageTwentyTwo setPage={setPage} /> :
+                                                      page == 23 ?
+                                                        <PageTwentyThree setPage={setPage} /> :
+                                                        page == 24 ?
+                                                          <PageTwentyFour setPage={setPage} /> :
+                                                          page == 25 ?
+                                                            <PageTwentyFive setPage={setPage} /> :
+                                                            page == 26 ?
+                                                              <PageTwentySix setPage={setPage} /> :
+                                                              page == 27 ?
+                                                                <PageTwentySeven setPage={setPage} /> : null
       }
     </div>
   )
