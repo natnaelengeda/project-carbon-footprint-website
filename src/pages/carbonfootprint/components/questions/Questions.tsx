@@ -14,7 +14,7 @@ import PageNine from "./components/page-9";
 import PageForteen from "./components/page-14";
 
 export default function Questions() {
-  const [page, setPage] = useState<number>(7);
+  const [page, setPage] = useState<number>(0);
 
   const [personalTransports, setPersonalTransports] = useState<string[]>([]);
   const [pubilcTransports, setPublicTransports] = useState<string[]>([]);
@@ -47,8 +47,8 @@ export default function Questions() {
                             personalTransports={personalTransports} /> :
                           page == 9 ?
                             <PageNine
-                             setPage={setPage} 
-                             pubilcTransports={pubilcTransports}/> :
+                              setPage={setPage}
+                              pubilcTransports={pubilcTransports} /> :
                             page == 14 ?
                               <PageForteen setPage={setPage} /> : null
       }
