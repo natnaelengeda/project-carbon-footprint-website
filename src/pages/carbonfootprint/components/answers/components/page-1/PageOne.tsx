@@ -14,9 +14,6 @@ import {
   CarbonState,
 } from '@/state/carbon';
 
-// Mantine
-// import { TextInput } from '@mantine/core';
-
 // Utils
 import { generateRandomId } from '@/utils/idGenerator';
 import { generateRandomName } from '@/utils/randomNameGenerator';
@@ -37,12 +34,11 @@ interface Props {
 }
 
 export default function PageOne({ setPage }: Props) {
-  
+
   // New Values
   const [name, setName] = useState<string>("");
-  
+
   const id = generateRandomId();
-  const newName = generateRandomName();
 
   const room = localStorage.getItem("room");
 
@@ -76,18 +72,18 @@ export default function PageOne({ setPage }: Props) {
     }));
   }
 
-  // const func = () => {
-  //   const newName = generateRandomName();
+  const func = () => {
+    const newName = generateRandomName();
 
-  //   if (name.length > 0) return true;
-  //   else
-  //     dispatch(addName({
-  //       id: id,
-  //       name: newName,
-  //     }));
+    if (name.length > 0) return true;
+    else
+      dispatch(addName({
+        id: id,
+        name: newName,
+      }));
 
-  //   return true;
-  // }
+    return false;
+  }
 
   useEffect(() => {
     if (carbonData.name) {
@@ -123,7 +119,9 @@ export default function PageOne({ setPage }: Props) {
           <NavComponent
             setPage={setPage}
             nextPage={2}
-            prevPage={0} />
+            prevPage={0}
+            currPage={1}
+            func={func} />
         </div>
       </div>
     </DefaultBackground>

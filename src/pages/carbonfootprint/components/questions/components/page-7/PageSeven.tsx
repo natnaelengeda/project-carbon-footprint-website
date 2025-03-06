@@ -1,118 +1,249 @@
 // AppAsset
 import AppAsset from "@/core/AppAsset";
+import QuestionsLayout from "../QuestionsLayout";
 import { useEffect, useState } from "react";
-
-// Socket
 import { useSocket } from "@/context/SocketProvider";
 
-// React Redux
-import { useDispatch } from "react-redux";
-
-// State
-import {
-  addName,
-  // CarbonState,
-} from '@/state/carbon';
 
 // Interface
 interface Props {
   setPage: React.Dispatch<React.SetStateAction<number>>;
+  setPublicTransports: React.Dispatch<React.SetStateAction<string[]>>;
+  setPersonalTransports: React.Dispatch<React.SetStateAction<string[]>>;
 }
 
-export default function PageSeven({ }: Props) {
-  const [name, setName] = useState<string>("");
+export default function PageSeven({ setPage, setPublicTransports, setPersonalTransports }: Props) {
+  const [selectedPersonal, setSelectedPersonal] = useState<string[]>([]);
+  const [selectedPublic, setSelectedPublic] = useState<string[]>([]);
 
+  const personalVehicles = [
+    { id: 0, name: "Automobile", label: "automobile" },
+    { id: 1, name: "Motor Cycle", label: "motor-cycle" },
+    { id: 2, name: "Bicycle", label: "bicycle" },
+  ];
 
-  const socket: any = useSocket();
-
-  // State
-  const dispatch = useDispatch();
+  const publicTransports = [
+    { id: 0, name: "Bus", label: "bus" },
+    { id: 1, name: "Mini-Bus", label: "mini-bus" },
+    { id: 2, name: "Light-rail", label: "light-rail" },
+    { id: 3, name: "Ride Hailing", label: "ride-hailing" },
+  ];
 
   useEffect(() => {
-    socket?.on("name-change-client-1", (data: any) => {
-      const parsedData = JSON.parse(data);
-      const id = parsedData.id;
-      const name = parsedData.name;
-
-      setName(parsedData.name);
-      dispatch(addName({
-        id: id,
-        name: name,
-      }));
-    });
-  }, [socket]);
+    setPublicTransports(selectedPublic);
+    setPersonalTransports(selectedPersonal);
+  }, [selectedPersonal, selectedPublic]);
 
   return (
-    <div
-      style={{
-        backgroundImage: `url(${AppAsset.Background})`,
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-        backgroundRepeat: "no-repeat",
-        backgroundAttachment: "contain",
-        position: "relative",
-      }}
-      className="w-full h-full min-h-screen font-Urbanist">
+    <QuestionsLayout
+      setPage={setPage}>
+      <div className="relative z-10 w-full h-full mx-auto 2xl:container flex flex-col items-center justify-start  py-10">
 
-      {/* Background Overlay */}
-      <div
-        className="absolute inset-0"
-        style={{
-          backgroundColor: "rgba(0, 0, 0, 0.5)", // You can adjust the last value (0.5) to change opacity
-          zIndex: 1,
-        }}
-      />
-      <div className="relative z-10 w-full h-full mx-auto 2xl:container flex flex-col items-center justify-start gap-5 py-10 md:py-[89px]">
-
-        {/* Top */}
+        {/* Image Content */}
         <div
-          className='w-full flex flex-row items-center justify-start px-[106px]'>
+          className="w-full h-auto flex flex-col items-center justify-start gap-5 px-10">
+          {/* Image */}
           <img
-            src={AppAsset.Logo}
+            src={AppAsset.BannerFive}
             style={{
-              width: '72px',
-              height: '109px',
+              width: '700px',
+              height: '700px'
             }}
-            className="w-32 h-32 object-contain" />
+            className=" object-contain" />
         </div>
 
-        {/* Center */}
+        {/* Title */}
         <div
-          className='w-full flex flex-col items-center justify-center gap-14 pt-[186px]'>
+          className="w-full h-auto flex flex-col items-start justify-start pl-20 text-white">
+          <div
+            className="flex flex-row items-start justify-start gap-5">
+            <div
+              className="w-10 h-3 bg-orange-500 mt-10">
+            </div>
+            <div className="flex flex-col items-start justify-start">
+              <p className="text-white text-[60px]">Transportation Mode</p>
+              <p className="text-white text-[40px]">Please provide your usual transportation option</p>
+            </div>
+          </div>
+        </div>
 
-          <img
-            src={AppAsset.BannerTwo}
-            style={{
-              width: '500px',
-              height: '500px'
-            }} />
+        {/* Personal Vehicle */}
+        <div
+          className="w-full h- flex flex-col items-start justify-start pl-40 pt-10 gap-10">
 
-          <span
-            style={{
-              fontSize: '48px'
-            }}
-            className='flex flex-col items-center justify-center gap-2 text-white font-semibold'>
-            <h1
-              className=''>
-              Would you mind sharing your
-            </h1>
-            <h1>
-              name? (Optional)
-            </h1>
-          </span>
+          {/* Title */}
+          <div className="">
+            <h1 className="text-[50px] font-bold text-white">Personal Vehicle</h1>
+          </div>
 
-          {/* Name */}
-          <div className="w-full flex flex-col items-center justify-center gap-2">
-            <p className="text-white text-2xl md:text-[64px] font-semibold">
-              {name}
-              <span className="animate-pulse">_</span>
-            </p>
+          <div
+            className="w-full h-auto flex flex-col items-start justify-start gap-5 pl-10">
+            {
+              personalVehicles.map((vehicles: { id: number, name: string, label: string }, index: number) => {
+                return (
+                  <CheckboxComponent
+                    key={index}
+                    id={index}
+                    name={vehicles.name}
+                    label={vehicles.label}
+                    type={"personal"}
+                    selectedPersonal={selectedPersonal}
+                    selectedPublic={selectedPublic}
+                    setSelectedPersonal={setSelectedPersonal}
+                    setSelectedPublic={setSelectedPublic} />
+                );
+              })
+            }
           </div>
 
         </div>
 
+        {/* Public Transport */}
+        <div
+          className="w-full h- flex flex-col items-start justify-start pl-40 pt-14 gap-10">
+          {/* Title */}
+          <div className="">
+            <h1 className="text-[50px] font-bold text-white">Public Transport</h1>
+          </div>
+
+          <div className="w-full h-auto flex flex-col items-start justify-start gap-5 pl-10">
+            {
+              publicTransports.map((vehicles: { id: number, name: string, label: string }, index: number) => {
+                return (
+                  <CheckboxComponent
+                    key={index}
+                    id={index}
+                    name={vehicles.name}
+                    label={vehicles.label}
+                    type={"public"}
+                    selectedPersonal={selectedPersonal}
+                    selectedPublic={selectedPublic}
+                    setSelectedPersonal={setSelectedPersonal}
+                    setSelectedPublic={setSelectedPublic} />
+                );
+              })
+            }
+          </div>
+        </div>
+
+      </div>
+
+    </QuestionsLayout>
+  )
+}
+
+interface ICheckboxComponent {
+  id: number,
+  name: string,
+  type: string,
+  label: string;
+  selectedPersonal: any,
+  selectedPublic: any,
+  setSelectedPersonal: any,
+  setSelectedPublic: any,
+}
+
+const CheckboxComponent = ({ name, type, label, selectedPersonal, selectedPublic, setSelectedPersonal, setSelectedPublic }: ICheckboxComponent) => {
+  const socket = useSocket();
+
+  const addRemoveTyeps = () => {
+    if (type == "personal") {
+      const check = selectedPersonal.includes(label);
+
+      if (check) {
+        const newSelectedTypes = selectedPersonal.filter((item: any) => item !== label); // Remove the item immutably
+        setSelectedPersonal(newSelectedTypes);
+
+      } else {
+        setSelectedPersonal([...selectedPersonal, label]); // Add the item immutably
+      }
+    }
+
+    if (type == "public") {
+      const check = selectedPublic.includes(label);
+
+      if (check) {
+        const newSelectedTypes = selectedPublic.filter((item: any) => item !== label); // Remove the item immutably
+        setSelectedPublic(newSelectedTypes);
+      } else {
+        setSelectedPublic([...selectedPublic, label]); // Add the item immutably
+      }
+    }
+  }
+
+  const changeCheckboxState = ({ statetype, stateLabel, isOn }: { statetype: string, stateLabel: string, isOn: boolean }) => {
+    if (statetype == "personal") {
+      setSelectedPersonal((prevSelectedTypes: any) => {
+        const checkSelected = prevSelectedTypes.includes(stateLabel);
+
+        if (isOn && !checkSelected) {
+          return [...prevSelectedTypes, stateLabel]; // Add the item immutably
+        } else if (!isOn && checkSelected) {
+          return prevSelectedTypes.filter((item: any) => item !== stateLabel); // Remove the item immutably
+        }
+
+        return prevSelectedTypes;
+      });
+    }
+
+    if (statetype == "public") {
+      setSelectedPublic((prevSelectedTypes: any) => {
+        const checkSelected = prevSelectedTypes.includes(stateLabel);
+
+        if (isOn && !checkSelected) {
+          return [...prevSelectedTypes, stateLabel]; // Add the item immutably
+        } else if (!isOn && checkSelected) {
+          return prevSelectedTypes.filter((item: any) => item !== stateLabel); // Remove the item immutably
+        }
+
+        return prevSelectedTypes;
+      });
+    }
+  }
+
+  const checkSelectedTypes = () => {
+    if (type == "personal") {
+      return selectedPersonal.includes(label);
+    }
+
+    if (type == "public") {
+      return selectedPublic.includes(label);
+    }
+  }
+
+  const check: boolean = checkSelectedTypes();
+
+  useEffect(() => {
+    socket?.on("page-7-emit-checkbox-change-server", (temp) => {
+      const data = JSON.parse(temp);
+
+      changeCheckboxState({
+        statetype: data.type,
+        stateLabel: data.label,
+        isOn: data.isOn
+      });
+
+    })
+  }, [socket]);
+
+
+  return (
+    <div
+      className="w-full h-full flex flex-col items-start justify-start gap-5 text-white">
+      <div
+        className='flex flex-row items-center justify-start gap-3 md:gap-[20px] text-white'>
+        <img
+          onClick={() => {
+            addRemoveTyeps();
+          }}
+          src={check ? AppAsset.CheckedIcon : AppAsset.UncheckedIcon}
+          className='w-7 md:w-[40px] md:h-[40px] object-contain cursor-pointer' />
+        <p
+          className='text-xl md:text-[45px] font-normal'>
+          {name}
+        </p>
       </div>
 
     </div>
-  )
+  );
 }

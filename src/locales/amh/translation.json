@@ -53,19 +53,20 @@
     "localFood": "ከአካባቢው የተመረተ እና ከዕፅዋት የተቀመሙ ምግቦችን ይምረጡ.",
     "unplugDevices": "በማይጠቀሙበት ጊዜ የኤሌክትሪክ ዕቃዎችን ይንቀሉ እና ኃይል ቆጣቢ መሳሪያዎችን ይጠቀሙ",
     "carbonFootprintComparison": "አጠቃላይ የካርበን አሻራዎ ",
-    "carbonFoot2": "ይህም 12 ዛፎችን ከማቃጠል ጋር እኩል ነው.",
-    "trrres": "ዛፎችን.",
+    "carbonFoot2": "ሲሆን ይህም ",
+    "carbonFoot3": "ከማቃጠል ጋር እኩል ነው።",
+    "trrres": "ዛፎችን",
     "pledgeQuestion": "የካርቦን አሻራዎን 0 ለማድረግ በዚህ ዓመት 12 ዛፎችን ለመትከል ቃል ይገባሉ?",
     "pledgeYes": "አዎ፣ በዚህ አመት ",
     "pledgeYes2": "ዛፎችን ለመትከል ቃል እገባለሁ።",
     "pledgeMore": "በዚህ ዓመት ",
     "pledgeMore2": " ዛፎችን ለመትከል ቃል እገባለሁ.",
     "contactDetails": "በጣም ጥሩ፣ ለወደፊት ክትትል የአድራሻ ዝርዝሮችዎን መተው ይፈልጋሉ?",
-    "name": "ስም (አስገዳጅ አይደለም)",
+    "name": "ስም (ግዴታ አይደለም)",
     "email": "ኢሜል (ግዴታ አይደለም)",
-    "phone": "ስልክ ቁጥር (ግዴታ ያልሆነ)",
+    "phone": "ስልክ ቁጥር (ግዴታ አይደለም)",
     "finishPledging": "ይጨርሱ",
     "thankYouForYour": "ወደ አረንጓዴ የወደፊት ሕይወት የመጀመሪያውን እርምጃ ስለወሰዱ እናመሰግናለን!",
-    "YourMakeDifferendce": "Your pledge makes a difference. Together, we can create a sustainable world by reducing our impact, one action at a time."
+    "YourMakeDifferendce": "የእርስዎ  ቃል መግባትና ቃልዎን ጠብቀው ዛፍ መትከል ከፍተኛ ለውጥ ያመጣል ። በየጊዜው አንድ ጠቃሚ ተግባር መፈጸም አብረን የተሻለ አለም ለመፍጠር ያስችለናል።"
   }
 }

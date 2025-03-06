@@ -1,16 +1,26 @@
 // AppAsset
-import { useSocket } from "@/context/SocketProvider";
 import AppAsset from "@/core/AppAsset";
+
+// Socket
+import { useSocket } from "@/context/SocketProvider";
+
+// Redux
+import { useSelector } from "react-redux";
+import { CarbonState } from "@/state/carbon";
+
 import { useEffect } from "react";
 
 // Interface
 interface Props {
   children: React.ReactNode;
   setPage: React.Dispatch<React.SetStateAction<number>>;
+  currPage?: number;
+  setSelectedComponent?: React.Dispatch<React.SetStateAction<number>>;
 }
 
-export default function QuestionsLayout({ children, setPage }: Props) {
+export default function QuestionsLayout({ children, setPage, currPage, setSelectedComponent }: Props) {
   const socket = useSocket();
+  const carbon = useSelector((state: { carbon: CarbonState }) => state.carbon);
 
   useEffect(() => {
     socket?.on("page-next-client", (temp) => {
@@ -27,12 +37,24 @@ export default function QuestionsLayout({ children, setPage }: Props) {
       const data = JSON.parse(temp);
       setPage(data.nextPage);
     });
+
+    socket?.on("page-next-component-client", (temp) => {
+      const data = JSON.parse(temp);
+      console.log(data);
+      setSelectedComponent && setSelectedComponent(parseInt(data.currComponent) + 1);
+    })
+
+    socket?.on("page-prev-component-client", (temp) => {
+      const data = JSON.parse(temp);
+      setSelectedComponent && setSelectedComponent(data.currComponent - 1);
+    })
+
   }, [socket]);
 
   return (
     <div
       style={{
-        backgroundImage: `url(${AppAsset.Background})`,
+        backgroundImage: currPage === 3 ? `url(${AppAsset.Background})` : `url(${AppAsset.Background})`,
         backgroundSize: "cover",
         backgroundPosition: "center",
         backgroundRepeat: "no-repeat",
@@ -49,6 +71,28 @@ export default function QuestionsLayout({ children, setPage }: Props) {
           zIndex: 1,
         }}
       />
+
+      {/* Logo */}
+      <div
+        className='absolute top-0 left-0 z-20 pl-[50px] pt-[74px]'>
+        <img
+          style={{
+            width: "250px",
+            height: "167px",
+            objectFit: "contain"
+          }}
+          src={AppAsset.Logo}
+          className='' />
+      </div>
+
+      {/* User Name */}
+      <div className="absolute top-0 right-0 z-20 pr-[50px] pt-[120px] flex flex-row items-center justify-end gap-5">
+        <img
+          src={AppAsset.UserBlackIcon}
+          className="w-7 md:w-[40px] object-contain" />
+        <p className="text-lg md:text-4xl text-white">{carbon.name ?? "Abebe"}</p>
+      </div>
+
       {children}
     </div>
   )
