@@ -25,12 +25,10 @@ import PageTwenty from "./components/page-20";
 import PageTwentyOne from "./components/page-21";
 import PageTwentyTwo from "./components/page-22";
 import PageTwentyThree from "./components/page-23";
-import PageTwentyFour from "./components/page-24";
-
 
 
 export default function Questions() {
-  const [page, setPage] = useState<number>(20);
+  const [page, setPage] = useState<number>(23);
 
   const [personalTransports, setPersonalTransports] = useState<string[]>([]);
   const [pubilcTransports, setPublicTransports] = useState<string[]>([]);
@@ -87,7 +85,13 @@ export default function Questions() {
                                               page == 19 ?
                                                 <PageNineteen setPage={setPage} /> :
                                                 page == 20 ?
-                                                  <PageTwenty setPage={setPage} /> : null
+                                                  <PageTwenty setPage={setPage} /> :
+                                                  page == 21 ?
+                                                    <PageTwentyOne setPage={setPage} /> :
+                                                    page == 22 ?
+                                                      <PageTwentyTwo setPage={setPage} /> :
+                                                      page == 23 ?
+                                                        <PageTwentyThree setPage={setPage} /> : null
       }
     </div>
   );

@@ -65,7 +65,7 @@ export default function PageSixteen({ setPage }: Props) {
             </div>
             <p className="text-white text-[60px]">Waste Disposal</p>
           </div>
-          <p className="text-[50px]">Waste</p>
+          <p className="text-[50px]">Waste Disposal</p>
         </div>
 
         {/* Options */}

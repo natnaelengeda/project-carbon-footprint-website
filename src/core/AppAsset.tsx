@@ -1,3 +1,4 @@
+
 // Logo
 import Logo from "@/assets/imgs/logo/science-museum-logo.svg";
 
@@ -20,29 +21,18 @@ import BannerMinBus from "@/assets/imgs/banner/miniVan.svg";
 import BannerSmallCar from "@/assets/imgs/banner/smallCar.svg";
 import BannerTrain from "@/assets/imgs/banner/train.svg";
 import BannerWalk from "@/assets/imgs/banner/walk.svg";
-import BannerEleven from "@/assets/imgs/banner/banner-eleven.svg";
-import BannerTwelve from "@/assets/imgs/banner/banner-twelve.svg";
-import BannerThirteen from "@/assets/imgs/banner/banner-thirteen.svg";
-import BannerFourteen from "@/assets/imgs/banner/banner-fourteen.svg";
-import BannerFifteen from "@/assets/imgs/banner/banner-fifteen.svg";
-import BannerSixteen from "@/assets/imgs/banner/banner-sixteen.svg";
-import BannerSeventeen from "@/assets/imgs/banner/banner-seventeen.svg";
-import BannerEighteen from "@/assets/imgs/banner/banner-eighteen.svg";
-import BannerNineteen from "@/assets/imgs/banner/banner-nineteen.svg";
-import BannerTwenty from "@/assets/imgs/banner/banner-twenty.svg";
-import BannerTwentyOne from "@/assets/imgs/banner/banner-twenty-one.svg";
-import BannerTwentyTwo from "@/assets/imgs/banner/banner-twenty-two.svg";
-import BannerTwentyThree from "@/assets/imgs/banner/banner-twenty-three.svg";
-import BannerTwentyFour from "@/assets/imgs/banner/banner-twenty-four.svg";
-import BannerTwentyFive from "@/assets/imgs/banner/banner-twenty-five.svg";
-import BannerTwentySix from "@/assets/imgs/banner/banner-twenty-six.svg";
-import BannerTwentySeven from "@/assets/imgs/banner/banner-twenty-seven.svg";
+import BannerThirteenn from "@/assets/imgs/banner/banner-nineteen.svg"
 import BannerFish from "@/assets/imgs/banner/banner-nineteen.svg";
-
-
+import BannerTwentyFour from "@/assets/imgs/banner/banner-twenty-four.svg";
 import Banner2 from "@/assets/imgs/banner/banner-2.svg";
 import Banner3 from "@/assets/imgs/banner/banner-3.svg";
+import BannerSeventeen from "@/assets/imgs/banner/banner-seventeen.svg";
 import BannerThirteen from "@/assets/imgs/banner/banner-13.svg";
+import BannerTwentyOne from "@/assets/imgs/banner/banner-twenty-one.svg";
+import BannerSixteen from "@/assets/imgs/banner/banner-sixteen.svg";
+import BannerEighteen from "@/assets/imgs/banner/banner-eighteen.svg";
+import BannerTwenty from "@/assets/imgs/banner/banner-twenty.svg";
+import BannerTwentyTwo from "@/assets/imgs/banner/banner-twenty-two.svg";
 
 // Badges
 import BlueBadge from "@/assets/imgs/badges/blue-badge.svg";
@@ -59,10 +49,10 @@ import CheckedIcon from "@/assets/icons/checkmark-square.svg";
 import UncheckedIcon from "@/assets/icons/unchecked-checkmark-square.svg";
 
 import ArrowUpIcon from "@/assets/icons/arrow-up-01.svg";
-import ArrowDownIcon from "@/assets/icons/arrow-down-01.svg";
+import ArrowDownIcon from "@/assets/icons/arrow-down-01.svg";;
 
 import RadioOnIcon from "@/assets/icons/Radio on.svg";
-import RadioOneWHite from "@/assets/icons/Radio on White.svg";
+import RadioOneWHite from "@/assets/icons/Radio on White.svg"
 import RadioOffIcon from "@/assets/icons/Radio Off.svg";
 
 import UserBlackIcon from "@/assets/icons/user.svg";
@@ -127,7 +117,7 @@ import PledgersIcon from "@/assets/icons/smallIcons/user-multiple-02.svg";
 import TreesIcon from "@/assets/icons/smallIcons/tree-06.svg";
 
 class AppAsset {
-  public constructor() {}
+  public constructor() { }
 
   static Logo = Logo;
 
@@ -150,10 +140,18 @@ class AppAsset {
   static BannerSmallCar = BannerSmallCar;
   static BannerTrain = BannerTrain;
   static BannerWalk = BannerWalk;
+  static BannerThirteenn = BannerThirteenn;
   static BannerFish = BannerFish;
-
   static Banner2 = Banner2;
   static Banner3 = Banner3;
+  static BannerTwentyFour = BannerTwentyFour;
+  static BannerSeventeen = BannerSeventeen;
+  static BannerThirteen = BannerThirteen;
+  static BannerTwentyOne = BannerTwentyOne;
+  static BannerSixteen = BannerSixteen;
+  static BannerEighteen = BannerEighteen;
+  static BannerTwenty = BannerTwenty;
+  static BannerTwentyTwo = BannerTwentyTwo;
 
   // Badges
   static BlueBadge = BlueBadge;
@@ -174,7 +172,7 @@ class AppAsset {
 
   static RadioOnIcon = RadioOnIcon;
   static RadioOneWHite = RadioOneWHite;
-  static RadioOffIcon = RadioOffIcon;
+  static RadioOffIcon = RadioOffIcon
 
   static UserBlackIcon = UserBlackIcon;
   static InformationCircleIcon = InformationCircleIcon;
@@ -235,16 +233,6 @@ class AppAsset {
   // Pledge Ind
   static PledgersIcon = PledgersIcon;
   static TreesIcon = TreesIcon;
-
-  static BannerSixteen = BannerSixteen;
-  static BannerSeventeen = BannerSeventeen;
-  static BannerEighteen = BannerEighteen;
-  static BannerNineteen = BannerNineteen;
-  static BannerTwenty = BannerTwenty;
-  static BannerTwentyOne = BannerTwentyOne;
-  static BannerTwentyTwo = BannerTwentyTwo;
-  static BannerTwentyThree = BannerTwentyThree;
-  static BannerTwentyFour = BannerTwentyFour;
 }
 
 export default AppAsset;

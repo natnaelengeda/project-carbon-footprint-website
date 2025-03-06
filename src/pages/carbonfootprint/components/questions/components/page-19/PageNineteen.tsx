@@ -51,7 +51,7 @@ export default function PageNineteen({ setPage }: Props) {
           className="w-full h-auto flex flex-col items-center justify-start gap-5 px-10">
           {/* Image */}
           <img
-            src={AppAsset.BannerTwentyThree}
+            src={AppAsset.BannerTwentyTwo}
             className="w-[550px] h-[550px] object-cover" />
         </div>
 

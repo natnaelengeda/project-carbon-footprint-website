@@ -94,6 +94,14 @@ export default function QuestionsLayout({ children, setPage, currPage, setSelect
       </div>
 
       {children}
+
+
+      <div className="absolute bottom-10 rigth-20 w-full flex flex-row items-center justify-end z-10 pr-10 gap-10">
+        <button onClick={() => setPage(prevPage => prevPage - 1)} className="px-20 py-5 bg-primary text-white text-4xl rounded-3xl font-bold">Previous</button>
+        <button onClick={() => setPage(prevPage => prevPage + 1)} className="px-20 py-5 bg-primary text-white text-4xl rounded-3xl font-bold">Next</button>
+
+      </div>
+
     </div>
   )
 }

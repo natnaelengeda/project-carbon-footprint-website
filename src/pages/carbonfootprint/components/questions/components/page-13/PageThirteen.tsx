@@ -1,3 +1,5 @@
+
+
 import { useEffect, useState } from "react";
 
 // Socket
@@ -51,7 +53,7 @@ export default function PageThirteen({ setPage }: Props) {
           className="w-full h-auto flex flex-col items-center justify-start gap-5 px-10">
           {/* Image */}
           <img
-            src={AppAsset.BannerFish}
+            src={AppAsset.BannerEighteen}
             className="w-[550px] h-[550px] object-cover" />
         </div>
 
@@ -65,7 +67,7 @@ export default function PageThirteen({ setPage }: Props) {
             </div>
             <p className="text-white text-[60px]">Diet and Food Consumption</p>
           </div>
-          <p className="text-[50px]">Fish</p>
+          <p className="text-[50px]">Meat</p>
         </div>
 
         {/* Options */}
@@ -232,60 +234,11 @@ const CheckboxComponent = (
       {/* Usage */}
       <div
         style={{
-          backgroundColor: "rgba(0, 0, 0, 0.5)", // You can adjust the last value (0.5) to change opacity
-          zIndex: 1,
+          display: check ? "flex" : "none"
         }}
-      />
-      <div className="relative z-10 w-full h-full mx-auto 2xl:container flex flex-col items-center justify-start gap-5 py-10 md:py-[89px]">
-
-        {/* Top */}
-        <div
-          className='w-full flex flex-row items-center justify-start px-[106px]'>
-          <img
-            src={AppAsset.Logo}
-            style={{
-              width: '72px',
-              height: '109px',
-            }}
-            className="w-32 h-32 object-contain" />
-        </div>
-
-        {/* Center */}
-        <div
-          className='w-full flex flex-col items-center justify-center gap-14 pt-[186px]'>
-
-          <img
-            src={AppAsset.BannerTwo}
-            style={{
-              width: '500px',
-              height: '500px'
-            }} />
-
-          <span
-            style={{
-              fontSize: '48px'
-            }}
-            className='flex flex-col items-center justify-center gap-2 text-white font-semibold'>
-            <h1
-              className=''>
-              Would you mind sharing your
-            </h1>
-            <h1>
-              name? (Optional)
-            </h1>
-          </span>
-
-          {/* Name */}
-          <div className="w-full flex flex-col items-center justify-center gap-2">
-            <p className="text-white text-2xl md:text-[64px] font-semibold">
-              {name}
-              <span className="animate-pulse">_</span>
-            </p>
-          </div>
-
-        </div>
-
+        className="pr-10">
+        <p className="text-[30px]">You use <span className="text-primary">Poultry '(Chicken)' for {selectedDays[id]} days</span> per week.</p>
       </div>
     </div>
-  );;
+  );
 }
