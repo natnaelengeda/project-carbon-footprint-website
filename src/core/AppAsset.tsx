@@ -12,6 +12,14 @@ import BannerSeven from "@/assets/imgs/banner/banner-seven.svg";
 import BannerEight from "@/assets/imgs/banner/banner-eight.svg";
 import BannerNine from "@/assets/imgs/banner/banner-nine.svg";
 import BannerTen from "@/assets/imgs/banner/banner-ten.svg";
+import BannerCard from "@/assets/imgs/banner/banner-car.svg";
+import BannerBike from "@/assets/imgs/banner/bike.svg";
+import BannerCycle from "@/assets/imgs/banner/cycle.svg";
+import BannerBus from "@/assets/imgs/banner/bus.svg";
+import BannerMinBus from "@/assets/imgs/banner/miniVan.svg";
+import BannerSmallCar from "@/assets/imgs/banner/smallCar.svg";
+import BannerTrain from "@/assets/imgs/banner/train.svg";
+import BannerWalk from "@/assets/imgs/banner/walk.svg";
 import BannerEleven from "@/assets/imgs/banner/banner-eleven.svg";
 import BannerTwelve from "@/assets/imgs/banner/banner-twelve.svg";
 import BannerThirteen from "@/assets/imgs/banner/banner-thirteen.svg";
@@ -132,6 +140,14 @@ class AppAsset {
   static BannerEight = BannerEight;
   static BannerNine = BannerNine;
   static BannerTen = BannerTen;
+  static BannerCard = BannerCard;
+  static BannerBike = BannerBike;
+  static BannerCycle = BannerCycle;
+  static BannerBus = BannerBus;
+  static BannerMinBus = BannerMinBus;
+  static BannerSmallCar = BannerSmallCar;
+  static BannerTrain = BannerTrain;
+  static BannerWalk = BannerWalk;
 
   static Banner2 = Banner2;
   static Banner3 = Banner3;
@@ -167,7 +183,7 @@ class AppAsset {
   static populationGrowthIcon = populationGrowthIcon;
   static urbanizationIcon = urbanizationIcon;
   static sustainableEnergyIcon = sustainableEnergyIcon;
-  static ecoFriendlyIcon = ecoFriendlyIcon; 
+  static ecoFriendlyIcon = ecoFriendlyIcon;
   static industryIcon = industryIcon;
 
   // Stats Icons

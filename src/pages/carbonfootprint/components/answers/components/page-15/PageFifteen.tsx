@@ -9,7 +9,7 @@ interface Props {
   setPage: React.Dispatch<React.SetStateAction<number>>;
 }
 
-export default function PageTwelve({ }: Props) {
+export default function PageFifteen({ }: Props) {
 
   return (
     <DefaultBackground>

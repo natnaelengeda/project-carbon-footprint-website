@@ -32,8 +32,6 @@ interface Props {
 }
 
 export default function PageFour({ setPage }: Props) {
-
-  // Values
   const [selectedTypes, setSelectedTypes] = useState<string[]>([]);
   const [currentlySelected, setCurrentlySelected] = useState<number>(0);
 

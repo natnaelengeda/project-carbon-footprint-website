@@ -25,6 +25,7 @@ export default function PageThree({ setPage }: Props) {
 
   const savedlanguages = JSON.parse(localStorage.getItem("language") || "");
 
+  console.log(savedlanguages.pledge)
   console.log(option);
 
   const pledge = useSelector((state: { pledge: PledgeState }) => state.pledge);
@@ -76,7 +77,15 @@ export default function PageThree({ setPage }: Props) {
                 }}
                 className='text-2xl md:text-[56px] font-bold text-center md:leading-[50px] text-white'>
                 {/* Great! You Just Saved <span className='text-primary'>{parseInt(numberOfTrees ?? "").toFixed(0)} out of {(pledge.carbon_footprint / 167).toFixed(0)} Trees</span> from Burning. */}
-                {t("pledge.carbonFootprintComparison", { lng: savedlanguages.pledge })} <span className='text-primary'>{parseInt(pledgeTotalCalculation ?? "0").toFixed(0)} kg CO2 - e</span> {t("pledge.carbonFoot2", { lng: savedlanguages.pledge })}  <span className='text-primary'> {(parseInt(pledgeTotalCalculation ?? "0") / 167).toFixed(0)} {t("pledge.trrres", { lng: savedlanguages.pledge })} </span>.
+                {savedlanguages.pledge === "en" ? (
+                  <>
+                    {t("pledge.carbonFootprintComparison", { lng: savedlanguages.pledge })} <span className='text-primary'>{parseInt(pledgeTotalCalculation ?? "0").toFixed(0)} kg CO2 - e</span> {t("pledge.carbonFoot2", { lng: savedlanguages.pledge })}  <span className='text-primary'> {(parseInt(pledgeTotalCalculation ?? "0") / 167).toFixed(0)} {t("pledge.trrres", { lng: savedlanguages.pledge })} </span>.
+                  </>
+                ) : (
+                  <>
+                      {t("pledge.carbonFootprintComparison", { lng: savedlanguages.pledge })} <span className='text-primary'>{parseInt(pledgeTotalCalculation ?? "0").toFixed(0)} kg CO2 - e</span> {t("pledge.carbonFoot2", { lng: savedlanguages.pledge })}  <span className='text-primary'> {(parseInt(pledgeTotalCalculation ?? "0") / 167).toFixed(0)} {t("pledge.trrres", { lng: savedlanguages.pledge })} </span> {t("pledge.carbonFoot3", { lng: savedlanguages.pledge })}
+                  </>
+                )}
               </p>
             </div>
 

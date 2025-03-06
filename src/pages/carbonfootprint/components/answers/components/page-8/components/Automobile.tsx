@@ -1,20 +1,13 @@
-import { useState } from "react";
+import { useEffect, useState } from 'react';
 
-// Slider
-import { Slider } from "@mantine/core";
+// Socket
+import { useSocket } from '@/context/SocketProvider';
 
-// Default Background
-import DefaultBackground from "../DefaultBackground";
+// AppAsset
+import AppAsset from '@/core/AppAsset'
+import { Slider } from '@mantine/core';
 
-// App Asset
-import AppAsset from "@/core/AppAsset";
-
-// Interface
-interface Props {
-  setPage: React.Dispatch<React.SetStateAction<number>>;
-}
-
-export default function PageTen({ setPage }: Props) {
+export default function Automobile() {
   const [selectedType, setSelectedType] = useState<string>("gas-powered");
   const [selectedKMs, setSelectedKMs] = useState<number>(0);
   const [selectedDays, setSelectedDays] = useState<number>(0);
@@ -22,58 +15,57 @@ export default function PageTen({ setPage }: Props) {
   const [currentlySelected, setCurrentlySelected] = useState<number>(0);
 
   const buttons = [
-    { id: 0, name: "Walking", type: "walking", extra: "Gas Powered Personal Vehicle - Automobile" },
+    { id: 0, name: "Gas Powered", type: "gas-powered", extra: "Gas Powered Personal Vehicle - Automobile" },
+    { id: 1, name: "Electric Powered", type: "electric-powered", extra: "Electric Powered Personal Vehicle - Automobile" },
+    { id: 2, name: "Hybrid", type: "hybrid", extra: "Hybrid Personal Vehicle - Automobile" },
   ];
 
   return (
-    <DefaultBackground>
-      <div className='w-full h-full relative z-10'>
+    <div className='w-full h-full'>
 
-        {/* Title */}
+      {/* Title */}
+      <div
+        className="w-full h-auto flex flex-col items-start justify-start pl-40  text-white">
         <div
-          className="w-full h-auto flex flex-col items-start justify-start pl-40  text-white pt-[250px]">
+          className="flex flex-row items-center justify-start gap-5">
           <div
-            className="flex flex-row items-center justify-start gap-5">
-            <div
-              className="w-10 h-3 bg-purple-500">
-            </div>
-            <p className="text-white text-[60px]">Transportation Mode</p>
+            className="w-10 h-3 bg-purple-500">
           </div>
-          <p className="text-[40px]">Walking</p>
+          <p className="text-white text-[60px]">Transportation Mode</p>
         </div>
-
-
-        {/* Options */}
-        <div
-          className="w-full h-auto flex flex-col items-start justify-start pl-40 pt-20 gap-16">
-          {
-            buttons &&
-            buttons.map((button: { id: number, name: string, type: string, extra: string }, index: number) => {
-              return (
-                <RadioButtonsComponent
-                  key={index}
-                  id={index}
-                  index={index}
-                  setSelectedType={setSelectedType}
-                  selectedType={selectedType}
-                  type={button.type}
-                  text={button.name}
-                  extraNote={button.extra}
-                  selectedDays={selectedDays}
-                  selectedKMs={selectedKMs}
-                  currentlySelected={currentlySelected}
-                  setCurrentlySelected={setCurrentlySelected}
-                />
-              );
-            })
-          }
-        </div>
-
+        <p className="text-[40px]">Personal Vehicle - Automobile</p>
       </div>
-    </DefaultBackground>
+
+      {/* Options */}
+      <div
+        className="w-full h-auto flex flex-col items-start justify-start pl-40 pt-20 gap-16">
+        {
+          buttons &&
+          buttons.map((button: { id: number, name: string, type: string, extra: string }, index: number) => {
+            return (
+              <RadioButtonsComponent
+                key={index}
+                id={index}
+                index={index}
+                setSelectedType={setSelectedType}
+                selectedType={selectedType}
+                type={button.type}
+                text={button.name}
+                extraNote={button.extra}
+                selectedDays={selectedDays}
+                selectedKMs={selectedKMs}
+                currentlySelected={currentlySelected}
+                setCurrentlySelected={setCurrentlySelected}
+              />
+            );
+          })
+        }
+      </div>
+
+
+    </div>
   )
 }
-
 
 const RadioButtonsComponent = ({ id, setSelectedType, selectedType, type, text, selectedDays, selectedKMs, extraNote, currentlySelected, setCurrentlySelected }: any) => {
   const [kms, setKms] = useState<number>(0);
@@ -89,7 +81,7 @@ const RadioButtonsComponent = ({ id, setSelectedType, selectedType, type, text, 
 
   return (
     <div
-      className="w-full h-full flex flex-col items-start justify-start gap-5 text-white">
+      className="w-full h-full flex flex-col items-start justify-start gap-14 text-white">
 
       <div
         className='flex flex-row items-center justify-start gap-3 md:gap-[20px] text-white'>
@@ -111,7 +103,7 @@ const RadioButtonsComponent = ({ id, setSelectedType, selectedType, type, text, 
         style={{
           display: currentlySelected == id ? "block" : "none"
         }}
-        className='w-full h-auto pl-2 pr-5 md:pr-32 flex flex-col items-start justify-start gap-2 pt-10'>
+        className='w-full h-auto pl-2 pr-5 md:pr-32 flex flex-col items-start justify-start gap-2'>
         {/* Text */}
         <p className="text-[#efefef] text-lg md:text-[30px] pb-2 md:pb-4">
           How many kilometers per day?
