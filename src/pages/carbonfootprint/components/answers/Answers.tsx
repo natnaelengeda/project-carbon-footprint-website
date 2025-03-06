@@ -12,6 +12,19 @@ import PageSeven from './components/page-7';
 import PageEight from './components/page-8';
 import PageNine from './components/page-9';
 import PageTen from './components/page-10';
+import PageEleven from './components/page-11';
+import PageTwelve from './components/page-12';
+import PageThirteen from './components/page-13';
+import PageFourteen from './components/page-14';
+import PageFifteen from './components/page-15';
+import PageSixteen from './components/page-16';
+import PageSeventeen from './components/page-17';
+import PageEighteen from './components/page-18';
+import PageNineteen from './components/page-19';
+import PageTwenty from './components/page-20';
+import PageTwentyOne from './components/page-21';
+import PageTwentyTwo from './components/page-22';
+import PageTwentyThree from './components/page-23';
 
 export default function Answers() {
   const [page, setPage] = useState<number>(10);
@@ -52,11 +65,34 @@ export default function Answers() {
                               setPage={setPage}
                               pubilcTransports={pubilcTransports} /> :
                             page == 10 ?
-                              <PageTen
-                                setPage={setPage} /> : null
-
+                              <PageTen setPage={setPage} /> :
+                              page == 11 ?
+                                <PageEleven setPage={setPage} /> :
+                                page == 12 ?
+                                  <PageTwelve setPage={setPage} /> :
+                                  page == 13 ?
+                                    <PageThirteen setPage={setPage} /> :
+                                    page == 14 ?
+                                      <PageFourteen setPage={setPage} /> :
+                                      page == 15 ?
+                                        <PageFifteen setPage={setPage} /> :
+                                        page == 16 ?
+                                          <PageSixteen setPage={setPage} /> :
+                                          page == 17 ?
+                                            <PageSeventeen setPage={setPage} /> :
+                                            page == 18 ?
+                                              <PageEighteen setPage={setPage} /> :
+                                              page == 19 ?
+                                                <PageNineteen setPage={setPage} /> :
+                                                page == 20 ?
+                                                  <PageTwenty setPage={setPage} /> :
+                                                  page == 21 ?
+                                                    <PageTwentyOne setPage={setPage} /> :
+                                                    page == 22 ?
+                                                      <PageTwentyTwo setPage={setPage} /> :
+                                                      page == 23 ?
+                                                        <PageTwentyThree setPage={setPage} /> : null
       }
-
     </div>
   );
 }
