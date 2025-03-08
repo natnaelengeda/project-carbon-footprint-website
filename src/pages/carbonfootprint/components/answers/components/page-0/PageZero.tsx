@@ -125,6 +125,16 @@ export default function PageZero({ setPage }: Props) {
         }}
       />
 
+      <div className="absolute top-0 left-0 pt-[74px] pl-[99px] w-full h-full flex items-start justify-start z-10">
+        <img
+          src={AppAsset.Logo}
+          style={{
+            width: '120px',
+            height: '167px',
+          }}
+          className="h-auto object-contain" />
+      </div>
+
       <div
         className="relative z-10 w-full h-full mx-auto 2xl:container flex flex-col items-center justify-start gap-5 py-10 md:pt-[184px] font-Urbanist">
 

@@ -121,7 +121,6 @@ export default function PageZero({ setPage }: Props) {
       />
       <div className="relative z-10 w-full h-full mx-auto 2xl:container flex flex-col items-center justify-start gap-5 py-10 font-Urbanist">
 
-
         {/* Center */}
         <div
           className='w-full flex flex-col items-center justify-center gap-14 pt-[125px]'>
