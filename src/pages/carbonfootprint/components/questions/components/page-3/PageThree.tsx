@@ -107,7 +107,7 @@ export default function PageThree({ setPage }: Props) {
             setSelectedType={setSelectedType}
             selectedType={selectedType}
             type={"electric"}
-            text={"Electric Air HEating"}
+            text={"Electric Air Heating"}
             selectedDays={selectedDays}
             selectedHours={selectedHours}
           />

@@ -18,7 +18,6 @@ import PageThirteen from "./components/page-13";
 import PageForteen from "./components/page-14";
 import PageFifteen from "./components/page-15";
 import PageSixteen from "./components/page-16";
-import PageSeventeen from "./components/page-17";
 import PageEighteen from "./components/page-18";
 import PageNineteen from "./components/page-19";
 import PageTwenty from "./components/page-20";
@@ -28,7 +27,7 @@ import PageTwentyThree from "./components/page-23";
 
 
 export default function Questions() {
-  const [page, setPage] = useState<number>(0);
+  const [page, setPage] = useState<number>(7);
 
   const [personalTransports, setPersonalTransports] = useState<string[]>([]);
   const [pubilcTransports, setPublicTransports] = useState<string[]>([]);

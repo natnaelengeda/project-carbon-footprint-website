@@ -25,6 +25,7 @@ interface InData {
   slider1: number;
   slider2: number;
   type: string;
+  page: string;
 }
 
 export default function PageSix({ setPage }: Props) {
@@ -38,7 +39,7 @@ export default function PageSix({ setPage }: Props) {
     { id: 1, name: "Fluorescent Bulb", type: "fluorescent-bulb" },
     { id: 2, name: "Compact Fluorescent Bulb", type: "compact-fluorescent-bulb" },
     { id: 3, name: "LED Lighting", type: "led-lighting" },
-  ];
+  ]
 
   return (
     <QuestionsLayout
@@ -162,95 +163,72 @@ const CheckboxComponent = (
   const check: boolean = checkSelectedTypes();
 
   useEffect(() => {
-    socket?.on("page-update-slider-client", (temp: any) => {
+    socket?.on("page-change-send-data-client", (temp: any) => {
       const data: InData = JSON.parse(temp);
 
-      setSelectedTypes((prevSelectedTypes: any) => {
-        const checkSelected = prevSelectedTypes.includes(data.type);
 
-        if (!checkSelected) {
-          return [...prevSelectedTypes, data.type]; // Add the item immutably
-        }
+      if (data.page == "page-6") {
+        setSelectedTypes((prevSelectedTypes: any) => {
+          const checkSelected = prevSelectedTypes.includes(data.type);
+          if (!checkSelected) {
+            return [...prevSelectedTypes, data.type]; // Add the item immutably
+          }
+          return prevSelectedTypes;
+        });
 
-        return prevSelectedTypes;
-      });
+        updateSelectedDays({
+          index: data.type == "incandescent-bulb" ? 0 :
+            data.type == "fluorescent-bulb" ? 1 :
+              data.type == "compact-fluorescent-bulb" ? 2 :
+                data.type == "led-lighting" ? 3 : 0,
+          value: data.slider1
+        });
 
-      dispatch(
-        addHouseholdEnergy({
-          id: 2,
-          name: "cooking",
-          selected: true,
-          value: 1
-        })
-      );
+        const timeValue = data.slider2; // All lighting types use hours
 
-      dispatch(
-        addHouseholdEnegryCategory({
-          parent_id: 2,
-          category_id:
-            data.type == "incandescent-bulb" ? 1 :
-              data.type == "fluorescent-bulb" ? 2 :
-                data.type == "compact-fluorescent-bulb" ? 3 :
-                  4,
-          id: data.type == "incandescent-bulb" ? 1 :
-            data.type == "fluorescent-bulb" ? 2 :
-              data.type == "compact-fluorescent-bulb" ? 3 :
-                4,
-          name: data.type == "incandescent-bulb" ? "lighting-incandescent" :
-            data.type == "fluorescent-bulb" ? "lighting-fluorescent" :
-              data.type == "compact-fluorescent-bulb" ? "lighting-compact-fluorescent" :
-                "lighting-led",
-          selected: true,
-          value: data.slider1,
-          frequency: data.slider2,
-        })
-      );
+        updateSelectedHours({
+          index: data.type == "incandescent-bulb" ? 0 :
+            data.type == "fluorescent-bulb" ? 1 :
+              data.type == "compact-fluorescent-bulb" ? 2 :
+                data.type == "led-lighting" ? 3 : 0,
+          value: timeValue
+        });
 
-      updateSelectedDays({
-        index: data.type == "incandescent-bulb" ? 0 :
-          data.type == "fluorescent-bulb" ? 1 :
-            data.type == "compact-fluorescent-bulb" ? 2 :
-              data.type == "led-lighting" ? 3 : 0,
-        value: data.slider1
-      });
+        dispatch(
+          addHouseholdEnergy({
+            id: 4,
+            name: "light-bulbs",
+            selected: true,
+            value: 1
+          })
+        )
 
-      const timeValue = data.slider2; // All lighting types use hours
+        dispatch(
+          addHouseholdEnegryCategory({
+            parent_id: 4,
+            category_id:
+              type === "incandescent-bulb" ? 1 :
+                type === "fluorescent-bulb" ? 2 :
+                  type === "compact-fluorescent-bulb" ? 3 :
+                    type === "led-lighting" ? 4 : 0,
+            id: type === "incandescent-bulb" ? 1 :
+              type === "fluorescent-bulb" ? 2 :
+                type === "compact-fluorescent-bulb" ? 3 :
+                  type === "led-lighting" ? 4 : 0,
+            name: type === "incandescent-bulb" ? "lighting-incandescent" :
+              type === "fluorescent-bulb" ? "light-bulb-incandecent" :
+                type === "compact-fluorescent-bulb" ? "light-bulb-cfl" :
+                  type === "led-lighting" ? "light-bulb-florecent" : "",
+            selected: true,
+            value: data.slider1,
+            frequency: data.slider2
+          })
+        );
 
-      updateSelectedHours({
-        index: data.type == "incandescent-bulb" ? 0 :
-          data.type == "fluorescent-bulb" ? 1 :
-            data.type == "compact-fluorescent-bulb" ? 2 :
-              data.type == "led-lighting" ? 3 : 0,
-        value: timeValue
-      });
-
-      dispatch(
-        addHouseholdEnegryCategory({
-          parent_id: 2,
-          category_id:
-            data.type == "incandescent-bulb" ? 1 :
-              data.type == "fluorescent-bulb" ? 2 :
-                data.type == "compact-fluorescent-bulb" ? 3 :
-                  4,
-          id: data.type == "incandescent-bulb" ? 1 :
-            data.type == "fluorescent-bulb" ? 2 :
-              data.type == "compact-fluorescent-bulb" ? 3 :
-                4,
-          name: data.type == "incandescent-bulb" ? "lighting-incandescent" :
-            data.type == "fluorescent-bulb" ? "lighting-fluorescent" :
-              data.type == "compact-fluorescent-bulb" ? "lighting-compact-fluorescent" :
-                "lighting-led",
-          selected: true,
-          value: data.slider1,
-          frequency: timeValue, // Use the correct time value (minutes or hours)
-        })
-      );
+      }
     });
 
   }, [socket]);
-
-  console.log(selectedTypes)
-
 
   return (
     <div

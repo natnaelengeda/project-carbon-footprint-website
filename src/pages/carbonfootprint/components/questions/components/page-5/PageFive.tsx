@@ -25,6 +25,7 @@ interface InData {
   slider1: number;
   slider2: number;
   type: string;
+  page: string;
 }
 
 export default function PageFive({ setPage }: Props) {
@@ -36,8 +37,8 @@ export default function PageFive({ setPage }: Props) {
   const buttons = [
     { id: 0, name: "Iron", type: "iron" },
     { id: 1, name: "Fridge", type: "fridge" },
-    { id: 2, name: "TV", type: "tv" },
-    { id: 3, name: "Water", type: "washing-machine" },
+    { id: 2, name: "TV", type: "television" },
+    { id: 3, name: "Water Boiler", type: "water-boiler" },
   ];
 
   return (
@@ -162,73 +163,74 @@ const CheckboxComponent = (
   const check: boolean = checkSelectedTypes();
 
   useEffect(() => {
-    socket?.on("page-update-slider-client", (temp: any) => {
+    socket?.on("page-change-send-data-client", (temp: any) => {
       const data: InData = JSON.parse(temp);
 
-      setSelectedTypes((prevSelectedTypes: any) => {
-        const checkSelected = prevSelectedTypes.includes(data.type);
+      if (data.page == "page-5") {
 
-        if (!checkSelected) {
-          return [...prevSelectedTypes, data.type]; // Add the item immutably
-        }
+        setSelectedTypes((prevSelectedTypes: any) => {
+          const checkSelected = prevSelectedTypes.includes(data.type);
 
-        return prevSelectedTypes;
-      });
+          if (!checkSelected) {
+            return [...prevSelectedTypes, data.type]; // Add the item immutably
+          }
 
-      dispatch(
-        addHouseholdEnergy({
-          id: 2,
-          name: "cooking",
-          selected: true,
-          value: 1
-        })
-      );
+          return prevSelectedTypes;
+        });
 
-      dispatch(
-        addHouseholdEnegryCategory({
-          parent_id: 2,
-          category_id:
-            data.type == "electric-stove" ? 1 :
-              data.type == "gas-stove" ? 2 :
-                data.type == "charcoal-stove" ? 3 :
+
+        updateSelectedDays({
+          index: data.type == "iron" ? 0 :
+            data.type == "fridge" ? 1 :
+              data.type == "television" ? 2 :
+                data.type == "water-boiler" ? 3 : 0,
+          value: data.slider1
+        });
+
+        updateSelectedHours({
+          index: data.type == "iron" ? 0 :
+            data.type == "fridge" ? 1 :
+              data.type == "television" ? 2 :
+                data.type == "water-boiler" ? 3 : 0,
+          value: data.slider2
+        });
+
+
+        dispatch(
+          addHouseholdEnergy({
+            id: 3,
+            name: "electric-appliances",
+            selected: true,
+            value: 1
+          })
+        );
+
+        dispatch(
+          addHouseholdEnegryCategory({
+            parent_id: 3,
+            category_id:
+              data.type == "iron" ? 1 :
+                data.type == "fridge" ? 2 :
+                  data.type == "television" ? 3 :
+                    4,
+            id: data.type == "iron" ? 1 :
+              data.type == "fridge" ? 2 :
+                data.type == "television" ? 3 :
                   4,
-          id: data.type == "electric-stove" ? 1 :
-            data.type == "gas-stove" ? 2 :
-              data.type == "charcoal-stove" ? 3 :
-                4,
-          name: data.type == "electric-stove" ? "cooking-electric-stove" :
-            data.type == "gas-stove" ? "cooking-gas-stove" :
-              data.type == "charcoal-stove" ? "cooking-charcoal" :
-                "cooking-wood-stove",
-          selected: true,
-          value: data.slider1,
-          frequency: data.slider2,
-        })
-      );
+            name: data.type == "iron" ? "electric-appliances-iron-clothes" :
+              data.type == "fridge" ? "electric-appliances-fridge" :
+                data.type == "television" ? "electric-appliances-tv" :
+                  "electric-appliances-water-boiler",
+            selected: true,
+            value: data.slider1,
+            frequency: data.slider2,
+          })
+        );
+      }
 
-
-
-      updateSelectedDays({
-        index: data.type == "electric-stove" ? 0 :
-          data.type == "gas-stove" ? 1 :
-            data.type == "charcoal-stove" ? 2 :
-              data.type == "wood-stove" ? 3 : 0,
-        value: data.slider1
-      });
-
-      updateSelectedHours({
-        index: data.type == "electric-stove" ? 0 :
-          data.type == "gas-stove" ? 1 :
-            data.type == "charcoal-stove" ? 2 :
-              data.type == "wood-stove" ? 3 : 0,
-        value: data.slider2
-      });
     });
 
   }, [socket]);
-
-  console.log(selectedTypes)
-
 
   return (
     <div

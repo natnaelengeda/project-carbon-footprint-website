@@ -12,7 +12,7 @@ export default function Motorcycle() {
   const [currentlySelected, setCurrentlySelected] = useState<number>(0);
 
   const buttons = [
-    { id: 0, name: "Bicycle", type: "bicycle", extra: "Gas Powered Personal Vehicle - Automobile" },
+    { id: 0, name: "Motorcycle", type: "motorcycle", extra: "Gas Powered Personal Vehicle - Automobile" },
   ];
 
   return (

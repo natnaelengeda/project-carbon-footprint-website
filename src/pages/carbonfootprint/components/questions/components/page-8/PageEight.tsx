@@ -21,6 +21,9 @@ interface Props {
 
 export default function PageEight({ setPage, personalTransports }: Props) {
   const [selectedComponent, setSelectedComponent] = useState<number>(0);
+  const [sortedTransports, setSortedTransports] = useState<string[]>([]);
+
+  const transportOrder = ['automobile', 'motor-cycle', 'bicycle'];
 
   const renderComponent = (label: string) => {
     switch (label) {
@@ -36,10 +39,17 @@ export default function PageEight({ setPage, personalTransports }: Props) {
   };
 
   useEffect(() => {
-    if (personalTransports.length == 0) {
+    if (personalTransports.length === 0) {
       setPage(9);
+      return;
     }
-  }, []);
+
+    // Sort the transports according to the predefined order
+    const sorted = transportOrder.filter(transport =>
+      personalTransports.includes(transport)
+    );
+    setSortedTransports(sorted);
+  }, [personalTransports]);
 
   return (
     <QuestionsLayout
@@ -48,7 +58,7 @@ export default function PageEight({ setPage, personalTransports }: Props) {
       currPage={8}>
       <div
         className="relative z-10 w-full h-full mx-auto 2xl:container flex flex-col items-center justify-center gap-5 py-10 md:py-20">
-        {renderComponent(personalTransports[selectedComponent])}
+        {renderComponent(sortedTransports[selectedComponent])}
       </div>
     </QuestionsLayout>
   );

@@ -26,6 +26,7 @@ export default function PageSix({ setPage }: Props) {
     { id: 2, name: "Compact Fluorescent Bulb", type: "compact-fluorescent-bulb" },
     { id: 3, name: "LED Lighting", type: "led-lighting" },
   ]
+
   return (
     <DefaultBackground
       currPage={6}>
@@ -103,8 +104,8 @@ const SliderComponent = ({ id, selectedTypes, type, text, setSelectedTypes, curr
     setValue(value);
     dispatch(
       addHouseholdEnergy({
-        id: 2,
-        name: "lighting",
+        id: 4,
+        name: "light-bulbs",
         selected: true,
         value: 1
       })
@@ -112,7 +113,7 @@ const SliderComponent = ({ id, selectedTypes, type, text, setSelectedTypes, curr
 
     dispatch(
       addHouseholdEnegryCategory({
-        parent_id: 2,
+        parent_id: 4,
         category_id:
           type === "incandescent-bulb" ? 1 :
             type === "fluorescent-bulb" ? 2 :
@@ -123,20 +124,21 @@ const SliderComponent = ({ id, selectedTypes, type, text, setSelectedTypes, curr
             type === "compact-fluorescent-bulb" ? 3 :
               type === "led-lighting" ? 4 : 0,
         name: type === "incandescent-bulb" ? "lighting-incandescent" :
-          type === "fluorescent-bulb" ? "lighting-fluorescent" :
-            type === "compact-fluorescent-bulb" ? "lighting-compact-fluorescent" :
-              type === "led-lighting" ? "lighting-led" : "",
+          type === "fluorescent-bulb" ? "light-bulb-incandecent" :
+            type === "compact-fluorescent-bulb" ? "light-bulb-cfl" :
+              type === "led-lighting" ? "light-bulb-florecent" : "",
         selected: true,
         value: value,
         frequency: frequency
       })
     );
 
-    socket?.emit("page-update-slider-server", JSON.stringify({
+    socket?.emit("page-change-send-data-server", JSON.stringify({
       type: type,
       room: room,
       slider1: value,
-      slider2: frequency
+      slider2: frequency,
+      page: "page-6"
     }));
   }
 
@@ -144,8 +146,8 @@ const SliderComponent = ({ id, selectedTypes, type, text, setSelectedTypes, curr
     setFrequency(frequency);
     dispatch(
       addHouseholdEnergy({
-        id: 2,
-        name: "lighting",
+        id: 4,
+        name: "light-bulbs",
         selected: true,
         value: 1
       })
@@ -153,7 +155,7 @@ const SliderComponent = ({ id, selectedTypes, type, text, setSelectedTypes, curr
 
     dispatch(
       addHouseholdEnegryCategory({
-        parent_id: 2,
+        parent_id: 4,
         category_id:
           type === "incandescent-bulb" ? 1 :
             type === "fluorescent-bulb" ? 2 :
@@ -164,20 +166,21 @@ const SliderComponent = ({ id, selectedTypes, type, text, setSelectedTypes, curr
             type === "compact-fluorescent-bulb" ? 3 :
               type === "led-lighting" ? 4 : 0,
         name: type === "incandescent-bulb" ? "lighting-incandescent" :
-          type === "fluorescent-bulb" ? "lighting-fluorescent" :
-            type === "compact-fluorescent-bulb" ? "lighting-compact-fluorescent" :
-              type === "led-lighting" ? "lighting-led" : "",
+          type === "fluorescent-bulb" ? "light-bulb-incandecent" :
+            type === "compact-fluorescent-bulb" ? "light-bulb-cfl" :
+              type === "led-lighting" ? "light-bulb-florecent" : "",
         selected: true,
         value: value,
         frequency: frequency
       })
     );
 
-    socket?.emit("page-update-slider-server", JSON.stringify({
+    socket?.emit("page-change-send-data-server", JSON.stringify({
       type: type,
       room: room,
       slider1: value,
-      slider2: frequency
+      slider2: frequency,
+      page: "page-6"
     }));
   }
 

@@ -77,7 +77,7 @@ export default function PageTen({ setPage }: Props) {
             setPage={setPage}
             nextPage={11}
             currPage={10}
-            prevPage={9} />
+            prevPage={7} />
         </div>
       </div>
     </DefaultBackground>

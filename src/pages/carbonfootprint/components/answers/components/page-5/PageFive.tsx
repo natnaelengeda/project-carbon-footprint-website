@@ -105,40 +105,41 @@ const SliderComponent = ({ id, selectedTypes, type, text, setSelectedTypes, curr
     setValue(value);
     dispatch(
       addHouseholdEnergy({
-        id: 2,
-        name: "electric-appliance",
+        id: 3,
+        name: "electric-appliances",
         selected: true,
         value: 1
       })
-    )
+    );
 
     dispatch(
       addHouseholdEnegryCategory({
-        parent_id: 2,
+        parent_id: 3,
         category_id:
-          type === "iron" ? 1 :
-            type === "fridge" ? 2 :
-              type === "television" ? 3 :
-                type === "water-boiler" ? 4 : 0,
-        id: type === "iron" ? 1 :
-          type === "fridge" ? 2 :
-            type === "television" ? 3 :
-              type === "water-boiler" ? 4 : 0,
-        name: type === "iron" ? "electric-appliance-iron" :
-          type === "fridge" ? "electric-appliance-fridge" :
-            type === "television" ? "electric-appliance-television" :
-              type === "water-boiler" ? "electric-appliance-water-boiler" : "",
+          type == "iron" ? 1 :
+            type == "fridge" ? 2 :
+              type == "television" ? 3 :
+                4,
+        id: type == "iron" ? 1 :
+          type == "fridge" ? 2 :
+            type == "television" ? 3 :
+              4,
+        name: type == "iron" ? "electric-appliances-iron-clothes" :
+          type == "fridge" ? "electric-appliances-fridge" :
+            type == "television" ? "electric-appliances-tv" :
+              "electric-appliances-water-boiler",
         selected: true,
         value: value,
-        frequency: frequency
+        frequency: frequency,
       })
     );
 
-    socket?.emit("page-update-slider-server", JSON.stringify({
+    socket?.emit("page-change-send-data-server", JSON.stringify({
       type: type,
       room: room,
       slider1: value,
-      slider2: frequency
+      slider2: frequency,
+      page: "page-5"
     }));
   }
 
@@ -148,40 +149,41 @@ const SliderComponent = ({ id, selectedTypes, type, text, setSelectedTypes, curr
     setFrequency(frequency);
     dispatch(
       addHouseholdEnergy({
-        id: 2,
-        name: "cooking",
+        id: 3,
+        name: "electric-appliances",
         selected: true,
         value: 1
       })
-    )
+    );
 
     dispatch(
       addHouseholdEnegryCategory({
-        parent_id: 2,
+        parent_id: 3,
         category_id:
-          type == "electric-stove" ? 1 :
-            type == "gas-stove" ? 2 :
-              type == "charcoal-stove" ? 3 :
+          type == "iron" ? 1 :
+            type == "fridge" ? 2 :
+              type == "television" ? 3 :
                 4,
-        id: type == "electric-stove" ? 1 :
-          type == "gas-stove" ? 2 :
-            type == "charcoal-stove" ? 3 :
+        id: type == "iron" ? 1 :
+          type == "fridge" ? 2 :
+            type == "television" ? 3 :
               4,
-        name: type == "electric-stove" ? "cooking-electric-stove" :
-          type == "gas-stove" ? "cooking-gas-stove" :
-            type == "charcoal-stove" ? "cooking-charcoal" :
-              "cooking-wood-stove",
+        name: type == "iron" ? "electric-appliances-iron-clothes" :
+          type == "fridge" ? "electric-appliances-fridge" :
+            type == "television" ? "electric-appliances-tv" :
+              "electric-appliances-water-boiler",
         selected: true,
         value: value,
-        frequency: frequency
+        frequency: frequency,
       })
     );
 
-    socket?.emit("page-update-slider-server", JSON.stringify({
+    socket?.emit("page-change-send-data-server", JSON.stringify({
       type: type,
       room: room,
       slider1: value,
-      slider2: frequency
+      slider2: frequency,
+      page: "page-5",
     }));
   }
 
@@ -190,26 +192,27 @@ const SliderComponent = ({ id, selectedTypes, type, text, setSelectedTypes, curr
     setMinutes(minutes);
 
     // For iron and water boiler, we'll use minutes as the frequency
-    const frequencyValue = minutes;
+    // const frequencyValue = minutes;
 
-    dispatch(
-      addHouseholdEnegryCategory({
-        parent_id: 2,
-        category_id: type === "iron" ? 1 : type === "fridge" ? 2 : type === "television" ? 3 : 4,
-        id: type === "iron" ? 1 : type === "fridge" ? 2 : type === "television" ? 3 : 4,
-        name: type === "iron" ? "electric-appliance-iron" : type === "fridge" ? "electric-appliance-fridge" : type === "television" ? "electric-appliance-television" : "electric-appliance-water-boiler",
-        selected: true,
-        value: value,
-        frequency: frequencyValue
-      })
-    );
+    // dispatch(
+    //   addHouseholdEnegryCategory({
+    //     parent_id: 2,
+    //     category_id: type === "iron" ? 1 : type === "fridge" ? 2 : type === "television" ? 3 : 4,
+    //     id: type === "iron" ? 1 : type === "fridge" ? 2 : type === "television" ? 3 : 4,
+    //     name: type === "iron" ? "electric-appliance-iron" : type === "fridge" ? "electric-appliance-fridge" : type === "television" ? "electric-appliance-television" : "electric-appliance-water-boiler",
+    //     selected: true,
+    //     value: value,
+    //     frequency: frequencyValue
+    //   })
+    // );
 
-    socket?.emit("page-update-slider-server", JSON.stringify({
-      type: type,
-      room: room,
-      slider1: value,
-      slider2: frequencyValue
-    }));
+    // socket?.emit("page-change-send-data-server", JSON.stringify({
+    //   type: type,
+    //   room: room,
+    //   slider1: value,
+    //   slider2: frequencyValue,
+    //   page: "page-5"
+    // }));
   }
 
   const checkSelectedTypes = () => {

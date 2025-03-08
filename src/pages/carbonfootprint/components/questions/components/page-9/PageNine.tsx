@@ -18,6 +18,9 @@ interface Props {
 
 export default function PageNine({ setPage, pubilcTransports }: Props) {
   const [selectedComponent, setSelectedComponent] = useState<number>(0);
+  const [sortedTransports, setSortedTransports] = useState<string[]>([]);
+
+  const transportOrder = ['bus', 'mini-bus', 'light-rail', 'ride-hailing'];
 
   const renderComponent = (label: string) => {
     switch (label) {
@@ -35,10 +38,17 @@ export default function PageNine({ setPage, pubilcTransports }: Props) {
   };
 
   useEffect(() => {
-    if (pubilcTransports.length == 0) {
+    if (pubilcTransports.length === 0) {
       setPage(10);
+      return;
     }
-  }, []);
+
+    // Sort the transports according to the predefined order
+    const sorted = transportOrder.filter(transport =>
+      pubilcTransports.includes(transport)
+    );
+    setSortedTransports(sorted);
+  }, [pubilcTransports]);
 
   return (
     <QuestionsLayout
@@ -47,9 +57,7 @@ export default function PageNine({ setPage, pubilcTransports }: Props) {
       currPage={9}>
       <div
         className="relative z-10 w-full h-full mx-auto 2xl:container flex flex-col items-center justify-center gap-5 py-10 md:py-20">
-        {/* {renderComponent(pubilcTransports[selectedComponent])} */}
-        <LightRail />
-
+        {renderComponent(sortedTransports[selectedComponent])}
       </div>
     </QuestionsLayout>
   )
