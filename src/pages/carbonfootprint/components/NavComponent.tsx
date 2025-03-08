@@ -55,7 +55,8 @@ export default function NavComponent({ setPage, func, currPage, nextPage, prevPa
           room: room,
         }));
       } else {
-        if (selectedComponent! >= noOfPages!) {
+        const nextComponent = (selectedComponent || 0) + 1;
+        if (nextComponent >= (noOfPages || 0)) {
           socket?.emit("page-next-server", JSON.stringify({
             nextPage: nextPage,
             room: room,
@@ -108,11 +109,11 @@ export default function NavComponent({ setPage, func, currPage, nextPage, prevPa
             room: room,
           }))
         } else {
-          setSelectedComponent(selectedComponent! - 1);
+          const prevComponent = (selectedComponent || 0) - 1;
           socket?.emit("page-prev-component-server", JSON.stringify({
             nextPage: nextPage,
             room: room,
-            currComponent: selectedComponent
+            currComponent: prevComponent
           }));
         }
       }
@@ -125,7 +126,6 @@ export default function NavComponent({ setPage, func, currPage, nextPage, prevPa
   }
 
   const handlePrevPage = () => {
-    socketPreviousPage();
     if (currPage == 8 || currPage == 9) {
       if (noOfPages == 1) {
         setPage(prevPage);
@@ -133,12 +133,13 @@ export default function NavComponent({ setPage, func, currPage, nextPage, prevPa
         if (selectedComponent == 0) {
           setPage(prevPage);
         } else {
-          setSelectedComponent(selectedComponent! - 1);
+          setSelectedComponent((selectedComponent || 0) - 1);
         }
       }
     } else {
       setPage(prevPage);
     }
+    socketPreviousPage();
   }
 
   const handleSkipPage = () => {
@@ -146,35 +147,36 @@ export default function NavComponent({ setPage, func, currPage, nextPage, prevPa
       if (noOfPages == 1) {
         setPage(nextPage);
       } else {
-        if (selectedComponent! >= noOfPages!) {
+        const nextComponent = (selectedComponent || 0) + 1;
+        if (nextComponent >= (noOfPages || 0)) {
           setPage(nextPage);
         } else {
-          setSelectedComponent(selectedComponent! + 1);
+          setSelectedComponent(nextComponent);
         }
       }
     } else {
       setPage(nextPage);
-      socketSkipPage();
     }
+    socketSkipPage();
   }
 
   const handleNextPage = () => {
-    socketNextPage();
     if (currPage == 8 || currPage == 9) {
       if (noOfPages == 1) {
         setPage(nextPage);
       } else {
-        if (selectedComponent! >= noOfPages!) {
+        const nextComponent = (selectedComponent || 0) + 1;
+        if (nextComponent >= (noOfPages || 0)) {
           setPage(nextPage);
         } else {
-          setSelectedComponent(selectedComponent! + 1);
+          setSelectedComponent(nextComponent);
         }
       }
     } else {
       setPage(nextPage);
     }
+    socketNextPage();
   }
-
 
   return (
     <div

@@ -22,6 +22,7 @@ interface Props {
 export default function PageEight({ setPage, personalTransports }: Props) {
   const [selectedComponent, setSelectedComponent] = useState<number>(0);
   const [sortedTransports, setSortedTransports] = useState<string[]>([]);
+  const [noOfPages, setNoOfPages] = useState<number>(0);
 
   const transportOrder = ['automobile', 'motor-cycle', 'bicycle'];
 
@@ -49,16 +50,32 @@ export default function PageEight({ setPage, personalTransports }: Props) {
       personalTransports.includes(transport)
     );
     setSortedTransports(sorted);
+    setNoOfPages(sorted.length);
+
+    // Reset selected component when transport list changes
+    setSelectedComponent(0);
   }, [personalTransports]);
+
+  // Handle component navigation
+  const handleComponentChange = (newComponent: number) => {
+    // Only update if we're within bounds
+    if (newComponent < noOfPages) {
+      setSelectedComponent(newComponent);
+    } else if (newComponent >= noOfPages) {
+      // Move to next page if we've shown all components
+      setPage(9);
+    }
+  };
 
   return (
     <QuestionsLayout
       setPage={setPage}
-      setSelectedComponent={setSelectedComponent}
+      setSelectedComponent={handleComponentChange}
+      noOfPages={noOfPages}
       currPage={8}>
       <div
         className="relative z-10 w-full h-full mx-auto 2xl:container flex flex-col items-center justify-center gap-5 py-10 md:py-20">
-        {renderComponent(sortedTransports[selectedComponent])}
+        {sortedTransports.length > 0 && renderComponent(sortedTransports[selectedComponent])}
       </div>
     </QuestionsLayout>
   );

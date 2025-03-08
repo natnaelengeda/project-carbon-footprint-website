@@ -15,7 +15,8 @@ interface Props {
   children: React.ReactNode;
   setPage: React.Dispatch<React.SetStateAction<number>>;
   currPage?: number;
-  setSelectedComponent?: React.Dispatch<React.SetStateAction<number>>;
+  setSelectedComponent?: ((value: number) => void) | React.Dispatch<React.SetStateAction<number>>;
+  noOfPages?: number;
 }
 
 export default function QuestionsLayout({ children, setPage, currPage, setSelectedComponent }: Props) {
