@@ -49,31 +49,6 @@ export default function TwentyOne({ setPage }: Props) {
       setPage={setPage}
       currPage={20}>
       <div className="relative z-10 w-full h-full mx-auto 2xl:container flex flex-col items-center justify-start gap-5 py-10 md:py-[89px] ">
-        {/* Top */}
-        <div className="w-full flex flex-row items-center justify-between px-[106px] ">
-          <img
-            src={AppAsset.Logo}
-            style={{
-              width: "121px",
-              height: "184px",
-            }}
-            className="w-32 h-32 object-contain"
-          />
-
-          <div className="flex flex-row gap-4 items-center justify-center ">
-            <img
-              src={AppAsset.UserBlackIcon}
-              style={{
-                width: "57px",
-                height: "57px",
-              }}
-              className="w-32 h-32 object-contain"
-            />
-            <p style={{ fontSize: 45.6 }} className="text-white font-bold">
-              Abebe
-            </p>
-          </div>
-        </div>
 
         {/* Center */}
         <div className="w-full flex flex-col items-center justify-center gap-8 mb-20 ">

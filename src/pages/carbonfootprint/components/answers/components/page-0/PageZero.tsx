@@ -7,6 +7,8 @@ import { useSocket } from "@/context/SocketProvider";
 
 // AppAsset
 import AppAsset from "@/core/AppAsset";
+import { useDispatch } from "react-redux";
+import { clearEverything } from "@/state/carbon";
 
 // Interface
 interface Props {
@@ -17,6 +19,7 @@ export default function PageZero({ setPage }: Props) {
   const [lanuage, setLanguage] = useState<string>("english");
   const room = localStorage.getItem("room");
   const mode = localStorage.getItem("page_mode");
+  const dispatch = useDispatch();
 
   // Socket
   const socket: any = useSocket();
@@ -103,6 +106,11 @@ export default function PageZero({ setPage }: Props) {
       isSelected: lanuage === "amharic"
     }
   ]
+
+  useEffect(() => {
+    dispatch(clearEverything());
+  }, []);
+
 
   return (
     <div

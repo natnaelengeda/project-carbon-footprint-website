@@ -10,6 +10,8 @@ import AppAsset from "@/core/AppAsset";
 
 // Validate Questions
 import { ValidateQuestions } from "@/pages/carbonfootprint/components/questions/components/VallidateQuestions";
+import { useDispatch } from "react-redux";
+import { clearEverything } from "@/state/carbon";
 
 // Interface
 interface Props {
@@ -19,6 +21,7 @@ interface Props {
 export default function PageZero({ setPage }: Props) {
   const [language, setLanguage] = useState("english");
   const mode = localStorage.getItem("page_mode");
+  const dispatch = useDispatch();
 
   // React Language Packaged;
   const { t } = useTranslation();
@@ -98,6 +101,10 @@ export default function PageZero({ setPage }: Props) {
       isSelected: language === "amharic"
     }
   ]
+
+  useEffect(() => {
+    dispatch(clearEverything());
+  }, []);
 
   return (
     <div
