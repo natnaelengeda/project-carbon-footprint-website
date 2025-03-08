@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 
 // Components
 import QuestionsModal from "./components/QuestionsModal";
+import Button from "@/components/Button";
 
 // Swiper
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -23,6 +24,27 @@ export default function Home() {
   const navigate = useNavigate();
   const [currentSlider, setCurrentSlider] = useState<number>(0);
   const [opened, { open, close }] = useDisclosure(false);
+
+  const buttons = [
+    {
+      label: "Carbon Footprint",
+      onClick: open
+    },
+    {
+      label: "Interactive Q/A",
+      onClick: () => {
+        navigate("/interactive-qa");
+        localStorage.setItem("page_type", "interactive-qa");
+      }
+    },
+    {
+      label: "Personal Pledge",
+      onClick: () => {
+        navigate("/pledge");
+        localStorage.setItem("page_type", "pledge");
+      }
+    }
+  ];
 
   return (
     <div
@@ -141,35 +163,13 @@ export default function Home() {
 
         {/* Buttons */}
         <div className="w-auto flex flex-col items-center justify-start gap-3 md:gap-10 pt-10">
-          <button
-            onClick={open}
-            className="w-auto h-auto md:w-[325px] md:h-[76px] border-2 border-primary bg-transparent text-primary font-semibold rounded-full md:rounded-full text-lg md:text-[26px] px-5 md:px-0 py-2 md:py-4 hover:bg-primary hover:text-white transition-all duration-300 flex flex-row items-center justify-center gap-3">
-            <p>Carbon Footprint</p>
-            <img src={AppAsset.RightArrowGreenicon}
-              className="w-[36px] object-contain"
+          {buttons.map((button, index) => (
+            <Button
+              key={index}
+              label={button.label}
+              onClick={button.onClick}
             />
-          </button>
-          <button
-            onClick={() => {
-              navigate("/interactive-qa");
-              localStorage.setItem("page_type", "interactive-qa");
-            }}
-            className="w-auto h-auto md:w-[325px] md:h-[76px] border-2 border-primary bg-transparent text-primary font-semibold rounded-full md:rounded-full text-lg md:text-[26px] px-5 md:px-0 py-2 md:py-4 hover:bg-primary hover:text-white transition-all duration-300 flex flex-row items-center justify-center gap-3">
-            <p>Interactive Q/A</p>
-            <img src={AppAsset.RightArrowGreenicon}
-              className="w-[36px] object-contain"
-            />
-          </button>
-          <button
-            onClick={() => {
-              navigate("/pledge");
-              localStorage.setItem("page_type", "pledge");
-            }}
-            className="w-auto h-auto md:w-[325px] md:h-[76px] border-2 border-primary bg-transparent text-primary font-semibold rounded-full md:rounded-full text-lg md:text-[26px] px-5 md:px-0 py-2 md:py-4 hover:bg-primary hover:text-white transition-all duration-300 flex flex-row items-center justify-center gap-3">
-            <p>Personal Pledge</p>
-            <img src={AppAsset.RightArrowGreenicon}
-              className="w-[36px] object-contain" />
-          </button>
+          ))}
         </div>
       </div>
 

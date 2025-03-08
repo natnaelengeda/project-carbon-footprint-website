@@ -43,6 +43,7 @@ export default function PageZero({ setPage }: Props) {
     });
 
     const savedlanguages = JSON.parse(localStorage.getItem("language") || defaultLanguage);
+
     if (savedlanguages) {
       if (savedlanguages.carbon == "am") {
         setLanguage("amharic")
@@ -84,9 +85,24 @@ export default function PageZero({ setPage }: Props) {
     socket?.emit("change-page-server-1", JSON.stringify({
       page_number: 1,
       mode: mode,
-      room:room,
+      room: room,
     }));
   }
+
+  const choices = [
+    {
+      id: 0,
+      label: "English",
+      onClick: changeToEnglish,
+      isSelected: lanuage === "english"
+    },
+    {
+      id: 1,
+      label: "አማርኛ",
+      onClick: changeToAmharic,
+      isSelected: lanuage === "amharic"
+    }
+  ]
 
   return (
     <div
@@ -109,45 +125,44 @@ export default function PageZero({ setPage }: Props) {
         }}
       />
 
-      <div className="relative z-10 w-full h-full mx-auto 2xl:container flex flex-col items-center justify-end gap-5 py-10 md:py-[100px]">
+      <div
+        className="relative z-10 w-full h-full mx-auto 2xl:container flex flex-col items-center justify-start gap-5 py-10 md:pt-[184px] font-Urbanist">
+
+        {/* Title  */}
+        <div
+          className="w-full flex flex-col items-center justify-start gap-5 md:gap-[111px]">
+          <p className="text-white text-2xl md:text-[64px] font-bold">
+            Welcome to Carbon Footprint
+          </p>
+          <p
+            className="text-white text-2xl md:text-[44px] font-bold">
+            Choose language
+          </p>
+
+        </div>
+
+
 
         {/* Choice */}
         <div
-          className="w-full md:w-[640px] flex flex-col items-start justify-start gap-10 md:gap-[80px] px-3 md:px-0 text-white">
-          <button
-            onClick={changeToEnglish}
-            className={`w-full h-20 md:w-[650px] md:h-[88px] bg-[#35D36A73] flex flex-row items-center justify-start gap-5 md:gap-[32px] px-3 md:px-[33px] rounded-lg ${lanuage == "english" ? "border-4 border-black" : ""}`}>
-            <img
-              src={lanuage == "english" ? AppAsset.RadioOnIcon : AppAsset.RadioOffIcon}
-              className="w-7 h-auto object-contain" />
-            <p
-              className={`text-2xl md:text-[36px] ${lanuage == "english" ? "font-bold" : ""}`}>
-              English
-            </p>
-
-          </button>
-
-          <button
-            onClick={changeToAmharic}
-            className={`w-full h-20 md:w-[650px] md:h-[88px] bg-[#35D36A73] flex flex-row items-center justify-start gap-5 md:gap-[32px] px-3 md:px-[33px] rounded-lg ${lanuage == "amharic" ? "border-4 border-black" : ""}`}>
-            <img
-              src={lanuage == "amharic" ? AppAsset.RadioOnIcon : AppAsset.RadioOffIcon}
-              className={`w- md:w-7 h-auto object-contain`} />
-            <p
-              className={`text-2xl md:text-[36px] ${lanuage == "amharic" ? "font-bold" : ""}`}>
-              አማርኛ
-            </p>
-          </button>
+          className="w-full md:w-[640px] flex flex-col items-start justify-start gap-10 md:gap-[80px] md:pt-[107px] px-3 md:px-0 text-white">
+          {
+            choices.map((choice, index) => (
+              <ChoiceButton
+                key={index}
+                choice={choice}
+                index={index} />
+            ))}
         </div>
 
         {/* Start Button */}
-        <div className="w-full flex items-center justify-center pt-28 md:pt-[202px]">
+        <div
+          className="w-full flex items-center justify-end pt-28 md:pt-[108px]">
           <button
             onClick={changePage}
-            className="bg-primary hover:opacity-70 flex flex-row items-center justify-end md:w-[650px] md:h-[88.9px] rounded-full gap-3 md:gap-[235.4px] md:px-[26.45px] px-5 py-3">
+            className="bg-primary hover:opacity-70 flex flex-row items-center justify-end md:w-[303px] md:h-[100px] rounded-full gap-3 md:gap-[60.4px] md:px-[26.45px] px-5 py-3">
             <p
-              className="font-semibold text-2xl md:text-[30px] text-white">
-              {/* {t("start")} */}
+              className="font-semibold text-2xl md:text-[34px] text-white">
               {t("carbon.start", { lng: sectionLanguage.carbon })}
             </p>
             <img
@@ -159,5 +174,22 @@ export default function PageZero({ setPage }: Props) {
       </div>
 
     </div>
+  )
+}
+
+const ChoiceButton = ({ choice, index }: { choice: any, index: number }) => {
+  return (
+    <button
+      key={index}
+      onClick={choice.onClick}
+      className={`w-full h-20 md:w-[650px] md:h-[88px]  border border-primary flex flex-row items-center justify-start gap-5 md:gap-[32px] px-3 md:px-[33px] rounded-lg ${choice.isSelected ? "border-4 bg-primary" : "bg-transparent"}`}>
+      <img
+        src={choice.isSelected ? AppAsset.RadioOneWHite : AppAsset.RadioOffIcon}
+        className="w-7 h-auto object-contain" />
+      <p
+        className={`text-2xl md:text-[36px] ${choice.isSelected ? "font-bold" : ""}`}>
+        {choice.label}
+      </p>
+    </button>
   )
 }
