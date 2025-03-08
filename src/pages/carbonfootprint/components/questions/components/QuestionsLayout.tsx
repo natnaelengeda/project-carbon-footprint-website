@@ -86,7 +86,11 @@ export default function QuestionsLayout({ children, setPage, currPage, setSelect
       </div>
 
       {/* User Name */}
-      <div className="absolute top-0 right-0 z-20 pr-[50px] pt-[120px] flex flex-row items-center justify-end gap-5">
+      <div
+        style={{
+          display: carbon.name ? "flex" : "none"
+        }}
+        className="absolute top-0 right-0 z-20 pr-[50px] pt-[120px] flex flex-row items-center justify-end gap-5">
         <img
           src={AppAsset.UserBlackIcon}
           className="w-7 md:w-[40px] object-contain" />

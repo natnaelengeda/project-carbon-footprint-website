@@ -9,6 +9,7 @@ import { useSocket } from '@/context/SocketProvider';
 
 // App Asset
 import AppAsset from '@/core/AppAsset'
+import { useTranslation } from 'react-i18next';
 
 interface Props {
   setPage: React.Dispatch<React.SetStateAction<number>>;
@@ -24,6 +25,9 @@ interface Props {
 export default function NavComponent({ setPage, func, currPage, nextPage, prevPage, noOfPages, selectedComponent, setSelectedComponent }: Props) {
   const socket = useSocket();
   const room = localStorage.getItem("room");
+
+  const { t } = useTranslation();
+  const sectionLanguage = JSON.parse(localStorage.getItem("language") || "");
 
   const carbonData = useSelector((state: { carbon: CarbonState }) => state.carbon);
 
@@ -191,14 +195,14 @@ export default function NavComponent({ setPage, func, currPage, nextPage, prevPa
       <button
         onClick={handleSkipPage}
         className='md:w-[159.32px] md:h-[100px] border border-primary rounded-full bg-transparent text-primary flex flex-row items-center justify-center gap-3 px-6 py-3'>
-        <p className='text-lg md:text-[34.56px] font-semibold'>Skip</p>
+        <p className='text-lg md:text-[34.56px] font-semibold'>{t("carbon.skip", { lng: sectionLanguage.carbon })}</p>
       </button>
 
       {/* Next Button */}
       <button
         onClick={handleNextPage}
         className='md:w-[221.32px] md:h-[100px] rounded-full bg-primary text-white flex flex-row items-center justify-center gap-3 px-6 py-3'>
-        <p className='text-lg md:text-[34.56px] font-semibold'>Next</p>
+        <p className='text-lg md:text-[34.56px] font-semibold'>{t("carbon.next", { lng: sectionLanguage.carbon })}</p>
         <img
           src={AppAsset.RightArrowIcon}
           className="w-6 md:w-10 h-auto object-contain" />

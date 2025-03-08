@@ -14,6 +14,7 @@ import {
   // CarbonState,
 } from '@/state/carbon';
 import QuestionsLayout from "../QuestionsLayout";
+import { useTranslation } from "react-i18next";
 
 // Interface
 interface Props {
@@ -25,6 +26,8 @@ export default function PageOne({ setPage }: Props) {
 
   const socket: any = useSocket();
 
+  const { t } = useTranslation();
+  const sectionLanguage = JSON.parse(localStorage.getItem("language") || "");
   // State
   const dispatch = useDispatch();
 
@@ -78,10 +81,10 @@ export default function PageOne({ setPage }: Props) {
             className='flex flex-col items-center justify-center gap-2 text-white font-semibold'>
             <h1
               className=''>
-              Would you mind sharing your
+              {t("carbon.would_you_mind_sharing_your_name_1", { lng: sectionLanguage.carbon })}
             </h1>
             <h1>
-              name? (Optional)
+              {t("carbon.would_you_mind_sharing_your_name_2", { lng: sectionLanguage.carbon })}
             </h1>
           </span>
 
