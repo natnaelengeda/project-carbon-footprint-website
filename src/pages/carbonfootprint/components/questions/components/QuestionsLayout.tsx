@@ -51,10 +51,56 @@ export default function QuestionsLayout({ children, setPage, currPage, setSelect
 
   }, [socket]);
 
+  const backgroundimages = () => {
+    switch (currPage) {
+      case 2:
+        return AppAsset.BackgroundHouseVertical;
+      case 3:
+        return AppAsset.BackgroundHouseHoldVertical;
+      case 4:
+        return AppAsset.BackgroundHouseHoldVertical;
+      case 5:
+        return AppAsset.BackgroundHouseHoldVertical;
+      case 6:
+        return AppAsset.BackgroundHouseHoldVertical;
+      case 7:
+        return AppAsset.BackgroundTransportationVertical;
+      case 8:
+        return AppAsset.BackgroundTransportationVertical;
+      case 9:
+        return AppAsset.BackgroundTransportationVertical;
+      case 10:
+        return AppAsset.BackgroundTransportationVertical;
+      case 11:
+        return AppAsset.BackgroundDietVertical;
+      case 12:
+        return AppAsset.BackgroundDietVertical;
+      case 13:
+        return AppAsset.BackgroundDietVertical;
+      case 14:
+        return AppAsset.BackgroundDietVertical;
+      case 15:
+        return AppAsset.BackgroundWasteVertical;
+      case 16:
+        return AppAsset.BackgroundWasteVertical;
+      case 17:
+        return AppAsset.BackgroundWaterVertical;
+      case 18:
+        return AppAsset.BackgroundWaterVertical;
+      case 19:
+        return AppAsset.BackgroundWaterVertical;
+
+      default:
+        return AppAsset.Background;
+    }
+  }
+
+  const bgImage = backgroundimages();
+
   return (
     <div
       style={{
-        backgroundImage: currPage === 3 ? `url(${AppAsset.Background})` : `url(${AppAsset.Background})`,
+        backgroundImage: `url(${bgImage})`,
         backgroundSize: "cover",
         backgroundPosition: "center",
         backgroundRepeat: "no-repeat",

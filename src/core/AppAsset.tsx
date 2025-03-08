@@ -110,6 +110,20 @@ import TickImage from "@/assets/imgs/Illustration.svg";
 import Background from "@/assets/imgs/background/background.svg";
 import BackgroundHorizontal from "@/assets/imgs/background/bbg.png";
 import BackgroundVertical from "@/assets/imgs/background/bg-h.png";
+import BackgroundHouseVertical from "@/assets/imgs/background/house_background_vertical.png";
+import BackgroundHouseHorizontal from "@/assets/imgs/background/house_background_horizontal.png";
+import BackgroundHouseHoldVertical from "@/assets/imgs/background/houseHoldBackgroundVertical.png";
+import BackgroundHouseHoldHorizontal from "@/assets/imgs/background/houseHoldBackgroundHorizontal.png";
+import BackgroundTransportationVertical from "@/assets/imgs/background/TransportationVertical.webp";
+import BackgroundTransporationHorizontal from "@/assets/imgs/background/TransportationVertical.webp";
+import BackgroundWasteVertical from "@/assets/imgs/background/wasteVertical.png";
+import BackgroundWastehorizontal from "@/assets/imgs/background/wasteHorizontal.png";
+import BackgroundWaterVertical from "@/assets/imgs/background/waterVertical.png";
+import BackgroundWaterHorizontal from "@/assets/imgs/background/waterHorizontal.png";
+import BackgroundDietVertical from "@/assets/imgs/background/TransportationVerticalasdf.png";
+import BackgroundDietHorizontal from "@/assets/imgs/background/TransportationHorizontal.png";
+
+
 import SplashImage from "@/assets/imgs/splash-animation.svg";
 
 // Pledge Ind
@@ -228,6 +242,19 @@ class AppAsset {
   static Background = Background;
   static BackgroundHorizontal = BackgroundHorizontal;
   static BackgroundVertical = BackgroundVertical;
+  static BackgroundHouseVertical = BackgroundHouseVertical;
+  static BackgroundHouseHorizontal = BackgroundHouseHorizontal;
+  static BackgroundHouseHoldVertical = BackgroundHouseHoldVertical;
+  static BackgroundHouseHoldHorizontal = BackgroundHouseHoldHorizontal;
+  static BackgroundTransportationVertical = BackgroundTransportationVertical;
+  static BackgroundTransporationHorizontal = BackgroundTransporationHorizontal;
+  static BackgroundWasteVertical = BackgroundWasteVertical;
+  static BackgroundWastehorizontal = BackgroundWastehorizontal;
+  static BackgroundWaterVertical = BackgroundWaterVertical;
+  static BackgroundWaterHorizontal = BackgroundWaterHorizontal;
+  static BackgroundDietVertical = BackgroundDietVertical;
+  static BackgroundDietHorizontal = BackgroundDietHorizontal;
+
   static SplashImage = SplashImage;
 
   // Pledge Ind

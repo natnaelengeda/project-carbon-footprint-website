@@ -16,18 +16,19 @@ interface Props {
 }
 
 export default function PageFive({ setPage }: Props) {
-// Values
-const [selectedTypes, setSelectedTypes] = useState<string[]>([]);
-const [currentlySelected, setCurrentlySelected] = useState<number>(0);
+  // Values
+  const [selectedTypes, setSelectedTypes] = useState<string[]>([]);
+  const [currentlySelected, setCurrentlySelected] = useState<number>(0);
 
-const buttons = [
-  { id: 0, name: "Iron", type: "iron" },
-  { id: 1, name: "Fridge", type: "fridge" },
-  { id: 2, name: "TV", type: "television" },
-  { id: 3, name: "Water Boiler", type: "water-boiler" },
-]
+  const buttons = [
+    { id: 0, name: "Iron", type: "iron" },
+    { id: 1, name: "Fridge", type: "fridge" },
+    { id: 2, name: "TV", type: "television" },
+    { id: 3, name: "Water Boiler", type: "water-boiler" },
+  ]
   return (
-    <DefaultBackground>
+    <DefaultBackground
+      currPage={5}>
       <div className="relative z-10 w-full h-full mx-auto flex flex-col items-center justify-start gap-5 py-10 md:py-20">
 
         {/* Title */}
@@ -63,7 +64,6 @@ const buttons = [
               );
             })
           }
-
         </div>
 
         <div
@@ -117,17 +117,17 @@ const SliderComponent = ({ id, selectedTypes, type, text, setSelectedTypes, curr
         parent_id: 2,
         category_id:
           type === "iron" ? 1 :
-          type === "fridge" ? 2 :
-          type === "television" ? 3 :
-          type === "water-boiler" ? 4 : 0,
+            type === "fridge" ? 2 :
+              type === "television" ? 3 :
+                type === "water-boiler" ? 4 : 0,
         id: type === "iron" ? 1 :
           type === "fridge" ? 2 :
-          type === "television" ? 3 :
-          type === "water-boiler" ? 4 : 0,
+            type === "television" ? 3 :
+              type === "water-boiler" ? 4 : 0,
         name: type === "iron" ? "electric-appliance-iron" :
           type === "fridge" ? "electric-appliance-fridge" :
-          type === "television" ? "electric-appliance-television" :
-          type === "water-boiler" ? "electric-appliance-water-boiler" : "",
+            type === "television" ? "electric-appliance-television" :
+              type === "water-boiler" ? "electric-appliance-water-boiler" : "",
         selected: true,
         value: value,
         frequency: frequency
@@ -188,10 +188,10 @@ const SliderComponent = ({ id, selectedTypes, type, text, setSelectedTypes, curr
   const updateSlider3 = (minutes: any) => {
     addSelectedToTypes();
     setMinutes(minutes);
-    
+
     // For iron and water boiler, we'll use minutes as the frequency
     const frequencyValue = minutes;
-    
+
     dispatch(
       addHouseholdEnegryCategory({
         parent_id: 2,
@@ -293,6 +293,7 @@ const SliderComponent = ({ id, selectedTypes, type, text, setSelectedTypes, curr
           display: currentlySelected == id && (type === "fridge" || type === "television") ? "block" : "none"
         }}
         className='w-full h-auto pl-2 pr-5 md:pr-32 flex flex-col items-start justify-start gap-2 pt-5'>
+
         {/* Text */}
         <p className="text-[#efefef] text-lg md:text-[30px] pb-2 md:pb-4">
           How many hours per day do you use the appliance?
@@ -321,7 +322,11 @@ const SliderComponent = ({ id, selectedTypes, type, text, setSelectedTypes, curr
       {/* Minutes Per Day - Only for Iron and Water Boiler */}
       <div
         style={{
-          display: currentlySelected == id && (type === "iron" || type === "water-boiler") ? "block" : "none"
+          display:
+            currentlySelected == id &&
+              (type === "iron" || type === "water-boiler") ?
+              "block" :
+              "none"
         }}
         className='w-full h-auto pl-2 pr-5 md:pr-32 flex flex-col items-start justify-start gap-2 pt-5'>
         {/* Text */}

@@ -13,13 +13,14 @@ import {
   addName,
   // CarbonState,
 } from "@/state/carbon";
+import QuestionsLayout from "../QuestionsLayout";
 
 // Interface
 interface Props {
   setPage: React.Dispatch<React.SetStateAction<number>>;
 }
 
-export default function TwentyOne({ }: Props) {
+export default function TwentyOne({ setPage }: Props) {
   const [name, setName] = useState<string>("");
 
   const socket: any = useSocket();
@@ -44,25 +45,9 @@ export default function TwentyOne({ }: Props) {
   }, [socket]);
 
   return (
-    <div
-      style={{
-        backgroundImage: `url(${AppAsset.Background})`,
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-        backgroundRepeat: "no-repeat",
-        backgroundAttachment: "contain",
-        position: "relative",
-      }}
-      className="w-full h-full min-h-screen font-Urbanist"
-    >
-      {/* Background Overlay */}
-      <div
-        className="absolute inset-0"
-        style={{
-          backgroundColor: "rgba(0, 0, 0, 0.5)", // You can adjust the last value (0.5) to change opacity
-          zIndex: 1,
-        }}
-      />
+    <QuestionsLayout
+      setPage={setPage}
+      currPage={20}>
       <div className="relative z-10 w-full h-full mx-auto 2xl:container flex flex-col items-center justify-start gap-5 py-10 md:py-[89px] ">
         {/* Top */}
         <div className="w-full flex flex-row items-center justify-between px-[106px] ">
@@ -119,7 +104,7 @@ export default function TwentyOne({ }: Props) {
         </div>
 
         <div>
-          <div className=" w-full flex flex-col items-center justify-between px-[106px] gap-8 ">
+          <div className=" w-full flex flex-col items-center justify-between px-[106px] gap-8 pt-52">
             <span style={{ fontSize: "36px" }}>
               <p className="text-white  text-center">
                 This page will reset in 30 seconds. You can start again using
@@ -127,9 +112,8 @@ export default function TwentyOne({ }: Props) {
               </p>
             </span>
           </div>
-          <div></div>
         </div>
       </div>
-    </div>
+    </QuestionsLayout>
   );
 }

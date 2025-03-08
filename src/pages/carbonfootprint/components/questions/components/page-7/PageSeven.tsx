@@ -36,7 +36,8 @@ export default function PageSeven({ setPage, setPublicTransports, setPersonalTra
 
   return (
     <QuestionsLayout
-      setPage={setPage}>
+      setPage={setPage}
+      currPage={7}>
       <div className="relative z-10 w-full h-full mx-auto 2xl:container flex flex-col items-center justify-start  py-10">
 
         {/* Image Content */}

@@ -44,8 +44,10 @@ export default function PageNine({ setPage, pubilcTransports }: Props) {
     }
     setNoOfPages(pubilcTransports.length);
   }, []);
+
   return (
-    <DefaultBackground>
+    <DefaultBackground
+      currPage={9}>
       <div className="relative z-10 w-full h-full mx-auto 2xl:container flex flex-col items-center justify-center gap-5 py-10 md:py-20">
         {renderComponent(pubilcTransports[selectedComponent])}
 

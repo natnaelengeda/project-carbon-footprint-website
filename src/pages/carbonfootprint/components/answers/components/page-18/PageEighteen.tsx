@@ -8,6 +8,7 @@ import DefaultBackground from "../DefaultBackground";
 
 // App Asset
 import AppAsset from "@/core/AppAsset";
+import NavComponent from "../../../NavComponent";
 
 // Interface
 interface Props {
@@ -24,7 +25,8 @@ export default function PageEighteen({ setPage }: Props) {
   ];
 
   return (
-    <DefaultBackground>
+    <DefaultBackground
+      currPage={18}>
       <div className='w-full h-full relative z-10'>
 
         {/* Title */}
@@ -66,6 +68,13 @@ export default function PageEighteen({ setPage }: Props) {
           }
         </div>
 
+        <div
+          className='absolute bottom-0 right-0'>
+          <NavComponent
+            setPage={setPage}
+            nextPage={19}
+            prevPage={17} />
+        </div>
       </div>
     </DefaultBackground>
   )
@@ -87,21 +96,6 @@ const RadioButtonsComponent = ({ id, setSelectedType, selectedType, type, text, 
   return (
     <div
       className="w-full h-full flex flex-col items-start justify-start gap-5 text-white">
-
-      <div
-        className='flex flex-row items-center justify-start gap-3 md:gap-[20px] text-white'>
-        <img
-          onClick={() => {
-            setSelectedType(type);
-            setCurrentlySelected(id);
-          }}
-          src={selectedType == type ? AppAsset.RadioOnIcon : AppAsset.RadioOffIcon}
-          className='w-7 md:w-[36px] md:h-[36px] object-contain cursor-pointer' />
-        <p
-          className='text-xl md:text-[45px] font-normal'>
-          {text}
-        </p>
-      </div>
 
       {/* Days per week*/}
       <div

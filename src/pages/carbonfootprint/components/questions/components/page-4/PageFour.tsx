@@ -42,7 +42,8 @@ export default function PageFour({ setPage }: Props) {
 
   return (
     <QuestionsLayout
-      setPage={setPage}>
+      setPage={setPage}
+      currPage={4}>
       <div
         className="relative z-10 w-full h-full mx-auto 2xl:container flex flex-col items-center justify-start gap-5 py-10 md:pt-[200px]">
 

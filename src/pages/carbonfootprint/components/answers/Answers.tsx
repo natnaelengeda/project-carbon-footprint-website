@@ -27,7 +27,7 @@ import PageTwentyTwo from './components/page-22';
 import PageTwentyThree from './components/page-23';
 
 export default function Answers() {
-  const [page, setPage] = useState<number>(1);
+  const [page, setPage] = useState<number>(20);
 
   const [personalTransports, setPersonalTransports] = useState<string[]>([]);
   const [pubilcTransports, setPublicTransports] = useState<string[]>([]);
@@ -99,9 +99,7 @@ export default function Answers() {
                                                   page == 21 ?
                                                     <PageTwentyOne setPage={setPage} /> :
                                                     page == 22 ?
-                                                      <PageTwentyTwo setPage={setPage} /> :
-                                                      page == 23 ?
-                                                        <PageTwentyThree setPage={setPage} /> : null
+                                                      <PageTwentyTwo setPage={setPage} /> : null
       }
     </div>
   );

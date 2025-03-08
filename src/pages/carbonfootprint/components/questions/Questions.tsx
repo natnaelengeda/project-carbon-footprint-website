@@ -28,7 +28,7 @@ import PageTwentyThree from "./components/page-23";
 
 
 export default function Questions() {
-  const [page, setPage] = useState<number>(1);
+  const [page, setPage] = useState<number>(20);
 
   const [personalTransports, setPersonalTransports] = useState<string[]>([]);
   const [pubilcTransports, setPublicTransports] = useState<string[]>([]);
@@ -89,19 +89,17 @@ export default function Questions() {
                                         page == 16 ?
                                           <PageSixteen setPage={setPage} /> :
                                           page == 17 ?
-                                            <PageSeventeen setPage={setPage} /> :
+                                            <PageEighteen setPage={setPage} /> :
                                             page == 18 ?
-                                              <PageEighteen setPage={setPage} /> :
+                                              <PageNineteen setPage={setPage} /> :
                                               page == 19 ?
-                                                <PageNineteen setPage={setPage} /> :
+                                                <PageTwenty setPage={setPage} /> :
                                                 page == 20 ?
-                                                  <PageTwenty setPage={setPage} /> :
+                                                  <PageTwentyOne setPage={setPage} /> :
                                                   page == 21 ?
-                                                    <PageTwentyOne setPage={setPage} /> :
+                                                    <PageTwentyTwo setPage={setPage} /> :
                                                     page == 22 ?
-                                                      <PageTwentyTwo setPage={setPage} /> :
-                                                      page == 23 ?
-                                                        <PageTwentyThree setPage={setPage} /> : null
+                                                      <PageTwentyThree setPage={setPage} /> : null
       }
     </div>
   );

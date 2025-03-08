@@ -5,6 +5,7 @@ import DefaultBackground from "../DefaultBackground";
 
 // App Asset
 import AppAsset from "@/core/AppAsset";
+import NavComponent from "../../../NavComponent";
 
 // Interface
 interface Props {
@@ -20,8 +21,10 @@ export default function PageSeventeen({ setPage }: Props) {
   ];
 
   return (
-    <DefaultBackground>
-      <div className='w-full h-full relative z-10'>
+    <DefaultBackground
+      currPage={17}>
+      <div className='w-full h-full relative flex flex-col items-center justify-start z-10 pl-[300px]'>
+
         {/* Title */}
         <div
           className="w-full h-auto flex flex-col items-start justify-start pl-40  text-white pt-[250px]">
@@ -57,6 +60,13 @@ export default function PageSeventeen({ setPage }: Props) {
               }}
             />
           ))}
+        </div>
+        <div
+          className='absolute bottom-0 right-0'>
+          <NavComponent
+            setPage={setPage}
+            nextPage={18}
+            prevPage={16} />
         </div>
       </div>
     </DefaultBackground>

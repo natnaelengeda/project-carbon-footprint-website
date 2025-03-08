@@ -34,15 +34,18 @@ export default function PageSixteen({ setPage }: Props) {
   const [selectedHours, setSelectedHours] = useState<number[]>([0, 0, 0, 0]);
 
   const buttons = [
-    { id: 0, name: "Iron", type: "iron" },
-    { id: 1, name: "Fridge", type: "fridge" },
-    { id: 2, name: "TV", type: "tv" },
-    { id: 3, name: "Water Boiler", type: "water-boiler" },
+    { id: 0, name: "Plastics", type: "plastics" },
+    { id: 1, name: "Paper", type: "paper" },
+    { id: 2, name: "Glass/Bottle", type: "glass-bottle" },
+    { id: 3, name: "Organic Material", type: "organic-material" },
+    { id: 3, name: "Metals", type: "metals" },
+    { id: 3, name: "None", type: "none" },
   ];
 
   return (
     <QuestionsLayout
-      setPage={setPage}>
+      setPage={setPage}
+      currPage={16}>
       <div
         className="relative z-10 w-full h-full mx-auto 2xl:container flex flex-col items-center justify-start gap-5 py-10 md:pt-[200px]">
 
@@ -51,7 +54,7 @@ export default function PageSixteen({ setPage }: Props) {
           className="w-full h-auto flex flex-col items-center justify-start gap-5 px-10">
           {/* Image */}
           <img
-            src={AppAsset.BannerTwenty}
+            src={AppAsset.BannerTwentyOne}
             className="w-[850px] h-[550px] object-cover" />
         </div>
 
@@ -65,13 +68,30 @@ export default function PageSixteen({ setPage }: Props) {
             </div>
             <p className="text-white text-[60px]">Waste Disposal</p>
           </div>
-          <p className="text-[50px]">Waste Disposal</p>
+          <p className="text-[50px]">Recycling Habits</p>
         </div>
 
         {/* Options */}
         <div
           className="w-full h-auto flex flex-col items-start justify-start pl-40 pt-20 gap-10">
-          <p className="text-[30px] text-white">You dispose <span className="text-primary">Waste for {selectedDays[0]} days</span> per week.</p>
+          {
+            buttons &&
+            buttons.map((button: { id: number, type: string, name: string }, index: number) => {
+              return (
+                <CheckboxComponent
+                  key={index}
+                  id={index}
+                  selectedTypes={selectedTypes}
+                  type={button.type}
+                  text={button.name}
+                  selectedDays={selectedDays}
+                  selectedHours={selectedHours}
+                  setSelectedTypes={setSelectedTypes}
+                  setSelectedDays={setSelectedDays}
+                  setSelectedHours={setSelectedHours} />
+              );
+            })
+          }
         </div>
       </div>
     </QuestionsLayout>
@@ -235,7 +255,7 @@ const CheckboxComponent = (
           display: check ? "flex" : "none"
         }}
         className="pr-10">
-        <p className="text-[30px]">You dispose <span className="text-primary">Waste for {selectedDays[id]} days</span> per week.</p>
+        <p className="text-[30px]">You dispose <span className="text-primary">Plastics for {selectedDays[id]} days</span> per week.</p>
       </div>
     </div>
   );

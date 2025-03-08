@@ -39,7 +39,8 @@ export default function PageSeven({ setPage, personalTransports, pubilcTransport
   }, [selectedPersonal, selectedPublic]);
 
   return (
-    <DefaultBackground>
+    <DefaultBackground
+      currPage={7}>
       <div className="relative z-10 w-full h-full mx-auto flex flex-col items-center justify-start gap-5 py-10 md:pt-[150px]">
 
         {/* Title */}

@@ -27,7 +27,7 @@ interface InData {
   type: string;
 }
 
-export default function PageFourteen ({ setPage }: Props) {
+export default function PageFourteen({ setPage }: Props) {
 
   const [selectedTypes, setSelectedTypes] = useState<string[]>([]);
   const [selectedDays, setSelectedDays] = useState<number[]>([0, 0, 0, 0]);
@@ -42,7 +42,8 @@ export default function PageFourteen ({ setPage }: Props) {
 
   return (
     <QuestionsLayout
-      setPage={setPage}>
+      setPage={setPage}
+      currPage={14}>
       <div
         className="relative z-10 w-full h-full mx-auto 2xl:container flex flex-col items-center justify-start gap-5 py-10 md:pt-[200px]">
 

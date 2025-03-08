@@ -8,15 +8,61 @@ import { CarbonState } from '@/state/carbon';
 // Interface
 interface Props {
   children: React.ReactNode;
+  currPage?: number;
 }
 
-export default function DefaultBackground({ children }: Props) {
+export default function DefaultBackground({ children, currPage }: Props) {
   const carbon = useSelector((state: { carbon: CarbonState }) => state.carbon);
+
+  const backgroundimages = () => {
+    switch (currPage) {
+      case 2:
+        return AppAsset.BackgroundHouseHorizontal;
+      case 3:
+        return AppAsset.BackgroundHouseHoldHorizontal;
+      case 4:
+        return AppAsset.BackgroundHouseHoldHorizontal;
+      case 5:
+        return AppAsset.BackgroundHouseHoldHorizontal;
+      case 6:
+        return AppAsset.BackgroundHouseHoldHorizontal;
+      case 7:
+        return AppAsset.BackgroundTransporationHorizontal;
+      case 8:
+        return AppAsset.BackgroundTransporationHorizontal;
+      case 9:
+        return AppAsset.BackgroundTransporationHorizontal;
+      case 10:
+        return AppAsset.BackgroundTransporationHorizontal;
+      case 11:
+        return AppAsset.BackgroundDietHorizontal;
+      case 12:
+        return AppAsset.BackgroundDietHorizontal;
+      case 13:
+        return AppAsset.BackgroundDietHorizontal;
+      case 14:
+        return AppAsset.BackgroundDietHorizontal;
+      case 15:
+        return AppAsset.BackgroundWastehorizontal;
+      case 16:
+        return AppAsset.BackgroundWastehorizontal;
+      case 17:
+        return AppAsset.BackgroundWaterHorizontal;
+      case 18:
+        return AppAsset.BackgroundWaterHorizontal;
+      case 19:
+        return AppAsset.BackgroundWaterHorizontal;
+      default:
+        return AppAsset.Background;
+    }
+  }
+
+  const bgImage = backgroundimages();
 
   return (
     <div
       style={{
-        backgroundImage: `url(${AppAsset.Background})`,
+        backgroundImage: `url(${bgImage})`,
         backgroundSize: "cover",
         backgroundPosition: "center",
         backgroundRepeat: "no-repeat",

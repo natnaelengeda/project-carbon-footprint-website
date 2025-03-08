@@ -8,6 +8,7 @@ import DefaultBackground from "../DefaultBackground";
 
 // App Asset
 import AppAsset from "@/core/AppAsset";
+import NavComponent from "../../../NavComponent";
 
 // Interface
 interface Props {
@@ -24,7 +25,8 @@ export default function PageNineteen({ setPage }: Props) {
   ];
 
   return (
-    <DefaultBackground>
+    <DefaultBackground
+      currPage={19}>
       <div className='w-full h-full relative z-10'>
 
         {/* Title */}
@@ -65,7 +67,13 @@ export default function PageNineteen({ setPage }: Props) {
             })
           }
         </div>
-
+        <div
+          className='absolute bottom-0 right-0'>
+          <NavComponent
+            setPage={setPage}
+            nextPage={20}
+            prevPage={18} />
+        </div>
       </div>
     </DefaultBackground>
   )

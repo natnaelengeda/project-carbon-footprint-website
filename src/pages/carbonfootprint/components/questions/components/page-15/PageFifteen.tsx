@@ -42,17 +42,18 @@ export default function PageFifteen({ setPage }: Props) {
 
   return (
     <QuestionsLayout
-      setPage={setPage}>
+      setPage={setPage}
+      currPage={15}>
       <div
-        className="relative z-10 w-full h-full mx-auto 2xl:container flex flex-col items-center justify-start gap-5 py-10 md:pt-[200px]">
+        className="relative z-10 w-full h-full mx-auto 2xl:container flex flex-col items-center justify-start gap-5 py-10 md:pt-[100px]">
 
         {/* Image Content */}
         <div
           className="w-full h-auto flex flex-col items-center justify-start gap-5 px-10">
           {/* Image */}
           <img
-            src={AppAsset.BannerTwentyFour}
-            className="w-[550px] h-[550px] object-cover" />
+            src={AppAsset.BannerTwentyOne}
+            className="w-[750px] h-[750px] object-contain" />
         </div>
 
         {/* Title */}
@@ -63,20 +64,20 @@ export default function PageFifteen({ setPage }: Props) {
             <div
               className="w-10 h-3 bg-pink-500">
             </div>
-            <p className="text-white text-[60px]">Water Usage</p>
+            <p className="text-white text-[60px]">Waste Disposal</p>
           </div>
-          <p className="text-[50px]">Watering the Garden</p>
+          <p className="text-[50px]">Waste Disposal</p>
         </div>
 
         {/* Options */}
         <div
           className="w-full h-auto flex flex-col items-start justify-start pl-40 pt-20 gap-10">
-          <p className="text-[30px]">
-            <span className="text-white">You use </span>
-            <span className="text-primary">Water for {selectedDays[0]} days</span>
-            <span className="text-white"> per week and </span>
-            <span className="text-primary">{selectedHours[0]} hours per day</span>
-          </p>
+          <div className="text-[38px] flex flex-row items-center justify-start gap-3">
+            <span className="text-white">You dispose </span>
+            <span className="text-primary">Waste</span>
+            <span className="text-white"> for</span>
+            <span className="text-primary">{selectedHours[0]} hours per week</span>
+          </div>
         </div>
       </div>
     </QuestionsLayout>

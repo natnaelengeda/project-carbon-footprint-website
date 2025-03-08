@@ -27,7 +27,8 @@ export default function PageSix({ setPage }: Props) {
     { id: 3, name: "LED Lighting", type: "led-lighting" },
   ]
   return (
-    <DefaultBackground>
+    <DefaultBackground
+      currPage={6}>
       <div className="relative z-10 w-full h-full mx-auto flex flex-col items-center justify-start gap-5 py-10 md:py-20">
 
         {/* Title */}
@@ -40,7 +41,7 @@ export default function PageSix({ setPage }: Props) {
             </div>
             <p className="text-white text-[60px]">Household Energy</p>
           </div>
-          <p className="text-[50px]">Lighting Usage</p>
+          <p className="text-[50px]">Electric Lighting Usage</p>
         </div>
 
         {/* Bottom Context */}

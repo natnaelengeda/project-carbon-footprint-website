@@ -14,13 +14,14 @@ import {
   // CarbonState,
 } from "@/state/carbon";
 import StackedProgressBar from "./components/StackedProgressBar";
+import QuestionsLayout from "../QuestionsLayout";
 
 // Interface
 interface Props {
   setPage: React.Dispatch<React.SetStateAction<number>>;
 }
 
-export default function PageTwentyTwo({ }: Props) {
+export default function PageTwentyTwo({ setPage }: Props) {
   const [name, setName] = useState<string>("");
 
   const socket: any = useSocket();
@@ -45,49 +46,9 @@ export default function PageTwentyTwo({ }: Props) {
   }, [socket]);
 
   return (
-    <div
-      style={{
-        backgroundImage: `url(${AppAsset.Background})`,
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-        backgroundRepeat: "no-repeat",
-        backgroundAttachment: "contain",
-        position: "relative",
-      }}
-      className="w-full h-full min-h-screen font-Urbanist"
-    >
-      {/* Background Overlay */}
-      <div
-        className="absolute inset-0"
-        style={{
-          backgroundColor: "rgba(0, 0, 0, 0.5)", // You can adjust the last value (0.5) to change opacity
-          zIndex: 1,
-        }}
-      />
+    <QuestionsLayout
+      setPage={setPage}>
       <div className="relative z-10 w-full h-full mx-auto 2xl:container flex flex-col items-center justify-start gap-5 py-10 md:py-[89px] ">
-        {/* Top */}
-        <div className="w-full flex flex-row items-center justify-between px-[106px] ">
-          <img
-            src={AppAsset.Logo}
-            style={{
-              width: "72px",
-              height: "109px",
-            }}
-            className="w-32 h-32 object-contain"
-          />
-
-          <div className="flex flex-row gap-4 items-center justify-center ">
-            <img
-              src={AppAsset.UserBlackIcon}
-              style={{
-                width: "72px",
-                height: "109px",
-              }}
-              className="w-32 h-32 object-contain"
-            />
-            <p className="text-white text-4xl font-bold">Abebe</p>
-          </div>
-        </div>
 
         {/* Center */}
         <div className="w-full flex flex-col items-center justify-center gap-8 mb-20 ">
@@ -96,15 +57,13 @@ export default function PageTwentyTwo({ }: Props) {
             style={{
               width: "400px",
               height: "400px",
-            }}
-          />
+            }} />
 
           <span
             style={{
               fontSize: "48px",
             }}
-            className="flex flex-col items-center justify-center gap-2 text-white font-semibold"
-          >
+            className="flex flex-col items-center justify-center gap-2 text-white font-semibold">
             <h1 className=" font-bold">Excellent</h1>
           </span>
           <span className="flex flex-col items-center justify-center gap-2 text-white font-semibold">
@@ -114,6 +73,7 @@ export default function PageTwentyTwo({ }: Props) {
             </h2>
           </span>
         </div>
+
         <div className="gap-20 w-full flex flex-col items-center justify-center mb-20 ">
           <div className="w-5/6 flex flex-col items-center justify-center gap-2 ">
             <span className=" text-white ">
@@ -132,6 +92,7 @@ export default function PageTwentyTwo({ }: Props) {
             <StackedProgressBar />
           </div>
         </div>
+
         {/* Bottom */}
         <div>
           <div className=" w-full flex flex-col items-center justify-between px-[106px] gap-8 ">
@@ -141,21 +102,9 @@ export default function PageTwentyTwo({ }: Props) {
                 the button below.
               </p>
             </span>
-            <div
-              style={{ fontSize: "30px" }}
-              className="flex flex-row gap-10 items-center justify-center  "
-            >
-              <div className="text-primary p-5 px-10 border-2 rounded-full border-primary ">
-                Insights
-              </div>
-              <div className="text-primary p-5 px-10 border-2 rounded-full border-primary ">
-                Finish
-              </div>
-            </div>
           </div>
-          <div></div>
         </div>
       </div>
-    </div>
+    </QuestionsLayout>
   );
 }

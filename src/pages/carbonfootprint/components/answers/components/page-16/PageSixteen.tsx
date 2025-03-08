@@ -5,6 +5,7 @@ import DefaultBackground from "../DefaultBackground";
 
 // App Asset
 import AppAsset from "@/core/AppAsset";
+import NavComponent from "../../../NavComponent";
 
 // Interface
 interface Props {
@@ -24,7 +25,8 @@ export default function PageSixteen({ setPage }: Props) {
   ];
 
   return (
-    <DefaultBackground>
+    <DefaultBackground
+      currPage={16}>
       <div className='w-full h-full relative z-10'>
         {/* Title */}
         <div
@@ -54,7 +56,7 @@ export default function PageSixteen({ setPage }: Props) {
                 } else {
                   setSelectedItems(prev => {
                     const withoutNone = prev.filter(t => t !== "none");
-                    return prev.includes(type) 
+                    return prev.includes(type)
                       ? withoutNone.filter(t => t !== type)
                       : [...withoutNone, type];
                   });
@@ -62,6 +64,14 @@ export default function PageSixteen({ setPage }: Props) {
               }}
             />
           ))}
+        </div>
+
+        <div
+          className='absolute bottom-0 right-0'>
+          <NavComponent
+            setPage={setPage}
+            nextPage={17}
+            prevPage={15} />
         </div>
       </div>
     </DefaultBackground>
@@ -86,7 +96,7 @@ const CheckboxComponent = ({ item, isSelected, onToggle }: CheckboxItemProps) =>
         onClick={() => onToggle(item.type)}>
         <img
           src={isSelected ? AppAsset.CheckedIcon : AppAsset.UncheckedIcon}
-          className='w-7 md:w-[36px] md:h-[36px] object-contain' 
+          className='w-7 md:w-[36px] md:h-[36px] object-contain'
           alt={isSelected ? "Checked" : "Unchecked"}
         />
         <p className='text-xl md:text-[45px] font-normal'>
