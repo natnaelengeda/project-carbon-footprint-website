@@ -1,6 +1,5 @@
 
 import { useEffect, useState } from "react";
-
 import { useTranslation } from "react-i18next";
 
 // Socket.io
@@ -12,14 +11,13 @@ import AppAsset from "@/core/AppAsset";
 // Validate Questions
 import { ValidateQuestions } from "@/pages/carbonfootprint/components/questions/components/VallidateQuestions";
 
-
 // Interface
 interface Props {
   setPage: React.Dispatch<React.SetStateAction<number>>;
 }
 
 export default function PageZero({ setPage }: Props) {
-  const [language, setLanguage] = useState("English");
+  const [language, setLanguage] = useState("english");
   const mode = localStorage.getItem("page_mode");
 
   // React Language Packaged;
@@ -63,16 +61,15 @@ export default function PageZero({ setPage }: Props) {
       const check = ValidateQuestions(mode, parseData.mode);
 
       if (check) {
-        const language = parseData.language == "amharic" ? "አማርኛ" : "English";
+        const language = parseData.language == "አማርኛ" ? "አማርኛ" : "english";
         setLanguage(language);
 
-        if (parseData.language == "amharic") {
+        if (parseData.language == "አማርኛ") {
           changeLanguage("carbon", "am");
         } else {
           changeLanguage("carbon", "en");
         }
       }
-      // console.log(parseData);
     });
 
 
@@ -87,7 +84,20 @@ export default function PageZero({ setPage }: Props) {
     });
   }, [socket]);
 
-
+  const choices = [
+    {
+      id: 0,
+      label: "english",
+      name: "English",
+      isSelected: language === "english"
+    },
+    {
+      id: 1,
+      label: "አማርኛ",
+      name: "አማርኛ",
+      isSelected: language === "amharic"
+    }
+  ]
 
   return (
     <div
@@ -109,39 +119,81 @@ export default function PageZero({ setPage }: Props) {
           zIndex: 1,
         }}
       />
-      <div className="relative z-10 w-full h-full mx-auto 2xl:container flex flex-col items-center justify-start gap-5 py-10 md:py-[89px]">
+      <div className="relative z-10 w-full h-full mx-auto 2xl:container flex flex-col items-center justify-start gap-5 py-10 font-Urbanist">
 
 
         {/* Center */}
         <div
-          className='w-full flex flex-col items-center justify-center gap-14 pt-[186px]'>
+          className='w-full flex flex-col items-center justify-center gap-14 pt-[125px]'>
 
           {/* Title */}
           <div className="flex flex-col items-center justify-start gap-2 md:gap-[111px]">
             <img
               src={AppAsset.Logo}
               style={{
-                width: '146px',
-                height: '222px',
+                width: '200px',
+                height: '304px',
               }}
               className="h-auto object-contain" />
-            <p
-              className="text-2xl md:text-[64px] font-semibold text-white">
-              {t("carbon.choose_language", { lng: sectionLanguage.carbon })}
+            <div className="flex flex-col items-center justify-center gap-10">
+              <p
+                className="text-2xl md:text-[64px] font-semibold text-white">
+                {t("carbon.welcome_to", { lng: sectionLanguage.carbon })}
+              </p>
+              <p
+                className="text-2xl md:text-[64px] font-semibold text-white">
+                {t("carbon.carbon_footprint", { lng: sectionLanguage.carbon })}
+              </p>
+            </div>
+          </div>
+
+          <p className="text-white text-2xl md:text-[44px] pt-20">
+            {t("carbon.language", { lng: sectionLanguage.carbon })}
+          </p>
+
+          {/* Choice */}
+          <div
+            className="w-full md:w-[640px] flex flex-col items-start justify-start gap-10 md:gap-[80px] md:pt-[107px] px-3 md:px-0 text-white">
+            {
+              choices.map((choice, index) => (
+                <ChoiceButton
+                  key={index}
+                  choice={choice}
+                  index={index}
+                  selectedLanguage={language} />
+              ))}
+          </div>
+
+          {/* Choosen Lanuage */}
+          <div>
+            <p className="absolute bottom-0 left-0 w-full mx-auto flex items-center justify-center text-white text-2xl md:text-[44px] pt-20 pb-[175px] gap-4">
+              <span
+                className="font-bold text-primary">
+                {language == "english" || language == "English" ? "English" : "አማርኛ"}
+              </span>
+              {t("carbon.isTheSelectedLanguage", { lng: sectionLanguage.carbon })}
             </p>
           </div>
 
-          {/* Answer */}
-          <div className="flex flex-col items-center justify-center gap-2 pt-80">
-            <span className="px-10 py-10 bg-primary rounded-xl">
-              <p
-                className="text-white text-2xl md:text-[64px] font-semibold">
-                {language}
-              </p>
-            </span>
-          </div>
         </div>
       </div>
     </div>
+  )
+}
+
+const ChoiceButton = ({ choice, index, selectedLanguage }: { choice: any, index: number, selectedLanguage: string }) => {
+  return (
+    <button
+      key={index}
+      onClick={choice.onClick}
+      className={`w-full h-20 md:w-[650px] md:h-[88px]  border border-primary flex flex-row items-center justify-start gap-5 md:gap-[32px] px-3 md:px-[33px] rounded-lg ${choice.label == selectedLanguage ? "border-4 bg-primary" : "bg-transparent"}`}>
+      <img
+        src={choice.label == selectedLanguage ? AppAsset.RadioOneWHite : AppAsset.RadioOffIcon}
+        className="w-7 h-auto object-contain" />
+      <p
+        className={`text-2xl md:text-[36px] ${choice.isSelected ? "font-bold" : ""}`}>
+        {choice.name}
+      </p>
+    </button>
   )
 }

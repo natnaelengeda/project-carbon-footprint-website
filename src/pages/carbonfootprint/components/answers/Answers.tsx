@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 // Pages
 import PageZero from './components/page-0';
@@ -31,6 +31,16 @@ export default function Answers() {
 
   const [personalTransports, setPersonalTransports] = useState<string[]>([]);
   const [pubilcTransports, setPublicTransports] = useState<string[]>([]);
+
+  useEffect(() => {
+    const language = localStorage.getItem("language");
+    if (!language) {
+      localStorage.setItem("language", JSON.stringify({
+        carbon: "en",
+        pledge: "en"
+      }));
+    }
+  }, []);
 
   return (
     <div className="w-full h-screen">

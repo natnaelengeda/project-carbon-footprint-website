@@ -2,6 +2,10 @@
   "carbon": {
     "welcome": "Welcome",
     "lang": "English",
+    "welcome_to_carbon_footprint": "Welcome to Carbon Footprint",
+    "welcome_to": "Welcome to",
+    "carbon_footprint": "Carbon Footprint",
+    "language": "Language",
     "start": "Start",
     "startAgain": "Start Again",
     "skip": "Skip",
@@ -39,7 +43,8 @@
     "incandecent_light_bulb": "Incandecent Light Bulb",
     "led_light_bulb": "LED Light Bulb",
     "cfl_light_bulb": "CFL Light Bulb",
-    "florecent_light_bulb": "Fluorescent Light Bulb"
+    "florecent_light_bulb": "Fluorescent Light Bulb",
+    "isTheSelectedLanguage": "is the selected language"
   },
   "pledge": {
     "welcome": "Welcome to Your personal pledge",

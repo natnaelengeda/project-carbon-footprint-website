@@ -71,7 +71,7 @@ export default function PageZero({ setPage }: Props) {
     changeLanguage("carbon", "am");
 
     socket?.emit("language-change-option-server", JSON.stringify({
-      language: "amharic",
+      language: "አማርኛ",
       section: "carbon",
       mode: mode,
       page_number: "0",
@@ -132,16 +132,13 @@ export default function PageZero({ setPage }: Props) {
         <div
           className="w-full flex flex-col items-center justify-start gap-5 md:gap-[111px]">
           <p className="text-white text-2xl md:text-[64px] font-bold">
-            Welcome to Carbon Footprint
+            {t("carbon.welcome_to_carbon_footprint", { lng: sectionLanguage.carbon })}
           </p>
           <p
             className="text-white text-2xl md:text-[44px] font-bold">
-            Choose language
+            {t("carbon.choose_language", { lng: sectionLanguage.carbon })}
           </p>
-
         </div>
-
-
 
         {/* Choice */}
         <div
@@ -160,7 +157,7 @@ export default function PageZero({ setPage }: Props) {
           className="w-full flex items-center justify-end pt-28 md:pt-[108px]">
           <button
             onClick={changePage}
-            className="bg-primary hover:opacity-70 flex flex-row items-center justify-end md:w-[303px] md:h-[100px] rounded-full gap-3 md:gap-[60.4px] md:px-[26.45px] px-5 py-3">
+            className="bg-primary hover:opacity-70 flex flex-row items-center justify-end md:w-[303px] md:h-[100px] rounded-full gap-3 md:gap-[45px] md:pl-[26.45px] px-10 py-3">
             <p
               className="font-semibold text-2xl md:text-[34px] text-white">
               {t("carbon.start", { lng: sectionLanguage.carbon })}
@@ -170,9 +167,7 @@ export default function PageZero({ setPage }: Props) {
               className="w-5 md:w-[36px] h-auto object-contain" />
           </button>
         </div>
-
       </div>
-
     </div>
   )
 }

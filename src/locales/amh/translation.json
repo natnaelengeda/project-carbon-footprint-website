@@ -1,7 +1,11 @@
 {
   "carbon": {
     "welcome": "እንኳን ደህና መጣህ",
+    "welcome_to_carbon_footprint": "ወደ ካርቦን አሻራ እንኳን በደህና መጡ",
+    "welcome_to": "ወደ ካርቦን አሻራ",
+    "carbon_footprint": "እንኳን በደህና መጡ",
     "lang": "Amharic",
+    "language": "ቋንቋ",
     "start": "ጀምር",
     "choose_language": "ቋንቋ ይምረጡ",
     "project_title_1": "ወደ ፕሮጀክት ካርቦን Lorem Ipsum",
@@ -22,7 +26,8 @@
     "select_hourly_usage_per_day": "በቀን የሰዓት አጠቃቀምን ይምረጡ",
     "electric_air_conditioning": "የኤሌክትሪክ አየር ማቀዝቀዣ",
     "charcoal": "ከሰል",
-    "i_dont_use_any_energy": "ለማሞቅ/ለማቀዝቀዝ ምንም አይነት ሃይል አልጠቀምም።"
+    "i_dont_use_any_energy": "ለማሞቅ/ለማቀዝቀዝ ምንም አይነት ሃይል አልጠቀምም።",
+    "isTheSelectedLanguage": "ቋንቋ መርጠዋል"
   },
   "pledge": {
     "welcome": "ዛፎችን ለመትከል ቃል ለመግባት እንኳን ደህና መጡ",
