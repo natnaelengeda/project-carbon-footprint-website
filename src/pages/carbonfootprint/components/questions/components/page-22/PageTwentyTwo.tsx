@@ -1,18 +1,6 @@
 // AppAsset
 import AppAsset from "@/core/AppAsset";
-import { useEffect, useState } from "react";
 
-// Socket
-import { useSocket } from "@/context/SocketProvider";
-
-// React Redux
-import { useDispatch } from "react-redux";
-
-// State
-import {
-  addName,
-  // CarbonState,
-} from "@/state/carbon";
 import StackedProgressBar from "./components/StackedProgressBar";
 import QuestionsLayout from "../QuestionsLayout";
 
@@ -22,28 +10,9 @@ interface Props {
 }
 
 export default function PageTwentyTwo({ setPage }: Props) {
-  const [name, setName] = useState<string>("");
 
-  const socket: any = useSocket();
 
-  // State
-  const dispatch = useDispatch();
 
-  useEffect(() => {
-    socket?.on("name-change-client-1", (data: any) => {
-      const parsedData = JSON.parse(data);
-      const id = parsedData.id;
-      const name = parsedData.name;
-
-      setName(parsedData.name);
-      dispatch(
-        addName({
-          id: id,
-          name: name,
-        })
-      );
-    });
-  }, [socket]);
 
   return (
     <QuestionsLayout

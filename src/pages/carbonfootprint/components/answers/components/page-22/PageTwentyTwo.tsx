@@ -2,10 +2,10 @@ import React from 'react'
 
 // Background
 import DefaultBackground from '../DefaultBackground';
-import NavComponent from '../../../NavComponent';
+// import NavComponent from '../../../NavComponent';
 import AppAsset from '@/core/AppAsset';
 import Section from '@/components/Section';
-import { ethiopiaFootprintData } from '@/data/sectionData';
+// import { ethiopiaFootprintData } from '@/data/sectionData';
 import { useSocket } from '@/context/SocketProvider';
 
 // Interface

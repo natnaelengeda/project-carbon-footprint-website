@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 
 // AppAsset
 import AppAsset from '@/core/AppAsset';
@@ -6,9 +6,9 @@ import AppAsset from '@/core/AppAsset';
 // Background
 import DefaultBackground from '../DefaultBackground';
 import { useSocket } from '@/context/SocketProvider';
-import { useSelector } from 'react-redux';
-import { mapData } from '@/utils/convertDataFunc';
-import axios from '@/utils/axios';
+// import { useSelector } from 'react-redux';
+// import { mapData } from '@/utils/convertDataFunc';
+// import axios from '@/utils/axios';
 
 // Interface
 interface Props {
@@ -19,61 +19,60 @@ export default function PageTwenty({ setPage }: Props) {
   const socket = useSocket();
   const room = localStorage.getItem("room");
 
-  const carbon = useSelector((state: any) => state.carbon);
-  const data = mapData(carbon);
+  // const carbon = useSelector((state: any) => state.carbon);
+  // const data = mapData(carbon);
 
-  const [loading, setLoading] = useState<boolean>(true);
-
-
-  const [allData, setAllData] = useState<number>(0);
-
-  const [waterUsage, setWaterUsage] = useState<number>(0);
-  const [foodWaste, setFoodWaste] = useState<number>(0);
-  const [transport, setTransport] = useState<number>(0);
-  const [diet, setDiet] = useState<number>(0);
-  const [waste, setWaste] = useState<number>(0);
-  const [energyUsage, setEnergyUsage] = useState<number>(0);
-
-  const sendFunction = () => {
-    axios.post("/api/v1/carbonFootPrint", data)
-      .then((response) => {
-        const data = response.data;
-        var allSum = 0;
-        allSum = data.dietAndFood + data.foodWastage + data.householdEnergy + data.transportationMode + data.wasteDisposal + data.waterUsage;
-
-        setAllData(data);
-
-        var waterUsage = (data.waterUsage / allSum) * 100;
-        var foodWaste = (data.foodWastage / allSum) * 100;
-        var transport = (data.transportationMode / allSum) * 100;
-        var diet = (data.dietAndFood / allSum) * 100;
-        var waste = (data.wasteDisposal / allSum) * 100;
-        var energyUsage = (data.householdEnergy / allSum) * 100;
-
-        setWaterUsage(waterUsage);
-        setFoodWaste(foodWaste);
-        setTransport(transport);
-        setDiet(diet);
-        setWaste(waste);
-        setEnergyUsage(energyUsage);
-
-        console.table({
-          waterUsage,
-          foodWaste,
-          transport,
-          diet,
-          waste,
-          energyUsage
-        });
-
-        setLoading(false);
-      })
-  }
+  // const [loading, setLoading] = useState<boolean>(true);
 
 
-  useEffect(() => {
-    sendFunction();
-  }, []);
+  // const [allData, setAllData] = useState<number>(0);
+
+  // const [waterUsage, setWaterUsage] = useState<number>(0);
+  // const [foodWaste, setFoodWaste] = useState<number>(0);
+  // const [transport, setTransport] = useState<number>(0);
+  // const [diet, setDiet] = useState<number>(0);
+  // const [waste, setWaste] = useState<number>(0);
+  // const [energyUsage, setEnergyUsage] = useState<number>(0);
+
+  // const sendFunction = () => {
+  //   axios.post("/api/v1/carbonFootPrint", data)
+  //     .then((response) => {
+  //       const data = response.data;
+  //       var allSum = 0;
+  //       allSum = data.dietAndFood + data.foodWastage + data.householdEnergy + data.transportationMode + data.wasteDisposal + data.waterUsage;
+
+  //       setAllData(data);
+
+  //       var waterUsage = (data.waterUsage / allSum) * 100;
+  //       var foodWaste = (data.foodWastage / allSum) * 100;
+  //       var transport = (data.transportationMode / allSum) * 100;
+  //       var diet = (data.dietAndFood / allSum) * 100;
+  //       var waste = (data.wasteDisposal / allSum) * 100;
+  //       var energyUsage = (data.householdEnergy / allSum) * 100;
+
+  //       setWaterUsage(waterUsage);
+  //       setFoodWaste(foodWaste);
+  //       setTransport(transport);
+  //       setDiet(diet);
+  //       setWaste(waste);
+  //       setEnergyUsage(energyUsage);
+
+  //       console.table({
+  //         waterUsage,
+  //         foodWaste,
+  //         transport,
+  //         diet,
+  //         waste,
+  //         energyUsage
+  //       });
+
+  //       setLoading(false);
+  //     })
+  // }
+
+  // useEffect(() => {
+  //   sendFunction();
+  // }, []);
 
   return (
     <DefaultBackground>

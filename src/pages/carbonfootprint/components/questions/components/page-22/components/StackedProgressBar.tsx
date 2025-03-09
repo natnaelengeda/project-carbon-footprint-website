@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 type Progress = number[];
 
 const StackedProgressBar: React.FC = () => {
@@ -10,6 +10,10 @@ const StackedProgressBar: React.FC = () => {
 
   // Labels for each segment
   const labels = ["You", "Global"];
+
+  useEffect(() => {
+    setProgress([10, 20]);
+  }, []);
 
   return (
     <div className="w-full mx-auto">

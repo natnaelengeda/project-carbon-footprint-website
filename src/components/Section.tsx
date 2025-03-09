@@ -1,5 +1,4 @@
 import React from 'react';
-import AppAsset from "@/core/AppAsset";
 
 interface ListItem {
   icon: string;
