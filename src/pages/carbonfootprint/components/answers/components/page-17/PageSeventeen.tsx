@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 // Default Background
 import DefaultBackground from "../DefaultBackground";
@@ -6,6 +6,9 @@ import DefaultBackground from "../DefaultBackground";
 // App Asset
 import AppAsset from "@/core/AppAsset";
 import NavComponent from "../../../NavComponent";
+import { useSocket } from "@/context/SocketProvider";
+import { useDispatch } from "react-redux";
+import { addWaterUsage } from "@/state/carbon";
 
 // Interface
 interface Props {
@@ -19,6 +22,28 @@ export default function PageSeventeen({ setPage }: Props) {
     { id: 0, name: "Washing Machine", type: "washing-machine" },
     { id: 1, name: "Handwash", type: "handwash" },
   ];
+
+  const socket = useSocket();
+  const dispatch = useDispatch();
+  const room = localStorage.getItem("room");
+
+  useEffect(() => {
+    socket?.emit("page-change-send-data-server", JSON.stringify({
+      room: room,
+      page: "page-17",
+      checkboxItems: selectedItems.join(',')
+    }));
+
+    dispatch(
+      addWaterUsage({
+        id: 1,
+        name: "washing-clothes",
+        value: 1,
+        washing_machine: selectedItems.includes("washing-machine"),
+        handwash: selectedItems.includes("handwash"),
+      }));
+
+  }, [selectedItems]);
 
   return (
     <DefaultBackground

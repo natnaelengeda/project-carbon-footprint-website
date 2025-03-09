@@ -1,10 +1,13 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 // Layout
 import QuestionsLayout from "../QuestionsLayout";
 
 // AppAsset
 import AppAsset from "@/core/AppAsset";
+import { useDispatch } from "react-redux";
+import { useSocket } from "@/context/SocketProvider";
+import { addTransportationMode } from "@/state/carbon";
 
 // Interface
 interface Props {
@@ -14,6 +17,32 @@ interface Props {
 export default function PageTen({ setPage }: Props) {
   const [km, setKm] = useState(0);
   const [days, setDays] = useState(0);
+
+  const dispatch = useDispatch();
+  const socket = useSocket();
+
+  useEffect(() => {
+    socket?.on("page-change-send-data-client", (temp: any) => {
+      const data = JSON.parse(temp);
+
+      if (data.page == "page-10") {
+        setKm(data.slider1);
+        setDays(data.slider2);
+
+        dispatch(
+          addTransportationMode({
+            id: 5,
+            name: "walking",
+            selected: true,
+            value: data.slider1,
+            frequency: data.slider2,
+          })
+        );
+
+      }
+
+    });
+  }, [socket]);
 
   return (
     <QuestionsLayout

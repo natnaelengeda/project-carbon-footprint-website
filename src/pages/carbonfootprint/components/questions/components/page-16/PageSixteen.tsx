@@ -7,7 +7,7 @@ import { useSocket } from "@/context/SocketProvider";
 import { useDispatch } from "react-redux";
 
 // State
-import { addHouseholdEnegryCategory, addHouseholdEnergy } from '@/state/carbon';
+import { addWaste } from '@/state/carbon';
 
 // Components
 import QuestionsLayout from "../QuestionsLayout";
@@ -20,27 +20,48 @@ interface Props {
   setPage: React.Dispatch<React.SetStateAction<number>>;
 }
 
-interface InData {
-  room: string;
-  slider1: number;
-  slider2: number;
-  type: string;
-}
-
 export default function PageSixteen({ setPage }: Props) {
 
   const [selectedTypes, setSelectedTypes] = useState<string[]>([]);
-  const [selectedDays, setSelectedDays] = useState<number[]>([0, 0, 0, 0]);
-  const [selectedHours, setSelectedHours] = useState<number[]>([0, 0, 0, 0]);
 
   const buttons = [
     { id: 0, name: "Plastics", type: "plastics" },
     { id: 1, name: "Paper", type: "paper" },
-    { id: 2, name: "Glass/Bottle", type: "glass-bottle" },
-    { id: 3, name: "Organic Material", type: "organic-material" },
-    { id: 3, name: "Metals", type: "metals" },
-    { id: 3, name: "None", type: "none" },
+    { id: 2, name: "Glass/bottle", type: "glass" },
+    { id: 3, name: "Organic material", type: "organic" },
+    { id: 4, name: "Metals", type: "metals" },
+    { id: 5, name: "None", type: "none" }
   ];
+
+  const socket = useSocket();
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    socket?.on("page-change-send-data-client", (temp: any) => {
+      const data = JSON.parse(temp);
+
+      if (data.page == "page-16") {
+        setSelectedTypes(data.checkboxItems.split(','));
+      }
+    });
+  }, [socket]);
+
+  useEffect(() => {
+    dispatch(
+      addWaste({
+        id: 2,
+        name: "recycling-habits",
+        option: "yes",
+        value: 1,
+        paper: selectedTypes.includes("paper"),
+        plastic: selectedTypes.includes("plastics"),
+        bottle: selectedTypes.includes("glass"),
+        metal: selectedTypes.includes("metals"),
+        organic: selectedTypes.includes("organic"),
+        none: selectedTypes.includes("none"),
+      }));
+  }, [selectedTypes]);
+
 
   return (
     <QuestionsLayout
@@ -80,15 +101,10 @@ export default function PageSixteen({ setPage }: Props) {
               return (
                 <CheckboxComponent
                   key={index}
-                  id={index}
                   selectedTypes={selectedTypes}
                   type={button.type}
                   text={button.name}
-                  selectedDays={selectedDays}
-                  selectedHours={selectedHours}
-                  setSelectedTypes={setSelectedTypes}
-                  setSelectedDays={setSelectedDays}
-                  setSelectedHours={setSelectedHours} />
+                />
               );
             })
           }
@@ -99,138 +115,24 @@ export default function PageSixteen({ setPage }: Props) {
 }
 
 interface ICheckboxComponent {
-  id: number,
   selectedTypes: string[],
   type: string,
   text: string,
-  selectedDays: number[],
-  selectedHours: number[],
-  setSelectedTypes: any,
-  setSelectedDays: any,
-  setSelectedHours: any,
+
 }
 
 const CheckboxComponent = (
   {
-    id,
     selectedTypes,
     type,
     text,
-    selectedDays,
-    selectedHours,
-    setSelectedTypes,
-    setSelectedDays,
-    setSelectedHours
   }: ICheckboxComponent) => {
-
-  const socket: any = useSocket();
-
-  // State
-  const dispatch = useDispatch();
-
 
   const checkSelectedTypes = () => {
     return selectedTypes.includes(type);
   }
 
-  const addRemoveTyeps = () => {
-    const check = selectedTypes.includes(type);
-    console.log(check);
-
-    if (check) {
-      const newSelectedTypes = selectedTypes.filter((item: any) => item !== type); // Remove the item immutably
-      setSelectedTypes(newSelectedTypes);
-    } else {
-      setSelectedTypes([...selectedTypes, type]); // Add the item immutably
-    }
-  }
-
-  const updateSelectedDays = ({ index, value }: { index: number, value: number }) => {
-    setSelectedDays((prevSelectedDays: any) => {
-      const newSelectedDays = [...prevSelectedDays];
-      newSelectedDays[index] = value;
-      return newSelectedDays;
-    });
-  };
-
-  const updateSelectedHours = ({ index, value }: { index: number, value: number }) => {
-    setSelectedHours((prevSelectedHours: any) => {
-      const newSelectedHours = [...prevSelectedHours];
-      newSelectedHours[index] = value;
-      return newSelectedHours;
-    });
-  };
-
   const check: boolean = checkSelectedTypes();
-
-  useEffect(() => {
-    socket?.on("page-update-slider-client", (temp: any) => {
-      const data: InData = JSON.parse(temp);
-
-      setSelectedTypes((prevSelectedTypes: any) => {
-        const checkSelected = prevSelectedTypes.includes(data.type);
-
-        if (!checkSelected) {
-          return [...prevSelectedTypes, data.type]; // Add the item immutably
-        }
-
-        return prevSelectedTypes;
-      });
-
-      dispatch(
-        addHouseholdEnergy({
-          id: 2,
-          name: "cooking",
-          selected: true,
-          value: 1
-        })
-      );
-
-      dispatch(
-        addHouseholdEnegryCategory({
-          parent_id: 2,
-          category_id:
-            data.type == "electric-stove" ? 1 :
-              data.type == "gas-stove" ? 2 :
-                data.type == "charcoal-stove" ? 3 :
-                  4,
-          id: data.type == "electric-stove" ? 1 :
-            data.type == "gas-stove" ? 2 :
-              data.type == "charcoal-stove" ? 3 :
-                4,
-          name: data.type == "electric-stove" ? "cooking-electric-stove" :
-            data.type == "gas-stove" ? "cooking-gas-stove" :
-              data.type == "charcoal-stove" ? "cooking-charcoal" :
-                "cooking-wood-stove",
-          selected: true,
-          value: data.slider1,
-          frequency: data.slider2,
-        })
-      );
-
-
-
-      updateSelectedDays({
-        index: data.type == "electric-stove" ? 0 :
-          data.type == "gas-stove" ? 1 :
-            data.type == "charcoal-stove" ? 2 :
-              data.type == "wood-stove" ? 3 : 0,
-        value: data.slider1
-      });
-
-      updateSelectedHours({
-        index: data.type == "electric-stove" ? 0 :
-          data.type == "gas-stove" ? 1 :
-            data.type == "charcoal-stove" ? 2 :
-              data.type == "wood-stove" ? 3 : 0,
-        value: data.slider2
-      });
-    });
-
-  }, [socket]);
-
-  console.log(selectedTypes)
-
 
   return (
     <div
@@ -238,24 +140,12 @@ const CheckboxComponent = (
       <div
         className='flex flex-row items-center justify-start gap-3 md:gap-[20px] text-white'>
         <img
-          onClick={() => {
-            addRemoveTyeps();
-          }}
           src={check ? AppAsset.CheckedIcon : AppAsset.UncheckedIcon}
           className='w-7 md:w-[40px] md:h-[40px] object-contain cursor-pointer' />
         <p
           className='text-xl md:text-[45px] font-normal'>
           {text}
         </p>
-      </div>
-
-      {/* Usage */}
-      <div
-        style={{
-          display: check ? "flex" : "none"
-        }}
-        className="pr-10">
-        <p className="text-[30px]">You dispose <span className="text-primary">Plastics for {selectedDays[id]} days</span> per week.</p>
       </div>
     </div>
   );

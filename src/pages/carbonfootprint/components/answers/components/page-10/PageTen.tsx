@@ -7,8 +7,11 @@ import { Slider } from "@mantine/core";
 import DefaultBackground from "../DefaultBackground";
 
 // App Asset
-import AppAsset from "@/core/AppAsset";
+
 import NavComponent from "../../../NavComponent";
+import { useDispatch } from "react-redux";
+import { addTransportationMode } from "@/state/carbon";
+import { useSocket } from "@/context/SocketProvider";
 
 // Interface
 interface Props {
@@ -16,11 +19,6 @@ interface Props {
 }
 
 export default function PageTen({ setPage }: Props) {
-  const [selectedType, setSelectedType] = useState<string>("gas-powered");
-  const [selectedKMs, setSelectedKMs] = useState<number>(0);
-  const [selectedDays, setSelectedDays] = useState<number>(0);
-
-  const [currentlySelected, setCurrentlySelected] = useState<number>(0);
 
   const buttons = [
     { id: 0, name: "Walking", type: "walking", extra: "Gas Powered Personal Vehicle - Automobile" },
@@ -50,22 +48,10 @@ export default function PageTen({ setPage }: Props) {
           className="w-full h-auto flex flex-col items-start justify-start pl-40 pt-20 gap-16">
           {
             buttons &&
-            buttons.map((button: { id: number, name: string, type: string, extra: string }, index: number) => {
+            buttons.map((_, index: number) => {
               return (
                 <RadioButtonsComponent
-                  key={index}
-                  id={index}
-                  index={index}
-                  setSelectedType={setSelectedType}
-                  selectedType={selectedType}
-                  type={button.type}
-                  text={button.name}
-                  extraNote={button.extra}
-                  selectedDays={selectedDays}
-                  selectedKMs={selectedKMs}
-                  currentlySelected={currentlySelected}
-                  setCurrentlySelected={setCurrentlySelected}
-                />
+                  key={index} />
               );
             })
           }
@@ -85,42 +71,62 @@ export default function PageTen({ setPage }: Props) {
 }
 
 
-const RadioButtonsComponent = ({ id, setSelectedType, selectedType, type, text, selectedDays, selectedKMs, extraNote, currentlySelected, setCurrentlySelected }: any) => {
+const RadioButtonsComponent = () => {
   const [kms, setKms] = useState<number>(0);
   const [days, setDays] = useState<number>(0);
 
+  const dispatch = useDispatch();
+  const socket = useSocket();
+  const room = localStorage.getItem("room");
+
   const updateSlider1 = (e: any) => {
     setKms(e);
+
+    dispatch(
+      addTransportationMode({
+        id: 5,
+        name: "walking",
+        selected: true,
+        value: e,
+        frequency: days,
+      })
+    );
+
+    socket?.emit("page-change-send-data-server", JSON.stringify({
+      room: room,
+      slider1: e,
+      slider2: days,
+      page: "page-10"
+    }));
   }
 
   const updateSlider2 = (e: any) => {
     setDays(e);
+
+    dispatch(
+      addTransportationMode({
+        id: 5,
+        name: "walking",
+        selected: true,
+        value: kms,
+        frequency: e,
+      })
+    );
+
+    socket?.emit("page-change-send-data-server", JSON.stringify({
+      room: room,
+      slider1: kms,
+      slider2: e,
+      page: "page-10"
+    }));
   }
 
   return (
     <div
       className="w-full h-full flex flex-col items-start justify-start gap-5 text-white">
 
-      <div
-        className='flex flex-row items-center justify-start gap-3 md:gap-[20px] text-white'>
-        <img
-          onClick={() => {
-            setSelectedType(type);
-            setCurrentlySelected(id);
-          }}
-          src={selectedType == type ? AppAsset.RadioOnIcon : AppAsset.RadioOffIcon}
-          className='w-7 md:w-[36px] md:h-[36px] object-contain cursor-pointer' />
-        <p
-          className='text-xl md:text-[45px] font-normal'>
-          {text}
-        </p>
-      </div>
-
       {/* Days per week*/}
       <div
-        style={{
-          display: currentlySelected == id ? "block" : "none"
-        }}
         className='w-full h-auto pl-2 pr-5 md:pr-32 flex flex-col items-start justify-start gap-2 pt-10'>
         {/* Text */}
         <p className="text-[#efefef] text-lg md:text-[30px] pb-2 md:pb-4">
@@ -149,9 +155,6 @@ const RadioButtonsComponent = ({ id, setSelectedType, selectedType, type, text, 
 
       {/* Hours Per Day*/}
       <div
-        style={{
-          display: currentlySelected == id ? "block" : "none"
-        }}
         className='w-full h-auto pl-2 pr-5 md:pr-32 flex flex-col items-start justify-start gap-2 pt-5'>
         {/* Text */}
         <p className="text-[#efefef] text-lg md:text-[30px] pb-2 md:pb-4">

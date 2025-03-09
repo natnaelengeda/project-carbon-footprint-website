@@ -7,8 +7,10 @@ import { Slider } from "@mantine/core";
 import DefaultBackground from "../DefaultBackground";
 
 // App Asset
-import AppAsset from "@/core/AppAsset";
 import NavComponent from "../../../NavComponent";
+import { useSocket } from "@/context/SocketProvider";
+import { useDispatch } from "react-redux";
+import { addWaterUsage } from "@/state/carbon";
 
 // Interface
 interface Props {
@@ -16,13 +18,6 @@ interface Props {
 }
 
 export default function PageEighteen({ setPage }: Props) {
-  const [selectedType, setSelectedType] = useState<string>("poultry");
-  const [selectedDays, setSelectedDays] = useState<number>(0);
-  const [currentlySelected, setCurrentlySelected] = useState<number>(0);
-
-  const buttons = [
-    { id: 0, name: "Waste Disposal", type: "waste-disposal", extra: "Chicken and other poultry consumption" },
-  ];
 
   return (
     <DefaultBackground
@@ -46,26 +41,7 @@ export default function PageEighteen({ setPage }: Props) {
         {/* Options */}
         <div
           className="w-full h-auto flex flex-col items-start justify-start pl-40 pt-20 gap-16">
-          {
-            buttons &&
-            buttons.map((button: { id: number, name: string, type: string, extra: string }, index: number) => {
-              return (
-                <RadioButtonsComponent
-                  key={index}
-                  id={index}
-                  index={index}
-                  setSelectedType={setSelectedType}
-                  selectedType={selectedType}
-                  type={button.type}
-                  text={button.name}
-                  extraNote={button.extra}
-                  selectedDays={selectedDays}
-                  currentlySelected={currentlySelected}
-                  setCurrentlySelected={setCurrentlySelected}
-                />
-              );
-            })
-          }
+          <RadioButtonsComponent />
         </div>
 
         <div
@@ -81,17 +57,54 @@ export default function PageEighteen({ setPage }: Props) {
 }
 
 
-const RadioButtonsComponent = ({ id, setSelectedType, selectedType, type, text, selectedDays, extraNote, currentlySelected, setCurrentlySelected }: any) => {
+const RadioButtonsComponent = () => {
   const [days, setDays] = useState<number>(0);
   const [minutes, setMinutes] = useState<number>(0);
 
+  const socket = useSocket();
+  const dispatch = useDispatch();
+  const room = localStorage.getItem("room");
+
   const updateSlider = (e: any) => {
     setDays(e);
+
+    socket?.emit("page-change-send-data-server", JSON.stringify({
+      room: room,
+      slider1: e,
+      slider2: minutes,
+      page: "page-18"
+    }));
+
+    dispatch(
+      addWaterUsage({
+        id: 2,
+        name: "showers",
+        value: e,
+        frequency: minutes,
+      })
+    );
   }
 
   const updateSlider1 = (e: any) => {
     setMinutes(e);
+
+    socket?.emit("page-change-send-data-server", JSON.stringify({
+      room: room,
+      slider1: days,
+      slider2: e,
+      page: "page-18"
+    }));
+
+    dispatch(
+      addWaterUsage({
+        id: 2,
+        name: "showers",
+        value: days,
+        frequency: e,
+      })
+    );
   }
+
 
   return (
     <div
@@ -99,9 +112,6 @@ const RadioButtonsComponent = ({ id, setSelectedType, selectedType, type, text, 
 
       {/* Days per week*/}
       <div
-        style={{
-          display: currentlySelected == id ? "block" : "none"
-        }}
         className='w-full h-auto pl-2 pr-5 md:pr-32 flex flex-col items-start justify-start gap-2 pt-5'>
         {/* Text */}
         <p className="text-[#efefef] text-lg md:text-[30px] pb-2 md:pb-4">
@@ -130,9 +140,7 @@ const RadioButtonsComponent = ({ id, setSelectedType, selectedType, type, text, 
 
       {/* Minutes per day*/}
       <div
-        style={{
-          display: currentlySelected == id ? "block" : "none"
-        }}
+
         className='w-full h-auto pl-2 pr-5 md:pr-32 flex flex-col items-start justify-start gap-2 pt-5'>
         {/* Text */}
         <p className="text-[#efefef] text-lg md:text-[30px] pb-2 md:pb-4">

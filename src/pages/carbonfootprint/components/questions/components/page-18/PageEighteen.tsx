@@ -7,7 +7,7 @@ import { useSocket } from "@/context/SocketProvider";
 import { useDispatch } from "react-redux";
 
 // State
-import { addHouseholdEnegryCategory, addHouseholdEnergy } from '@/state/carbon';
+import { addWaterUsage } from '@/state/carbon';
 
 // Components
 import QuestionsLayout from "../QuestionsLayout";
@@ -20,23 +20,40 @@ interface Props {
   setPage: React.Dispatch<React.SetStateAction<number>>;
 }
 
-interface InData {
-  room: string;
-  slider1: number;
-  slider2: number;
-  type: string;
-}
 
 export default function PageEighteen({ setPage }: Props) {
 
   const [selectedTypes, setSelectedTypes] = useState<string[]>([]);
-  const [selectedDays, setSelectedDays] = useState<number[]>([0, 0, 0, 0]);
-  const [selectedHours, setSelectedHours] = useState<number[]>([0, 0, 0, 0]);
 
   const buttons = [
     { id: 0, name: "Washing Machine", type: "washing-machine" },
-    { id: 1, name: "Handwash", type: "hand-wash" },
+    { id: 1, name: "Handwash", type: "handwash" },
   ];
+
+  const socket = useSocket();
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    socket?.on("page-change-send-data-client", (temp: any) => {
+      const data = JSON.parse(temp);
+
+      if (data.page == "page-17") {
+        setSelectedTypes(data.checkboxItems.split(','));
+      }
+    });
+  }, [socket]);
+
+  useEffect(() => {
+    dispatch(
+      addWaterUsage({
+        id: 1,
+        name: "washing-clothes",
+        value: 1,
+        washing_machine: selectedTypes.includes("washing-machine"),
+        handwash: selectedTypes.includes("handwash"),
+      }));
+
+  }, [selectedTypes]);
 
   return (
     <QuestionsLayout
@@ -76,15 +93,10 @@ export default function PageEighteen({ setPage }: Props) {
               return (
                 <CheckboxComponent
                   key={index}
-                  id={index}
                   selectedTypes={selectedTypes}
                   type={button.type}
                   text={button.name}
-                  selectedDays={selectedDays}
-                  selectedHours={selectedHours}
-                  setSelectedTypes={setSelectedTypes}
-                  setSelectedDays={setSelectedDays}
-                  setSelectedHours={setSelectedHours} />
+                  setSelectedTypes={setSelectedTypes} />
               );
             })
           }
@@ -95,34 +107,19 @@ export default function PageEighteen({ setPage }: Props) {
 }
 
 interface ICheckboxComponent {
-  id: number,
   selectedTypes: string[],
   type: string,
   text: string,
-  selectedDays: number[],
-  selectedHours: number[],
   setSelectedTypes: any,
-  setSelectedDays: any,
-  setSelectedHours: any,
 }
 
 const CheckboxComponent = (
   {
-    id,
     selectedTypes,
     type,
     text,
-    selectedDays,
-    selectedHours,
     setSelectedTypes,
-    setSelectedDays,
-    setSelectedHours
   }: ICheckboxComponent) => {
-
-  const socket: any = useSocket();
-
-  // State
-  const dispatch = useDispatch();
 
 
   const checkSelectedTypes = () => {
@@ -131,7 +128,6 @@ const CheckboxComponent = (
 
   const addRemoveTyeps = () => {
     const check = selectedTypes.includes(type);
-    console.log(check);
 
     if (check) {
       const newSelectedTypes = selectedTypes.filter((item: any) => item !== type); // Remove the item immutably
@@ -141,92 +137,7 @@ const CheckboxComponent = (
     }
   }
 
-  const updateSelectedDays = ({ index, value }: { index: number, value: number }) => {
-    setSelectedDays((prevSelectedDays: any) => {
-      const newSelectedDays = [...prevSelectedDays];
-      newSelectedDays[index] = value;
-      return newSelectedDays;
-    });
-  };
-
-  const updateSelectedHours = ({ index, value }: { index: number, value: number }) => {
-    setSelectedHours((prevSelectedHours: any) => {
-      const newSelectedHours = [...prevSelectedHours];
-      newSelectedHours[index] = value;
-      return newSelectedHours;
-    });
-  };
-
   const check: boolean = checkSelectedTypes();
-
-  useEffect(() => {
-    socket?.on("page-update-slider-client", (temp: any) => {
-      const data: InData = JSON.parse(temp);
-
-      setSelectedTypes((prevSelectedTypes: any) => {
-        const checkSelected = prevSelectedTypes.includes(data.type);
-
-        if (!checkSelected) {
-          return [...prevSelectedTypes, data.type]; // Add the item immutably
-        }
-
-        return prevSelectedTypes;
-      });
-
-      dispatch(
-        addHouseholdEnergy({
-          id: 2,
-          name: "cooking",
-          selected: true,
-          value: 1
-        })
-      );
-
-      dispatch(
-        addHouseholdEnegryCategory({
-          parent_id: 2,
-          category_id:
-            data.type == "electric-stove" ? 1 :
-              data.type == "gas-stove" ? 2 :
-                data.type == "charcoal-stove" ? 3 :
-                  4,
-          id: data.type == "electric-stove" ? 1 :
-            data.type == "gas-stove" ? 2 :
-              data.type == "charcoal-stove" ? 3 :
-                4,
-          name: data.type == "electric-stove" ? "cooking-electric-stove" :
-            data.type == "gas-stove" ? "cooking-gas-stove" :
-              data.type == "charcoal-stove" ? "cooking-charcoal" :
-                "cooking-wood-stove",
-          selected: true,
-          value: data.slider1,
-          frequency: data.slider2,
-        })
-      );
-
-
-
-      updateSelectedDays({
-        index: data.type == "electric-stove" ? 0 :
-          data.type == "gas-stove" ? 1 :
-            data.type == "charcoal-stove" ? 2 :
-              data.type == "wood-stove" ? 3 : 0,
-        value: data.slider1
-      });
-
-      updateSelectedHours({
-        index: data.type == "electric-stove" ? 0 :
-          data.type == "gas-stove" ? 1 :
-            data.type == "charcoal-stove" ? 2 :
-              data.type == "wood-stove" ? 3 : 0,
-        value: data.slider2
-      });
-    });
-
-  }, [socket]);
-
-  console.log(selectedTypes)
-
 
   return (
     <div
@@ -245,14 +156,6 @@ const CheckboxComponent = (
         </p>
       </div>
 
-      {/* Usage */}
-      <div
-        style={{
-          display: check ? "flex" : "none"
-        }}
-        className="pr-10">
-        <p className="text-[30px]">You use <span className="text-primary">Water for {selectedDays[id]} days</span> per week.</p>
-      </div>
     </div>
   );
 }

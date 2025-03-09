@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 // Default Background
 import DefaultBackground from "../DefaultBackground";
@@ -6,6 +6,9 @@ import DefaultBackground from "../DefaultBackground";
 // App Asset
 import AppAsset from "@/core/AppAsset";
 import NavComponent from "../../../NavComponent";
+import { useDispatch } from "react-redux";
+import { useSocket } from "@/context/SocketProvider";
+import { addWaste } from "@/state/carbon";
 
 // Interface
 interface Props {
@@ -23,6 +26,34 @@ export default function PageSixteen({ setPage }: Props) {
     { id: 4, name: "Metals", type: "metals" },
     { id: 5, name: "None", type: "none" }
   ];
+
+  const socket = useSocket();
+  const dispatch = useDispatch();
+  const room = localStorage.getItem("room");
+
+  useEffect(() => {
+    socket?.emit("page-change-send-data-server", JSON.stringify({
+      room: room,
+      page: "page-16",
+      checkboxItems: selectedItems.join(',')
+    }));
+
+    dispatch(
+      addWaste({
+        id: 2,
+        name: "recycling-habits",
+        option: "yes",
+        value: 1,
+        paper: selectedItems.includes("paper"),
+        plastic: selectedItems.includes("plastics"),
+        bottle: selectedItems.includes("glass"),
+        metal: selectedItems.includes("metals"),
+        organic: selectedItems.includes("organic"),
+        none: selectedItems.includes("none"),
+      }));
+
+  }, [selectedItems]);
+
 
   return (
     <DefaultBackground
@@ -89,6 +120,7 @@ interface CheckboxItemProps {
 }
 
 const CheckboxComponent = ({ item, isSelected, onToggle }: CheckboxItemProps) => {
+
   return (
     <div className="w-full h-full flex flex-col items-start justify-start gap-5 text-white">
       <div

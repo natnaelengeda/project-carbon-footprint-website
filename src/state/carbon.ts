@@ -53,6 +53,8 @@ interface WasteDisposal {
   plastic?: boolean;
   bottle?: boolean;
   metal?: boolean;
+  organic?: boolean;
+  none?: boolean;
 }
 
 // Water Usage 
@@ -61,6 +63,8 @@ interface WaterUsage {
   name: string;
   value?: number;
   frequency?: number;
+  washing_machine?: boolean;
+  handwash?: boolean;
 }
 
 
@@ -323,6 +327,12 @@ export const carbonSlice = createSlice({
           name: action.payload.name || "",
           value: action.payload.value || 0,
           option: action.payload.option || "no",
+          paper: action.payload.paper || false,
+          plastic: action.payload.plastic || false,
+          bottle: action.payload.bottle || false,
+          metal: action.payload.metal || false,
+          organic: action.payload.organic || false,
+          none: action.payload.none || false,
         });
       }
     },
@@ -357,7 +367,9 @@ export const carbonSlice = createSlice({
           id: action.payload.id,
           name: action.payload.name || "",
           value: action.payload.value || 1,
-          frequency: action.payload.frequency || 1
+          frequency: action.payload.frequency || 1,
+          washing_machine: action.payload.washing_machine || false,
+          handwash: action.payload.handwash || false,
         })
       }
     },
@@ -423,7 +435,7 @@ export const {
   addDiet,
   deleteDiet,
 
-  // Waste
+  // Waste 
   addWaste,
   deleteWaste,
 
