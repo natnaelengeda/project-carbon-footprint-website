@@ -5,10 +5,37 @@ import { useSocket } from '@/context/SocketProvider';
 
 // AppAsset
 import AppAsset from '@/core/AppAsset'
+import { useDispatch } from 'react-redux';
+import { addTransportationMode } from '@/state/carbon';
 
 export default function LightRail() {
   const [km, setKm] = useState(0);
   const [days, setDays] = useState(0);
+
+  const dispatch = useDispatch();
+  const socket = useSocket();
+
+  useEffect(() => {
+    socket?.on("page-change-send-data-client", (temp: any) => {
+      const data: any = JSON.parse(temp);
+      if (data.page == "page-9" && data.vehicle == "light-rail") {
+        setKm(data.slider1);
+        setDays(data.slider2);
+
+        dispatch(
+          addTransportationMode({
+            id: 6,
+            name: "light-rail",
+            selected: true,
+            value: data.slider1,
+            frequency: data.slider2,
+          })
+        );
+
+      }
+    });
+
+  }, [socket]);
 
   return (
     <div
@@ -19,7 +46,7 @@ export default function LightRail() {
         className="w-full h-auto flex flex-col items-center justify-start gap-5 px-10">
         {/* Image */}
         <img
-          src={AppAsset.BannerSmallCar}
+          src={AppAsset.BannerTrain}
           className="w-[700px] h-[700px] object-contain" />
       </div>
 
@@ -33,7 +60,7 @@ export default function LightRail() {
           </div>
           <p className="text-white text-[60px]">Transportation Mode</p>
         </div>
-        <p className="text-[40px]">Public Transport = Light</p>
+        <p className="text-[40px]">Public Transport - Light Rail</p>
       </div>
 
       {/* Options */}

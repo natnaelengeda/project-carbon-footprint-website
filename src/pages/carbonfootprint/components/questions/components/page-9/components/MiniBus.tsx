@@ -5,10 +5,37 @@ import { useSocket } from '@/context/SocketProvider';
 
 // AppAsset
 import AppAsset from '@/core/AppAsset'
+import { useDispatch } from 'react-redux';
+import { addTransportationMode } from '@/state/carbon';
 
 export default function MiniBus() {
   const [km, setKm] = useState(0);
   const [days, setDays] = useState(0);
+
+  const dispatch = useDispatch();
+  const socket = useSocket();
+
+  useEffect(() => {
+    socket?.on("page-change-send-data-client", (temp: any) => {
+      const data: any = JSON.parse(temp);
+      if (data.page == "page-9" && data.vehicle == "mini-bus") {
+        setKm(data.slider1);
+        setDays(data.slider2);
+
+        dispatch(
+          addTransportationMode({
+            id: 5,
+            name: "mini-bus",
+            selected: true,
+            value: data.slider1,
+            frequency: data.slider2,
+          })
+        );
+
+      }
+    });
+
+  }, [socket]);
 
   return (
     <div

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 // Socket
 import { useSocket } from '@/context/SocketProvider';
@@ -6,11 +6,11 @@ import { useSocket } from '@/context/SocketProvider';
 // AppAsset
 import AppAsset from '@/core/AppAsset'
 import { Slider } from '@mantine/core';
+import { useDispatch } from 'react-redux';
+import { addTransportationMode, addTransportCategory } from '@/state/carbon';
 
 export default function Automobile() {
   const [selectedType, setSelectedType] = useState<string>("gas-powered");
-  const [selectedKMs, setSelectedKMs] = useState<number>(0);
-  const [selectedDays, setSelectedDays] = useState<number>(0);
 
   const [currentlySelected, setCurrentlySelected] = useState<number>(0);
 
@@ -52,8 +52,6 @@ export default function Automobile() {
                 type={button.type}
                 text={button.name}
                 extraNote={button.extra}
-                selectedDays={selectedDays}
-                selectedKMs={selectedKMs}
                 currentlySelected={currentlySelected}
                 setCurrentlySelected={setCurrentlySelected}
               />
@@ -67,16 +65,101 @@ export default function Automobile() {
   )
 }
 
-const RadioButtonsComponent = ({ id, setSelectedType, selectedType, type, text, selectedDays, selectedKMs, extraNote, currentlySelected, setCurrentlySelected }: any) => {
+const RadioButtonsComponent = ({ id, setSelectedType, selectedType, type, text, currentlySelected, setCurrentlySelected }: any) => {
   const [kms, setKms] = useState<number>(0);
   const [days, setDays] = useState<number>(0);
 
+  const dispatch = useDispatch();
+  const socket = useSocket();
+  const room = localStorage.getItem("room");
+
+
   const updateSlider1 = (e: any) => {
     setKms(e);
+
+    dispatch(
+      addTransportationMode({
+        id: 1,
+        name: "automobile",
+        selected: true,
+        value: 1,
+      })
+    );
+
+    dispatch(
+      addTransportCategory({
+        parent_id: 1,
+        category_id: 1,
+        name: type,
+        value: e,
+        frequency: days,
+      })
+    );
+
+    socket?.emit("page-change-send-data-server", JSON.stringify({
+      room: room,
+      type: type,
+      slider1: e,
+      slider2: days,
+      page: "page-8",
+      vehicle: "automobile",
+    }));
+
+    // dispatch(
+    //   addTransportCategory({
+    //     parent_id: 1,
+    //     category_id: id + 1,
+    //     name: id == 0 ? "gas-powered" :
+    //       id == 1 ? "electric-powered" :
+    //         "hybrid",
+    //     value: e,
+    //     frequency: days,
+    //   })
+    // );
   }
 
   const updateSlider2 = (e: any) => {
     setDays(e);
+
+    dispatch(
+      addTransportationMode({
+        id: 1,
+        name: "automobile",
+        selected: true,
+        value: 1,
+      })
+    );
+
+    dispatch(
+      addTransportCategory({
+        parent_id: 1,
+        category_id: 1,
+        name: type,
+        value: kms,
+        frequency: e,
+      })
+    );
+
+    socket?.emit("page-change-send-data-server", JSON.stringify({
+      room: room,
+      type: type,
+      slider1: kms,
+      slider2: e,
+      page: "page-8",
+      vehicle: "automobile",
+    }));
+
+    // dispatch(
+    //   addTransportCategory({
+    //     parent_id: 1,
+    //     category_id: id + 1,
+    //     name: id == 0 ? "gas-powered" :
+    //       id == 1 ? "electric-powered" :
+    //         "hybrid",
+    //     value: kms,
+    //     frequency: e,
+    //   })
+    // );
   }
 
   return (
@@ -116,16 +199,21 @@ const RadioButtonsComponent = ({ id, setSelectedType, selectedType, type, text, 
           color="#35D36A"
           size="xl"
           min={0}
-          max={7}
+          max={50}
           marks={[
-            { value: 1, label: '1' },
-            { value: 2, label: '2' },
-            { value: 3, label: '3' },
-            { value: 4, label: '4' },
             { value: 5, label: '5' },
-            { value: 6, label: '6' },
-            { value: 7, label: '7' },
+            { value: 10, label: '10' },
+            { value: 15, label: '15' },
+            { value: 20, label: '20' },
+            { value: 25, label: '25' },
+            { value: 30, label: '30' },
+            { value: 35, label: '35' },
+            { value: 40, label: '40' },
+            { value: 45, label: '45' },
+            { value: 50, label: '50' },
           ]}
+
+
         />
       </div>
 
@@ -147,16 +235,17 @@ const RadioButtonsComponent = ({ id, setSelectedType, selectedType, type, text, 
           size="xl"
           className='w-full'
           min={0}
-          max={24}
+          max={7}
           marks={[
             { value: 1, label: '1' },
+            { value: 2, label: '2' },
+            { value: 3, label: '3' },
             { value: 4, label: '4' },
-            { value: 8, label: '8' },
-            { value: 12, label: '12' },
-            { value: 16, label: '16' },
-            { value: 20, label: '20' },
-            { value: 24, label: '24' },
+            { value: 5, label: '5' },
+            { value: 6, label: '6' },
+            { value: 7, label: '7' },
           ]}
+
         />
       </div>
     </div>

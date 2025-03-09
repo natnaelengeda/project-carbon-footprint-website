@@ -5,10 +5,37 @@ import { useSocket } from '@/context/SocketProvider';
 
 // AppAsset
 import AppAsset from '@/core/AppAsset'
+import { useDispatch } from 'react-redux';
+import { addTransportationMode } from '@/state/carbon';
 
 export default function RideHailing() {
   const [km, setKm] = useState(0);
   const [days, setDays] = useState(0);
+
+  const dispatch = useDispatch();
+  const socket = useSocket();
+
+  useEffect(() => {
+    socket?.on("page-change-send-data-client", (temp: any) => {
+      const data: any = JSON.parse(temp);
+      if (data.page == "page-9" && data.vehicle == "ride-hailing") {
+        setKm(data.slider1);
+        setDays(data.slider2);
+
+        dispatch(
+          addTransportationMode({
+            id: 7,
+            name: "ride-hailing",
+            selected: true,
+            value: data.slider1,
+            frequency: data.slider2,
+          })
+        );
+
+      }
+    });
+
+  }, [socket]);
 
   return (
     <div
@@ -33,7 +60,7 @@ export default function RideHailing() {
           </div>
           <p className="text-white text-[60px]">Transportation Mode</p>
         </div>
-        <p className="text-[40px]">Public Transport = Ride Hailing</p>
+        <p className="text-[40px]">Public Transport - Ride Hailing</p>
       </div>
 
       {/* Options */}

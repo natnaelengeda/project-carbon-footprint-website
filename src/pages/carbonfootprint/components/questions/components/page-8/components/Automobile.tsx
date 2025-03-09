@@ -5,12 +5,16 @@ import { useSocket } from '@/context/SocketProvider';
 
 // AppAsset
 import AppAsset from '@/core/AppAsset'
+import { addTransportationMode, addTransportCategory } from '@/state/carbon';
+import { useDispatch } from 'react-redux';
 
 
 export default function Automobile() {
   const [selectedType, setSelectedType] = useState<string>("gas-powered");
   const [selectedKMs, setSelectedKMs] = useState<number>(0);
   const [selectedDays, setSelectedDays] = useState<number>(0);
+
+  const dispatch = useDispatch();
 
   const buttons = [
     { id: 0, name: "Gas Powered", type: "gas-powered", extra: "Gas Powered Personal Vehicle - Automobile" },
@@ -21,10 +25,33 @@ export default function Automobile() {
   const socket: any = useSocket();
 
   useEffect(() => {
-    // socket?.on("", (temp: any) => {
-    //   // const data: any = JSON.parse(temp);
+    socket?.on("page-change-send-data-client", (temp: any) => {
+      const data: any = JSON.parse(temp);
+      if (data.page == "page-8" && data.vehicle == "automobile") {
+        setSelectedType(data.type);
+        setSelectedKMs(data.slider1);
+        setSelectedDays(data.slider2);
 
-    // });
+        dispatch(
+          addTransportationMode({
+            id: 1,
+            name: "automobile",
+            selected: true,
+            value: 1,
+          })
+        );
+
+        dispatch(
+          addTransportCategory({
+            parent_id: 1,
+            category_id: 1,
+            name: data.type,
+            value: data.slider1,
+            frequency: data.slider2,
+          })
+        );
+      }
+    });
 
   }, [socket]);
 
@@ -75,7 +102,7 @@ export default function Automobile() {
           })
         }
       </div>
-      
+
     </div>
   )
 }
@@ -107,7 +134,7 @@ const RadioButtonsComponent = ({ setSelectedType, selectedType, type, text, sele
         }}
         className="pr-10">
         <p
-          className="text-[30px]">You use <span className="text-primary">{extraNote}{selectedDays} Kilometers</span> per week and <span className="text-primary">{selectedKMs} days per week</span></p>
+          className="text-[30px]">You use <span className="text-primary">{extraNote} {selectedKMs} Kilometers</span> per week and <span className="text-primary">{selectedDays} days per week</span></p>
       </div>
     </div>
   );

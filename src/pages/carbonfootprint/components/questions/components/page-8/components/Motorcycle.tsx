@@ -5,10 +5,37 @@ import { useSocket } from '@/context/SocketProvider';
 
 // AppAsset
 import AppAsset from '@/core/AppAsset'
+import { useDispatch } from 'react-redux';
+import { addTransportationMode } from '@/state/carbon';
 
 export default function Motorcycle() {
   const [km, setKm] = useState(0);
   const [days, setDays] = useState(0);
+
+  const dispatch = useDispatch();
+  const socket = useSocket();
+
+  useEffect(() => {
+    socket?.on("page-change-send-data-client", (temp: any) => {
+      const data: any = JSON.parse(temp);
+      if (data.page == "page-8" && data.vehicle == "motor-cycle") {
+        setKm(data.slider1);
+        setDays(data.slider2);
+
+        dispatch(
+          addTransportationMode({
+            id: 2,
+            name: "motor-cycle",
+            selected: true,
+            value: data.slider1,
+            frequency: data.slider2,
+          })
+        );
+
+      }
+    });
+
+  }, [socket]);
 
   return (
     <div
