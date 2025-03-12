@@ -14,11 +14,14 @@ import RideHailing from "./components/RideHailing";
 interface Props {
   setPage: React.Dispatch<React.SetStateAction<number>>;
   pubilcTransports: string[];
+  publicTransportArray: { id: number, name: string, isSelected: boolean; }[];
 }
 
-export default function PageNine({ setPage, pubilcTransports }: Props) {
+export default function PageNine({ setPage, pubilcTransports, publicTransportArray }: Props) {
   const [selectedComponent, setSelectedComponent] = useState<number>(0);
   const [sortedTransports, setSortedTransports] = useState<string[]>([]);
+  const [noOfPages, setNoOfPages] = useState<number>(0);
+
 
   const transportOrder = ['bus', 'mini-bus', 'light-rail', 'ride-hailing'];
 
@@ -37,23 +40,60 @@ export default function PageNine({ setPage, pubilcTransports }: Props) {
     }
   };
 
+  // useEffect(() => {
+  //   if (pubilcTransports.length === 0) {
+  //     setPage(10);
+  //     return;
+  //   }
+
+  //   // Sort the transports according to the predefined order
+  //   const sorted = transportOrder.filter(transport =>
+  //     pubilcTransports.includes(transport)
+  //   );
+  //   setSortedTransports(sorted);
+  // }, [pubilcTransports]);
+
   useEffect(() => {
-    if (pubilcTransports.length === 0) {
+
+    const selectedCount = publicTransportArray.filter(transport => transport.isSelected).length;
+    setNoOfPages(selectedCount);
+
+    console.log(selectedCount)
+    if (selectedCount === 0) {
       setPage(10);
+      // socket?.emit("page-next-server", JSON.stringify({
+      //   nextPage: 9,
+      //   room: room,
+      // }));
       return;
     }
 
-    // Sort the transports according to the predefined order
-    const sorted = transportOrder.filter(transport =>
-      pubilcTransports.includes(transport)
-    );
+    // Filter and sort the transports according to the predefined order and isSelected property
+    const sorted = publicTransportArray
+      .filter(transport => transport.isSelected)
+      .map(transport => transport.name);
+
     setSortedTransports(sorted);
-  }, [pubilcTransports]);
+  }, [publicTransportArray]);
+
+  // Handle component navigation
+  const handleComponentChange = (newComponent: number) => {
+    // Only update if we're within bounds
+    const selectedCount = publicTransportArray.filter(transport => transport.isSelected).length;
+
+    console.log(newComponent, selectedCount)
+    if (newComponent <= selectedCount) {
+      setSelectedComponent(newComponent);
+    } else {
+      // Move to next page if we've shown all components
+      setPage(10);
+    }
+  };
 
   return (
     <QuestionsLayout
       setPage={setPage}
-      setSelectedComponent={setSelectedComponent}
+      setSelectedComponent={handleComponentChange}
       currPage={9}>
       <div
         className="relative z-10 w-full h-full mx-auto 2xl:container flex flex-col items-center justify-center gap-5 py-10 md:py-20">

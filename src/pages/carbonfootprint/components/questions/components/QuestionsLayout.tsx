@@ -41,8 +41,9 @@ export default function QuestionsLayout({ children, setPage, currPage, setSelect
 
     socket?.on("page-next-component-client", (temp) => {
       const data = JSON.parse(temp);
-      console.log(data);
-      setSelectedComponent && setSelectedComponent(parseInt(data.currComponent) + 1);
+      console.log(data)
+      // setSelectedComponent && setSelectedComponent(parseInt(data.currComponent) + 1);
+      setSelectedComponent && setSelectedComponent(data.nextComponent);
     })
 
     socket?.on("page-prev-component-client", (temp) => {
@@ -147,7 +148,7 @@ export default function QuestionsLayout({ children, setPage, currPage, setSelect
       {children}
 
 
-      <div className="absolute bottom-10 rigth-20 w-full flex flex-row items-center justify-end z-10 pr-10 gap-10">
+      <div className="absolute bottom-10 rigth-20 w-full hidden flex-row items-center justify-end z-10 pr-10 gap-10">
         <button onClick={() => setPage(prevPage => prevPage - 1)} className="px-20 py-5 bg-primary text-white text-4xl rounded-3xl font-bold">Previous</button>
         <button onClick={() => setPage(prevPage => prevPage + 1)} className="px-20 py-5 bg-primary text-white text-4xl rounded-3xl font-bold">Next</button>
 

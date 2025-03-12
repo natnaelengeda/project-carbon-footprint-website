@@ -10,9 +10,21 @@ interface Props {
   setPage: React.Dispatch<React.SetStateAction<number>>;
   setPublicTransports: React.Dispatch<React.SetStateAction<string[]>>;
   setPersonalTransports: React.Dispatch<React.SetStateAction<string[]>>;
+  personalTransportArray: any;
+  setPersonalTransportsArray: any;
+  publicTransportArray: any;
+  setPublicTransportArray: any;
 }
 
-export default function PageSeven({ setPage, setPublicTransports, setPersonalTransports }: Props) {
+export default function PageSeven({
+  setPage,
+  setPublicTransports,
+  setPersonalTransports,
+  personalTransportArray,
+  setPersonalTransportsArray,
+  publicTransportArray,
+  setPublicTransportArray,
+}: Props) {
   const [selectedPersonal, setSelectedPersonal] = useState<string[]>([]);
   const [selectedPublic, setSelectedPublic] = useState<string[]>([]);
 
@@ -33,6 +45,29 @@ export default function PageSeven({ setPage, setPublicTransports, setPersonalTra
     setPublicTransports(selectedPublic);
     setPersonalTransports(selectedPersonal);
   }, [selectedPersonal, selectedPublic]);
+
+  useEffect(() => {
+    const updatedPersonalTransportArray = personalTransportArray.map((per: any) => {
+      if (selectedPersonal.includes(per.name)) {
+        return { ...per, isSelected: true };
+      }
+      return { ...per, isSelected: false };
+    });
+
+    setPersonalTransportsArray(updatedPersonalTransportArray);
+  }, [selectedPersonal]);
+
+  useEffect(() => {
+    const updatePublicTransportArray = publicTransportArray.map((per: any) => {
+      if (selectedPublic.includes(per.name)) {
+        return { ...per, isSelected: true };
+      }
+
+      return { ...per, isSelected: false };
+    });
+
+    setPublicTransportArray(updatePublicTransportArray);
+  }, [selectedPublic]);
 
   return (
     <QuestionsLayout

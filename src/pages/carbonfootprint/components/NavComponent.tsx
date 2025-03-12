@@ -65,7 +65,8 @@ export default function NavComponent({ setPage, func, currPage, nextPage, prevPa
           socket?.emit("page-next-component-server", JSON.stringify({
             nextPage: nextPage,
             room: room,
-            currComponent: selectedComponent
+            currComponent: selectedComponent,
+            nextComponent:nextComponent,
           }));
         }
       }

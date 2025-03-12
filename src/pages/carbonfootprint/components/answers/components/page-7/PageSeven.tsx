@@ -15,10 +15,24 @@ interface Props {
   setPublicTransports: React.Dispatch<React.SetStateAction<string[]>>;
   setPersonalTransports: React.Dispatch<React.SetStateAction<string[]>>;
   personalTransports: string[];
-  pubilcTransports: string[]
+  pubilcTransports: string[];
+  personalTransportArray: any;
+  setPersonalTransportsArray: any;
+  publicTransportArray: any;
+  setPublicTransportArray: any
 }
 
-export default function PageSeven({ setPage, personalTransports, pubilcTransports, setPublicTransports, setPersonalTransports }: Props) {
+export default function PageSeven({
+  setPage,
+  personalTransports,
+  pubilcTransports,
+  setPublicTransports,
+  setPersonalTransports,
+  personalTransportArray,
+  setPersonalTransportsArray,
+  publicTransportArray,
+  setPublicTransportArray,
+}: Props) {
   const [selectedPersonal, setSelectedPersonal] = useState<string[]>([]);
   const [selectedPublic, setSelectedPublic] = useState<string[]>([]);
 
@@ -36,7 +50,27 @@ export default function PageSeven({ setPage, personalTransports, pubilcTransport
   ];
 
   useEffect(() => {
-  }, [selectedPersonal, selectedPublic]);
+    const updatedPersonalTransportArray = personalTransportArray.map((per: any) => {
+      if (selectedPersonal.includes(per.name)) {
+        return { ...per, isSelected: true };
+      }
+      return { ...per, isSelected: false };
+    });
+
+    setPersonalTransportsArray(updatedPersonalTransportArray);
+  }, [selectedPersonal]);
+
+  useEffect(() => {
+    const updatePublicTransportArray = publicTransportArray.map((per: any) => {
+      if (selectedPublic.includes(per.name)) {
+        return { ...per, isSelected: true };
+      }
+
+      return { ...per, isSelected: false };
+    });
+
+    setPublicTransportArray(updatePublicTransportArray);
+  }, [selectedPublic]);
 
   return (
     <DefaultBackground
@@ -83,7 +117,9 @@ export default function PageSeven({ setPage, personalTransports, pubilcTransport
                       personalTransports={personalTransports}
                       pubilcTransports={pubilcTransports}
                       setPublicTransports={setPublicTransports}
-                      setPersonalTransports={setPersonalTransports} />
+                      setPersonalTransports={setPersonalTransports}
+                      personalTransportArray={personalTransportArray}
+                      publicTransportArray={publicTransportArray} />
                   );
                 })
               }
@@ -115,7 +151,9 @@ export default function PageSeven({ setPage, personalTransports, pubilcTransport
                       personalTransports={personalTransports}
                       pubilcTransports={pubilcTransports}
                       setPublicTransports={setPublicTransports}
-                      setPersonalTransports={setPersonalTransports} />
+                      setPersonalTransports={setPersonalTransports}
+                      personalTransportArray={personalTransportArray}
+                      publicTransportArray={publicTransportArray} />
                   );
                 })
               }
@@ -148,6 +186,8 @@ interface ICheckboxComponent {
   pubilcTransports: any,
   setPublicTransports: any,
   setPersonalTransports: any,
+  personalTransportArray: any,
+  publicTransportArray: any,
 }
 
 const CheckboxComponent = ({
@@ -161,7 +201,9 @@ const CheckboxComponent = ({
   personalTransports,
   pubilcTransports,
   setPublicTransports,
-  setPersonalTransports
+  setPersonalTransports,
+  personalTransportArray,
+  publicTransportArray
 }: ICheckboxComponent) => {
   const socket = useSocket();
   const room = localStorage.getItem("room");
@@ -185,6 +227,7 @@ const CheckboxComponent = ({
         room: room,
         type: type,
         label: label,
+        arrayPersonal: personalTransportArray,
         isOn: !check
       }));
 
@@ -206,6 +249,7 @@ const CheckboxComponent = ({
         room: room,
         type: type,
         label: label,
+        arrayPublic: publicTransportArray,
         isOn: !check
       }));
     }

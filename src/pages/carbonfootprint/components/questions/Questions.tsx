@@ -27,10 +27,22 @@ import PageTwentyThree from "./components/page-23";
 
 
 export default function Questions() {
-  const [page, setPage] = useState<number>(20);
+  const [page, setPage] = useState<number>(0);
 
   const [personalTransports, setPersonalTransports] = useState<string[]>([]);
+  const [personalTransportArray, setPersonalTransportsArray] = useState([
+    { id: 0, name: "automobile", isSelected: false },
+    { id: 1, name: "motor-cycle", isSelected: false },
+    { id: 2, name: "bicycle", isSelected: false },
+  ]);
   const [pubilcTransports, setPublicTransports] = useState<string[]>([]);
+  const [publicTransportArray, setPublicTransportArray] = useState([
+    { id: 0, name: "bus", isSelected: false },
+    { id: 1, name: "mini-bus", isSelected: false },
+    { id: 2, name: "light-rail", isSelected: false },
+    { id: 3, name: "ride-hailing", isSelected: false },
+  ]);
+
 
   useEffect(() => {
     const language = localStorage.getItem("language");
@@ -63,15 +75,21 @@ export default function Questions() {
                         <PageSeven
                           setPage={setPage}
                           setPersonalTransports={setPersonalTransports}
-                          setPublicTransports={setPublicTransports} /> :
+                          setPublicTransports={setPublicTransports}
+                          personalTransportArray={personalTransportArray}
+                          setPersonalTransportsArray={setPersonalTransportsArray}
+                          publicTransportArray={publicTransportArray}
+                          setPublicTransportArray={setPublicTransportArray} /> :
                         page == 8 ?
                           <PageEight
                             setPage={setPage}
-                            personalTransports={personalTransports} /> :
+                            personalTransports={personalTransports}
+                            personalTransportArray={personalTransportArray} /> :
                           page == 9 ?
                             <PageNine
                               setPage={setPage}
-                              pubilcTransports={pubilcTransports} /> :
+                              pubilcTransports={pubilcTransports}
+                              publicTransportArray={publicTransportArray} /> :
                             page == 10 ?
                               <PageTen
                                 setPage={setPage} /> :

@@ -168,6 +168,8 @@ const CheckboxComponent = (
 
       if (data.page == "page-5") {
 
+        console.log(data);
+
         setSelectedTypes((prevSelectedTypes: any) => {
           const checkSelected = prevSelectedTypes.includes(data.type);
 

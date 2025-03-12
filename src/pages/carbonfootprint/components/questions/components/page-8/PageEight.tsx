@@ -17,9 +17,10 @@ import Motorcycle from "./components/Motorcycle";
 interface Props {
   setPage: React.Dispatch<React.SetStateAction<number>>;
   personalTransports: string[];
+  personalTransportArray: { id: number, name: string, isSelected: boolean }[];
 }
 
-export default function PageEight({ setPage, personalTransports }: Props) {
+export default function PageEight({ setPage, personalTransports, personalTransportArray }: Props) {
   const [selectedComponent, setSelectedComponent] = useState<number>(0);
   const [sortedTransports, setSortedTransports] = useState<string[]>([]);
   const [noOfPages, setNoOfPages] = useState<number>(0);
@@ -39,30 +40,57 @@ export default function PageEight({ setPage, personalTransports }: Props) {
     }
   };
 
+  // useEffect(() => {
+  //   if (personalTransports.length === 0) {
+  //     setPage(9);
+  //     return;
+  //   }
+
+  //   // Sort the transports according to the predefined order
+  //   const sorted = transportOrder.filter(transport =>
+  //     personalTransports.includes(transport)
+  //   );
+  //   setSortedTransports(sorted);
+  //   setNoOfPages(sorted.length);
+
+  //   // Reset selected component when transport list changes
+  //   setSelectedComponent(0);
+  // }, [personalTransports]);
+
   useEffect(() => {
-    if (personalTransports.length === 0) {
+
+    const selectedCount = personalTransportArray.filter(transport => transport.isSelected).length;
+    setNoOfPages(selectedCount);
+
+    console.log(selectedCount)
+    if (selectedCount === 0) {
       setPage(9);
+      // socket?.emit("page-next-server", JSON.stringify({
+      //   nextPage: 9,
+      //   room: room,
+      // }));
       return;
     }
 
-    // Sort the transports according to the predefined order
-    const sorted = transportOrder.filter(transport =>
-      personalTransports.includes(transport)
-    );
-    setSortedTransports(sorted);
-    setNoOfPages(sorted.length);
+    // Filter and sort the transports according to the predefined order and isSelected property
+    const sorted = personalTransportArray
+      .filter(transport => transport.isSelected)
+      .map(transport => transport.name);
 
-    // Reset selected component when transport list changes
-    setSelectedComponent(0);
-  }, [personalTransports]);
+    setSortedTransports(sorted);
+  }, [personalTransportArray]);
 
   // Handle component navigation
   const handleComponentChange = (newComponent: number) => {
     // Only update if we're within bounds
-    if (newComponent < noOfPages) {
+    const selectedCount = personalTransportArray.filter(transport => transport.isSelected).length;
+
+    console.log(newComponent, selectedCount)
+    if (newComponent <= selectedCount) {
       setSelectedComponent(newComponent);
-    } else if (newComponent >= noOfPages) {
+    } else {
       // Move to next page if we've shown all components
+      console.log("Change Page");
       setPage(9);
     }
   };

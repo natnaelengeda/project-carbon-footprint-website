@@ -143,10 +143,10 @@ const SliderComponent = ({ id, selectedTypes, type, text, setSelectedTypes, curr
     }));
   }
 
-  const updateSlider2 = (frequency: any) => {
+  const updateSlider2 = (efreq: any) => {
     addSelectedToTypes();
 
-    setFrequency(frequency);
+    setFrequency(efreq);
     dispatch(
       addHouseholdEnergy({
         id: 3,
@@ -174,7 +174,7 @@ const SliderComponent = ({ id, selectedTypes, type, text, setSelectedTypes, curr
               "electric-appliances-water-boiler",
         selected: true,
         value: value,
-        frequency: frequency,
+        frequency: efreq,
       })
     );
 
@@ -182,7 +182,7 @@ const SliderComponent = ({ id, selectedTypes, type, text, setSelectedTypes, curr
       type: type,
       room: room,
       slider1: value,
-      slider2: frequency,
+      slider2: efreq,
       page: "page-5",
     }));
   }
@@ -191,6 +191,47 @@ const SliderComponent = ({ id, selectedTypes, type, text, setSelectedTypes, curr
     addSelectedToTypes();
     setMinutes(minutes);
 
+    // addSelectedToTypes();
+
+    // setFrequency(efreq);
+    dispatch(
+      addHouseholdEnergy({
+        id: 3,
+        name: "electric-appliances",
+        selected: true,
+        value: 1
+      })
+    );
+
+    dispatch(
+      addHouseholdEnegryCategory({
+        parent_id: 3,
+        category_id:
+          type == "iron" ? 1 :
+            type == "fridge" ? 2 :
+              type == "television" ? 3 :
+                4,
+        id: type == "iron" ? 1 :
+          type == "fridge" ? 2 :
+            type == "television" ? 3 :
+              4,
+        name: type == "iron" ? "electric-appliances-iron-clothes" :
+          type == "fridge" ? "electric-appliances-fridge" :
+            type == "television" ? "electric-appliances-tv" :
+              "electric-appliances-water-boiler",
+        selected: true,
+        value: value,
+        frequency: minutes,
+      })
+    );
+
+    socket?.emit("page-change-send-data-server", JSON.stringify({
+      type: type,
+      room: room,
+      slider1: value,
+      slider2: minutes,
+      page: "page-5",
+    }));
     // For iron and water boiler, we'll use minutes as the frequency
     // const frequencyValue = minutes;
 
