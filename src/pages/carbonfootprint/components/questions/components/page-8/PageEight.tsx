@@ -16,16 +16,16 @@ import Motorcycle from "./components/Motorcycle";
 // Interface
 interface Props {
   setPage: React.Dispatch<React.SetStateAction<number>>;
-  personalTransports: string[];
+  personalTransports?: string[];
   personalTransportArray: { id: number, name: string, isSelected: boolean }[];
 }
 
-export default function PageEight({ setPage, personalTransports, personalTransportArray }: Props) {
+export default function PageEight({ setPage, personalTransportArray }: Props) {
   const [selectedComponent, setSelectedComponent] = useState<number>(0);
   const [sortedTransports, setSortedTransports] = useState<string[]>([]);
   const [noOfPages, setNoOfPages] = useState<number>(0);
 
-  const transportOrder = ['automobile', 'motor-cycle', 'bicycle'];
+  // const transportOrder = ['automobile', 'motor-cycle', 'bicycle'];
 
   const renderComponent = (label: string) => {
     switch (label) {

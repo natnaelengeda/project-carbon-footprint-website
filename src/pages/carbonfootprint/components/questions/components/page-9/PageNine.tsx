@@ -13,17 +13,17 @@ import RideHailing from "./components/RideHailing";
 // Interface
 interface Props {
   setPage: React.Dispatch<React.SetStateAction<number>>;
-  pubilcTransports: string[];
+  pubilcTransports?: string[];
   publicTransportArray: { id: number, name: string, isSelected: boolean; }[];
 }
 
-export default function PageNine({ setPage, pubilcTransports, publicTransportArray }: Props) {
+export default function PageNine({ setPage, publicTransportArray }: Props) {
   const [selectedComponent, setSelectedComponent] = useState<number>(0);
   const [sortedTransports, setSortedTransports] = useState<string[]>([]);
-  const [noOfPages, setNoOfPages] = useState<number>(0);
+  // const [noOfPages, setNoOfPages] = useState<number>(0);
 
 
-  const transportOrder = ['bus', 'mini-bus', 'light-rail', 'ride-hailing'];
+  // const transportOrder = ['bus', 'mini-bus', 'light-rail', 'ride-hailing'];
 
   const renderComponent = (label: string) => {
     switch (label) {
@@ -56,7 +56,7 @@ export default function PageNine({ setPage, pubilcTransports, publicTransportArr
   useEffect(() => {
 
     const selectedCount = publicTransportArray.filter(transport => transport.isSelected).length;
-    setNoOfPages(selectedCount);
+    // setNoOfPages(selectedCount);
 
     console.log(selectedCount)
     if (selectedCount === 0) {

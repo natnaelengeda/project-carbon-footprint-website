@@ -95,11 +95,11 @@ import { useSocket } from '@/context/SocketProvider';
 // Interface
 interface Props {
   setPage: React.Dispatch<React.SetStateAction<number>>;
-  personalTransports: string[];
+  personalTransports?: string[];
   personalTransportArray: { id: number, name: string, isSelected: boolean }[];
 }
 
-export default function PageEight({ setPage, personalTransports, personalTransportArray }: Props) {
+export default function PageEight({ setPage, personalTransportArray }: Props) {
   const socket = useSocket();
   const room = localStorage.getItem("room");
   const [selectedComponent, setSelectedComponent] = useState(0);
