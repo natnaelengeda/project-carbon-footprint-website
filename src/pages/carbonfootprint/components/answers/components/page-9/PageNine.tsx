@@ -90,11 +90,11 @@ import NavComponent from '../../../NavComponent';
 // Interface
 interface Props {
   setPage: React.Dispatch<React.SetStateAction<number>>;
-  pubilcTransports: string[];
+  pubilcTransports?: string[];
   publicTransportArray: { id: number, name: string, isSelected: boolean; }[];
 }
 
-export default function PageNine({ setPage, pubilcTransports, publicTransportArray }: Props) {
+export default function PageNine({ setPage, publicTransportArray }: Props) {
   const [selectedComponent, setSelectedComponent] = useState(0);
   const [sortedTransports, setSortedTransports] = useState<string[]>([]);
 
