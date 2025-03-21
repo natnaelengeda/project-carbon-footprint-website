@@ -88,5 +88,8 @@
     "finishPledging": "Finish Pledging",
     "thankYouForYour": "Thank You for Taking the First Step Toward a Greener Future!",
     "YourMakeDifferendce": "Your pledge makes a difference. Together, we can create a sustainable world by reducing our impact, one action at a time."
+  },
+  "qa": {
+    "start": "Start"
   }
 }
