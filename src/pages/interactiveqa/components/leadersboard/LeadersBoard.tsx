@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 // Axios
 import axios from "@/utils/axios";
 import AppAsset from "@/core/AppAsset";
+import { useTranslation } from "react-i18next";
 
 
 export interface ParticipantData {
@@ -21,6 +22,16 @@ interface Props {
 
 export default function LeadersBoard({ score, setPage, cuserId }: Props) {
   const [leaderboardData, setLeaderboardData] = useState<any>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
+  const savedlanguages = JSON.parse(localStorage.getItem("language") || JSON.stringify({
+    carbon: "en",
+    pledge: "en",
+    qa: "en"
+  }));
+
+  // React Language Packaged;
+  const { t } = useTranslation();
 
   if (false) {
     console.log(score);
@@ -29,8 +40,10 @@ export default function LeadersBoard({ score, setPage, cuserId }: Props) {
   const fetchLeaderboardData = () => {
     axios.get(`/api/v1/questionAttempts/top10/${cuserId}`)
       .then((response) => {
-        console.log(response.data);
-        setLeaderboardData(response.data);
+        if (response.status == 201) {
+          setLeaderboardData(response.data);
+          setIsLoading(false);
+        }
       });
   }
 
@@ -79,20 +92,24 @@ export default function LeadersBoard({ score, setPage, cuserId }: Props) {
         <div className="w-full flex flex-row items-center max-md:max-w-full ">
           <div className="w-full flex flex-col items-start justify-center">
             {
-              leaderboardData &&
               <LeaderboardTable
+                isLoading={isLoading}
                 participants={leaderboardData}
                 cuserId={cuserId} />
             }
 
           </div>
-
           <div
             className="w-full h-auto flex flex-col items-center justify-center text-3xl xl:gap-[100px]">
-            <span className="flex flex-col items-center justify-center xl:text-[50px] gap-7">
-              <p>Great job! Now share these</p>
-              <p>results with your friends and </p>
-              <p>family!</p>
+            <span
+              className="flex flex-col items-center justify-center xl:text-[50px] gap-7 text-center">
+              <p
+                style={{
+                  fontSize: savedlanguages.qa == "am" ? "60px" : "60px",
+                  lineHeight: savedlanguages.qa == "am" ? "1.5" : "1.2"
+                }}>
+                {t("qa.great_job_share_with_friends_and_family", { lng: savedlanguages.qa })}
+              </p>
             </span>
 
             <div className="py-10">
@@ -101,12 +118,10 @@ export default function LeadersBoard({ score, setPage, cuserId }: Props) {
                   setPage(1);
                 }}
                 className="flex flex-row items-center justify-center md:w-[220.32px] md:h-[100px] bg-primary rounded-full text-white px-3 md:px-0 py-2 md:py-0 gap-2 pt-10">
-                <p className="text-xl md:text-[34px]">Finish</p>
+                <p className="text-xl md:text-[34px]"> {t("qa.finish", { lng: savedlanguages.qa })}</p>
               </button>
             </div>
           </div>
-
-
         </div>
       </div>
     </div>
@@ -114,7 +129,7 @@ export default function LeadersBoard({ score, setPage, cuserId }: Props) {
 }
 
 
-export function LeaderboardTable({ participants, cuserId }: any) {
+export function LeaderboardTable({ isLoading, participants, cuserId }: any) {
   return (
     <div className="w-[800px] flex overflow-hidden flex-col self-stretch text-3xl bg-white rounded-3xl border-y border-solid border-neutral-300 max-md:max-w-full">
       <div className="flex overflow-hidden flex-wrap gap-10 justify-between items-center px-24 py-4 w-full text-2xl font-bold min-h-[80px] text-stone-300 max-md:px-5 max-md:max-w-full">
@@ -122,18 +137,19 @@ export function LeaderboardTable({ participants, cuserId }: any) {
         <div className="self-stretch my-auto w-[150px]">Score</div>
       </div>
       {
-        participants &&
-        participants.topAttempts.map((participant: any, index: number) => {
-          return (
-            <LeaderboardRow
-              key={`${participant.userId}-${index}`}
-              participant={participant}
-              index={index}
-              cuserId={cuserId}
-            />
-          )
-        }
-        )
+        isLoading ?
+          (
+            participants &&
+            participants.topAttempts.map((participant: any, index: number) => {
+              return (
+                <LeaderboardRow
+                  key={`${participant.userId}-${index}`}
+                  participant={participant}
+                  index={index}
+                  cuserId={cuserId}
+                />
+              )
+            })) : <LoadingTableSkeleton />
       }
     </div>
   );
@@ -156,5 +172,11 @@ export function LeaderboardRow({ participant, index, cuserId }: any) {
       </div>
       <div className={`self-stretch my-auto w-[150px]  ${participant._id == cuserId ? "font-bold text-white" : "text-black"}`}>{participant.score.toFixed(0)}</div>
     </div>
+  );
+}
+
+const LoadingTableSkeleton = () => {
+  return (
+    <div></div>
   );
 }

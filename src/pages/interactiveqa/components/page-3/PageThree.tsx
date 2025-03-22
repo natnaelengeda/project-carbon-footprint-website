@@ -9,6 +9,7 @@ import AppAsset from "@/core/AppAsset";
 
 // Styles
 import "./styles/styles.css";
+import { useTranslation } from "react-i18next";
 
 
 // Interface
@@ -32,6 +33,15 @@ export default function PageThree({ page, setPage, answers, setAnswers, setQuest
 
   const isKeyPressed = useRef(false);
   const [key, setKey] = useState(null);
+
+  const savedlanguages = JSON.parse(localStorage.getItem("language") || JSON.stringify({
+    carbon: "en",
+    pledge: "en",
+    qa: "en"
+  }));
+
+  // React Language Packaged;
+  const { t } = useTranslation();
 
   useEffect(() => {
     if (isKeyPressed.current) {
@@ -275,7 +285,7 @@ export default function PageThree({ page, setPage, answers, setAnswers, setQuest
               incorrect &&
               <div
                 className="w-full h-auto rounded-lg">
-                <p className="text-2xl md:text-[30px]"><span className="font-bold text-red-500">Incorrect Answer:</span> Empty Answers</p>
+                <p className="text-2xl md:text-[30px]"><span className="font-bold text-red-500">{t("qa.incorrect_answer", { lng: savedlanguages.qa })}:</span> {t("qa.empty_answer", { lng: savedlanguages.qa })}</p>
               </div>
             }
 
@@ -294,7 +304,7 @@ export default function PageThree({ page, setPage, answers, setAnswers, setQuest
                       style={{
                         lineHeight: "1.2"
                       }}
-                      className={`${selectedChoice.isCorrect ? "text-primary" : "text-red-500"} font-bold`}>{selectedChoice.isCorrect ? "Correct: " : "Incorrect Answer: "}</span>
+                      className={`${selectedChoice.isCorrect ? "text-primary" : "text-red-500"} font-bold`}>{selectedChoice.isCorrect ? `${t("qa.correct", { lng: savedlanguages.qa })}: ` : `${t("qa.incorrect_answer", { lng: savedlanguages.qa })}: `}</span>
                     {selectedChoice.explanation}</p>
                 </div>
               </>
@@ -327,10 +337,10 @@ export default function PageThree({ page, setPage, answers, setAnswers, setQuest
                 {
                   click == 1 ?
                     <>
-                      <p className="text-xl md:text-[34px]">Submit</p>
+                      <p className="text-xl md:text-[34px]">{t("qa.submit", { lng: savedlanguages.qa })}</p>
                     </> :
                     <>
-                      <p className="text-xl md:text-[34px]">Next</p>
+                      <p className="text-xl md:text-[34px]">{t("qa.next", { lng: savedlanguages.qa })}</p>
                       <img
                         className="w-6 md:w-[34.56px] h-auto object-contain"
                         src={AppAsset.RightArrowIcon} />
@@ -347,7 +357,7 @@ export default function PageThree({ page, setPage, answers, setAnswers, setQuest
                 }}
                 className="flex flex-row items-center justify-center md:w-[220.32px] md:h-[100px] bg-primary rounded-full text-white px-3 md:px-0 py-2 md:py-0 gap-2">
                 <p
-                  className="text-xl md:text-[34px]">Submit</p>
+                  className="text-xl md:text-[34px]">{t("qa.submit", { lng: savedlanguages.qa })}</p>
               </button>
             )
           }

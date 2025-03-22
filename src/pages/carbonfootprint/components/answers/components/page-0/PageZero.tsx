@@ -53,6 +53,7 @@ export default function PageZero({ setPage }: Props) {
       }
       setSectionLanguage(savedlanguages);
     }
+    
   }, []);
 
   const changeToEnglish = () => {

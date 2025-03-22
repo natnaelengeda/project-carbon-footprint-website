@@ -74,5 +74,28 @@
     "finishPledging": "ይጨርሱ",
     "thankYouForYour": "ወደ አረንጓዴ የወደፊት ሕይወት የመጀመሪያውን እርምጃ ስለወሰዱ እናመሰግናለን!",
     "YourMakeDifferendce": "የእርስዎ  ቃል መግባትና ቃልዎን ጠብቀው ዛፍ መትከል ከፍተኛ ለውጥ ያመጣል ። በየጊዜው አንድ ጠቃሚ ተግባር መፈጸም አብረን የተሻለ አለም ለመፍጠር ያስችለናል።"
+  },
+  "qa": {
+    "start": "ይጀምሩ",
+    "start_now": "አሁን ይጀምሩ",
+    "welcome_to_interactive": "እንኳን ደህና መጡ",
+    "qa": "ወደ ጥያቄ እና መልስ",
+    "choose_language": "ቋንቋ ይምረጡ",
+    "start_qa": "አሁን ይጀምሩ",
+    "loading": "ይጠብቁ",
+    "submit": "ይምረጡ",
+    "next": "ቀጣይ",
+    "incorrect_answer": "የተሳሳተ መልስ",
+    "empty_answer": "ባዶ መልስ",
+    "correct": "ትክክል",
+    "do_you_want_to_share_your_name": "በመሪዎች ሰሌዳው ላይ ለመሆን ስምዎን ማጋራት ይፈልጋሉ? (ግዴታ አይደለም)",
+    "seconds": "ሰከንዶች",
+    "eg_john_doe": "ለምሳሌ. አበበ ከበደ",
+    "congrats_your_one_of_the": "እንኳን ደስ አለዎት!",
+    "top_10": "እርስዎ ከምርጥ 10",
+    "participants": "ተሳታፊዎች አንዱ ነዎት",
+    "see_leader_board": "መሪ ሰሌዳን ይመልከቱ",
+    "finish": "ይጨርሱ",
+    "great_job_share_with_friends_and_family": "ምርጥ ስራ! አሁን ውጤቱን ለጓደኞችዎ እና ለቤተሰብዎ ያካፍሉ!"
   }
 }

@@ -1,5 +1,8 @@
 import { useState, useRef, useEffect } from 'react';
 
+// Translation
+import { useTranslation } from 'react-i18next';
+
 // AppAsset
 import AppAsset from "@/core/AppAsset";
 
@@ -13,6 +16,15 @@ interface Props {
 export default function PageOne({ setPage }: Props) {
   const isKeyPressed = useRef(false);
   const [key, setKey] = useState(null);
+
+  const savedlanguages = JSON.parse(localStorage.getItem("language") || JSON.stringify({
+    qa: "en"
+  }));
+
+  const [language, setLanguage] = useState(savedlanguages);
+
+  // React Language Packaged;
+  const { t } = useTranslation();
 
 
   useEffect(() => {
@@ -40,6 +52,17 @@ export default function PageOne({ setPage }: Props) {
       window.removeEventListener("keydown", handleKeyDown);
       window.removeEventListener("keyup", handleKeyUp);
     };
+  }, []);
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      setLanguage((prevLanguage: any) => ({
+        qa: prevLanguage.qa === "en" ? "am" : "en"
+      }));
+      console.log("Change")
+    }, 10000);
+
+    return () => clearInterval(intervalId);
   }, []);
 
   return (
@@ -83,8 +106,8 @@ export default function PageOne({ setPage }: Props) {
             className="object-contain" />
           <div
             className="h-auto flex flex-col items-center justify-start gap-5 md:gap-16 text-[40px]">
-            <p className="text-2xl md:text-[70px] font-semibold">Welcome to Interactive</p>
-            <p className="text-2xl md:text-[70px] font-semibold">Q/A</p>
+            <p className="text-2xl md:text-[70px] font-semibold">{t("qa.welcome_to_interactive", { lng: language.qa })}</p>
+            <p className="text-2xl md:text-[70px] font-semibold">{t("qa.qa", { lng: language.qa })}</p>
           </div>
         </div>
 
@@ -101,7 +124,7 @@ export default function PageOne({ setPage }: Props) {
               height: "100px",
             }}
             className=" bg-primary text-white font-semibold rounded-full text-lg md:text-[30px] px- py-4 hover:opacity-80 flex items-center justify-center gap-3 px-5 md:px-0">
-            Start Now
+            {t("qa.start_now", { lng: language.qa })}
             <img
               src={AppAsset.RightArrowIcon}
               className="w-5 md:w-10 h-auto object-contain" />

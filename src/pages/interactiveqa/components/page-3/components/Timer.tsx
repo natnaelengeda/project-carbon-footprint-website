@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 
 // Interface
 interface Props {
@@ -14,6 +15,15 @@ interface Props {
 
 export default function Timer({ page, setPage, duration, questionLength, timeLeft, setTimeLeft, handleNextQuestion, checkAnswer }: Props) {
   const width = window.innerWidth;
+
+  const savedlanguages = JSON.parse(localStorage.getItem("language") || JSON.stringify({
+    carbon: "en",
+    pledge: "en",
+    qa: "en"
+  }));
+
+  // React Language Packaged;
+  const { t } = useTranslation();
 
   if (false) {
     console.log(questionLength);
@@ -49,11 +59,13 @@ export default function Timer({ page, setPage, duration, questionLength, timeLef
     <div className='w-full flex items-center justify-center'>
       <div
         className="relative w-36 h-36 md:w-[200px] md:h-[200px] object-contain text-white">
+
         {/* Circular Progress */}
         <svg
           className="transform -rotate-90"
           width="100%"
           height="100%">
+
           {/* Background Circle */}
           <circle
             cx="50%"
@@ -88,7 +100,7 @@ export default function Timer({ page, setPage, duration, questionLength, timeLef
           </span>
           <span
             className="text-sm md:text-[20px] text-white font-normal">
-            Seconds
+            {t("qa.seconds", { lng: savedlanguages.qa })}
           </span>
         </div>
       </div>

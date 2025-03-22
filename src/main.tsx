@@ -30,8 +30,6 @@ import '@mantine/core/styles.css';
 import 'react-loading-skeleton/dist/skeleton.css'
 import 'react-simple-keyboard/build/css/index.css';
 
-
-
 const container = document.getElementById('root') as HTMLElement;
 
 // Create the root only once

@@ -90,6 +90,26 @@
     "YourMakeDifferendce": "Your pledge makes a difference. Together, we can create a sustainable world by reducing our impact, one action at a time."
   },
   "qa": {
-    "start": "Start"
+    "start": "Start",
+    "start_now": "Start Now",
+    "welcome_to_interactive": "Welcome To Interactive",
+    "qa": "Q/A",
+    "choose_language": "Choose language",
+    "start_qa": "Start Q/A",
+    "loading": "Loading",
+    "submit": "Submit",
+    "next": "Next",
+    "incorrect_answer": "Incorrect Answer",
+    "empty_answer": "Empty Answers",
+    "correct": "Correct",
+    "do_you_want_to_share_your_name": "Do you want to share your name to be on the leaderboard? (Optional)",
+    "seconds": "Seconds",
+    "eg_john_doe": "Eg. John Doe",
+    "congrats_your_one_of_the": "Congrats! You're one of the",
+    "top_10": "Top 10",
+    "participants": "Participants",
+    "see_leader_board": "See Leaderboard",
+    "finish": "Finish",
+    "great_job_share_with_friends_and_family": "Great job! Now share the results with your friends and family!"
   }
 }

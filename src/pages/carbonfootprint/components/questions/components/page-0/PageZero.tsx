@@ -104,6 +104,8 @@ export default function PageZero({ setPage }: Props) {
 
   useEffect(() => {
     dispatch(clearEverything());
+    // window.setScreenSize(520,960)
+    window.resizeTo(1080, 1920);
   }, []);
 
   return (
@@ -156,7 +158,11 @@ export default function PageZero({ setPage }: Props) {
           <p className="text-white text-2xl md:text-[44px] pt-20">
             {t("carbon.language", { lng: sectionLanguage.carbon })}
           </p>
+          <span className="flex flex-col items-center justify-center text-3xl text-white">
+            <p>{`Height: ${window.innerHeight}`}</p>
+            <p>{`Width: ${window.innerWidth}`}</p>
 
+          </span>
           {/* Choice */}
           <div
             className="w-full md:w-[640px] flex flex-col items-start justify-start gap-10 md:gap-[80px] md:pt-[107px] px-3 md:px-0 text-white">
