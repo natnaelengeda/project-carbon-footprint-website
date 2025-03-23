@@ -2,6 +2,11 @@
   --main-color: #35D36A;
 }
 
+/* * {
+  transform-origin: 0px 0px;
+  transform: scale(0.5);
+} */
+
 @font-face {
   font-family: "Shiromeda";
   src: url('/fonts/Shiromeda-Bold.ttf') format('truetype');

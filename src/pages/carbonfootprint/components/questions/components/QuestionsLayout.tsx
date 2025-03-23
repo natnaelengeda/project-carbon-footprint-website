@@ -122,11 +122,11 @@ export default function QuestionsLayout({ children, setPage, currPage, setSelect
 
       {/* Logo */}
       <div
-        className='absolute top-0 left-0 z-20 pl-[50px] pt-[74px]'>
+        className='absolute top-0 left-0 z-20 pl-[0px] pt-[40px]'>
         <img
           style={{
-            width: "250px",
-            height: "167px",
+            width: "150px",
+            height: "100px",
             objectFit: "contain"
           }}
           src={AppAsset.Logo}

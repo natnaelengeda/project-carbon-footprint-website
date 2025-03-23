@@ -54,7 +54,7 @@ export default function PageZero({ setPage }: Props) {
         backgroundAttachment: "contain",
         position: "relative",
       }}
-      className="w-full h-full min-h-screen flex flex-col items-center justify-start pt-10 md:pt-[74px] gap-20 md:gap-[236px]">
+      className="w-full h-full min-h-screen flex flex-col items-center justify-start pt-10 md:pt-[74px] gap-20 md:gap-[23px]">
 
       {/* Background Overlay */}
       <div
@@ -72,8 +72,8 @@ export default function PageZero({ setPage }: Props) {
           <img
             src={AppAsset.Logo}
             style={{
-              width: '146px',
-              height: '222px',
+              width: '100px',
+              height: '100px',
             }}
             className="h-auto object-contain" />
 
@@ -105,7 +105,7 @@ export default function PageZero({ setPage }: Props) {
           <button
             onClick={() => {
               setLanguage("amharic");
-              changeLanguage("carbon",   "am");
+              changeLanguage("carbon", "am");
             }}
             className={`w-full h-20 md:w-[650px] md:h-[88px] bg-[#35D36A73] flex flex-row items-center justify-start gap-5 md:gap-[32px] px-3 md:px-[33px] rounded-lg ${lanuage == "amharic" ? "border-4 border-black" : ""}`}>
             <img

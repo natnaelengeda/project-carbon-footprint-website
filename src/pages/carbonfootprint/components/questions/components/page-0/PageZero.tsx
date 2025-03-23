@@ -132,18 +132,18 @@ export default function PageZero({ setPage }: Props) {
 
         {/* Center */}
         <div
-          className='w-full flex flex-col items-center justify-center gap-14 pt-[125px]'>
+          className='w-full flex flex-col items-center justify-center gap-10 pt-[px]'>
 
           {/* Title */}
-          <div className="flex flex-col items-center justify-start gap-2 md:gap-[111px]">
+          <div className="flex flex-col items-center justify-start gap-2 md:gap-[11px]">
             <img
               src={AppAsset.Logo}
               style={{
-                width: '200px',
+                width: '100px',
                 height: '304px',
               }}
               className="h-auto object-contain" />
-            <div className="flex flex-col items-center justify-center gap-10">
+            <div className="flex flex-col items-center justify-center gap-1">
               <p
                 className="text-2xl md:text-[64px] font-semibold text-white">
                 {t("carbon.welcome_to", { lng: sectionLanguage.carbon })}
@@ -155,17 +155,18 @@ export default function PageZero({ setPage }: Props) {
             </div>
           </div>
 
-          <p className="text-white text-2xl md:text-[44px] pt-20">
+          <p className="text-white text-2xl md:text-[44px] pt-0">
             {t("carbon.language", { lng: sectionLanguage.carbon })}
           </p>
-          <span className="flex flex-col items-center justify-center text-3xl text-white">
+          <span
+            className="hidden flex-col items-center justify-center text-3xl text-white">
             <p>{`Height: ${window.innerHeight}`}</p>
             <p>{`Width: ${window.innerWidth}`}</p>
-
           </span>
+
           {/* Choice */}
           <div
-            className="w-full md:w-[640px] flex flex-col items-start justify-start gap-10 md:gap-[80px] md:pt-[107px] px-3 md:px-0 text-white">
+            className="w-full md:w-[640px] flex flex-col items-start justify-start gap-10 md:gap-[80px] md:pt-[10px] px-3 md:px-0 text-white">
             {
               choices.map((choice, index) => (
                 <ChoiceButton
@@ -178,7 +179,7 @@ export default function PageZero({ setPage }: Props) {
 
           {/* Choosen Lanuage */}
           <div>
-            <p className="absolute bottom-0 left-0 w-full mx-auto flex items-center justify-center text-white text-2xl md:text-[44px] pt-20 pb-[175px] gap-4">
+            <p className="absolute bottom-0 left-0 w-full mx-auto flex items-center justify-center text-white text-2xl md:text-[44px] pt-24 pb-[175px] gap-4">
               <span
                 className="font-bold text-primary">
                 {language == "english" || language == "English" ? "English" : "አማርኛ"}
@@ -198,7 +199,7 @@ const ChoiceButton = ({ choice, index, selectedLanguage }: { choice: any, index:
     <button
       key={index}
       onClick={choice.onClick}
-      className={`w-full h-20 md:w-[650px] md:h-[88px]  border border-primary flex flex-row items-center justify-start gap-5 md:gap-[32px] px-3 md:px-[33px] rounded-lg ${choice.label == selectedLanguage ? "border-4 bg-primary" : "bg-transparent"}`}>
+      className={`w-full h-20 md:w-[600px] md:h-[60px]  border border-primary flex flex-row items-center justify-start gap-5 md:gap-[32px] px-3 md:px-[33px] rounded-lg ${choice.label == selectedLanguage ? "border-4 bg-primary" : "bg-transparent"}`}>
       <img
         src={choice.label == selectedLanguage ? AppAsset.RadioOneWHite : AppAsset.RadioOffIcon}
         className="w-7 h-auto object-contain" />

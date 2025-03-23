@@ -7,12 +7,6 @@ import PageTwo from "./components/page-2";
 import PageThree from "./components/page-3";
 import PageFour from "./components/page-4";
 import PageFive from "./components/page-5";
-import PageSix from "./components/page-6";
-import PageSeven from "./components/page-7";
-import PageEight from "./components/page-8";
-import PageNine from "./components/page-9";
-import PageTen from "./components/Page-10";
-import PageEleven from "./components/page-11";
 
 export interface ISkipUser {
   householdEnergy: any;
@@ -24,7 +18,7 @@ export interface ISkipUser {
 }
 
 export default function Pledge() {
-  const [page, setPage] = useState<number>(0);
+  const [page, setPage] = useState<number>(5);
   const [skipUserData, setSkipUserData] = useState<ISkipUser | []>([]);
 
   return (
@@ -43,18 +37,7 @@ export default function Pledge() {
                   <PageFour setPage={setPage} /> :
                   page == 5 ?
                     <PageFive setPage={setPage} /> :
-                    page == 6 ?
-                      <PageSix setPage={setPage} /> :
-                      page == 7 ?
-                        <PageSeven setPage={setPage} /> :
-                        page == 8 ?
-                          <PageEight setPage={setPage} /> :
-                          page == 9 ?
-                            <PageNine setPage={setPage} /> :
-                            page == 10 ?
-                              <PageTen setPage={setPage} /> :
-                              page == 11 ?
-                                <PageEleven setPage={setPage} /> : null
+                    null
       }
 
     </div>
