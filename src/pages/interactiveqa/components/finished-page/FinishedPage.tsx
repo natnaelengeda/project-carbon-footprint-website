@@ -7,6 +7,7 @@ import AppAsset from "@/core/AppAsset";
 
 // Translation
 import { useTranslation } from "react-i18next";
+import QABackground from "../QABackground";
 
 export interface FeedbackCardProps {
   icon: string;
@@ -115,40 +116,8 @@ export default function FinishedPage({ setPage, answers, questions, setcUserId, 
   }, []);
 
   return (
-    <div
-      style={{
-        backgroundImage: `url(${AppAsset.BackgroundHorizontal})`,
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-        backgroundRepeat: "no-repeat",
-        backgroundAttachment: "contain",
-        position: "relative",
-      }}
-      className="w-full h-full min-h-screen flex overflow-hidden flex-row items-center px-20 bg-white">
-
-      {/* Background Overlay */}
-      <div
-        className="absolute inset-0"
-        style={{
-          backgroundColor: "rgba(0, 0, 0, 0.5)", // You can adjust the last value (0.5) to change opacity
-          zIndex: 1,
-        }} />
-
-      {/* Logo */}
-      <div
-        className='absolute top-0 left-0 z-20 pl-[5px] pt-[74px]'>
-        <img
-          style={{
-            width: "250px",
-            height: "167px",
-            objectFit: "contain"
-          }}
-          src={AppAsset.Logo}
-          className='' />
-      </div>
-
-
-      <div className="relative grid grid-cols-2 items-center w-full z-10">
+    <QABackground>
+      <div className="relative grid grid-cols-2 items-center w-full z-10 pt-52">
         {/* Left Side */}
         <div className="w-full h-full flex flex-col items-center justify-start gap-5">
           <img
@@ -172,9 +141,8 @@ export default function FinishedPage({ setPage, answers, questions, setcUserId, 
             addData={addData}
           />
         </div>
-
       </div>
-    </div>
+    </QABackground>
   )
 }
 

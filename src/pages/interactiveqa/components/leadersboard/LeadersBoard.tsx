@@ -1,8 +1,12 @@
 import { useEffect, useState } from "react";
 
+// Layout
+import QABackground from "../QABackground";
+
 // Axios
 import axios from "@/utils/axios";
-import AppAsset from "@/core/AppAsset";
+
+// Translation
 import { useTranslation } from "react-i18next";
 
 
@@ -16,11 +20,11 @@ export interface ParticipantData {
 // Interface
 interface Props {
   setPage: React.Dispatch<React.SetStateAction<number>>;
-  score: number;
+  score?: number;
   cuserId: number | null;
 }
 
-export default function LeadersBoard({ score, setPage, cuserId }: Props) {
+export default function LeadersBoard({ setPage, cuserId }: Props) {
   const [leaderboardData, setLeaderboardData] = useState<any>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
@@ -32,10 +36,6 @@ export default function LeadersBoard({ score, setPage, cuserId }: Props) {
 
   // React Language Packaged;
   const { t } = useTranslation();
-
-  if (false) {
-    console.log(score);
-  }
 
   const fetchLeaderboardData = () => {
     axios.get(`/api/v1/questionAttempts/top10/${cuserId}`)
@@ -54,41 +54,9 @@ export default function LeadersBoard({ score, setPage, cuserId }: Props) {
   }, [cuserId]);
 
   return (
-    <div
-      style={{
-        backgroundImage: `url(${AppAsset.BackgroundHorizontal})`,
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-        backgroundRepeat: "no-repeat",
-        backgroundAttachment: "contain",
-        position: "relative",
-      }}
-      className="w-full h-full min-h-screen pt-80">
-
-      {/* Background Overlay */}
+    <QABackground>
       <div
-        className="absolute inset-0"
-        style={{
-          backgroundColor: "rgba(0, 0, 0, 0.5)", // You can adjust the last value (0.5) to change opacity
-          zIndex: 1,
-        }} />
-
-      {/* Logo */}
-      <div
-        className='absolute top-0 left-0 z-20 pl-[99px] pt-[74px]'>
-        <img
-          style={{
-            width: "250px",
-            height: "167px",
-            objectFit: "contain"
-          }}
-          src={AppAsset.Logo}
-          className='' />
-
-      </div>
-
-      <div
-        className="relative w-full flex overflow-hidden flex-col justify-start items-center px-20 text-white max-md:px-5 z-10">
+        className="relative w-full flex overflow-hidden flex-col justify-start items-center px-20 text-white max-md:px-5 z-10 pt-80">
         <div className="w-full flex flex-row items-center max-md:max-w-full ">
           <div className="w-full flex flex-col items-start justify-center">
             {
@@ -124,7 +92,7 @@ export default function LeadersBoard({ score, setPage, cuserId }: Props) {
           </div>
         </div>
       </div>
-    </div>
+    </QABackground>
   )
 }
 

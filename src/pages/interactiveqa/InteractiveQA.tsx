@@ -28,7 +28,6 @@ export default function InteractiveQA() {
             page == 3 ?
               questions &&
               <PageThree
-                page={page}
                 setPage={setPage}
                 questions={questions}
                 answers={answers}

@@ -2,6 +2,12 @@ import { useState, useRef, useEffect } from 'react';
 
 import { Oval } from 'react-loader-spinner';
 
+// Layout
+import QABackground from '../QABackground';
+
+// Components
+import LanguageButton from './components/LanguageButton';
+
 // Axios
 import axios from "@/utils/axios";
 
@@ -47,8 +53,6 @@ export default function PageTwo({ setPage, setQuestions }: Props) {
     localStorage.setItem("language", JSON.stringify(updatedLanuages));
   }
 
-
-
   const fetchQuestions = () => {
     setLoading(true);
     try {
@@ -73,9 +77,6 @@ export default function PageTwo({ setPage, setQuestions }: Props) {
           console.error(error);
           toast.error("Questions Fetch Unsuccessful");
         })
-
-      // setQuestions(qs);
-      // setPage(3);
 
     } catch (error) {
       console.error(error);
@@ -155,41 +156,8 @@ export default function PageTwo({ setPage, setQuestions }: Props) {
   }
 
   return (
-    <div
-      style={{
-        backgroundImage: `url(${AppAsset.BackgroundHorizontal})`,
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-        backgroundRepeat: "no-repeat",
-        backgroundAttachment: "contain",
-        position: "relative",
-      }}
-      className='relative w-full h-full flex flex-col items-center justify-start pt-5'>
-
-
-      {/* Background Overlay */}
-      <div
-        className="absolute inset-0"
-        style={{
-          backgroundColor: "rgba(0, 0, 0, 0.5)", // You can adjust the last value (0.5) to change opacity
-          zIndex: 1,
-        }}
-      />
-
+    <QABackground>
       <div className='relative w-full h-full flex flex-col items-center justify-start z-10  md:pt-[140px] 3xl:pt-[550px]'>
-
-        {/* Logo */}
-        <div
-          className='absolute top-0 left-0 z-20 pl-[99px] pt-[74px]'>
-          <img
-            style={{
-              width: "250px",
-              height: "167px",
-              objectFit: "contain"
-            }}
-            src={AppAsset.Logo}
-            className='' />
-        </div>
 
         {/* Title */}
         <div
@@ -206,13 +174,13 @@ export default function PageTwo({ setPage, setQuestions }: Props) {
         {/* Choice */}
         <div
           className="w-full md:w-[640px] flex flex-col items-start justify-start gap-10 md:gap-[80px] px-3 md:px-0 text-white mt-[107px]">
-          <CustomButton
+          <LanguageButton
             functions={changeToEnglish}
             language={lanuage}
             currLanuage="english"
             viewLanguage="English" />
 
-          <CustomButton
+          <LanguageButton
             functions={changeToAmharic}
             language={lanuage}
             currLanuage="amharic"
@@ -252,23 +220,6 @@ export default function PageTwo({ setPage, setQuestions }: Props) {
           </button>
         </div>
       </div>
-    </div>
+    </QABackground>
   )
-}
-
-
-const CustomButton = ({ functions, language, currLanuage, viewLanguage }: any) => {
-  return (
-    <button
-      onClick={functions}
-      className={`w-full h-20 md:w-[650px] md:h-[88px] 3xl:w-[800px] 3xl:h-[150px]  flex flex-row items-center justify-start gap-5 md:gap-[32px] px-3 md:px-[33px] border-2 border-[#35D36A] rounded-lg ${language == currLanuage ? "bg-[#35D36A] " : ""}`}>
-      <img
-        src={language == currLanuage ? AppAsset.RadioOneWHite : AppAsset.RadioOffIcon}
-        className="w-7 h-auto object-contain" />
-      <p
-        className={`text-2xl md:text-[36px] 3xl:text-[50px] ${language == currLanuage ? "font-bold" : ""}`}>
-        {viewLanguage}
-      </p>
-    </button>
-  );
 }

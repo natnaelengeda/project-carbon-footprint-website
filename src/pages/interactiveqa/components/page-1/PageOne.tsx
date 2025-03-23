@@ -8,6 +8,7 @@ import AppAsset from "@/core/AppAsset";
 
 // Import Swiper styles
 import 'swiper/css';
+import QABackground from '../QABackground';
 
 interface Props {
   setPage: React.Dispatch<React.SetStateAction<number>>;
@@ -66,27 +67,9 @@ export default function PageOne({ setPage }: Props) {
   }, []);
 
   return (
-    <div
-      onClick={() => {
-        setPage(2);
-      }}
-      style={{
-        backgroundImage: `url(${AppAsset.BackgroundHorizontal})`,
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-        backgroundRepeat: "no-repeat",
-        backgroundAttachment: "contain",
-        position: "relative",
-      }}
-      className='relative w-full h-full min-h-screen text-white'>
-      {/* Background Overlay */}
-      <div
-        className="absolute inset-0"
-        style={{
-          backgroundColor: "rgba(0, 0, 0, 0.5)", // You can adjust the last value (0.5) to change opacity
-          zIndex: 1,
-        }} />
-
+    <QABackground
+      page={1}
+      setPage={setPage}>
       <div
         onKeyDown={() => {
           setPage(2)
@@ -131,6 +114,6 @@ export default function PageOne({ setPage }: Props) {
           </button>
         </div>
       </div>
-    </div>
+    </QABackground>
   )
 }

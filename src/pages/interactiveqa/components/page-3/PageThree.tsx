@@ -10,11 +10,11 @@ import AppAsset from "@/core/AppAsset";
 // Styles
 import "./styles/styles.css";
 import { useTranslation } from "react-i18next";
+import QABackground from "../QABackground";
 
 
 // Interface
 interface Props {
-  page: number;
   setPage: React.Dispatch<React.SetStateAction<number>>;
   questions: any[];
   answers: { [key: number]: number };
@@ -23,7 +23,7 @@ interface Props {
 }
 
 
-export default function PageThree({ page, setPage, answers, setAnswers, setQuestions, questions }: Props) {
+export default function PageThree({ setPage, answers, setAnswers, setQuestions, questions }: Props) {
   const [colorStep, setColorStep] = useState<number>(0);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [incorrect, setIncorrect] = useState(false);
@@ -115,9 +115,6 @@ export default function PageThree({ page, setPage, answers, setAnswers, setQuest
   const duration = 20;
   const [timeLeft, setTimeLeft] = useState(duration);
 
-  // Question Length 
-  const questionLength = questions.length;
-
   const [currentQuestionA, setCurruentQuestion] = useState({
     question: 0,
     answer: 0,
@@ -172,54 +169,20 @@ export default function PageThree({ page, setPage, answers, setAnswers, setQuest
   }, []);
 
   return (
-    <div
-      style={{
-        backgroundImage: `url(${AppAsset.BackgroundHorizontal})`,
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-        backgroundRepeat: "no-repeat",
-        backgroundAttachment: "contain",
-        position: "relative",
-      }}
-      className="w-full h-full min-h-screen flex flex-col items-start justify-start pl-[400px]">
-
-      {/* Logo */}
-      <div
-        className='absolute top-0 left-0 z-20 pl-[99px] pt-[74px]'>
-        <img
-          style={{
-            width: "250px",
-            height: "167px",
-            objectFit: "contain"
-          }}
-          src={AppAsset.Logo}
-          className='' />
-      </div>
-
+    <QABackground>
       {/* TImer */}
       <div className="absolute top-0 right-0 pr-[112px] pt-[92px] z-10">
         <Timer
-          page={page}
           setPage={setPage}
           duration={duration}
           timeLeft={timeLeft}
           setTimeLeft={setTimeLeft}
-          handleNextQuestion={handleNextQuestion}
-          questionLength={questionLength}
           checkAnswer={checkAnswer} />
-
       </div>
 
-      {/* Background Overlay */}
-      <div
-        className="absolute inset-0"
-        style={{
-          backgroundColor: "rgba(0, 0, 0, 0.5)", // You can adjust the last value (0.5) to change opacity
-          zIndex: 1,
-        }} />
 
       {/* Main */}
-      <div className="w-full h-full min-h-screen flex flex-col items-start justify-start relative z-10">
+      <div className="w-full h-full mx-auto min-h-screen flex flex-col items-center justify-start relative z-10">
 
         {/* Questions */}
         <div
@@ -363,7 +326,6 @@ export default function PageThree({ page, setPage, answers, setAnswers, setQuest
           }
         </div>
       </div>
-
-    </div>
+    </QABackground>
   )
 }

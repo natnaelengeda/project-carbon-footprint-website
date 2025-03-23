@@ -3,17 +3,14 @@ import { useTranslation } from 'react-i18next';
 
 // Interface
 interface Props {
-  page: number;
   setPage: React.Dispatch<React.SetStateAction<number>>;
   duration: number;
   timeLeft: number;
   setTimeLeft: React.Dispatch<React.SetStateAction<number>>;
-  questionLength: number;
-  handleNextQuestion: () => void;
   checkAnswer: () => void;
 }
 
-export default function Timer({ page, setPage, duration, questionLength, timeLeft, setTimeLeft, handleNextQuestion, checkAnswer }: Props) {
+export default function Timer({ setPage, duration, timeLeft, setTimeLeft, checkAnswer }: Props) {
   const width = window.innerWidth;
 
   const savedlanguages = JSON.parse(localStorage.getItem("language") || JSON.stringify({
@@ -24,12 +21,6 @@ export default function Timer({ page, setPage, duration, questionLength, timeLef
 
   // React Language Packaged;
   const { t } = useTranslation();
-
-  if (false) {
-    console.log(questionLength);
-    handleNextQuestion();
-    console.log(page);
-  }
 
   // Progress calculation
   const radius = width > 768 ? 70 : 50; // Circle radius
