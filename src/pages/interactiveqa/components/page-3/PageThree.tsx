@@ -1,17 +1,17 @@
 import React, { useEffect, useRef, useState } from "react";
 
-
 // Components
 import Timer from "./components/Timer";
-
-// AppAsset
-import AppAsset from "@/core/AppAsset";
+import QABackground from "../QABackground";
+import Choice from "./components/Choice";
+import EmptyAnswer from "./components/EmptyAnswer";
+import NextQuestion from "./components/NextQuestion";
+import CorrectAnswer from "./components/CorrentAnswer";
+import IncorrectAnswer from "./components/IncorrectAnswer";
+import Question from "./components/Question";
 
 // Styles
 import "./styles/styles.css";
-import { useTranslation } from "react-i18next";
-import QABackground from "../QABackground";
-
 
 // Interface
 interface Props {
@@ -21,7 +21,6 @@ interface Props {
   setAnswers: React.Dispatch<React.SetStateAction<{ [key: number]: number }>>;
   setQuestions: any;
 }
-
 
 export default function PageThree({ setPage, answers, setAnswers, setQuestions, questions }: Props) {
   const [colorStep, setColorStep] = useState<number>(0);
@@ -34,19 +33,8 @@ export default function PageThree({ setPage, answers, setAnswers, setQuestions, 
   const isKeyPressed = useRef(false);
   const [key, setKey] = useState(null);
 
-  const savedlanguages = JSON.parse(localStorage.getItem("language") || JSON.stringify({
-    carbon: "en",
-    pledge: "en",
-    qa: "en"
-  }));
-
-  // React Language Packaged;
-  const { t } = useTranslation();
-
   useEffect(() => {
     if (isKeyPressed.current) {
-      console.log(key);
-
       switch (key!) {
         case "a":
           if (click == 1) {
@@ -81,7 +69,6 @@ export default function PageThree({ setPage, answers, setAnswers, setQuestions, 
             case 2:
               handleNextQuestion();
               break;
-
           }
           break;
         default:
@@ -110,9 +97,8 @@ export default function PageThree({ setPage, answers, setAnswers, setQuestions, 
     };
   }, []);
 
-
   // Timer
-  const duration = 20;
+  const duration = 2;
   const [timeLeft, setTimeLeft] = useState(duration);
 
   const [currentQuestionA, setCurruentQuestion] = useState({
@@ -132,15 +118,20 @@ export default function PageThree({ setPage, answers, setAnswers, setQuestions, 
       question: questionId,
       answer: choiceId
     });
-
   };
 
   const handleNextQuestion = () => {
-    setCurrentQuestionIndex(prevIndex => prevIndex + 1);
-    setColorStep(colorStep + 1);
-    setClick(1);
-    setIncorrect(false);
-    setTimeLeft(duration);
+    console.log(currentQuestionIndex + 1);
+    if (currentQuestionIndex >= 9) {
+      setPage(4);
+    } else {
+      setCurrentQuestionIndex(prevIndex => prevIndex + 1);
+      setColorStep(colorStep + 1);
+      setClick(1);
+      setIncorrect(false);
+      setTimeLeft(duration);
+    }
+
   };
 
   const checkAnswer = () => {
@@ -150,13 +141,19 @@ export default function PageThree({ setPage, answers, setAnswers, setQuestions, 
       console.log("Empty Answers");
       setIncorrect(true);
       setClick(2);
-
-      setTimeout(() => {
-        handleNextQuestion();
-      }, 2000);
+      if (currentQuestionIndex >= 9) {
+        setPage(4);
+      } else {
+        setTimeout(() => {
+          handleNextQuestion();
+        }, 2000);
+      }
     } else {
-      console.log("Answers are present");
-      setClick(2);
+      if (currentQuestionIndex >= 9) {
+        setPage(4);
+      } else {
+        setClick(2);
+      }
     }
   }
 
@@ -180,151 +177,41 @@ export default function PageThree({ setPage, answers, setAnswers, setQuestions, 
           checkAnswer={checkAnswer} />
       </div>
 
-
       {/* Main */}
       <div className="w-full h-full mx-auto min-h-screen flex flex-col items-center justify-start relative z-10">
 
         {/* Questions */}
         <div
           className="w-full md:w-[auto] flex flex-col items-start justify-start gap-4 md:gap-[60px] text-white pt-[150px]">
-
-
           {/* Question */}
-          <div className="w-[1200px] px-3 md:px-0 md:pt-[100px]">
-            <h1
-              style={{
-                lineHeight: "1.3"
-              }}
-              className="text-2xl md:text-[48px] font-bold md:leading-10 space-y-2">
-              {questions && currentQuestion.translations[0].question}
-            </h1>
-          </div>
+          <Question
+            questions={questions}
+            currentQuestion={currentQuestion} />
 
           {/* Choices */}
-          <div
-            className="w-full h-auto grid grid-cols-2 space-y-5 items-center justify-start gap-5 md:gap-[30px] px-3 md:px-0 m">
-            {
-              questions &&
-              currentQuestion.translations[0].options.map((choice: any, index: number) => {
-                return (
-                  <div
-                    key={index}
-                    onClick={() => {
-                      if (click == 1) {
-                        handleAnswerChange(currentQuestion._id, choice._id)
-                        setSelectedChoice(choice);
-                      }
-                    }}
-                    className={`w-full h-auto flex flex-row items-center justify-start gap-3 md:gap-[20px] border rounded-lg py-5 pl-3 md:w-[480px] md:min-h-[120px] ${answers[currentQuestion._id] === choice._id ? "bg-[#35D36A40] border-primary" : "border-white "}`}>
-                    <label
-                      key={choice._id}
-                      className="w-full h-auto flex flex-row items-center md:items-start justify-start gap-3 md:gap-[20px] custom-radio">
-                      <span className="text-lg md:text-[30px]">
-                        {
-                          ["A) ", "B) ", "C) ", "D) "][index] || null
-                        }
-                      </span>
-                      <span
-                        className="text-lg md:text-[30px] font-normal">
-                        <p
-                          style={{
-                            whiteSpace: 'wrap',
-                            flex: 'wrap',
-                            lineHeight: "1.2",
-                          }}>
-                          {choice.text}
-                        </p>
-
-                      </span>
-                    </label>
-                  </div>
-                );
-              })
-            }
-          </div>
+          <Choice
+            questions={questions}
+            currentQuestion={currentQuestion}
+            click={click}
+            handleAnswerChange={handleAnswerChange}
+            setSelectedChoice={setSelectedChoice}
+            answers={answers} />
 
           <div>
-            {
-              incorrect &&
-              <div
-                className="w-full h-auto rounded-lg">
-                <p className="text-2xl md:text-[30px]"><span className="font-bold text-red-500">{t("qa.incorrect_answer", { lng: savedlanguages.qa })}:</span> {t("qa.empty_answer", { lng: savedlanguages.qa })}</p>
-              </div>
-            }
-
-            {
-              click == 2 &&
-              currentQuestionA.answer == selectedChoice._id &&
-              <>
-                <div
-                  className="pt-5 w-[80rem]">
-                  <p
-                    style={{
-                      lineHeight: "1.5"
-                    }}
-                    className="text-2xl md:text-[30px]">
-                    <span
-                      style={{
-                        lineHeight: "1.2"
-                      }}
-                      className={`${selectedChoice.isCorrect ? "text-primary" : "text-red-500"} font-bold`}>{selectedChoice.isCorrect ? `${t("qa.correct", { lng: savedlanguages.qa })}: ` : `${t("qa.incorrect_answer", { lng: savedlanguages.qa })}: `}</span>
-                    {selectedChoice.explanation}</p>
-                </div>
-              </>
-            }
+            <EmptyAnswer incorrect={incorrect} />
+            <CorrectAnswer click={click} currentQuestionA={currentQuestionA} selectedChoice={selectedChoice} />
+            <IncorrectAnswer click={click} currentQuestionA={currentQuestionA} selectedChoice={selectedChoice} />
           </div>
         </div>
 
-
         {/* Next Questions */}
-        <div
-          className="w-full pt-0 md:pt-10 flex flex-row items-center justify-end pr-10 md:pr-[140px] gap-1 md:gap-5 ">
-
-          {
-            questions &&
-            currentQuestionIndex < questions.length - 1 &&
-            (
-              <button
-                onClick={() => {
-                  switch (click) {
-                    case 1:
-                      checkAnswer();
-                      break;
-                    case 2:
-                      handleNextQuestion();
-                      break;
-
-                  }
-                }}
-                className="flex flex-row items-center justify-center w-60 h-60 md:w-[220.32px] md:h-[100px] bg-primary rounded-full text-white px-3 md:px-0 py-2 md:py-0 gap-2">
-                {
-                  click == 1 ?
-                    <>
-                      <p className="text-xl md:text-[34px]">{t("qa.submit", { lng: savedlanguages.qa })}</p>
-                    </> :
-                    <>
-                      <p className="text-xl md:text-[34px]">{t("qa.next", { lng: savedlanguages.qa })}</p>
-                      <img
-                        className="w-6 md:w-[34.56px] h-auto object-contain"
-                        src={AppAsset.RightArrowIcon} />
-                    </>
-                }
-              </button>
-            )}
-          {
-            questions &&
-            currentQuestionIndex === questions.length - 1 && (
-              <button
-                onClick={() => {
-                  setPage(4);
-                }}
-                className="flex flex-row items-center justify-center md:w-[220.32px] md:h-[100px] bg-primary rounded-full text-white px-3 md:px-0 py-2 md:py-0 gap-2">
-                <p
-                  className="text-xl md:text-[34px]">{t("qa.submit", { lng: savedlanguages.qa })}</p>
-              </button>
-            )
-          }
-        </div>
+        <NextQuestion
+          questions={questions}
+          click={click}
+          currentQuestionIndex={currentQuestionIndex}
+          checkAnswer={checkAnswer}
+          handleNextQuestion={handleNextQuestion}
+          setPage={setPage} />
       </div>
     </QABackground>
   )

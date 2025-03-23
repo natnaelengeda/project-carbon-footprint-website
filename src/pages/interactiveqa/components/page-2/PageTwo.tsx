@@ -98,14 +98,10 @@ export default function PageTwo({ setPage, setQuestions }: Props) {
       }
       setSectionLanguage(savedlanguages);
     }
-
-
   }, []);
 
   useEffect(() => {
     if (isKeyPressed.current) {
-      console.log(key);
-
       switch (key!) {
         case "ArrowUp":
           if (lanuage !== "english") {
@@ -123,7 +119,6 @@ export default function PageTwo({ setPage, setQuestions }: Props) {
       }
     }
   }, [isKeyPressed.current]);
-
 
   useEffect(() => {
     const handleKeyDown = (event: any) => {

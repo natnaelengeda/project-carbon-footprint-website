@@ -1,5 +1,8 @@
 import { useState, useRef, useEffect } from 'react';
 
+// Layout
+import QABackground from '../QABackground';
+
 // Translation
 import { useTranslation } from 'react-i18next';
 
@@ -8,7 +11,6 @@ import AppAsset from "@/core/AppAsset";
 
 // Import Swiper styles
 import 'swiper/css';
-import QABackground from '../QABackground';
 
 interface Props {
   setPage: React.Dispatch<React.SetStateAction<number>>;
@@ -23,10 +25,7 @@ export default function PageOne({ setPage }: Props) {
   }));
 
   const [language, setLanguage] = useState(savedlanguages);
-
-  // React Language Packaged;
   const { t } = useTranslation();
-
 
   useEffect(() => {
     if (isKeyPressed.current) {
@@ -60,7 +59,6 @@ export default function PageOne({ setPage }: Props) {
       setLanguage((prevLanguage: any) => ({
         qa: prevLanguage.qa === "en" ? "am" : "en"
       }));
-      console.log("Change")
     }, 10000);
 
     return () => clearInterval(intervalId);
@@ -93,7 +91,6 @@ export default function PageOne({ setPage }: Props) {
             <p className="text-2xl md:text-[70px] font-semibold">{t("qa.qa", { lng: language.qa })}</p>
           </div>
         </div>
-
 
         {/* Buttons */}
         <div

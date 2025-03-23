@@ -40,6 +40,8 @@ export default function FinishedPage({ setPage, answers, questions, setcUserId, 
   const [sum, setSum] = useState<number>(0);
   const [name, setName] = useState<string>("");
 
+  console.log(answers)
+
   const savedlanguages = JSON.parse(localStorage.getItem("language") || JSON.stringify({
     carbon: "en",
     pledge: "en",

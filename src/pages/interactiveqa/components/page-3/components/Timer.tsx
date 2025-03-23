@@ -27,8 +27,6 @@ export default function Timer({ setPage, duration, timeLeft, setTimeLeft, checkA
   const circumference = 2 * Math.PI * radius;
   const progress = ((duration - timeLeft) / duration) * circumference;
 
-  // Question Counter
-
   useEffect(() => {
     if (timeLeft <= 0) return;
 
