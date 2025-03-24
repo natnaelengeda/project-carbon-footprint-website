@@ -82,34 +82,34 @@ export default function PageSeven({
           <img
             src={AppAsset.BannerFive}
             style={{
-              width: '700px',
-              height: '700px'
+              width: '250px',
+              height: '250px'
             }}
             className=" object-contain" />
         </div>
 
         {/* Title */}
         <div
-          className="w-full h-auto flex flex-col items-start justify-start pl-20 text-white">
+          className="w-full h-auto flex flex-col items-start justify-start pl-10 text-white">
           <div
             className="flex flex-row items-start justify-start gap-5">
             <div
-              className="w-10 h-3 bg-orange-500 mt-10">
+              className="w-8 h-2 bg-orange-500 mt-8">
             </div>
             <div className="flex flex-col items-start justify-start">
-              <p className="text-white text-[60px]">Transportation Mode</p>
-              <p className="text-white text-[40px]">Please provide your usual transportation option</p>
+              <p className="text-white text-[40px]">Transportation Mode</p>
+              <p className="text-white text-[25px]">Please provide your usual transportation option</p>
             </div>
           </div>
         </div>
 
         {/* Personal Vehicle */}
         <div
-          className="w-full h- flex flex-col items-start justify-start pl-40 pt-10 gap-10">
+          className="w-full flex flex-col items-start justify-start pl-10 pt-5 gap-5">
 
           {/* Title */}
           <div className="">
-            <h1 className="text-[50px] font-bold text-white">Personal Vehicle</h1>
+            <h1 className="text-[40px] font-bold text-white">Personal Vehicle</h1>
           </div>
 
           <div
@@ -136,10 +136,10 @@ export default function PageSeven({
 
         {/* Public Transport */}
         <div
-          className="w-full h- flex flex-col items-start justify-start pl-40 pt-14 gap-10">
+          className="w-full h- flex flex-col items-start justify-start pl-10 pt-5 gap-5">
           {/* Title */}
           <div className="">
-            <h1 className="text-[50px] font-bold text-white">Public Transport</h1>
+            <h1 className="text-[40px] font-bold text-white">Public Transport</h1>
           </div>
 
           <div className="w-full h-auto flex flex-col items-start justify-start gap-5 pl-10">

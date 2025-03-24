@@ -54,29 +54,22 @@ export default function PageOne({ setPage }: Props) {
         {/* Top */}
         <div
           className='w-full flex flex-row items-center justify-start px-[106px]'>
-          <img
-            src={AppAsset.Logo}
-            style={{
-              width: '72px',
-              height: '109px',
-            }}
-            className="w-32 h-32 object-contain" />
         </div>
 
         {/* Center */}
         <div
-          className='w-full flex flex-col items-center justify-center gap-14 pt-[186px]'>
+          className='w-full flex flex-col items-center justify-center gap-14 pt-5'>
 
           <img
             src={AppAsset.BannerTwo}
             style={{
-              width: '500px',
-              height: '500px'
+              width: '350px',
+              height: '350px'
             }} />
 
           <span
             style={{
-              fontSize: '48px'
+              fontSize: '34px'
             }}
             className='flex flex-col items-center justify-center gap-2 text-white font-semibold'>
             <h1

@@ -55,12 +55,12 @@ export default function PageTwo({ setPage }: Props) {
           {/* Image */}
           <img
             src={AppAsset.BannerThree}
-            className="w-[550px] h-[550px] object-cover" />
+            className="w-[350px] h-[350px] object-cover" />
         </div>
 
         {/* Note */}
         <div
-          className="w-auto flex flex-row items-center justify-center gap-3 font-semibold text-2xl md:text-[64px] pt-20 text-white">
+          className="w-auto flex flex-row items-center justify-center font-semibold text-3xl md:text-[64px] pt-20 text-white">
           <p>
             What is your housing type?
           </p>
@@ -68,13 +68,13 @@ export default function PageTwo({ setPage }: Props) {
 
         {/* Radio Input */}
         <div
-          className="w-full flex flex-col items-center justify-start gap-5 pt-2 md:pt-[150px] px-10 md:px-4">
+          className="w-full flex flex-col items-center justify-start gap-5 pt-10 md:pt-[150px] px-10 md:px-4">
           <RadioGroup
             value={value}
             onChange={setValue}
             required>
             <div
-              className='flex flex-col gap-20 text-white text-lg'>
+              className='flex flex-col gap-10 text-white text-lg'>
               <Radio
                 iconColor=""
                 classNames={{
@@ -83,7 +83,7 @@ export default function PageTwo({ setPage }: Props) {
                 }}
                 color={`var(--main-color)`}
                 value="apartment"
-                size={"xl"}
+                size={"lg"}
                 label={"Apartment/Condiminium"} />
               <Radio
                 iconColor=""
@@ -93,7 +93,7 @@ export default function PageTwo({ setPage }: Props) {
                 }}
                 color={`var(--main-color)`}
                 value="house"
-                size={"xl"}
+                size={"lg"}
                 label={"House"} />
 
             </div>
@@ -110,8 +110,6 @@ export default function PageTwo({ setPage }: Props) {
           }</span></p>
 
         </div>
-
-
 
       </div>
     </QuestionsLayout>

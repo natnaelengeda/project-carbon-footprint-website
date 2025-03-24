@@ -128,34 +128,34 @@ export default function PageZero({ setPage }: Props) {
           zIndex: 1,
         }}
       />
-      <div className="relative z-10 w-full h-full mx-auto 2xl:container flex flex-col items-center justify-start gap-5 py-10 font-Urbanist">
+      <div className="relative z-10 w-full h-full mx-auto 2xl:container flex flex-col items-center justify-start gap-5 font-Urbanist">
 
         {/* Center */}
         <div
-          className='w-full flex flex-col items-center justify-center gap-10 pt-[px]'>
+          className='w-full flex flex-col items-center justify-center gap-7'>
 
           {/* Title */}
           <div className="flex flex-col items-center justify-start gap-2 md:gap-[11px]">
             <img
               src={AppAsset.Logo}
               style={{
-                width: '100px',
+                width: '120px',
                 height: '304px',
               }}
               className="h-auto object-contain" />
             <div className="flex flex-col items-center justify-center gap-1">
               <p
-                className="text-2xl md:text-[64px] font-semibold text-white">
+                className="text-4xl md:text-[64px] font-semibold text-white">
                 {t("carbon.welcome_to", { lng: sectionLanguage.carbon })}
               </p>
               <p
-                className="text-2xl md:text-[64px] font-semibold text-white">
+                className="text-4xl md:text-[64px] font-semibold text-white">
                 {t("carbon.carbon_footprint", { lng: sectionLanguage.carbon })}
               </p>
             </div>
           </div>
 
-          <p className="text-white text-2xl md:text-[44px] pt-0">
+          <p className="text-white text-2xl md:text-[44px]">
             {t("carbon.language", { lng: sectionLanguage.carbon })}
           </p>
           <span
@@ -166,7 +166,7 @@ export default function PageZero({ setPage }: Props) {
 
           {/* Choice */}
           <div
-            className="w-full md:w-[640px] flex flex-col items-start justify-start gap-10 md:gap-[80px] md:pt-[10px] px-3 md:px-0 text-white">
+            className="w-full md:w-[640px] flex flex-col items-start justify-start gap-10 md:gap-[80px] md:pt-[10px] md:px-0 text-white px-6">
             {
               choices.map((choice, index) => (
                 <ChoiceButton
@@ -199,7 +199,7 @@ const ChoiceButton = ({ choice, index, selectedLanguage }: { choice: any, index:
     <button
       key={index}
       onClick={choice.onClick}
-      className={`w-full h-20 md:w-[600px] md:h-[60px]  border border-primary flex flex-row items-center justify-start gap-5 md:gap-[32px] px-3 md:px-[33px] rounded-lg ${choice.label == selectedLanguage ? "border-4 bg-primary" : "bg-transparent"}`}>
+      className={`w-full h-[4.6rem] md:w-[600px] md:h-[60px]  border border-primary flex flex-row items-center justify-start gap-5 md:gap-[32px] px-3 md:px-[33px] rounded-lg ${choice.label == selectedLanguage ? "border-4 bg-primary" : "bg-transparent"}`}>
       <img
         src={choice.label == selectedLanguage ? AppAsset.RadioOneWHite : AppAsset.RadioOffIcon}
         className="w-7 h-auto object-contain" />

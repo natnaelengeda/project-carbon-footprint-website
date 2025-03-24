@@ -1,8 +1,8 @@
 .label {
-  font-size: 40pt;
+  font-size: 25pt;
 }
 
 .body {
   flex-direction: row;
-  gap: 7px;
+  gap: 5px;
 }

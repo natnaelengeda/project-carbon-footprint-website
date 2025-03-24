@@ -22,7 +22,7 @@ const StackedProgressBar: React.FC = () => {
         <div className="flex justify-between mt-2">
           {progress.map((_, index) => (
             <div key={index} className="text-center">
-              <span className=" text-white   " style={{ fontSize: "30px" }}>
+              <span className=" text-white   " style={{ fontSize: "25px" }}>
                 {labels[index]}
               </span>
             </div>
@@ -54,8 +54,7 @@ const StackedProgressBar: React.FC = () => {
               {/* Exact values down the bar */}
               <span
                 className="text-white font-bold"
-                style={{ fontSize: "30px" }}
-              >
+                style={{ fontSize: "25px" }}>
                 {value}
               </span>
             </div>

@@ -22,7 +22,7 @@ interface Props {
   setQuestions: any;
 }
 
-export default function PageThree({ setPage, answers, setAnswers, setQuestions, questions }: Props) {
+export default function xPageThree({ setPage, answers, setAnswers, setQuestions, questions }: Props) {
   const [colorStep, setColorStep] = useState<number>(0);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [incorrect, setIncorrect] = useState(false);
