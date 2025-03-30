@@ -15,11 +15,10 @@ interface Props {
   children: React.ReactNode;
   setPage: React.Dispatch<React.SetStateAction<number>>;
   currPage?: number;
-  setSelectedComponent?: ((value: number) => void) | React.Dispatch<React.SetStateAction<number>>;
-  noOfPages?: number;
+  handleComponentChange?: () => void;
 }
 
-export default function QuestionsLayout({ children, setPage, currPage, setSelectedComponent }: Props) {
+export default function QuestionsLayout({ children, setPage, currPage }: Props) {
   const socket = useSocket();
   const carbon = useSelector((state: { carbon: CarbonState }) => state.carbon);
 
@@ -39,17 +38,15 @@ export default function QuestionsLayout({ children, setPage, currPage, setSelect
       setPage(data.nextPage);
     });
 
-    socket?.on("page-next-component-client", (temp) => {
-      const data = JSON.parse(temp);
-      console.log(data)
-      // setSelectedComponent && setSelectedComponent(parseInt(data.currComponent) + 1);
-      setSelectedComponent && setSelectedComponent(data.nextComponent);
+    socket?.on("page-next-component-client", () => {
+      // const data = JSON.parse(temp);
+      // handleComponentChange();
     })
 
-    socket?.on("page-prev-component-client", (temp) => {
-      const data = JSON.parse(temp);
-      setSelectedComponent && setSelectedComponent(data.currComponent - 1);
-    })
+    // socket?.on("page-prev-component-client", (temp) => {
+    //   const data = JSON.parse(temp);
+    //   setSelectedComponent && setSelectedComponent(data.currComponent - 1);
+    // })
 
   }, [socket]);
 
@@ -93,7 +90,7 @@ export default function QuestionsLayout({ children, setPage, currPage, setSelect
         return AppAsset.BackgroundWaterVertical;
 
       default:
-        return AppAsset.Background;
+        return AppAsset.BackgroundVertical;
     }
   }
 
@@ -151,9 +148,7 @@ export default function QuestionsLayout({ children, setPage, currPage, setSelect
       <div className="absolute bottom-10 rigth-20 w-full hidden flex-row items-center justify-end z-10 pr-10 gap-10">
         <button onClick={() => setPage(prevPage => prevPage - 1)} className="px-20 py-5 bg-primary text-white text-4xl rounded-3xl font-bold">Previous</button>
         <button onClick={() => setPage(prevPage => prevPage + 1)} className="px-20 py-5 bg-primary text-white text-4xl rounded-3xl font-bold">Next</button>
-
       </div>
-
     </div>
   )
 }

@@ -111,7 +111,7 @@ export default function PageZero({ setPage }: Props) {
   return (
     <div
       style={{
-        backgroundImage: `url(${AppAsset.Background})`,
+        backgroundImage: `url(${AppAsset.BackgroundVertical})`,
         backgroundSize: "cover",
         backgroundPosition: "center",
         backgroundRepeat: "no-repeat",
@@ -124,7 +124,7 @@ export default function PageZero({ setPage }: Props) {
       <div
         className="absolute inset-0"
         style={{
-          backgroundColor: "rgba(0, 0, 0, 0.5)", // You can adjust the last value (0.5) to change opacity
+          backgroundColor: "rgba(0, 0, 0, 0.4)", // You can adjust the last value (0.5) to change opacity
           zIndex: 1,
         }}
       />

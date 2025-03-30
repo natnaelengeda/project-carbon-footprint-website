@@ -22,7 +22,7 @@ export default function Choice({ click, questions, answers, currentQuestion, han
               key={index}
               onClick={() => {
                 if (click == 1) {
-                  handleAnswerChange(currentQuestion._id, choice._id)
+                  handleAnswerChange(currentQuestion._id, choice._id, choice.isCorrect)
                   setSelectedChoice(choice);
                 }
               }}

@@ -19,10 +19,11 @@ interface Props {
   questions: any[];
   answers: { [key: number]: number };
   setAnswers: React.Dispatch<React.SetStateAction<{ [key: number]: number }>>;
+  setCheck: React.Dispatch<React.SetStateAction<{ question: number, answer: number, isCorrect: boolean }[] | []>>;
   setQuestions: any;
 }
 
-export default function xPageThree({ setPage, answers, setAnswers, setQuestions, questions }: Props) {
+export default function xPageThree({ setPage, answers, setAnswers, setQuestions, setCheck, questions }: Props) {
   const [colorStep, setColorStep] = useState<number>(0);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [incorrect, setIncorrect] = useState(false);
@@ -38,25 +39,25 @@ export default function xPageThree({ setPage, answers, setAnswers, setQuestions,
       switch (key!) {
         case "a":
           if (click == 1) {
-            handleAnswerChange(currentQuestion._id, currentQuestion.translations[0].options[0]._id);
+            handleAnswerChange(currentQuestion._id, currentQuestion.translations[0].options[0]._id, currentQuestion.translations[0].options[0].isCorrect);
             setSelectedChoice(currentQuestion.translations[0].options[0]);
           }
           break;
         case "b":
           if (click == 1) {
-            handleAnswerChange(currentQuestion._id, currentQuestion.translations[0].options[1]._id);
+            handleAnswerChange(currentQuestion._id, currentQuestion.translations[0].options[1]._id, currentQuestion.translations[0].options[1].isCorrect);
             setSelectedChoice(currentQuestion.translations[0].options[1]);
           }
           break;
         case "c":
           if (click == 1) {
-            handleAnswerChange(currentQuestion._id, currentQuestion.translations[0].options[2]._id);
+            handleAnswerChange(currentQuestion._id, currentQuestion.translations[0].options[2]._id, currentQuestion.translations[0].options[2].isCorrect);
             setSelectedChoice(currentQuestion.translations[0].options[2]);
           }
           break;
         case "d":
           if (click == 1) {
-            handleAnswerChange(currentQuestion._id, currentQuestion.translations[0].options[3]._id);
+            handleAnswerChange(currentQuestion._id, currentQuestion.translations[0].options[3]._id, currentQuestion.translations[0].options[3].isCorrect);
             setSelectedChoice(currentQuestion.translations[0].options[3]);
           }
           break;
@@ -98,7 +99,7 @@ export default function xPageThree({ setPage, answers, setAnswers, setQuestions,
   }, []);
 
   // Timer
-  const duration = 2;
+  const duration = 5;
   const [timeLeft, setTimeLeft] = useState(duration);
 
   const [currentQuestionA, setCurruentQuestion] = useState({
@@ -108,11 +109,20 @@ export default function xPageThree({ setPage, answers, setAnswers, setQuestions,
 
   const [click, setClick] = useState<number>(1);
 
-  const handleAnswerChange = (questionId: number, choiceId: number) => {
+  const handleAnswerChange = (questionId: number, choiceId: number, isCorrect: boolean) => {
     setAnswers(prevAnswers => ({
       ...prevAnswers,
       [questionId]: choiceId
     }));
+
+    setCheck(prevCheck => [
+      ...prevCheck,
+      {
+        question: questionId,
+        answer: choiceId,
+        isCorrect: isCorrect
+      }
+    ]);
 
     setCurruentQuestion({
       question: questionId,
@@ -131,14 +141,13 @@ export default function xPageThree({ setPage, answers, setAnswers, setQuestions,
       setIncorrect(false);
       setTimeLeft(duration);
     }
-
   };
 
   const checkAnswer = () => {
+    console.log(answers, currentQuestionIndex);
     if (!answers || Object.keys(answers).length === 0) {
-      // handleAnswerChange(currentQuestion._id, currentQuestion.translations[0].options[0]._id);
-      setSelectedChoice('000');
-      console.log("Empty Answers");
+      handleAnswerChange(currentQuestion._id, 0, false);
+      setSelectedChoice('null');
       setIncorrect(true);
       setClick(2);
       if (currentQuestionIndex >= 9) {
@@ -149,6 +158,12 @@ export default function xPageThree({ setPage, answers, setAnswers, setQuestions,
         }, 2000);
       }
     } else {
+      if (Object.keys(answers).length == currentQuestionIndex) {
+        handleAnswerChange(currentQuestion._id, 0, false);
+        setTimeout(() => {
+          handleNextQuestion();
+        }, 4000);
+      }
       if (currentQuestionIndex >= 9) {
         setPage(4);
       } else {

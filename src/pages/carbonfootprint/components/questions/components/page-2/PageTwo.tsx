@@ -102,7 +102,7 @@ export default function PageTwo({ setPage }: Props) {
 
         {/* Selection Text */}
         <div
-          className="w-full h-auto flex items-center justify-center text-white text-[45pt] pt-[500px]">
+          className="w-full h-auto flex items-center justify-center text-white text-[20pt] pt-[50px]">
           <p>You choose <span className="text-primary">{
             value == "apartment" ?
               "Apartment/Condiminium" :

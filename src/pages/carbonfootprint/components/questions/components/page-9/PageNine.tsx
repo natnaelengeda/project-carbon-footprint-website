@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
 
-
 // Layout
 import QuestionsLayout from "../QuestionsLayout";
+
+// Socket
+import { useSocket } from "@/context/SocketProvider";
 
 // Components
 import Bus from "./components/Bus";
@@ -18,12 +20,10 @@ interface Props {
 }
 
 export default function PageNine({ setPage, publicTransportArray }: Props) {
+  const socket = useSocket();
+
   const [selectedComponent, setSelectedComponent] = useState<number>(0);
   const [sortedTransports, setSortedTransports] = useState<string[]>([]);
-  // const [noOfPages, setNoOfPages] = useState<number>(0);
-
-
-  // const transportOrder = ['bus', 'mini-bus', 'light-rail', 'ride-hailing'];
 
   const renderComponent = (label: string) => {
     switch (label) {
@@ -40,31 +40,11 @@ export default function PageNine({ setPage, publicTransportArray }: Props) {
     }
   };
 
-  // useEffect(() => {
-  //   if (pubilcTransports.length === 0) {
-  //     setPage(10);
-  //     return;
-  //   }
-
-  //   // Sort the transports according to the predefined order
-  //   const sorted = transportOrder.filter(transport =>
-  //     pubilcTransports.includes(transport)
-  //   );
-  //   setSortedTransports(sorted);
-  // }, [pubilcTransports]);
 
   useEffect(() => {
-
     const selectedCount = publicTransportArray.filter(transport => transport.isSelected).length;
-    // setNoOfPages(selectedCount);
-
-    console.log(selectedCount)
     if (selectedCount === 0) {
       setPage(10);
-      // socket?.emit("page-next-server", JSON.stringify({
-      //   nextPage: 9,
-      //   room: room,
-      // }));
       return;
     }
 
@@ -76,24 +56,39 @@ export default function PageNine({ setPage, publicTransportArray }: Props) {
     setSortedTransports(sorted);
   }, [publicTransportArray]);
 
-  // Handle component navigation
-  const handleComponentChange = (newComponent: number) => {
-    // Only update if we're within bounds
-    const selectedCount = publicTransportArray.filter(transport => transport.isSelected).length;
+  // Next Component Handler
+  useEffect(() => {
+    const handlePageChange = (temp: any) => {
+      const data = JSON.parse(temp);
+      setSelectedComponent(data.nextComponent);
+    };
 
-    console.log(newComponent, selectedCount)
-    if (newComponent <= selectedCount) {
-      setSelectedComponent(newComponent);
-    } else {
-      // Move to next page if we've shown all components
-      setPage(10);
+    socket?.on("page-next-component-client", handlePageChange);
+
+    return () => {
+      socket?.off("page-next-component-client", handlePageChange);
+    };
+  }, [socket]);
+
+  // Prev Component Handler
+  useEffect(() => {
+    const handlePageChange = (temp: any) => {
+      const data = JSON.parse(temp);
+      setSelectedComponent(data.prevComponent);
     }
-  };
+
+    socket?.on("page-prev-component-client", handlePageChange);
+
+    return () => {
+      socket?.off("page-prev-component-client", handlePageChange);
+    };
+
+  }, [socket]);
 
   return (
     <QuestionsLayout
       setPage={setPage}
-      setSelectedComponent={handleComponentChange}
+      // setSelectedComponent={handleComponentChange}
       currPage={9}>
       <div
         className="relative z-10 w-full h-full mx-auto 2xl:container flex flex-col items-center justify-center gap-5 py-10 md:py-20">

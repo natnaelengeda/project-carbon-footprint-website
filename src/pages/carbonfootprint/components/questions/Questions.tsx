@@ -25,9 +25,8 @@ import PageTwentyOne from "./components/page-21";
 import PageTwentyTwo from "./components/page-22";
 import PageTwentyThree from "./components/page-23";
 
-
 export default function Questions() {
-  const [page, setPage] = useState<number>(22);
+  const [page, setPage] = useState<number>(7);
 
   const [personalTransports, setPersonalTransports] = useState<string[]>([]);
   const [personalTransportArray, setPersonalTransportsArray] = useState([
@@ -42,7 +41,6 @@ export default function Questions() {
     { id: 2, name: "light-rail", isSelected: false },
     { id: 3, name: "ride-hailing", isSelected: false },
   ]);
-
 
   useEffect(() => {
     const language = localStorage.getItem("language");

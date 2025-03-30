@@ -12,6 +12,7 @@ export default function InteractiveQA() {
 
   const [questions, setQuestions] = useState<any>(null);
   const [answers, setAnswers] = useState<{ [key: number]: number }>({});
+  const [check, setCheck] = useState<{ question: number, answer: number, isCorrect: boolean }[] | []>([]);
   const [score, setScore] = useState<number>(0);
   const [cuserId, setcUserId] = useState<number | null>(null);
 
@@ -32,6 +33,7 @@ export default function InteractiveQA() {
                 questions={questions}
                 answers={answers}
                 setAnswers={setAnswers}
+                setCheck={setCheck}
                 setQuestions={setQuestions} /> :
               page == 4 ?
                 <FinishedPage
@@ -39,6 +41,7 @@ export default function InteractiveQA() {
                   answers={answers}
                   questions={questions}
                   setScore={setScore}
+                  check={check}
                   setcUserId={setcUserId} /> :
                 page == 5 ?
                   <LeadersBoard

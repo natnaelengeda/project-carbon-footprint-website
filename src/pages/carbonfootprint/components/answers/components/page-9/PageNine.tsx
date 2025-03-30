@@ -1,91 +1,22 @@
-// import React, { useState, useEffect } from 'react'
-
-// // Background
-// import DefaultBackground from '../DefaultBackground';
-
-// // Components
-// import Bus from './components/Bus';
-// import MiniBus from './components/MiniBus';
-// import LightRail from './components/LightRail';
-// import RideHailing from './components/RideHailing';
-// import NavComponent from '../../../NavComponent';
-
-// // Interface
-// interface Props {
-//   setPage: React.Dispatch<React.SetStateAction<number>>;
-//   pubilcTransports: string[];
-//   publicTransportArray: { id: number, name: string, isSelected: boolean; }[];
-// }
-
-// export default function PageNine({ setPage, pubilcTransports, publicTransportArray }: Props) {
-//   const [selectedComponent, setSelectedComponent] = useState(0);
-//   const [sortedTransports, setSortedTransports] = useState<string[]>([]);
-
-//   console.log(publicTransportArray)
-
-//   const transportOrder = ['bus', 'mini-bus', 'light-rail', 'ride-hailing'];
-
-//   const renderComponent = (label: string) => {
-//     switch (label) {
-//       case 'bus': 
-//         return <Bus />;
-//       case 'mini-bus':
-//         return <MiniBus />;
-//       case 'light-rail':
-//         return <LightRail />;
-//       case 'ride-hailing':
-//         return <RideHailing />;
-//       default:
-//         return null;
-//     }
-//   };
-
-//   useEffect(() => {
-//     if (pubilcTransports.length === 0) {
-//       setPage(10);
-//       return;
-//     }
-
-//     console.log(pubilcTransports.length)
-//     const sorted = transportOrder.filter(transport =>
-//       pubilcTransports.includes(transport)
-//     );
-//     setSortedTransports(sorted);
-//   }, [pubilcTransports]);
-
-//   return (
-//     <DefaultBackground
-//       currPage={9}>
-//       <div className="relative z-10 w-full h-full mx-auto 2xl:container flex flex-col items-center justify-center gap-5 py-10 md:py-20">
-//         {renderComponent(sortedTransports[selectedComponent])}
-
-//         <div
-//           className='absolute bottom-0 right-0'>
-//           <NavComponent
-//             setPage={setPage}
-//             nextPage={10}
-//             prevPage={8}
-//             currPage={9}
-//             noOfPages={pubilcTransports.length}
-//             selectedComponent={selectedComponent}
-//             setSelectedComponent={setSelectedComponent} />
-//         </div>
-//       </div>
-//     </DefaultBackground>
-//   )
-// }
-
 import React, { useState, useEffect } from 'react'
 
 // Background
 import DefaultBackground from '../DefaultBackground';
+
+// Translation
+import { useTranslation } from 'react-i18next';
+
+// Nav Component
+import { useSocket } from '@/context/SocketProvider';
 
 // Components
 import Bus from './components/Bus';
 import MiniBus from './components/MiniBus';
 import LightRail from './components/LightRail';
 import RideHailing from './components/RideHailing';
-import NavComponent from '../../../NavComponent';
+
+// AppAsset
+import AppAsset from '@/core/AppAsset';
 
 // Interface
 interface Props {
@@ -95,8 +26,13 @@ interface Props {
 }
 
 export default function PageNine({ setPage, publicTransportArray }: Props) {
+  const socket = useSocket();
+  const room = localStorage.getItem("room");
+
   const [selectedComponent, setSelectedComponent] = useState(0);
   const [sortedTransports, setSortedTransports] = useState<string[]>([]);
+
+  const [currentSection, setCurrentSection] = useState(1);
 
   const renderComponent = (label: string) => {
     switch (label) {
@@ -113,11 +49,56 @@ export default function PageNine({ setPage, publicTransportArray }: Props) {
     }
   };
 
-  useEffect(() => {
 
+  const handleNextPage = () => {
+    const selectedCount = publicTransportArray.filter(transport => transport.isSelected).length;
+
+    if (currentSection == selectedCount) {
+      setPage(10);
+      socket?.emit("page-next-server", JSON.stringify({
+        nextPage: 10,
+        room: room,
+      }));
+    } else {
+      socket?.emit("page-next-component-server", JSON.stringify({
+        nextPage: 10,
+        room: room,
+        currComponent: selectedComponent,
+        nextComponent: selectedComponent + 1,
+      }));
+      setCurrentSection((prev) => prev + 1);
+      setSelectedComponent((prev) => prev + 1);
+    }
+  }
+
+  const handlePrevPage = () => {
+    if (currentSection == 1) {
+      setPage(7);
+      socket?.emit("page-prev-server", JSON.stringify({
+        prevPage: 7,
+        room: room,
+      }))
+    } else {
+      socket?.emit("page-prev-component-server", JSON.stringify({
+        prevPage: 7,
+        room: room,
+        currComponent: selectedComponent,
+        prevComponent: selectedComponent - 1,
+      }));
+      setCurrentSection((prev) => prev - 1);
+      setSelectedComponent((prev) => prev - 1);
+    }
+  }
+
+
+  useEffect(() => {
     const selectedCount = publicTransportArray.filter(transport => transport.isSelected).length;
     if (selectedCount === 0) {
       setPage(10);
+      socket?.emit("page-next-server", JSON.stringify({
+        nextPage: 9,
+        room: room,
+      }));
       return;
     }
 
@@ -135,16 +116,56 @@ export default function PageNine({ setPage, publicTransportArray }: Props) {
         {renderComponent(sortedTransports[selectedComponent])}
 
         <div className='absolute bottom-0 right-0'>
-          <NavComponent
-            setPage={setPage}
-            nextPage={10}
-            prevPage={7}
-            currPage={9}
-            noOfPages={sortedTransports.length}
-            selectedComponent={selectedComponent}
-            setSelectedComponent={setSelectedComponent} />
+          <ChangePageFunction
+            handleNextPage={handleNextPage}
+            handlePrevPage={handlePrevPage} />
         </div>
       </div>
     </DefaultBackground>
   )
+}
+
+
+interface IChangePageFunction {
+  handleNextPage: () => void;
+  handlePrevPage: () => void;
+}
+
+const ChangePageFunction = ({ handleNextPage, handlePrevPage }: IChangePageFunction) => {
+  const { t } = useTranslation();
+  const sectionLanguage = JSON.parse(localStorage.getItem("language") || "");
+
+
+  return (
+    <div
+      className='w-full h-80 flex items-center justify-end px-5 md:px-40 gap-3 md:gap-[32px] pb-10 md:pb-0'>
+      {/* Back Button */}
+      <button
+        onClick={handlePrevPage}
+        className={
+          `w-10 h-10 md:w-[100px] md:h-[100px] flex rounded-full border border-primary items-center justify-center p-2 md:p-0`
+        }>
+        <img
+          src={AppAsset.LeftArrowIcon}
+          className='w-20 h-auto object-contain md:w-[40.56px] md:h-[40.56px]' />
+      </button>
+
+      {/* Skip Button */}
+      <button
+        onClick={handleNextPage}
+        className='md:w-[159.32px] md:h-[100px] border border-primary rounded-full bg-transparent text-primary flex flex-row items-center justify-center gap-3 px-6 py-3'>
+        <p className='text-lg md:text-[34.56px] font-semibold'>{t("carbon.skip", { lng: sectionLanguage.carbon })}</p>
+      </button>
+
+      {/* Next Button */}
+      <button
+        onClick={handleNextPage}
+        className='md:w-[221.32px] md:h-[100px] rounded-full bg-primary text-white flex flex-row items-center justify-center gap-3 px-6 py-3'>
+        <p className='text-lg md:text-[34.56px] font-semibold'>{t("carbon.next", { lng: sectionLanguage.carbon })}</p>
+        <img
+          src={AppAsset.RightArrowIcon}
+          className="w-6 md:w-10 h-auto object-contain" />
+      </button>
+    </div>
+  );
 }

@@ -107,7 +107,7 @@ import WaterDroplet from "@/assets/icons/pledge/droplet.svg";
 import TickImage from "@/assets/imgs/Illustration.svg";
 
 // Background
-import Background from "@/assets/imgs/background/background.svg";
+import Background from "@/assets/imgs/background/bbg.png";
 import BackgroundHorizontal from "@/assets/imgs/background/bbg.png";
 import BackgroundVertical from "@/assets/imgs/background/bg-h.png";
 import BackgroundHouseVertical from "@/assets/imgs/background/house_background_vertical.png";

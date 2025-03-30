@@ -13,91 +13,76 @@ export default function Root() {
   const navigate = useNavigate();
   const location = useLocation();
   const socket = useSocket();
+  const queryParams = new URLSearchParams(location.search);
+  const room = queryParams.get('room');
 
   useEffect(() => {
-    const page = localStorage.getItem("page_type");
-    const mode = localStorage.getItem("page_mode");
-
-    if (page == "carbonfootprint") {
-      if (mode == "questions") {
-        navigate("/carbonfootprint/questions");
-      } else if (mode == "answers") {
-        navigate("/carbonfootprint/answers");
+    if (location.pathname != "/") {
+      switch (location.pathname) {
+        case "interactive-qa":
+          navigate("/interactive-qa");
+          localStorage.setItem("page_type", "interactive-qa");
+          return;
+        case "/carbonfootprint/questions":
+          if (room) {
+            localStorage.setItem("room", room);
+          }
+          localStorage.setItem("page_type", "carbonfootprint");
+          localStorage.setItem("page_mode", "questions");
+          socket?.emit("page_mode", JSON.stringify({
+            page_type: "carbonfootprint",
+            page_mode: "questions",
+            unique_code: room
+          }));
+          navigate("/carbonfootprint/questions");
+          return;
+        case "/carbonfootprint/answers":
+          if (room) {
+            localStorage.setItem("room", room);
+          }
+          localStorage.setItem("page_type", "carbonfootprint");
+          localStorage.setItem("page_mode", "answers");
+          socket?.emit("page_mode", JSON.stringify({
+            page_type: "carbonfootprint",
+            page_mode: "answers",
+            unique_code: room
+          }));
+          navigate("/carbonfootprint/answers");
+          return;
+        case "/pledge":
+          navigate("/pledge");
+          localStorage.setItem("page_type", "pledge");
+          return;
+        default:
+          break;
       }
-      // navigate("/carbonfootprint");
-    } else if (page == "pledge") {
-      navigate("/pledge");
-    } else if (page == "interactive-qa") {
-      navigate("/interactive-qa");
-    } else if (page == "pledgeStat") {
-      navigate("/pledgeStat");
-    }
 
-    if (page == null) {
-      toast("Choose from the Options Bellow");
-      navigate("/");
+    } else {
+      const page = localStorage.getItem("page_type");
+      const mode = localStorage.getItem("page_mode");
+
+      if (page == "carbonfootprint") {
+        if (mode == "questions") {
+          navigate("/carbonfootprint/questions");
+        } else if (mode == "answers") {
+          navigate("/carbonfootprint/answers");
+        }
+        // navigate("/carbonfootprint");
+      } else if (page == "pledge") {
+        navigate("/pledge");
+      } else if (page == "interactive-qa") {
+        navigate("/interactive-qa");
+      } else if (page == "pledgeStat") {
+        navigate("/pledgeStat");
+      }
+
+      if (page == null) {
+        toast("Choose from the Options Bellow");
+        navigate("/");
+      }
     }
   }, []);
 
-  const checkPledge = () => {
-    const localSot = localStorage.getItem("page_type");
-
-    if (localSot == "pledge") {
-      return null;
-    } else {
-      if (location.pathname == "/pledge") {
-        console.log(location)
-        navigate("/pledge");
-        localStorage.setItem("page_type", "pledge");
-      }
-    }
-  }
-
-  const changeCarbonFootprintPage = () => {
-    console.log(location.pathname);
-    const queryParams = new URLSearchParams(location.search);
-    const room = queryParams.get('room');
-
-    if (room) {
-      if (location.pathname == "/carbonfootprint/questions") {
-        localStorage.setItem("page_type", "carbonfootprint");
-        localStorage.setItem("page_mode", "questions");
-        localStorage.setItem("room", room);
-
-        socket?.emit("page_mode", JSON.stringify({
-          page_type: "carbonfootprint",
-          page_mode: "questions",
-          unique_code: room
-        }));
-      }
-
-      if (location.pathname == "/carbonfootprint/answers") {
-        localStorage.setItem("page_type", "carbonfootprint");
-        localStorage.setItem("page_mode", "answers");
-        localStorage.setItem("room", room);
-
-        socket?.emit("page_mode", JSON.stringify({
-          page_type: "carbonfootprint",
-          page_mode: "answers",
-          unique_code: room
-        }));
-      }
-
-    }
-  }
-
-  const checkPledgeStat = () => {
-    if (location.pathname == "/pledgeStat") {
-      localStorage.setItem("page_type", "pledgeStat");
-      navigate("/pledgeStat");
-    }
-  }
-
-  useEffect(() => {
-    checkPledge();
-    changeCarbonFootprintPage();
-    checkPledgeStat();
-  }, [location.pathname]);
 
   return (
     <div

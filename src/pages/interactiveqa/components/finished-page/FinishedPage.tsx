@@ -34,13 +34,14 @@ interface Props {
   questions: any[];
   setScore: React.Dispatch<React.SetStateAction<number>>;
   setcUserId: any;
+  check: { question: number, answer: number, isCorrect: boolean }[] | [];
 }
 
-export default function FinishedPage({ setPage, answers, questions, setcUserId, setScore }: Props) {
+export default function FinishedPage({ setPage, answers, questions, setcUserId, setScore, check }: Props) {
   const [sum, setSum] = useState<number>(0);
   const [name, setName] = useState<string>("");
 
-  console.log(answers)
+  console.log(check)
 
   const savedlanguages = JSON.parse(localStorage.getItem("language") || JSON.stringify({
     carbon: "en",
@@ -126,8 +127,7 @@ export default function FinishedPage({ setPage, answers, questions, setcUserId, 
             loading="lazy"
             src={AppAsset.SplashImage}
             alt="Score achievement illustration"
-            className="object-contain max-w-full aspect-[1.13] w-[400px]"
-          />
+            className="object-contain max-w-full aspect-[1.13] w-[400px]" />
           <ScoreDisplay
             score={`${sum.toFixed(0)}/100`}
             rank="Top 10" />

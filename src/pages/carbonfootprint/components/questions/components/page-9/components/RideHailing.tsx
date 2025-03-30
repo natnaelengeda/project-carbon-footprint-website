@@ -47,25 +47,25 @@ export default function RideHailing() {
         {/* Image */}
         <img
           src={AppAsset.BannerSmallCar}
-          className="w-[700px] h-[700px] object-contain" />
+          className="w-[300px] h-[300px] object-contain" />
       </div>
 
       {/* Title */}
       <div
-        className="w-full h-auto flex flex-col items-start justify-start pl-40  text-white">
+        className="w-full h-auto flex flex-col items-start justify-start pl-10  text-white">
         <div
           className="flex flex-row items-center justify-start gap-5">
           <div
             className="w-10 h-3 bg-purple-500">
           </div>
-          <p className="text-white text-[60px]">Transportation Mode</p>
+          <p className="text-white text-[40px]">Transportation Mode</p>
         </div>
-        <p className="text-[40px]">Public Transport - Ride Hailing</p>
+        <p className="text-[25px]">Public Transport - Ride Hailing</p>
       </div>
 
       {/* Options */}
       <div
-        className="w-full h-auto flex flex-col items-start justify-start pl-40 pt-20 gap-16 text-white text-[40px] pr-14">
+        className="w-full h-auto flex flex-col items-start justify-start pl-10 pt-10 gap-16 text-white text-[20px] pr-14">
         <p>You use  <span className='text-primary'>Public Transport - Ride Hailing {km} Kilometers</span> per day and <span className='text-primary'>{days} days per week</span></p>
 
       </div>
