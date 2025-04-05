@@ -24,9 +24,9 @@ export default function QABack({ page, children, setPage }: Props) {
         setGamepadConnected(true)
 
         // Detect if buttons were just pressed (to avoid repeated actions)
-        const buttonPressed = (index: number) => {
-          return gamepad.buttons[index]?.pressed
-        }
+        // const buttonPressed = (index: number) => {
+        //   return gamepad.buttons[index]?.pressed
+        // }
 
 
         // Handle D-pad or left stick for navigation

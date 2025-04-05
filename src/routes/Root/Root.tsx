@@ -49,10 +49,6 @@ export default function Root() {
           }));
           navigate("/carbonfootprint/answers");
           return;
-        case "/pledge":
-          navigate("/pledge");
-          localStorage.setItem("page_type", "pledge");
-          return;
         case "/qanew":
           navigate("/qanew");
           localStorage.setItem("page_type", "qanew");
@@ -72,12 +68,8 @@ export default function Root() {
           navigate("/carbonfootprint/answers");
         }
         // navigate("/carbonfootprint");
-      } else if (page == "pledge") {
-        navigate("/pledge");
       } else if (page == "interactive-qa") {
         navigate("/interactive-qa");
-      } else if (page == "pledgeStat") {
-        navigate("/pledgeStat");
       }
 
       if (page == null) {

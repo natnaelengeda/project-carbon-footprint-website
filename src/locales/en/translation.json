@@ -139,6 +139,7 @@
   },
   "qa": {
     "start": "Start",
+    "press_x_to_start": "Press X to Start",
     "start_now": "Start Now",
     "welcome_to_interactive": "Welcome To Interactive",
     "qa": "Q/A",

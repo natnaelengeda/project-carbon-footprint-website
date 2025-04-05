@@ -150,6 +150,7 @@
   "qa": {
     "start": "ይጀምሩ",
     "start_now": "አሁን ይጀምሩ",
+    "press_x_to_start": "ለመጀመር X ይጫኑ",
     "welcome_to_interactive": "እንኳን ደህና መጡ",
     "qa": "ወደ ጥያቄ እና መልስ",
     "choose_language": "ቋንቋ ይምረጡ",

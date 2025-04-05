@@ -8,9 +8,7 @@ import Home from "../pages/home";
 import CarbonFootPrint from "@/pages/carbonfootprint";
 import Answers from "@/pages/carbonfootprint/components/answers";
 import Questions from "@/pages/carbonfootprint/components/questions";
-import PledgeIndPage from "@/pages/plageInd";
 import InteractiveQA from "@/pages/interactiveqa";
-import Pledge from "@/pages/pledge";
 
 // Test
 import Test from "@/pages/test";
@@ -46,15 +44,6 @@ export const router = createBrowserRouter([
         path: "/interactive-qa",
         element: <InteractiveQA />
       },
-      {
-        path: "/pledge",
-        element: <Pledge />
-      },
-      {
-        path: "/pledgeStat",
-        element: <PledgeIndPage />
-      },
-
 
       // Test
       {

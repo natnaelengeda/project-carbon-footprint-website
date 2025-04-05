@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 
 // Layout
 import QABackground from '../QABackground';
@@ -17,8 +17,9 @@ interface Props {
 }
 
 export default function PageOne({ setPage }: Props) {
-  const isKeyPressed = useRef(false);
-  const [key, setKey] = useState(null);
+  // const isKeyPressed = useRef(false);
+  // const [key, setKey] = useState(null);
+  const [gamepadConnected, setGamepadConnected] = useState(false)
 
   const savedlanguages = JSON.parse(localStorage.getItem("language") || JSON.stringify({
     qa: "en"
@@ -27,31 +28,62 @@ export default function PageOne({ setPage }: Props) {
   const [language, setLanguage] = useState(savedlanguages);
   const { t } = useTranslation();
 
+  // useEffect(() => {
+  //   if (isKeyPressed.current) {
+  //     console.log(key);
+  //     setPage(2)
+  //   }
+  // }, [isKeyPressed.current]);
+
+  // Check Joystick Connectivity
   useEffect(() => {
-    if (isKeyPressed.current) {
-      console.log(key);
-      setPage(2)
+    let gamepadCheckInterval: NodeJS.Timeout
+
+    const checkGamepad = () => {
+      const gamepads = navigator.getGamepads()
+      const gamepad = gamepads[0]
+
+      if (gamepad) {
+        setGamepadConnected(true)
+
+        // Detect if buttons were just pressed (to avoid repeated actions)
+        const buttonPressed = (index: number) => {
+          return gamepad.buttons[index]?.pressed
+        }
+
+        if (buttonPressed(0)) {
+          setPage(2);
+        }
+
+      } else {
+        setGamepadConnected(false)
+      }
     }
-  }, [isKeyPressed.current]);
 
-  useEffect(() => {
-    const handleKeyDown = (event: any) => {
-      isKeyPressed.current = true;
-      setKey(event.key);
-    };
+    // Check if gamepad is already connected
+    if (navigator.getGamepads && navigator.getGamepads()[0]) {
+      setGamepadConnected(true)
+      gamepadCheckInterval = setInterval(checkGamepad, 100)
+    }
 
-    const handleKeyUp = () => {
-      isKeyPressed.current = false;
-      setKey(null);
-    };
+    const handleGamepadConnected = () => {
+      setGamepadConnected(true)
+      gamepadCheckInterval = setInterval(checkGamepad, 100)
+    }
 
-    window.addEventListener("keydown", handleKeyDown);
-    window.addEventListener("keyup", handleKeyUp);
+    const handleGamepadDisconnected = () => {
+      setGamepadConnected(false)
+      if (gamepadCheckInterval) clearInterval(gamepadCheckInterval)
+    }
+
+    window.addEventListener("gamepadconnected", handleGamepadConnected)
+    window.addEventListener("gamepaddisconnected", handleGamepadDisconnected)
 
     return () => {
-      window.removeEventListener("keydown", handleKeyDown);
-      window.removeEventListener("keyup", handleKeyUp);
-    };
+      window.removeEventListener("gamepadconnected", handleGamepadConnected)
+      window.removeEventListener("gamepaddisconnected", handleGamepadDisconnected)
+      if (gamepadCheckInterval) clearInterval(gamepadCheckInterval)
+    }
   }, []);
 
   useEffect(() => {
@@ -92,6 +124,12 @@ export default function PageOne({ setPage }: Props) {
           </div>
         </div>
 
+        {gamepadConnected && (
+          <div className="absolute top-4 right-4 bg-green-100 text-green-800 px-3 py-1 rounded-md text-sm">
+            Gamepad Connected
+          </div>
+        )}
+
         {/* Buttons */}
         <div
           className="w-auto flex flex-col items-center justify-start gap-10 pt-10 md:pt-[10rem] pb-10 md:pb-0">
@@ -100,11 +138,11 @@ export default function PageOne({ setPage }: Props) {
               setPage(2);
             }}
             style={{
-              width: "250px",
+              width: "350px",
               height: "80px",
             }}
             className=" bg-primary text-white font-semibold rounded-full text-lg md:text-[30px] px- py-4 hover:opacity-80 flex items-center justify-center gap-3 px-5 md:px-0">
-            {t("qa.start_now", { lng: language.qa })}
+            {t("qa.press_x_to_start", { lng: language.qa })}
             <img
               src={AppAsset.RightArrowIcon}
               className="w-5 md:w-10 h-auto object-contain" />

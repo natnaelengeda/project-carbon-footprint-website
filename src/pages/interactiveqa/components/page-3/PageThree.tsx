@@ -29,10 +29,101 @@ export default function xPageThree({ setPage, answers, setAnswers, setQuestions,
   const [incorrect, setIncorrect] = useState(false);
   const [selectedChoice, setSelectedChoice] = useState<any>();
 
+  // const [selected, setSelected] = useState<number>(0);
+  const [firstSelected, setFirstSelected] = useState<boolean>(false);
+
+  const [gamepadConnected, setGamepadConnected] = useState(false);
+
   const savedQuestions = localStorage.getItem("questions");
 
   const isKeyPressed = useRef(false);
   const [key, setKey] = useState(null);
+
+
+  // Check Joystick Connectivity
+  useEffect(() => {
+    let gamepadCheckInterval: NodeJS.Timeout;
+
+    const checkGamepad = () => {
+      const gamepads = navigator.getGamepads();
+      const gamepad = gamepads[0]
+
+      if (gamepad) {
+        setGamepadConnected(true);
+
+        // Detect if buttons were just pressed (to avoid repeated actions)
+        const buttonPressed = (index: number) => {
+          return gamepad.buttons[index]?.pressed
+        }
+
+        console.log(firstSelected)
+        if (firstSelected) {
+          // Up Direction
+          if (gamepad.axes[1] < -0.5 || buttonPressed(12)) {
+            console.log("Go Up");
+            handleAnswerChange(currentQuestion._id, currentQuestion.translations[0].options[0]._id, currentQuestion.translations[0].options[0].isCorrect);
+            setSelectedChoice(currentQuestion.translations[0].options[0]);
+          }
+
+          // Down Direction
+          if (gamepad.axes[1] > 0.5 || buttonPressed(13)) {
+            console.log("Go Down");
+            handleAnswerChange(currentQuestion._id, currentQuestion.translations[0].options[2]._id, currentQuestion.translations[0].options[2].isCorrect);
+            setSelectedChoice(currentQuestion.translations[0].options[2]);
+          }
+
+          // Left Direction
+          if (gamepad.axes[0] < -0.5 || buttonPressed(14)) {
+
+          }
+
+          // Right Direction
+          if (gamepad.axes[0] > 0.5 || buttonPressed(15)) {
+
+          }
+
+        } else {
+          if (gamepad.axes[1] < -0.5 || buttonPressed(12) || gamepad.axes[1] > 0.5 || buttonPressed(13) || gamepad.axes[0] < -0.5 || gamepad.axes[0] > 0.5 || buttonPressed(14) || buttonPressed(13)) {
+            handleFirstQuestion();
+          }
+        }
+
+      }
+    }
+
+
+    // Check if gamepad is already connected
+    if (navigator.getGamepads && navigator.getGamepads()[0]) {
+      setGamepadConnected(true)
+      gamepadCheckInterval = setInterval(checkGamepad, 100)
+    }
+
+    const handleGamepadConnected = () => {
+      setGamepadConnected(true)
+      gamepadCheckInterval = setInterval(checkGamepad, 100)
+    }
+
+    const handleGamepadDisconnected = () => {
+      setGamepadConnected(false)
+      if (gamepadCheckInterval) clearInterval(gamepadCheckInterval)
+    }
+
+    window.addEventListener("gamepadconnected", handleGamepadConnected)
+    window.addEventListener("gamepaddisconnected", handleGamepadDisconnected)
+
+    return () => {
+      window.removeEventListener("gamepadconnected", handleGamepadConnected)
+      window.removeEventListener("gamepaddisconnected", handleGamepadDisconnected)
+      if (gamepadCheckInterval) clearInterval(gamepadCheckInterval)
+    }
+
+  }, [firstSelected]);
+
+  const handleFirstQuestion = () => {
+    handleAnswerChange(currentQuestion._id, currentQuestion.translations[0].options[0]._id, currentQuestion.translations[0].options[0].isCorrect);
+    setSelectedChoice(currentQuestion.translations[0].options[0]);
+    setFirstSelected(true);
+  }
 
   useEffect(() => {
     if (isKeyPressed.current) {
@@ -99,7 +190,7 @@ export default function xPageThree({ setPage, answers, setAnswers, setQuestions,
   }, []);
 
   // Timer
-  const duration = 40;
+  const duration = 100;
   const [timeLeft, setTimeLeft] = useState(duration);
 
   const [currentQuestionA, setCurruentQuestion] = useState({
@@ -182,6 +273,13 @@ export default function xPageThree({ setPage, answers, setAnswers, setQuestions,
 
   return (
     <QABackground>
+
+      {gamepadConnected && (
+        <div className="absolute top-2 right-6 bg-green-100 text-green-800 px-3 py-1 rounded-md text-sm">
+          Gamepad Connected
+        </div>
+      )}
+
       {/* Timer */}
       <div className="absolute top-0 right-0 pr-[5px] pt-[5px] z-10">
         <Timer

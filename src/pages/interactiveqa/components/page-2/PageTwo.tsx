@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState,  useEffect } from 'react';
 
 import { Oval } from 'react-loader-spinner';
 
@@ -28,8 +28,11 @@ export default function PageTwo({ setPage, setQuestions }: Props) {
   const [loading, setLoading] = useState<boolean>(false);
   const [lanuage, setLanguage] = useState<string>("english");
 
-  const isKeyPressed = useRef(false);
-  const [key, setKey] = useState(null);
+  const [selected, setSelected] = useState<number>(0);
+  const [gamepadConnected, setGamepadConnected] = useState(false);
+
+  // const isKeyPressed = useRef(false);
+  // const [key, setKey] = useState(null);
 
   const savedlanguages = JSON.parse(localStorage.getItem("language") || JSON.stringify({
     carbon: "en",
@@ -83,6 +86,70 @@ export default function PageTwo({ setPage, setQuestions }: Props) {
     }
   }
 
+  // Check Joystick Connectivity
+  useEffect(() => {
+    let gamepadCheckInterval: NodeJS.Timeout
+
+    const checkGamepad = () => {
+      const gamepads = navigator.getGamepads()
+      const gamepad = gamepads[0];
+
+      if (gamepad) {
+        setGamepadConnected(true);
+
+        // Detect if buttons were just pressed (to avoid repeated actions)
+        const buttonPressed = (index: number) => {
+          return gamepad.buttons[index]?.pressed
+        }
+
+        if (gamepad.axes[1] < -0.5 || buttonPressed(12)) {
+          if (selected >= 0) {
+            setSelected(0);
+            changeToEnglish();
+          }
+        } else if (gamepad.axes[1] > 0.5 || buttonPressed(13)) {
+          if (selected != 1) {
+            setSelected(1);
+            changeToAmharic();
+          }
+        }
+
+        if (buttonPressed(0)) {
+          fetchQuestions();
+        }
+
+      } else {
+        setGamepadConnected(false)
+      }
+    }
+
+    // Check if gamepad is already connected
+    if (navigator.getGamepads && navigator.getGamepads()[0]) {
+      setGamepadConnected(true)
+      gamepadCheckInterval = setInterval(checkGamepad, 100)
+    }
+
+    const handleGamepadConnected = () => {
+      setGamepadConnected(true)
+      gamepadCheckInterval = setInterval(checkGamepad, 100)
+    }
+
+    const handleGamepadDisconnected = () => {
+      setGamepadConnected(false)
+      if (gamepadCheckInterval) clearInterval(gamepadCheckInterval)
+    }
+
+    window.addEventListener("gamepadconnected", handleGamepadConnected)
+    window.addEventListener("gamepaddisconnected", handleGamepadDisconnected)
+
+    return () => {
+      window.removeEventListener("gamepadconnected", handleGamepadConnected)
+      window.removeEventListener("gamepaddisconnected", handleGamepadDisconnected)
+      if (gamepadCheckInterval) clearInterval(gamepadCheckInterval)
+    }
+  }, []);
+
+
   useEffect(() => {
     const defaultLanguage = JSON.stringify({
       carbon: "en",
@@ -100,46 +167,6 @@ export default function PageTwo({ setPage, setQuestions }: Props) {
     }
   }, []);
 
-  useEffect(() => {
-    if (isKeyPressed.current) {
-      switch (key!) {
-        case "ArrowUp":
-          if (lanuage !== "english") {
-            setLanguage("english");
-          }
-          break;
-        case "ArrowDown":
-          if (lanuage != "amharic") {
-            setLanguage("amharic");
-          }
-          break;
-        case "Enter":
-          fetchQuestions();
-          break;
-      }
-    }
-  }, [isKeyPressed.current]);
-
-  useEffect(() => {
-    const handleKeyDown = (event: any) => {
-      isKeyPressed.current = true;
-      setKey(event.key);
-    };
-
-    const handleKeyUp = () => {
-      isKeyPressed.current = false;
-      setKey(null);
-    };
-
-    window.addEventListener("keydown", handleKeyDown);
-    window.addEventListener("keyup", handleKeyUp);
-
-    return () => {
-      window.removeEventListener("keydown", handleKeyDown);
-      window.removeEventListener("keyup", handleKeyUp);
-    };
-  }, []);
-
   const changeToEnglish = () => {
     setLanguage("english");
     changeLanguage("qa", "en")
@@ -154,6 +181,12 @@ export default function PageTwo({ setPage, setQuestions }: Props) {
     <QABackground>
       <div className='relative w-full h-full flex flex-col items-center justify-start z-10  md:pt-[140px] 3xl:pt-[550px]'>
 
+        {gamepadConnected && (
+          <div className="absolute top-4 right-4 bg-green-100 text-green-800 px-3 py-1 rounded-md text-sm">
+            Gamepad Connected
+          </div>
+        )}
+
         {/* Title */}
         <div
           className='relative flex flex-col items-center justify-start gap-1 md:gap-10 3xl:gap-32 font-semibold text-white'>
@@ -166,21 +199,19 @@ export default function PageTwo({ setPage, setQuestions }: Props) {
           <p className='text-[35px] 3xl:text-[90px]'>{t("qa.choose_language", { lng: savedlanguages.qa })}</p>
         </div>
 
-        <div>
-          <p className='text-white text-3xl'>{`Width: ${window.innerWidth}, Height: ${window.innerHeight}`}</p>
-        </div>
-
         {/* Choice */}
         <div
           className="w-full md:w-[640px] flex flex-col items-center justify-start gap-10 md:gap-[40px] px-3 md:px-0 text-white mt-[80px]">
           <LanguageButton
             functions={changeToEnglish}
+            selected={selected}
             language={lanuage}
             currLanuage="english"
             viewLanguage="English" />
 
           <LanguageButton
             functions={changeToAmharic}
+            selected={selected}
             language={lanuage}
             currLanuage="amharic"
             viewLanguage="አማርኛ" />
@@ -191,12 +222,12 @@ export default function PageTwo({ setPage, setQuestions }: Props) {
         <div className='w-full h-full flex flex-row items-center justify-end pr-[100px] 3xl:pr-[190px] pt-28'>
           <button
             onClick={fetchQuestions}
-            className={`text-[19px] 3xl:text-[60px] font-semibold text-white flex flex-row items-center justify-center gap-2 rounded-full min-w-[200px] h-[60px] 3xl:min-w-[500px] 3xl:min-h-[150px]  px-5 transition-all ${loading ? "bg-gray-300" : "bg-primary"}`}
+            className={`text-[19px] 3xl:text-[60px] font-semibold text-white flex flex-row items-center justify-center gap-2 rounded-full min-w-[220px] h-[60px] 3xl:min-w-[500px] 3xl:min-h-[150px]  px-5 transition-all ${loading ? "bg-gray-300" : "bg-primary"} ${selected == 2 ? "border-4 border-white" : ""}`}
             disabled={loading}>
             {
               !loading ? (
                 <>
-                  <span>{t("qa.start_qa", { lng: savedlanguages.qa })}</span>
+                  <span>{t("qa.press_x_to_start", { lng: savedlanguages.qa })}</span>
                   <img
                     src={AppAsset.RightArrowIcon}
                   />

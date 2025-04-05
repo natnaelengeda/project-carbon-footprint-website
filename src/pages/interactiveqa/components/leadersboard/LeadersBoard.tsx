@@ -28,6 +28,7 @@ interface Props {
 export default function LeadersBoard({ setPage, cuserId }: Props) {
   const [leaderboardData, setLeaderboardData] = useState<any>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  console.log(isLoading);
 
   const savedlanguages = JSON.parse(localStorage.getItem("language") || JSON.stringify({
     carbon: "en",

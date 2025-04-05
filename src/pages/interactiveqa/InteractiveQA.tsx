@@ -8,7 +8,7 @@ import FinishedPage from "./components/finished-page";
 import LeadersBoard from "./components/leadersboard";
 
 export default function InteractiveQA() {
-  const [page, setPage] = useState<number>(1);
+  const [page, setPage] = useState<number>(2);
 
   const [questions, setQuestions] = useState<any>(null);
   const [answers, setAnswers] = useState<{ [key: number]: number }>({});

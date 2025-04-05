@@ -10,7 +10,7 @@ import AppAsset from "@/core/AppAsset";
 
 // Import Swiper styles
 import 'swiper/css';
-import QABackground from '@/pages/interactiveqa/components/QABackground';
+// import QABackground from '@/pages/interactiveqa/components/QABackground';
 import QABack from './QABack';
 
 interface Props {
