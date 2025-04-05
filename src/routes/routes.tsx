@@ -14,7 +14,7 @@ import Pledge from "@/pages/pledge";
 
 // Test
 import Test from "@/pages/test";
-
+import QANew from "@/pages/qanew";
 
 export const router = createBrowserRouter([
   {
@@ -60,6 +60,10 @@ export const router = createBrowserRouter([
       {
         path: "/test",
         element: <Test />
+      },
+      {
+        path: "/qanew",
+        element: <QANew />,
       }
     ]
   }

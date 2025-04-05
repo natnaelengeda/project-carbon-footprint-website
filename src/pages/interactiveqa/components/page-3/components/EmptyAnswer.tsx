@@ -18,7 +18,7 @@ export default function EmptyAnswer({ incorrect }: IIncorrectAnswer) {
         display: !incorrect ? "none" : ""
       }}
       className="w-full h-auto rounded-lg">
-      <p className="text-2xl md:text-[30px]"><span className="font-bold text-red-500">{t("qa.incorrect_answer", { lng: savedlanguages.qa })}:</span> {t("qa.empty_answer", { lng: savedlanguages.qa })}</p>
+      <p className="text-2xl md:text-[15px]"><span className="font-bold text-red-500">{t("qa.incorrect_answer", { lng: savedlanguages.qa })}:</span> {t("qa.empty_answer", { lng: savedlanguages.qa })}</p>
     </div>
   )
 }

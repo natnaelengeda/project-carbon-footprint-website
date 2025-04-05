@@ -16,40 +16,52 @@ export default function QABackground({ page, children, setPage }: Props) {
         }
       }}
       style={{
-        backgroundImage: `url(${AppAsset.BackgroundHorizontal})`,
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-        backgroundRepeat: "no-repeat",
-        backgroundAttachment: "contain",
+
         position: "relative",
+        marginTop: "0px",
+        marginLeft: "380px",
+        border: "15px solid black",
+        width: "830px",
+        height: "865px",
       }}
-      className='relative w-full h-full min-h-screen text-white flex flex-col items-center'>
-
-      {/* Background Overlay */}
-      <div
-        className="absolute inset-0"
-        style={{
-          backgroundColor: "rgba(0, 0, 0, 0.5)", // You can adjust the last value (0.5) to change opacity
-          zIndex: 1,
-        }} />
-
-      {/* Logo */}
+      className='relative text-white flex flex-col items-center'>
       <div
         style={{
-          display: page == 1 ? "none" : ""
+          backgroundImage: `url(${AppAsset.BackgroundHorizontal})`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          backgroundRepeat: "no-repeat",
+          backgroundAttachment: "contain",
         }}
-        className='absolute top-0 left-0 z-20 pl-[99px] pt-[74px]'>
-        <img
+        className="w-full h-full ">
+        {/* Background Overlay */}
+        <div
+          className="absolute inset-0"
           style={{
-            width: "250px",
-            height: "167px",
-            objectFit: "contain"
-          }}
-          src={AppAsset.Logo}
-          className='' />
-      </div>
+            backgroundColor: "rgba(0, 0, 0, 0.5)", // You can adjust the last value (0.5) to change opacity
+            zIndex: 1,
+          }} />
+        <div
+          className="w-full h-full relative z-50">
+          {/* Logo */}
+          <div
+            style={{
+              display: page == 1 ? "none" : ""
+            }}
+            className='absolute top-0 left-0 z-20 '>
+            <img
+              style={{
+                width: "150px",
+                height: "160px",
+                objectFit: "contain"
+              }}
+              src={AppAsset.Logo}
+              className='pt-10 pl-16' />
+          </div>
 
-      {children}
+          {children}
+        </div>
+      </div>
     </div>
   )
 }

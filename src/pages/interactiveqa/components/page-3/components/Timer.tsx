@@ -23,7 +23,7 @@ export default function Timer({ setPage, duration, timeLeft, setTimeLeft, checkA
   const { t } = useTranslation();
 
   // Progress calculation
-  const radius = width > 768 ? 70 : 50; // Circle radius
+  const radius = 50; // Circle radius
   const circumference = 2 * Math.PI * radius;
   const progress = ((duration - timeLeft) / duration) * circumference;
 
@@ -61,7 +61,7 @@ export default function Timer({ setPage, duration, timeLeft, setTimeLeft, checkA
             cy="50%"
             r={radius}
             stroke="#e0f2f1"
-            strokeWidth={width > 640 ? 15 : 10}
+            strokeWidth={12}
             fill="transparent"
           />
           {/* Animated Circle */}
@@ -82,13 +82,13 @@ export default function Timer({ setPage, duration, timeLeft, setTimeLeft, checkA
 
         {/* Center Content */}
         <div
-          className="absolute inset-0 flex flex-col justify-center items-center md:gap-5">
+          className="absolute inset-0 flex flex-col justify-center items-center md:gap-1">
           <span
-            className="text-4xl md:text-[70px] font-bold text-white">
+            className="text-xl md:text-[40px] font-bold text-white">
             {timeLeft}
           </span>
           <span
-            className="text-sm md:text-[20px] text-white font-normal">
+            className="text-xs md:text-[12px] text-white font-normal">
             {t("qa.seconds", { lng: savedlanguages.qa })}
           </span>
         </div>

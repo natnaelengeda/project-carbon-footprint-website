@@ -99,7 +99,7 @@ export default function xPageThree({ setPage, answers, setAnswers, setQuestions,
   }, []);
 
   // Timer
-  const duration = 5;
+  const duration = 40;
   const [timeLeft, setTimeLeft] = useState(duration);
 
   const [currentQuestionA, setCurruentQuestion] = useState({
@@ -182,8 +182,8 @@ export default function xPageThree({ setPage, answers, setAnswers, setQuestions,
 
   return (
     <QABackground>
-      {/* TImer */}
-      <div className="absolute top-0 right-0 pr-[112px] pt-[92px] z-10">
+      {/* Timer */}
+      <div className="absolute top-0 right-0 pr-[5px] pt-[5px] z-10">
         <Timer
           setPage={setPage}
           duration={duration}

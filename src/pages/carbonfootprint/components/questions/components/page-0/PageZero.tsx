@@ -146,7 +146,7 @@ export default function PageZero({ setPage }: Props) {
             <div className="flex flex-col items-center justify-center gap-1">
               <p
                 className="text-4xl md:text-[64px] font-semibold text-white">
-                {t("carbon.welcome_to", { lng: sectionLanguage.carbon })}
+                {t("carbon.welcome_to_carbon_footprint_calculator", { lng: sectionLanguage.carbon })}
               </p>
               <p
                 className="text-4xl md:text-[64px] font-semibold text-white">

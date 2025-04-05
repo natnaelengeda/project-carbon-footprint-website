@@ -157,18 +157,22 @@ export default function PageTwo({ setPage, setQuestions }: Props) {
         {/* Title */}
         <div
           className='relative flex flex-col items-center justify-start gap-1 md:gap-10 3xl:gap-32 font-semibold text-white'>
-          <p className='text-2xl md:text-[63px] 3xl:text-[130px]'>{t("qa.welcome_to_interactive", { lng: savedlanguages.qa })}</p>
-          <p className='text-2xl md:text-[63px] 3xl:text-[130px]'>{t("qa.qa", { lng: savedlanguages.qa })}</p>
+          <p className='text-2xl md:text-[40px] 3xl:text-[100px]'>{t("qa.welcome_to_interactive", { lng: savedlanguages.qa })}</p>
+          <p className='text-2xl md:text-[40px] 3xl:text-[130px]'>{t("qa.qa", { lng: savedlanguages.qa })}</p>
         </div>
 
         {/* Choose Language */}
-        <div className='flex items-center justify-center mt-[78px] 3xl:mt-[120px] text-white'>
-          <p className='text-[44px] 3xl:text-[90px]'>{t("qa.choose_language", { lng: savedlanguages.qa })}</p>
+        <div className='flex items-center justify-center mt-[30px] 3xl:mt-[120px] text-white'>
+          <p className='text-[35px] 3xl:text-[90px]'>{t("qa.choose_language", { lng: savedlanguages.qa })}</p>
+        </div>
+
+        <div>
+          <p className='text-white text-3xl'>{`Width: ${window.innerWidth}, Height: ${window.innerHeight}`}</p>
         </div>
 
         {/* Choice */}
         <div
-          className="w-full md:w-[640px] flex flex-col items-start justify-start gap-10 md:gap-[80px] px-3 md:px-0 text-white mt-[107px]">
+          className="w-full md:w-[640px] flex flex-col items-center justify-start gap-10 md:gap-[40px] px-3 md:px-0 text-white mt-[80px]">
           <LanguageButton
             functions={changeToEnglish}
             language={lanuage}
@@ -184,10 +188,10 @@ export default function PageTwo({ setPage, setQuestions }: Props) {
         </div>
 
         {/* Continue Page */}
-        <div className='w-full h-full flex flex-row items-center justify-end pr-[165px] 3xl:pr-[250px]'>
+        <div className='w-full h-full flex flex-row items-center justify-end pr-[100px] 3xl:pr-[190px] pt-28'>
           <button
             onClick={fetchQuestions}
-            className={`text-[34px] 3xl:text-[60px] font-semibold text-white flex flex-row items-center justify-center gap-2 rounded-full min-w-[300px] h-[100px] 3xl:min-w-[500px] 3xl:min-h-[150px]  px-5 transition-all ${loading ? "bg-gray-300" : "bg-primary"}`}
+            className={`text-[19px] 3xl:text-[60px] font-semibold text-white flex flex-row items-center justify-center gap-2 rounded-full min-w-[200px] h-[60px] 3xl:min-w-[500px] 3xl:min-h-[150px]  px-5 transition-all ${loading ? "bg-gray-300" : "bg-primary"}`}
             disabled={loading}>
             {
               !loading ? (
@@ -202,13 +206,14 @@ export default function PageTwo({ setPage, setQuestions }: Props) {
                   <>
                     <span>{t("qa.loading", { lng: savedlanguages.qa })}...</span>
                     <Oval
-                      height="50"
-                      width="50"
+                      height="25"
+                      width="25"
                       color="#efefef"
                       ariaLabel="oval-loading"
-                      wrapperStyle={{}}
-                      wrapperClass=""
-                    />
+                      strokeWidth={6}
+                      wrapperStyle={{
+                      }}
+                      wrapperClass="" />
                   </>
                 )
             }

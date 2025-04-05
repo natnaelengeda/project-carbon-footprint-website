@@ -1,7 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 
 // Layout
-import QABackground from '../QABackground';
 
 // Translation
 import { useTranslation } from 'react-i18next';
@@ -11,6 +10,8 @@ import AppAsset from "@/core/AppAsset";
 
 // Import Swiper styles
 import 'swiper/css';
+import QABackground from '@/pages/interactiveqa/components/QABackground';
+import QABack from './QABack';
 
 interface Props {
   setPage: React.Dispatch<React.SetStateAction<number>>;
@@ -65,7 +66,7 @@ export default function PageOne({ setPage }: Props) {
   }, []);
 
   return (
-    <QABackground
+    <QABack
       page={1}
       setPage={setPage}>
       <div
@@ -79,16 +80,16 @@ export default function PageOne({ setPage }: Props) {
           style={{
             paddingTop: "20px"
           }}
-          className="flex flex-col items-center justify-center gap-5 md:gap-28">
+          className="flex flex-col items-center justify-center gap-5 md:gap-40">
           <img
             src={AppAsset.Logo}
-            width={100}
-            height={100}
+            width={180}
+            height={180}
             className="object-contain" />
           <div
-            className="h-auto flex flex-col items-center justify-start gap-5 md:gap-5 text-[40px]">
-            <p className="text-2xl md:text-[40px] font-semibold">{t("qa.welcome_to_interactive", { lng: language.qa })}</p>
-            <p className="text-2xl md:text-[40px] font-semibold">{t("qa.qa", { lng: language.qa })}</p>
+            className="h-auto flex flex-col items-center justify-start gap-5 md:gap-16 text-[40px]">
+            <p className="text-2xl md:text-[70px] font-semibold">{t("qa.welcome_to_interactive", { lng: language.qa })}</p>
+            <p className="text-2xl md:text-[70px] font-semibold">{t("qa.qa", { lng: language.qa })}</p>
           </div>
         </div>
 
@@ -101,7 +102,7 @@ export default function PageOne({ setPage }: Props) {
             }}
             style={{
               width: "250px",
-              height: "80px",
+              height: "100px",
             }}
             className=" bg-primary text-white font-semibold rounded-full text-lg md:text-[30px] px- py-4 hover:opacity-80 flex items-center justify-center gap-3 px-5 md:px-0">
             {t("qa.start_now", { lng: language.qa })}
@@ -111,6 +112,6 @@ export default function PageOne({ setPage }: Props) {
           </button>
         </div>
       </div>
-    </QABackground>
+    </QABack>
   )
 }

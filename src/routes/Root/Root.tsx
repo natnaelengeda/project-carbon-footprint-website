@@ -53,6 +53,10 @@ export default function Root() {
           navigate("/pledge");
           localStorage.setItem("page_type", "pledge");
           return;
+        case "/qanew":
+          navigate("/qanew");
+          localStorage.setItem("page_type", "qanew");
+          return;
         default:
           break;
       }

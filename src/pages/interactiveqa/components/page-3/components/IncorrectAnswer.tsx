@@ -22,12 +22,12 @@ export default function IncorrectAnswer({ click, currentQuestionA, selectedChoic
         !selectedChoice.isCorrect &&
         <>
           <div
-            className="pt-5 w-[80rem]">
+            className="pt-5 w-full">
             <p
               style={{
                 lineHeight: "1.5"
               }}
-              className="text-2xl md:text-[30px]">
+              className="text-2xl md:text-[15px]">
               <span
                 style={{
                   lineHeight: "1.2"
