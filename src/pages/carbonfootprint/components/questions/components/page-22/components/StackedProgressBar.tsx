@@ -22,14 +22,14 @@ const StackedProgressBar: React.FC = () => {
         <div className="flex justify-between mt-2">
           {progress.map((_, index) => (
             <div key={index} className="text-center">
-              <span className=" text-white   " style={{ fontSize: "25px" }}>
+              <span className=" text-white text-lg" >
                 {labels[index]}
               </span>
             </div>
           ))}
         </div>
         {/* Progress Bar */}
-        <div className="flex h-5 rounded-3xl overflow-hidden">
+        <div className="flex h-3 rounded-3xl overflow-hidden">
           {progress.map((value, index) => (
             <div
               key={index}
@@ -41,26 +41,25 @@ const StackedProgressBar: React.FC = () => {
           ))}
           {remainingProgress > 0 && (
             <div
-              className="flex items-center justify-center bg-white"
+              className="flex items-center justify-center bg-white text-sm"
               style={{ width: `${remainingProgress}%` }}
             ></div>
           )}
         </div>
 
         {/* Bottom Values */}
-        <div className="flex justify-between mt-2">
+        <div className="flex justify-between mt-2 text-sm">
           {progress.map((value, index) => (
             <div key={index} className="text-center">
               {/* Exact values down the bar */}
               <span
-                className="text-white font-bold"
-                style={{ fontSize: "25px" }}>
+                className="text-white font-bold text-sm">
                 {value}
               </span>
             </div>
           ))}
           {remainingProgress > 0 && (
-            <div className="text-center">
+            <div className="text-center text-white text-sm">
               {/* Remaining progress value */}
               <span>{remainingProgress}</span>
             </div>

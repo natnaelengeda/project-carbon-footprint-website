@@ -134,7 +134,7 @@ export default function PageSeven({
               <h1 className="text-[50px] font-bold text-white">Public Transport</h1>
             </div>
 
-            <div className="w-full h-auto flex flex-col items-start justify-start gap-5 pl-10">
+            <div className="w-full h-auto flex flex-col items-start justify-start gap-5 pl-10 z-10">
               {
                 publicTransports.map((vehicles: { id: number, name: string, label: string }, index: number) => {
                   return (
@@ -162,7 +162,7 @@ export default function PageSeven({
         </div>
 
         <div
-          className='absolute bottom-0 right-0'>
+          className='absolute bottom-0 right-0 '>
           <NavComponent
             setPage={setPage}
             nextPage={8}

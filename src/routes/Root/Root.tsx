@@ -16,6 +16,8 @@ export default function Root() {
   const queryParams = new URLSearchParams(location.search);
   const room = queryParams.get('room');
 
+  // const eruda = 
+
   useEffect(() => {
     if (location.pathname != "/") {
       switch (location.pathname) {

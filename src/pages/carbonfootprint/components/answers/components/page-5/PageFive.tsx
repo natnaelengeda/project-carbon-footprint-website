@@ -67,7 +67,7 @@ export default function PageFive({ setPage }: Props) {
         </div>
 
         <div
-          className='absolute bottom-0 right-0'>
+          className={`absolute bottom-0 right-0 ${currentlySelected == 3 ? "pb-44" : ""}`}>
           <NavComponent
             setPage={setPage}
             nextPage={6}

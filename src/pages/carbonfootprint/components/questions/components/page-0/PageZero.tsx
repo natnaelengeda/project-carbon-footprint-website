@@ -56,24 +56,50 @@ export default function PageZero({ setPage }: Props) {
     }
   }, []);
 
-
-  // Recieve Updated From Server
   useEffect(() => {
-    socket?.on("language-change-option-client", (data) => {
+    const handleLanguageChange = (data: any) => {
       const parseData = JSON.parse(data);
       const check = ValidateQuestions(mode, parseData.mode);
 
       if (check) {
-        const language = parseData.language == "አማርኛ" ? "አማርኛ" : "english";
+        const language = parseData.language === "አማርኛ" ? "አማርኛ" : "english";
         setLanguage(language);
 
-        if (parseData.language == "አማርኛ") {
+        if (parseData.language === "አማርኛ") {
           changeLanguage("carbon", "am");
         } else {
           changeLanguage("carbon", "en");
         }
       }
-    });
+    };
+
+    // Attach the event listener
+    socket?.on("language-change-option-client", handleLanguageChange);
+
+    // Cleanup: remove the listener when the component unmounts
+    return () => {
+      socket?.off("language-change-option-client", handleLanguageChange);
+    };
+  }, [mode, socket]);
+
+
+  // Recieve Updated From Server
+  useEffect(() => {
+    // socket?.on("language-change-option-client", (data) => {
+    //   const parseData = JSON.parse(data);
+    //   const check = ValidateQuestions(mode, parseData.mode);
+
+    //   if (check) {
+    //     const language = parseData.language == "አማርኛ" ? "አማርኛ" : "english";
+    //     setLanguage(language);
+
+    //     if (parseData.language == "አማርኛ") {
+    //       changeLanguage("carbon", "am");
+    //     } else {
+    //       changeLanguage("carbon", "en");
+    //     }
+    //   }
+    // });
 
 
     // Change Page 

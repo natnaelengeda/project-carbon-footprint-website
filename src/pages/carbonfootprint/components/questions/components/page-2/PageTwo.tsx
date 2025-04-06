@@ -47,11 +47,11 @@ export default function PageTwo({ setPage }: Props) {
       currPage={2}
       setPage={setPage}>
       <div
-        className="relative z-10 w-full h-full mx-auto 2xl:container flex flex-col items-center justify-start gap-5 py-10 md:pt-[120px]">
+        className="relative z-10 w-full h-full mx-auto 2xl:container flex flex-col items-center justify-start gap-5 py-20 md:pt-[120px]">
 
         {/* Image Content */}
         <div
-          className="w-full h-auto flex flex-col items-center justify-start gap-5 px-10">
+          className="w-full h-auto flex flex-col items-center justify-start gap-5 px-10 pt-10">
           {/* Image */}
           <img
             src={AppAsset.BannerThree}
@@ -84,7 +84,7 @@ export default function PageTwo({ setPage }: Props) {
                 color={`var(--main-color)`}
                 value="apartment"
                 size={"lg"}
-                label={"Apartment/Condiminium"} />
+                label={"Apartment/Condominium"} />
               <Radio
                 iconColor=""
                 classNames={{
@@ -105,7 +105,7 @@ export default function PageTwo({ setPage }: Props) {
           className="w-full h-auto flex items-center justify-center text-white text-[20pt] pt-[50px]">
           <p>You choose <span className="text-primary">{
             value == "apartment" ?
-              "Apartment/Condiminium" :
+              "Apartment/Condominium" :
               "House"
           }</span></p>
 

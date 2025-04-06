@@ -132,7 +132,7 @@ const ChangePageFunction = ({ handleNextPage, handlePrevPage }: IChangePageFunct
 
   return (
     <div
-      className='w-full h-80 flex items-center justify-end px-5 md:px-40 gap-3 md:gap-[32px] pb-10 md:pb-0'>
+      className='w-full h-40 flex items-center justify-end px-5 md:px-40 gap-3 md:gap-[32px] pb-10 md:pb-0 '>
       {/* Back Button */}
       <button
         onClick={handlePrevPage}
