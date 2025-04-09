@@ -7,6 +7,7 @@ import { useSocket } from '@/context/SocketProvider';
 import AppAsset from '@/core/AppAsset'
 import { useDispatch } from 'react-redux';
 import { addTransportationMode } from '@/state/carbon';
+import CarbonLanguage from '@/utils/carbonLanguage';
 
 export default function MiniBus() {
   const [km, setKm] = useState(0);
@@ -58,15 +59,17 @@ export default function MiniBus() {
           <div
             className="w-10 h-3 bg-purple-500">
           </div>
-          <p className="text-white text-[40px]">Transportation Mode</p>
+          <p className="text-white text-[40px]"><CarbonLanguage name="transportation_mode" /></p>
         </div>
-        <p className="text-[25px]">Public Transport - Mini-Bus Taxi</p>
+        <p className="text-[25px]"><CarbonLanguage name="public_transportation" /> - <CarbonLanguage name="mini_bus" /></p>
       </div>
 
       {/* Options */}
       <div
         className="w-full h-auto flex flex-col items-start justify-start pl-10 pt-10 gap-16 text-white text-[20px] pr-14">
-        <p>You use  <span className='text-primary'>Public Transport - Mini-Bus Taxi {km} Kilometers</span> per day and <span className='text-primary'>{days} days per week</span></p>
+        {/* <p>You use  <span className='text-primary'>Public Transport - Mini-Bus Taxi {km} Kilometers</span> per day and <span className='text-primary'>{days} days per week</span></p> */}
+        <p className='text-white'><span className='text-white'><CarbonLanguage name="you_use" /></span> <span className='text-primary'><CarbonLanguage name="public_transportation" /> - <CarbonLanguage name="mini_bus" /> {km} <CarbonLanguage name="kilometers" /></span> <CarbonLanguage name="per_day_and" /> <span className='text-primary'>{days} <CarbonLanguage name="days_per_week" /></span></p>
+
 
       </div>
 

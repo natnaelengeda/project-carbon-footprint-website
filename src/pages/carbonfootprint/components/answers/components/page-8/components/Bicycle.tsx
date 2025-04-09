@@ -2,6 +2,7 @@
 
 import { useSocket } from "@/context/SocketProvider";
 import { addTransportationMode } from "@/state/carbon";
+import CarbonLanguage from "@/utils/carbonLanguage";
 import { Slider } from "@mantine/core";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
@@ -19,9 +20,9 @@ export default function Bicycle() {
           <div
             className="w-10 h-3 bg-purple-500">
           </div>
-          <p className="text-white text-[60px]">Transportation Mode</p>
+          <p className="text-white text-[60px]"><CarbonLanguage name="transportation_mode" /></p>
         </div>
-        <p className="text-[40px]">Personal Vehicle - Bicycle</p>
+        <p className="text-[40px]"><CarbonLanguage name="personal_transportation" /> - <CarbonLanguage name="bicycle" /></p>
       </div>
 
 
@@ -97,7 +98,7 @@ const RadioButtonsComponent = () => {
         className='w-full h-auto pl-2 pr-5 md:pr-32 flex flex-col items-start justify-start gap-2 pt-10'>
         {/* Text */}
         <p className="text-[#efefef] text-lg md:text-[30px] pb-2 md:pb-4">
-          How many kilometers per day?
+          <CarbonLanguage name="how_many_kilometers_per_day" />
         </p>
 
         <Slider
@@ -119,8 +120,7 @@ const RadioButtonsComponent = () => {
             { value: 40, label: '40' },
             { value: 45, label: '45' },
             { value: 50, label: '50' },
-          ]}
-        />
+          ]} />
       </div>
 
       {/* Hours Per Day*/}
@@ -128,7 +128,7 @@ const RadioButtonsComponent = () => {
         className='w-full h-auto pl-2 pr-5 md:pr-32 flex flex-col items-start justify-start gap-2 pt-5'>
         {/* Text */}
         <p className="text-[#efefef] text-lg md:text-[30px] pb-2 md:pb-4">
-          How many days per week?
+          <CarbonLanguage name="how_many_days_per_week" />
         </p>
 
         <Slider

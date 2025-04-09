@@ -5,10 +5,15 @@ import { useTranslation } from "react-i18next";
 // Socket.io
 import { useSocket } from "@/context/SocketProvider";
 
-// AppAsset
-import AppAsset from "@/core/AppAsset";
+// Redux
 import { useDispatch } from "react-redux";
 import { clearEverything } from "@/state/carbon";
+
+// Utils
+import CarbonLanguage from "@/utils/carbonLanguage";
+
+// AppAsset
+import AppAsset from "@/core/AppAsset";
 
 // Interface
 interface Props {
@@ -53,7 +58,7 @@ export default function PageZero({ setPage }: Props) {
       }
       setSectionLanguage(savedlanguages);
     }
-    
+
   }, []);
 
   const changeToEnglish = () => {
@@ -151,11 +156,11 @@ export default function PageZero({ setPage }: Props) {
         <div
           className="w-full flex flex-col items-center justify-start gap-5 md:gap-[111px]">
           <p className="text-white text-2xl md:text-[64px] font-bold">
-            {t("carbon.welcome_to_carbon_footprint", { lng: sectionLanguage.carbon })}
+            <CarbonLanguage name="project_title_1" />
           </p>
           <p
             className="text-white text-2xl md:text-[44px] font-bold">
-            {t("carbon.choose_language", { lng: sectionLanguage.carbon })}
+            <CarbonLanguage name="choose_language" />
           </p>
         </div>
 

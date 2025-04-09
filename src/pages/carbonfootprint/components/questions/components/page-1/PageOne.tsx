@@ -73,12 +73,12 @@ export default function PageOne({ setPage }: Props) {
             }}
             className='flex flex-col items-center justify-center gap-2 text-white font-semibold'>
             <h1
-              className=''>
-              {t("carbon.would_you_mind_sharing_your_name_1", { lng: sectionLanguage.carbon })}
+              className='text-center'>
+              {t("carbon.would_you_mind_sharing_your_name_optional", { lng: sectionLanguage.carbon })}
             </h1>
-            <h1>
+            {/* <h1>
               {t("carbon.would_you_mind_sharing_your_name_2", { lng: sectionLanguage.carbon })}
-            </h1>
+            </h1> */}
           </span>
 
           {/* Name */}

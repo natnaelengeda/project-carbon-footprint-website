@@ -9,6 +9,7 @@ import { addHouseholdEnegryCategory } from '@/state/carbon';
 import { addHouseholdEnergy } from '@/state/carbon';
 import { Slider } from '@mantine/core';
 import AppAsset from '@/core/AppAsset';
+import CarbonLanguage from '@/utils/carbonLanguage';
 
 // Interface
 interface Props {
@@ -21,10 +22,10 @@ export default function PageSix({ setPage }: Props) {
   const [currentlySelected, setCurrentlySelected] = useState<number>(0);
 
   const buttons = [
-    { id: 0, name: "Incandescent Bulb", type: "incandescent-bulb" },
-    { id: 1, name: "Fluorescent Bulb", type: "fluorescent-bulb" },
-    { id: 2, name: "Compact Fluorescent Bulb", type: "compact-fluorescent-bulb" },
-    { id: 3, name: "LED Lighting", type: "led-lighting" },
+    { id: 0, name: <CarbonLanguage name="incandescent_bulb" />, type: "incandescent-bulb" },
+    { id: 1, name: <CarbonLanguage name="florescent" />, type: "fluorescent-bulb" },
+    { id: 2, name: <CarbonLanguage name="compact_florescent" />, type: "compact-fluorescent-bulb" },
+    { id: 3, name: <CarbonLanguage name="led_bulb" />, type: "led-lighting" },
   ]
 
   return (
@@ -40,9 +41,9 @@ export default function PageSix({ setPage }: Props) {
             <div
               className="w-10 h-3 bg-purple-500">
             </div>
-            <p className="text-white text-[60px]">Household Energy</p>
+            <p className="text-white text-[60px]"><CarbonLanguage name="household_energy" /></p>
           </div>
-          <p className="text-[50px]">Electric Lighting Usage</p>
+          <p className="text-[50px]"><CarbonLanguage name="electric_light_usage" /></p>
         </div>
 
         {/* Bottom Context */}
@@ -51,7 +52,7 @@ export default function PageSix({ setPage }: Props) {
 
           {
             buttons &&
-            buttons.map((button: { id: number, type: string, name: string }, index: number) => {
+            buttons.map((button: { id: number, type: string, name: any }, index: number) => {
               return (
                 <SliderComponent
                   key={index}
@@ -236,7 +237,7 @@ const SliderComponent = ({ id, selectedTypes, type, text, setSelectedTypes, curr
         className='w-full h-auto pl-2 pr-5 md:pr-32 flex flex-col items-start justify-start gap-2'>
         {/* Text */}
         <p className="text-[#efefef] text-lg md:text-[30px] pb-2 md:pb-4">
-          How many days per week do you use the lighting?
+          <CarbonLanguage name="how_many_days_per_week" />
         </p>
 
         <Slider
@@ -267,7 +268,7 @@ const SliderComponent = ({ id, selectedTypes, type, text, setSelectedTypes, curr
         className='w-full h-auto pl-2 pr-5 md:pr-32 flex flex-col items-start justify-start gap-2 pt-5'>
         {/* Text */}
         <p className="text-[#efefef] text-lg md:text-[30px] pb-2 md:pb-4">
-          How many hours per day do you use the lighting?
+          <CarbonLanguage name="how_many_hours_per_day" />
         </p>
 
         <Slider

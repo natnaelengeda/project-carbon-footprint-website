@@ -1,5 +1,3 @@
-// AppAsset
-import AppAsset from "@/core/AppAsset";
 import { useEffect, useState } from "react";
 
 // Components
@@ -8,11 +6,18 @@ import QuestionsLayout from "../QuestionsLayout";
 // Socket
 import { useSocket } from "@/context/SocketProvider";
 
+// Translation
+import { useTranslation } from "react-i18next";
+
 // React Redux
 import { useDispatch } from "react-redux";
 
 // State
 import { addHouseholdEnergy } from "@/state/carbon";
+
+// AppAsset
+import AppAsset from "@/core/AppAsset";
+import DaysPerWeekHoursPerDay from "../DaysPerWeekHoursPerDay";
 
 // Interface
 interface Props {
@@ -33,6 +38,9 @@ export default function PageThree({ setPage }: Props) {
 
   const socket: any = useSocket();
 
+  const { t } = useTranslation();
+  const sectionLanguage = JSON.parse(localStorage.getItem("language") || "");
+
   // State
   const dispatch = useDispatch();
 
@@ -43,7 +51,6 @@ export default function PageThree({ setPage }: Props) {
       setSelectedType(data.type);
       setSelectedDays(data.slider1);
       setSelectedHours(data.slider2);
-
 
       dispatch(
         addHouseholdEnergy({
@@ -93,9 +100,9 @@ export default function PageThree({ setPage }: Props) {
             <div
               className="w-10 h-3 bg-purple-500">
             </div>
-            <p className="text-white text-[40px]">Household Energy</p>
+            <p className="text-white text-[40px]">{t("carbon.household_energy", { lng: sectionLanguage.carbon })}</p>
           </div>
-          <p className="text-[30px]">Heating</p>
+          <p className="text-[30px]">{t("carbon.heating", { lng: sectionLanguage.carbon })}</p>
         </div>
 
         {/* Options */}
@@ -107,40 +114,36 @@ export default function PageThree({ setPage }: Props) {
             setSelectedType={setSelectedType}
             selectedType={selectedType}
             type={"electric"}
-            text={"Electric Air Heating"}
+            text={t("carbon.electric_air_heating", { lng: sectionLanguage.carbon })}
             selectedDays={selectedDays}
-            selectedHours={selectedHours}
-          />
+            selectedHours={selectedHours} />
 
           {/* Charcoal */}
           <RadioButtonsComponent
             setSelectedType={setSelectedType}
             selectedType={selectedType}
             type={"charcoal"}
-            text={"Charcoal"}
+            text={t("carbon.charcoal", { lng: sectionLanguage.carbon })}
             selectedDays={selectedDays}
-            selectedHours={selectedHours}
-          />
+            selectedHours={selectedHours} />
 
           {/* Wood */}
           <RadioButtonsComponent
             setSelectedType={setSelectedType}
             selectedType={selectedType}
             type={"wood"}
-            text={"Wood"}
+            text={t("carbon.wood", { lng: sectionLanguage.carbon })}
             selectedDays={selectedDays}
-            selectedHours={selectedHours}
-          />
+            selectedHours={selectedHours} />
 
           {/* I don't use any */}
           <RadioButtonsComponent
             setSelectedType={setSelectedType}
             selectedType={selectedType}
             type={"none"}
-            text={"I don't use any heating Instruments"}
+            text={t("carbon.i_dont_use_any_heating_instruments", { lng: sectionLanguage.carbon })}
             selectedDays={selectedDays}
-            selectedHours={selectedHours}
-          />
+            selectedHours={selectedHours} />
         </div>
       </div>
     </QuestionsLayout>
@@ -148,6 +151,7 @@ export default function PageThree({ setPage }: Props) {
 }
 
 const RadioButtonsComponent = ({ setSelectedType, selectedType, type, text, selectedDays, selectedHours }: any) => {
+
   return (
     <div
       className="w-full h-full flex flex-col items-start justify-start gap-5 text-white">
@@ -172,7 +176,10 @@ const RadioButtonsComponent = ({ setSelectedType, selectedType, type, text, sele
               "flex" : "none"
         }}
         className="pr-10">
-        <p className="text-[20px]">You use <span className="text-primary">Electric Air Heating for {selectedDays} days</span> per week and <span className="text-primary">{selectedHours} hours per day</span></p>
+        <DaysPerWeekHoursPerDay
+          text={text}
+          selectedDays={selectedDays}
+          selectedHours={selectedHours} />
       </div>
     </div>
   );

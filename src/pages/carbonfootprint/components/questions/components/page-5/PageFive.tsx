@@ -15,6 +15,10 @@ import QuestionsLayout from "../QuestionsLayout";
 // AppAsset
 import AppAsset from "@/core/AppAsset";
 
+// Utils
+import CarbonLanguage from "@/utils/carbonLanguage";
+import DaysPerWeekHoursPerDay from "../DaysPerWeekHoursPerDay";
+
 // Interface
 interface Props {
   setPage: React.Dispatch<React.SetStateAction<number>>;
@@ -35,10 +39,10 @@ export default function PageFive({ setPage }: Props) {
   const [selectedHours, setSelectedHours] = useState<number[]>([0, 0, 0, 0]);
 
   const buttons = [
-    { id: 0, name: "Iron", type: "iron" },
-    { id: 1, name: "Fridge", type: "fridge" },
-    { id: 2, name: "TV", type: "television" },
-    { id: 3, name: "Water Boiler", type: "water-boiler" },
+    { id: 0, name: <CarbonLanguage name="iron" />, type: "iron" },
+    { id: 1, name: <CarbonLanguage name="fridge" />, type: "fridge" },
+    { id: 2, name: <CarbonLanguage name="tv" />, type: "television" },
+    { id: 3, name: <CarbonLanguage name="water_boiler" />, type: "water-boiler" },
   ];
 
   return (
@@ -65,9 +69,9 @@ export default function PageFive({ setPage }: Props) {
             <div
               className="w-10 h-3 bg-purple-500">
             </div>
-            <p className="text-white text-[40px]">Household Energy</p>
+            <p className="text-white text-[40px]"><CarbonLanguage name="household_energy" /></p>
           </div>
-          <p className="text-[30px]">Electric Appliances</p>
+          <p className="text-[30px]"><CarbonLanguage name="electric_appliances" /></p>
         </div>
 
         {/* Options */}
@@ -75,7 +79,7 @@ export default function PageFive({ setPage }: Props) {
           className="w-full h-auto flex flex-col items-start justify-start pl-10 pt-1 gap-5">
           {
             buttons &&
-            buttons.map((button: { id: number, type: string, name: string }, index: number) => {
+            buttons.map((button: { id: number, type: string, name: any }, index: number) => {
               return (
                 <CheckboxComponent
                   key={index}
@@ -134,7 +138,6 @@ const CheckboxComponent = (
 
   const addRemoveTyeps = () => {
     const check = selectedTypes.includes(type);
-    console.log(check);
 
     if (check) {
       const newSelectedTypes = selectedTypes.filter((item: any) => item !== type); // Remove the item immutably
@@ -168,8 +171,6 @@ const CheckboxComponent = (
 
       if (data.page == "page-5") {
 
-        console.log(data);
-
         setSelectedTypes((prevSelectedTypes: any) => {
           const checkSelected = prevSelectedTypes.includes(data.type);
 
@@ -179,7 +180,6 @@ const CheckboxComponent = (
 
           return prevSelectedTypes;
         });
-
 
         updateSelectedDays({
           index: data.type == "iron" ? 0 :
@@ -257,7 +257,11 @@ const CheckboxComponent = (
           display: check ? "flex" : "none"
         }}
         className="pr-10">
-        <p className="text-[20px]">You use <span className="text-primary">Electric Appliances for {selectedDays[id]} days</span> per week and <span className="text-primary">{selectedHours[id]} hours per day</span></p>
+        {/* <p className="text-[20px]"><CarbonLanguage name="you_use" /> <span className="text-primary">{text} <CarbonLanguage name="for" /> {selectedDays[id]} <CarbonLanguage name="days" /></span> <CarbonLanguage name="per_week_and" /> <span className="text-primary">{selectedHours[id]} <CarbonLanguage name="hours_per_day" /></span></p> */}
+        <DaysPerWeekHoursPerDay
+          text={text}
+          selectedDays={selectedDays[id]}
+          selectedHours={selectedHours[id]} />
       </div>
     </div>
   );

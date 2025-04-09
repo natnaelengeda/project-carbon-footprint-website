@@ -3,12 +3,18 @@ import { useDispatch } from 'react-redux';
 // Background
 import DefaultBackground from '../DefaultBackground';
 import { useSocket } from '@/context/SocketProvider';
+
 // Socket
 import NavComponent from '../../../NavComponent';
 import { addHouseholdEnegryCategory } from '@/state/carbon';
 import { addHouseholdEnergy } from '@/state/carbon';
 import { Slider } from '@mantine/core';
+
+// AppAsset
 import AppAsset from '@/core/AppAsset';
+
+// Utils
+import CarbonLanguage from '@/utils/carbonLanguage';
 
 // Interface
 interface Props {
@@ -21,11 +27,12 @@ export default function PageFive({ setPage }: Props) {
   const [currentlySelected, setCurrentlySelected] = useState<number>(0);
 
   const buttons = [
-    { id: 0, name: "Iron", type: "iron" },
-    { id: 1, name: "Fridge", type: "fridge" },
-    { id: 2, name: "TV", type: "television" },
-    { id: 3, name: "Water Boiler", type: "water-boiler" },
-  ]
+    { id: 0, name: <CarbonLanguage name="iron" />, type: "iron" },
+    { id: 1, name: <CarbonLanguage name="fridge" />, type: "fridge" },
+    { id: 2, name: <CarbonLanguage name="tv" />, type: "television" },
+    { id: 3, name: <CarbonLanguage name="water_boiler" />, type: "water-boiler" },
+  ];
+
   return (
     <DefaultBackground
       currPage={5}>
@@ -50,7 +57,7 @@ export default function PageFive({ setPage }: Props) {
 
           {
             buttons &&
-            buttons.map((button: { id: number, type: string, name: string }, index: number) => {
+            buttons.map((button: { id: number, type: string, name: any }, index: number) => {
               return (
                 <SliderComponent
                   key={index}
@@ -308,7 +315,8 @@ const SliderComponent = ({ id, selectedTypes, type, text, setSelectedTypes, curr
         className='w-full h-auto pl-2 pr-5 md:pr-32 flex flex-col items-start justify-start gap-2'>
         {/* Text */}
         <p className="text-[#efefef] text-lg md:text-[30px] pb-2 md:pb-4">
-          How many days per week do you use the appliance?
+          {/* How many days per week do you use the appliance? */}
+          <CarbonLanguage name="how_many_days_per_week" />
         </p>
 
         <Slider
@@ -340,7 +348,7 @@ const SliderComponent = ({ id, selectedTypes, type, text, setSelectedTypes, curr
 
         {/* Text */}
         <p className="text-[#efefef] text-lg md:text-[30px] pb-2 md:pb-4">
-          How many hours per day do you use the appliance?
+          <CarbonLanguage name="how_many_hours_per_day" />
         </p>
 
         <Slider
@@ -375,7 +383,7 @@ const SliderComponent = ({ id, selectedTypes, type, text, setSelectedTypes, curr
         className='w-full h-auto pl-2 pr-5 md:pr-32 flex flex-col items-start justify-start gap-2 pt-5'>
         {/* Text */}
         <p className="text-[#efefef] text-lg md:text-[30px] pb-2 md:pb-4">
-          How many minutes per day use the appliance?
+          <CarbonLanguage name="how_many_minutes_per_day" />
         </p>
 
         <Slider

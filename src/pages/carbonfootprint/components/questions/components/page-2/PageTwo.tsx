@@ -16,6 +16,9 @@ import QuestionsLayout from "../QuestionsLayout";
 // Mantine
 import { Radio, RadioGroup, } from '@mantine/core';
 
+// Translation
+import { useTranslation } from "react-i18next";
+
 // Styles
 import classes from "./styles.module.css";
 
@@ -27,6 +30,9 @@ interface Props {
 export default function PageTwo({ setPage }: Props) {
   const [value, setValue] = useState("apartment");
   const socket: any = useSocket();
+
+  const { t } = useTranslation();
+  const sectionLanguage = JSON.parse(localStorage.getItem("language") || "");
 
   // State
   const dispatch = useDispatch();
@@ -62,7 +68,7 @@ export default function PageTwo({ setPage }: Props) {
         <div
           className="w-auto flex flex-row items-center justify-center font-semibold text-3xl md:text-[64px] pt-20 text-white">
           <p>
-            What is your housing type?
+            {t("carbon.what_is_your_housing_type", { lng: sectionLanguage.carbon })}
           </p>
         </div>
 
@@ -84,7 +90,7 @@ export default function PageTwo({ setPage }: Props) {
                 color={`var(--main-color)`}
                 value="apartment"
                 size={"lg"}
-                label={"Apartment/Condominium"} />
+                label={t("carbon.apartmentcondominium", { lng: sectionLanguage.carbon })} />
               <Radio
                 iconColor=""
                 classNames={{
@@ -94,7 +100,7 @@ export default function PageTwo({ setPage }: Props) {
                 color={`var(--main-color)`}
                 value="house"
                 size={"lg"}
-                label={"House"} />
+                label={t("carbon.house", { lng: sectionLanguage.carbon })} />
 
             </div>
           </RadioGroup>
@@ -103,10 +109,10 @@ export default function PageTwo({ setPage }: Props) {
         {/* Selection Text */}
         <div
           className="w-full h-auto flex items-center justify-center text-white text-[20pt] pt-[50px]">
-          <p>You choose <span className="text-primary">{
+          <p>{t("carbon.you_choose", { lng: sectionLanguage.carbon })} <span className="text-primary">{
             value == "apartment" ?
-              "Apartment/Condominium" :
-              "House"
+              `${t("carbon.apartmentcondominium", { lng: sectionLanguage.carbon })}` :
+              `${t("carbon.house", { lng: sectionLanguage.carbon })}`
           }</span></p>
 
         </div>

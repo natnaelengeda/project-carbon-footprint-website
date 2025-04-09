@@ -6,6 +6,9 @@ import DefaultBackground from '../DefaultBackground';
 import NavComponent from '../../../NavComponent';
 import { useSocket } from '@/context/SocketProvider';
 
+// Utils
+import CarbonLanguage from "@/utils/carbonLanguage";
+
 // AppAsset
 import AppAsset from '@/core/AppAsset';
 
@@ -37,16 +40,16 @@ export default function PageSeven({
   const [selectedPublic, setSelectedPublic] = useState<string[]>([]);
 
   const personalVehicles = [
-    { id: 0, name: "Automobile", label: "automobile" },
-    { id: 1, name: "Motor Cycle", label: "motor-cycle" },
-    { id: 2, name: "Bicycle", label: "bicycle" },
+    { id: 0, name: <CarbonLanguage name="automobile" />, label: "automobile" },
+    { id: 1, name: <CarbonLanguage name="motorcycle" />, label: "motor-cycle" },
+    { id: 2, name: <CarbonLanguage name="bicycle" />, label: "bicycle" },
   ];
 
   const publicTransports = [
-    { id: 0, name: "Bus", label: "bus" },
-    { id: 1, name: "Mini-Bus", label: "mini-bus" },
-    { id: 2, name: "Light-rail", label: "light-rail" },
-    { id: 3, name: "Ride Hailing", label: "ride-hailing" },
+    { id: 0, name: <CarbonLanguage name="bus" />, label: "bus" },
+    { id: 1, name: <CarbonLanguage name="mini_bus" />, label: "mini-bus" },
+    { id: 2, name: <CarbonLanguage name="light_rail" />, label: "light-rail" },
+    { id: 3, name: <CarbonLanguage name="ride_hailing_service" />, label: "ride-hailing" },
   ];
 
   useEffect(() => {
@@ -81,28 +84,31 @@ export default function PageSeven({
         <div
           className="w-full h-auto flex flex-col items-start justify-start pl-[500px] text-white">
           <div
-            className="flex flex-row items-center justify-start gap-5">
+            className="flex flex-row items-start justify-start gap-5">
             <div
-              className="w-10 h-3 bg-orange-500">
+              className="w-8 h-2 bg-orange-500 mt-12">
             </div>
-            <p className="text-white text-[60px]">Transportation Mode</p>
+            <div className="flex flex-col items-start justify-start">
+              <p className="text-white text-[60px]"><CarbonLanguage name="transportation_mode" /></p>
+              <p className="text-white text-[30px]"><CarbonLanguage name="please_provide_your_usual_transportation_option" /></p>
+            </div>
           </div>
         </div>
 
-        <div className="w-[1000px] mx-auto h-auto grid grid-cols-2 items-center gap-20 pt-14">
+        <div className="w-[1000px] mx-auto h-auto grid grid-cols-2 items-center gap-20 pt-4">
           {/* Personal Vehicle */}
           <div
             className="w-full h- flex flex-col items-start justify-start-10 gap-10 ">
 
             {/* Title */}
             <div className="">
-              <h1 className="text-[50px] font-bold text-white">Personal Vehicle</h1>
+              <h1 className="text-[50px] font-bold text-white"><CarbonLanguage name="personal_transportation" /></h1>
             </div>
 
             <div
               className="w-full h-auto flex flex-col items-start justify-start gap-5 pl-10">
               {
-                personalVehicles.map((vehicles: { id: number, name: string, label: string }, index: number) => {
+                personalVehicles.map((vehicles: { id: number, name: any, label: string }, index: number) => {
                   return (
                     <CheckboxComponent
                       key={index}
@@ -131,12 +137,12 @@ export default function PageSeven({
             className="w-full h- flex flex-col items-start justify-start pt-14 gap-10">
             {/* Title */}
             <div className="">
-              <h1 className="text-[50px] font-bold text-white">Public Transport</h1>
+              <h1 className="text-[50px] font-bold text-white"><CarbonLanguage name="public_transportation" /></h1>
             </div>
 
             <div className="w-full h-auto flex flex-col items-start justify-start gap-5 pl-10 z-10">
               {
-                publicTransports.map((vehicles: { id: number, name: string, label: string }, index: number) => {
+                publicTransports.map((vehicles: { id: number, name: any, label: string }, index: number) => {
                   return (
                     <CheckboxComponent
                       key={index}

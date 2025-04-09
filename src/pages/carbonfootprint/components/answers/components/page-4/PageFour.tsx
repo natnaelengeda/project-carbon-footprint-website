@@ -25,6 +25,7 @@ import DefaultBackground from '../DefaultBackground';
 // Socket
 import { useSocket } from '@/context/SocketProvider';
 import NavComponent from '../../../NavComponent';
+import CarbonLanguage from '@/utils/carbonLanguage';
 
 // Interface
 interface Props {
@@ -36,11 +37,11 @@ export default function PageFour({ setPage }: Props) {
   const [currentlySelected, setCurrentlySelected] = useState<number>(0);
 
   const buttons = [
-    { id: 0, name: "Electric Stove", type: "electric-stove" },
-    { id: 2, name: "Gas Stove", type: "gas-stove" },
-    { id: 3, name: "Charcoal Stove", type: "charcoal-stove" },
-    { id: 4, name: "Wood Stove", type: "wood-stove" },
-  ]
+    { id: 0, name: <CarbonLanguage name="electric_stove" />, type: "electric-stove" },
+    { id: 1, name: <CarbonLanguage name="gas_stove" />, type: "gas-stove" },
+    { id: 2, name: <CarbonLanguage name="charcoal_stove" />, type: "charcoal-stove" },
+    { id: 3, name: <CarbonLanguage name="wood_stove" />, type: "wood-stove" },
+  ];
 
   return (
     <DefaultBackground
@@ -55,9 +56,9 @@ export default function PageFour({ setPage }: Props) {
             <div
               className="w-10 h-3 bg-purple-500">
             </div>
-            <p className="text-white text-[60px]">Household Energy</p>
+            <p className="text-white text-[60px]"><CarbonLanguage name="household_energy" /></p>
           </div>
-          <p className="text-[50px]">Cooking</p>
+          <p className="text-[50px]"><CarbonLanguage name="cooking" /></p>
         </div>
 
         {/* Bottom Context */}
@@ -66,7 +67,7 @@ export default function PageFour({ setPage }: Props) {
 
           {
             buttons &&
-            buttons.map((button: { id: number, type: string, name: string }, index: number) => {
+            buttons.map((button: { id: number, type: string, name: any }, index: number) => {
               return (
                 <SliderComponent
                   key={index}
@@ -253,7 +254,8 @@ const SliderComponent = ({ id, selectedTypes, type, text, setSelectedTypes, curr
         className='w-full h-auto pl-2 pr-5 md:pr-32 flex flex-col items-start justify-start gap-2'>
         {/* Text */}
         <p className="text-[#efefef] text-lg md:text-[30px] pb-2 md:pb-4">
-          How many days per week?
+          <CarbonLanguage name="how_many_days_per_week" />
+
         </p>
 
         <Slider
@@ -284,7 +286,7 @@ const SliderComponent = ({ id, selectedTypes, type, text, setSelectedTypes, curr
         className='w-full h-auto pl-2 pr-5 md:pr-32 flex flex-col items-start justify-start gap-2 pt-5'>
         {/* Text */}
         <p className="text-[#efefef] text-lg md:text-[30px] pb-2 md:pb-4">
-          How many hours per day?
+          <CarbonLanguage name="how_many_hours_per_day" />
         </p>
 
         <Slider

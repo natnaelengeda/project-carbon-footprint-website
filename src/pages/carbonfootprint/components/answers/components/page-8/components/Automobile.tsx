@@ -9,15 +9,18 @@ import { Slider } from '@mantine/core';
 import { useDispatch } from 'react-redux';
 import { addTransportationMode, addTransportCategory } from '@/state/carbon';
 
+// Utils
+import CarbonLanguage from '@/utils/carbonLanguage';
+
 export default function Automobile() {
   const [selectedType, setSelectedType] = useState<string>("gas-powered");
 
   const [currentlySelected, setCurrentlySelected] = useState<number>(0);
 
   const buttons = [
-    { id: 0, name: "Gas Powered", type: "gas-powered", extra: "Gas Powered Personal Vehicle - Automobile" },
-    { id: 1, name: "Electric Powered", type: "electric-powered", extra: "Electric Powered Personal Vehicle - Automobile" },
-    { id: 2, name: "Hybrid", type: "hybrid", extra: "Hybrid Personal Vehicle - Automobile" },
+    { id: 0, name: <CarbonLanguage name="gas_powered" />, type: "gas-powered", extra: "Gas Powered Personal Vehicle - Automobile" },
+    { id: 1, name: <CarbonLanguage name="electric_powered" />, type: "electric-powered", extra: "Electric Powered Personal Vehicle - Automobile" },
+    { id: 2, name: <CarbonLanguage name="hybrid" />, type: "hybrid", extra: "Hybrid Personal Vehicle - Automobile" },
   ];
 
   return (
@@ -31,9 +34,9 @@ export default function Automobile() {
           <div
             className="w-10 h-3 bg-purple-500">
           </div>
-          <p className="text-white text-[60px]">Transportation Mode</p>
+          <p className="text-white text-[60px]"><CarbonLanguage name="transportation_mode" /></p>
         </div>
-        <p className="text-[40px]">Personal Vehicle - Automobile</p>
+        <p className="text-[40px]"><CarbonLanguage name="personal_transportation" /> - <CarbonLanguage name="automobile" /></p>
       </div>
 
       {/* Options */}
@@ -41,7 +44,7 @@ export default function Automobile() {
         className="w-full h-auto flex flex-col items-start justify-start pl-40 pt-20 gap-16">
         {
           buttons &&
-          buttons.map((button: { id: number, name: string, type: string, extra: string }, index: number) => {
+          buttons.map((button: { id: number, name: any, type: string, extra: string }, index: number) => {
             return (
               <RadioButtonsComponent
                 key={index}
@@ -105,17 +108,6 @@ const RadioButtonsComponent = ({ id, setSelectedType, selectedType, type, text, 
       vehicle: "automobile",
     }));
 
-    // dispatch(
-    //   addTransportCategory({
-    //     parent_id: 1,
-    //     category_id: id + 1,
-    //     name: id == 0 ? "gas-powered" :
-    //       id == 1 ? "electric-powered" :
-    //         "hybrid",
-    //     value: e,
-    //     frequency: days,
-    //   })
-    // );
   }
 
   const updateSlider2 = (e: any) => {
@@ -148,18 +140,6 @@ const RadioButtonsComponent = ({ id, setSelectedType, selectedType, type, text, 
       page: "page-8",
       vehicle: "automobile",
     }));
-
-    // dispatch(
-    //   addTransportCategory({
-    //     parent_id: 1,
-    //     category_id: id + 1,
-    //     name: id == 0 ? "gas-powered" :
-    //       id == 1 ? "electric-powered" :
-    //         "hybrid",
-    //     value: kms,
-    //     frequency: e,
-    //   })
-    // );
   }
 
   return (
@@ -189,7 +169,7 @@ const RadioButtonsComponent = ({ id, setSelectedType, selectedType, type, text, 
         className='w-full h-auto pl-2 pr-5 md:pr-32 flex flex-col items-start justify-start gap-2'>
         {/* Text */}
         <p className="text-[#efefef] text-lg md:text-[30px] pb-2 md:pb-4">
-          How many kilometers per day?
+          <CarbonLanguage name="how_many_kilometers_per_day" />
         </p>
 
         <Slider
@@ -225,7 +205,7 @@ const RadioButtonsComponent = ({ id, setSelectedType, selectedType, type, text, 
         className='w-full h-auto pl-2 pr-5 md:pr-32 flex flex-col items-start justify-start gap-2 pt-5'>
         {/* Text */}
         <p className="text-[#efefef] text-lg md:text-[30px] pb-2 md:pb-4">
-          How many days per week?
+          <CarbonLanguage name="how_many_days_per_week" />
         </p>
 
         <Slider

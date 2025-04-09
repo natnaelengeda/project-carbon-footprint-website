@@ -24,6 +24,7 @@ import DefaultBackground from '../DefaultBackground';
 import { useSocket } from '@/context/SocketProvider';
 import NavComponent from '../../../NavComponent';
 import { Slider } from '@mantine/core';
+import CarbonLanguage from '@/utils/carbonLanguage';
 
 // Interface
 interface Props {
@@ -234,9 +235,10 @@ export default function PageThree({ setPage }: Props) {
             <div
               className="w-10 h-3 bg-purple-500">
             </div>
-            <p className="text-white text-[60px]">Household Energy</p>
+            <p className="text-white text-[60px]"><CarbonLanguage name="household_energy" />
+            </p>
           </div>
-          <p className="text-[50px]">Heating</p>
+          <p className="text-[50px]"><CarbonLanguage name="heating" /></p>
         </div>
 
         {/* Bottom Context */}
@@ -263,7 +265,7 @@ export default function PageThree({ setPage }: Props) {
                 className='w-7 md:w-[36px] md:h-[36px] object-contain cursor-pointer' />
               <p
                 className='text-xl md:text-[40px] font-normal'>
-                {t("carbon.electric_air_conditioning", { lng: savedlanguages.carbon })}
+                <CarbonLanguage name="electric_air_heating" />
               </p>
             </div>
 
@@ -275,7 +277,7 @@ export default function PageThree({ setPage }: Props) {
               className='w-full h-auto pl-2 pr-5 md:pr-32 flex flex-col items-start justify-start gap-2'>
               {/* Text */}
               <p className="text-[#efefef] text-lg md:text-[30px] pb-2 md:pb-4">
-                How many days per week?
+                <CarbonLanguage name="how_many_days_per_week" />
               </p>
 
               <Slider
@@ -305,7 +307,7 @@ export default function PageThree({ setPage }: Props) {
               className='w-full h-auto pl-2 pr-5 md:pr-32 flex flex-col items-start justify-start gap-2 pt-5'>
               {/* Text */}
               <p className="text-[#efefef] text-lg md:text-[30px] pb-2 md:pb-4">
-                How many hours per day?
+                <CarbonLanguage name="how_many_hours_per_day" />
               </p>
 
               <Slider
@@ -348,7 +350,7 @@ export default function PageThree({ setPage }: Props) {
                 className='w-7 md:w-[36px] md:h-[36px] object-contain cursor-pointer' />
               <p
                 className='text-xl md:text-[40px] font-normal'>
-                {t("carbon.charcoal", { lng: savedlanguages.carbon })}
+                <CarbonLanguage name="charcoal" />
               </p>
             </div>
 
@@ -360,7 +362,7 @@ export default function PageThree({ setPage }: Props) {
               className='w-full h-auto pl-2 pr-5 md:pr-32 flex flex-col items-start justify-start g'>
               {/* Text */}
               <p className="text-[#efefef] text-lg md:text-[30px] pb-2 md:pb-4">
-                How many days per week?
+                <CarbonLanguage name="how_many_days_per_week" />
               </p>
 
               <Slider
@@ -390,7 +392,7 @@ export default function PageThree({ setPage }: Props) {
               className='w-full h-auto pl-2 pr-5 md:pr-32 flex flex-col items-start justify-start pt-5'>
               {/* Text */}
               <p className="text-[#efefef] text-lg md:text-[30px] pb-2 md:pb-4">
-                How many hours per day?
+                <CarbonLanguage name="how_many_hours_per_day" />
               </p>
 
               <Slider
@@ -435,7 +437,7 @@ export default function PageThree({ setPage }: Props) {
                 className='w-7 md:w-[36px] md:h-[36px] object-contain cursor-pointer' />
               <p
                 className='text-xl md:text-[40px] font-normal'>
-                Wood
+                <CarbonLanguage name="wood" />
               </p>
             </div>
 
@@ -447,7 +449,7 @@ export default function PageThree({ setPage }: Props) {
               className='w-full h-auto pl-2 pr-5 md:pr-32 flex flex-col items-start justify-start g'>
               {/* Text */}
               <p className="text-[#efefef] text-lg md:text-[30px] pb-2 md:pb-4">
-                How many days per week?
+                <CarbonLanguage name="how_many_days_per_week" />
               </p>
 
               <Slider
@@ -477,7 +479,7 @@ export default function PageThree({ setPage }: Props) {
               className='w-full h-auto pl-2 pr-5 md:pr-32 flex flex-col items-start justify-start pt-5'>
               {/* Text */}
               <p className="text-[#efefef] text-lg md:text-[30px] pb-2 md:pb-4">
-                How many hours per day?
+                <CarbonLanguage name="how_many_hours_per_day" />
               </p>
 
               <Slider
@@ -500,8 +502,7 @@ export default function PageThree({ setPage }: Props) {
                   { value: 10, label: '10' },
                   { value: 11, label: '11' },
                   { value: 12, label: '12' },
-                ]}
-              />
+                ]} />
             </div>
 
           </div>
@@ -526,7 +527,7 @@ export default function PageThree({ setPage }: Props) {
                 className='w-7 md:w-[36px] md:h-[36px] object-contain cursor-pointer' />
               <p
                 className='text-xl md:text-[40px] font-normal'>
-                {t("carbon.i_dont_use_any_energy", { lng: savedlanguages.carbon })}
+                {t("carbon.i_dont_use_any_heating_instruments", { lng: savedlanguages.carbon })}
               </p>
             </div>
 
@@ -539,11 +540,7 @@ export default function PageThree({ setPage }: Props) {
                 className='w-full h-16 rounded-xl border border-[#CBCBCB] px-5 text-[24px]' />
             </div>
           </div>
-
         </div>
-
-
-
         <div
           className='absolute bottom-0 right-0'>
           <NavComponent

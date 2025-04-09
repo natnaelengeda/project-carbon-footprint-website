@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import toast from 'react-hot-toast';
 
 // Socket.io
 import { useSocket } from '@/context/SocketProvider';
@@ -8,13 +9,20 @@ import "./styles.css";
 
 // Icons
 import { FaAngleDoubleLeft, FaAngleDoubleRight } from "react-icons/fa";
-import toast from 'react-hot-toast';
+
+
 
 export default function Devools() {
   const [opened, setOpened] = useState(false);
   const [activeBorder, setActiveBorder] = useState(false);
 
   const socket = useSocket();
+
+  // React Language Packaged;
+  const [sectionLanguage, setSectionLanguage] = useState({
+    carbon: "en",
+    pledge: "en"
+  });
 
   // Border Activate
   const activateBorder = () => {
@@ -41,6 +49,29 @@ export default function Devools() {
     socket?.emit("checkSocket", 'Hello');
   }
 
+  const changeLanguage = () => {
+    const defaultLanguage = JSON.stringify({
+      carbon: "en",
+      pledge: "en"
+    });
+
+    const savedlanguages = JSON.parse(localStorage.getItem("language") || defaultLanguage);
+    console.log(savedlanguages);
+
+    if (savedlanguages.carbon == "en") {
+      changeLanguageFF("carbon", "am");
+    } else {
+      changeLanguageFF("carbon", "en");
+    }
+  }
+
+  // Change language for a specific section
+  const changeLanguageFF = (section: string, lang: string) => {
+    const updatedLanuages = { ...sectionLanguage, [section]: lang };
+    setSectionLanguage(updatedLanuages);
+    localStorage.setItem("language", JSON.stringify(updatedLanuages));
+  }
+
 
   useEffect(() => {
     socket?.on("connectionWorks", () => {
@@ -52,7 +83,11 @@ export default function Devools() {
     <>
       {
         opened ?
-          <div className='fixed top-1/4 md:top-1/1 right-0 flex flex-row items-start z-[1000]'>
+          <div
+            style={{
+              zIndex: 1000,
+            }}
+            className='fixed top-1/4 md:top-1/1 right-0 flex flex-row items-start'>
             <button
               onClick={() => setOpened(!opened)}
               className='bg-white border-4 md:border-8 border-r-0 border-primary px-5 py-3'>
@@ -75,6 +110,12 @@ export default function Devools() {
                   className={`w-full h-16 md:h-20 border-b-4 md:border-b-8  text-xl md:text-2xl ${activeBorder ? "bg-primary text-white font-bold" : "border-primary"}`}>
                   Check Socket
                 </button>
+
+                <button
+                  onClick={changeLanguage}
+                  className={`w-full h-16 md:h-20 border-b-4 md:border-b-8  text-xl md:text-2xl ${activeBorder ? "bg-primary text-white font-bold" : "border-primary"}`}>
+                  Change Language
+                </button>
               </div>
             </div>
           </div> :
@@ -84,10 +125,7 @@ export default function Devools() {
               className='bg-white border-4 md:border-8 border-primary px-5 py-3'>
               <FaAngleDoubleLeft className="text-3xl text-primary" />
             </button>
-
-
           </div>
-
       }
     </>
   )

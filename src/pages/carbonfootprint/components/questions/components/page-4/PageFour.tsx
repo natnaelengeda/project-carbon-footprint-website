@@ -15,6 +15,10 @@ import QuestionsLayout from "../QuestionsLayout";
 // AppAsset
 import AppAsset from "@/core/AppAsset";
 
+// Utils
+import CarbonLanguage from "@/utils/carbonLanguage";
+import DaysPerWeekHoursPerDay from "../DaysPerWeekHoursPerDay";
+
 // Interface
 interface Props {
   setPage: React.Dispatch<React.SetStateAction<number>>;
@@ -34,10 +38,10 @@ export default function PageFour({ setPage }: Props) {
   const [selectedHours, setSelectedHours] = useState<number[]>([0, 0, 0, 0]);
 
   const buttons = [
-    { id: 0, name: "Electric Stove", type: "electric-stove" },
-    { id: 1, name: "Gas Stove", type: "gas-stove" },
-    { id: 2, name: "Charcoal Stove", type: "charcoal-stove" },
-    { id: 3, name: "Wood Stove", type: "wood-stove" },
+    { id: 0, name: <CarbonLanguage name="electric_stove" />, type: "electric-stove" },
+    { id: 1, name: <CarbonLanguage name="gas_stove" />, type: "gas-stove" },
+    { id: 2, name: <CarbonLanguage name="charcoal_stove" />, type: "charcoal-stove" },
+    { id: 3, name: <CarbonLanguage name="wood_stove" />, type: "wood-stove" },
   ];
 
   return (
@@ -64,9 +68,9 @@ export default function PageFour({ setPage }: Props) {
             <div
               className="w-10 h-3 bg-purple-500">
             </div>
-            <p className="text-white text-[40px]">Household Energy</p>
+            <p className="text-white text-[40px]"><CarbonLanguage name="household_energy" /> </p>
           </div>
-          <p className="text-[30px]">Cooking</p>
+          <p className="text-[30px]"><CarbonLanguage name="cooking" /> </p>
         </div>
 
         {/* Options */}
@@ -74,7 +78,7 @@ export default function PageFour({ setPage }: Props) {
           className="w-full h-auto flex flex-col items-start justify-start pl-10 pt-3 gap-5">
           {
             buttons &&
-            buttons.map((button: { id: number, type: string, name: string }, index: number) => {
+            buttons.map((button: { id: number, type: string, name: any }, index: number) => {
               return (
                 <CheckboxComponent
                   key={index}
@@ -133,7 +137,6 @@ const CheckboxComponent = (
 
   const addRemoveTyeps = () => {
     const check = selectedTypes.includes(type);
-    console.log(check);
 
     if (check) {
       const newSelectedTypes = selectedTypes.filter((item: any) => item !== type); // Remove the item immutably
@@ -225,9 +228,6 @@ const CheckboxComponent = (
 
   }, [socket]);
 
-  console.log(selectedTypes)
-
-
   return (
     <div
       className="w-full h-full flex flex-col items-start justify-start gap-2 text-white">
@@ -251,7 +251,10 @@ const CheckboxComponent = (
           display: check ? "flex" : "none"
         }}
         className="pr-10">
-        <p className="text-[20px]">You use <span className="text-primary">Electric Air Heating for {selectedDays[id]} days</span> per week and <span className="text-primary">{selectedHours[id]} hours per day</span></p>
+        <DaysPerWeekHoursPerDay
+          text={text}
+          selectedDays={selectedDays[id]}
+          selectedHours={selectedHours[id]} />
       </div>
     </div>
   );

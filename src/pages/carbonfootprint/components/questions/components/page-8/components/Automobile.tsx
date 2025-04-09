@@ -7,6 +7,7 @@ import { useSocket } from '@/context/SocketProvider';
 import AppAsset from '@/core/AppAsset'
 import { addTransportationMode, addTransportCategory } from '@/state/carbon';
 import { useDispatch } from 'react-redux';
+import CarbonLanguage from '@/utils/carbonLanguage';
 
 
 export default function Automobile() {
@@ -17,9 +18,9 @@ export default function Automobile() {
   const dispatch = useDispatch();
 
   const buttons = [
-    { id: 0, name: "Gas Powered", type: "gas-powered", extra: "Gas Powered Personal Vehicle - Automobile" },
-    { id: 1, name: "Electric Powered", type: "electric-powered", extra: "Electric Powered Personal Vehicle - Automobile" },
-    { id: 2, name: "Hybrid", type: "hybrid", extra: "Hybrid Personal Vehicle - Automobile" },
+    { id: 0, name: <CarbonLanguage name="gas_powered" />, type: "gas-powered", extra: <CarbonLanguage name='gas_powered_personal_vehicle_automobile' /> },
+    { id: 1, name: <CarbonLanguage name="electric_powered" />, type: "electric-powered", extra: "Electric Powered Personal Vehicle - Automobile" },
+    { id: 2, name: <CarbonLanguage name="hybrid" />, type: "hybrid", extra: "Hybrid Personal Vehicle - Automobile" },
   ];
 
   const socket: any = useSocket();
@@ -76,9 +77,9 @@ export default function Automobile() {
           <div
             className="w-10 h-3 bg-purple-500">
           </div>
-          <p className="text-white text-[40px]">Transportation Mode</p>
+          <p className="text-white text-[40px]"><CarbonLanguage name="transportation_mode" /></p>
         </div>
-        <p className="text-[25px]">Personal Vehicle - Automobile</p>
+        <p className="text-[25px]"><CarbonLanguage name="personal_transportation" /> - <CarbonLanguage name="automobile" /></p>
       </div>
 
       {/* Options */}
@@ -86,7 +87,7 @@ export default function Automobile() {
         className="w-full h-auto flex flex-col items-start justify-start pl-10 pt-3 gap-2">
         {
           buttons &&
-          buttons.map((button: { name: string, type: string, extra: string }, index: number) => {
+          buttons.map((button: { name: any, type: string, extra: any }, index: number) => {
             return (
               <RadioButtonsComponent
                 key={index}
@@ -133,7 +134,7 @@ const RadioButtonsComponent = ({ setSelectedType, selectedType, type, text, sele
         }}
         className="pr-10">
         <p
-          className="text-[15px]">You use <span className="text-primary">{extraNote} {selectedKMs} Kilometers</span> per week and <span className="text-primary">{selectedDays} days per week</span></p>
+          className="text-[15px]"><CarbonLanguage name="you_use" /> <span className="text-primary">{extraNote} {selectedKMs} <CarbonLanguage name="kilometers" /></span> <CarbonLanguage name="per_day_and" /> <span className="text-primary">{selectedDays} <CarbonLanguage name="days_per_week" /></span></p>
       </div>
     </div>
   );

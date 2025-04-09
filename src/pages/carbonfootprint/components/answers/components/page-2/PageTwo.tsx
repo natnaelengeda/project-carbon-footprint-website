@@ -25,6 +25,8 @@ import {
 
 // Styles
 import classes from "./styles.module.css";
+import CarbonLanguage from '@/utils/carbonLanguage';
+import { useTranslation } from 'react-i18next';
 
 // Interface
 interface Props {
@@ -34,6 +36,9 @@ interface Props {
 export default function PageTwo({ setPage }: Props) {
   const [value, setValue] = useState("apartment");
   const room = localStorage.getItem("room");
+
+  const { t } = useTranslation();
+  const sectionLanguage = JSON.parse(localStorage.getItem("language") || "");
 
   // State
   const dispatch = useDispatch();
@@ -64,7 +69,7 @@ export default function PageTwo({ setPage }: Props) {
           <div
             className="w-auto flex flex-row items-center justify-center gap-3 font-semibold text-2xl md:text-[64px] pt-20 text-white">
             <p>
-              What is your housing type?
+              <CarbonLanguage name="what_is_your_housing_type" />
             </p>
           </div>
 
@@ -88,7 +93,7 @@ export default function PageTwo({ setPage }: Props) {
                     color={`var(--main-color)`}
                     value="apartment"
                     size={"xl"}
-                    label={"Apartment/Condiminium"} />
+                    label={t("carbon.apartmentcondominium", { lng: sectionLanguage.carbon })} />
                   <Radio
                     iconColor=""
                     classNames={{
@@ -98,7 +103,7 @@ export default function PageTwo({ setPage }: Props) {
                     color={`var(--main-color)`}
                     value="house"
                     size={"xl"}
-                    label={"House"} />
+                    label={t("carbon.house", { lng: sectionLanguage.carbon })} />
 
                 </div>
               </RadioGroup>

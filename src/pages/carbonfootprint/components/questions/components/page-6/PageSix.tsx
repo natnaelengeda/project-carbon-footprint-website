@@ -14,6 +14,8 @@ import QuestionsLayout from "../QuestionsLayout";
 
 // AppAsset
 import AppAsset from "@/core/AppAsset";
+import CarbonLanguage from "@/utils/carbonLanguage";
+import DaysPerWeekHoursPerDay from "../DaysPerWeekHoursPerDay";
 
 // Interface
 interface Props {
@@ -35,10 +37,10 @@ export default function PageSix({ setPage }: Props) {
   const [selectedHours, setSelectedHours] = useState<number[]>([0, 0, 0, 0]);
 
   const buttons = [
-    { id: 0, name: "Incandescent Bulb", type: "incandescent-bulb" },
-    { id: 1, name: "Fluorescent Bulb", type: "fluorescent-bulb" },
-    { id: 2, name: "Compact Fluorescent Bulb", type: "compact-fluorescent-bulb" },
-    { id: 3, name: "LED Lighting", type: "led-lighting" },
+    { id: 0, name: <CarbonLanguage name="incandescent_bulb" />, type: "incandescent-bulb" },
+    { id: 1, name: <CarbonLanguage name="florescent" />, type: "fluorescent-bulb" },
+    { id: 2, name: <CarbonLanguage name="compact_florescent" />, type: "compact-fluorescent-bulb" },
+    { id: 3, name: <CarbonLanguage name="led_bulb" />, type: "led-lighting" },
   ]
 
   return (
@@ -65,9 +67,9 @@ export default function PageSix({ setPage }: Props) {
             <div
               className="w-10 h-3 bg-purple-500">
             </div>
-            <p className="text-white text-[40px]">Household Energy</p>
+            <p className="text-white text-[40px]"><CarbonLanguage name="household_energy" /></p>
           </div>
-          <p className="text-[30px]">Electric Lighting Usage</p>
+          <p className="text-[30px]"><CarbonLanguage name="electric_light_usage" /></p>
         </div>
 
         {/* Options */}
@@ -75,7 +77,7 @@ export default function PageSix({ setPage }: Props) {
           className="w-full h-auto flex flex-col items-start justify-start pl-10 gap-3">
           {
             buttons &&
-            buttons.map((button: { id: number, type: string, name: string }, index: number) => {
+            buttons.map((button: { id: number, type: string, name: any }, index: number) => {
               return (
                 <CheckboxComponent
                   key={index}
@@ -253,7 +255,10 @@ const CheckboxComponent = (
           display: check ? "flex" : "none"
         }}
         className="pr-10">
-        <p className="text-[20px]">You use <span className="text-primary">{text} for {selectedDays[id]} days</span> per week and <span className="text-primary">{selectedHours[id]} hours per day</span></p>
+        <DaysPerWeekHoursPerDay
+          text={text}
+          selectedDays={selectedDays[id]}
+          selectedHours={selectedHours[id]} />
       </div>
     </div>
   );

@@ -1,8 +1,5 @@
 import React, { useEffect, useState } from 'react'
 
-// Translation
-import { useTranslation } from 'react-i18next';
-
 // State
 import {
   useDispatch,
@@ -14,9 +11,8 @@ import {
   CarbonState,
 } from '@/state/carbon';
 
-// Utils
-import { generateRandomId } from '@/utils/idGenerator';
-import { generateRandomName } from '@/utils/randomNameGenerator';
+// Compnoents
+import NavComponent from '../../../NavComponent';
 
 // AppAsset
 import AppAsset from "@/core/AppAsset";
@@ -26,7 +22,11 @@ import DefaultBackground from '../DefaultBackground';
 
 // Socket
 import { useSocket } from '@/context/SocketProvider';
-import NavComponent from '../../../NavComponent';
+
+// Utils
+import { generateRandomId } from '@/utils/idGenerator';
+import { generateRandomName } from '@/utils/randomNameGenerator';
+import { useTranslation } from 'react-i18next';
 
 // Interface
 interface Props {
@@ -42,13 +42,11 @@ export default function PageOne({ setPage }: Props) {
 
   const room = localStorage.getItem("room");
 
+
   // React Language Packaged;
   const { t } = useTranslation();
-
-  // Width
-  // const width = window.innerWidth;
-
   const savedlanguages = JSON.parse(localStorage.getItem("language") || "");
+
 
   // State
   const dispatch = useDispatch();
@@ -103,11 +101,10 @@ export default function PageOne({ setPage }: Props) {
           <div className="relative w-full md:w-[35rem]">
             <img
               src={AppAsset.UserBlackIcon}
-              className="absolute left-3 top-1/2 -translate-y-1/2 w-8 h-8"
-            />
+              className="absolute left-3 top-1/2 -translate-y-1/2 w-8 h-8" />
             <input
               type="text"
-              placeholder={t("carbon.name_eg", { lng: savedlanguages.carbon })}
+              placeholder={t("carbon.enter_your_name", { lng: savedlanguages.carbon })}
               value={name}
               onChange={onNameChange}
               className="w-full h-20 rounded-lg border-2 border-white bg-transparent text-xl text-white placeholder-white pl-14 pr-2" />

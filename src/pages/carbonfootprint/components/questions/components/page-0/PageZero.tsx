@@ -12,6 +12,7 @@ import AppAsset from "@/core/AppAsset";
 import { ValidateQuestions } from "@/pages/carbonfootprint/components/questions/components/VallidateQuestions";
 import { useDispatch } from "react-redux";
 import { clearEverything } from "@/state/carbon";
+import CarbonLanguage from "@/utils/carbonLanguage";
 
 // Interface
 interface Props {
@@ -171,18 +172,14 @@ export default function PageZero({ setPage }: Props) {
               className="h-auto object-contain" />
             <div className="flex flex-col items-center justify-center gap-1">
               <p
-                className="text-4xl md:text-[64px] font-semibold text-white">
-                {t("carbon.welcome_to_carbon_footprint_calculator", { lng: sectionLanguage.carbon })}
-              </p>
-              <p
-                className="text-4xl md:text-[64px] font-semibold text-white">
-                {t("carbon.carbon_footprint", { lng: sectionLanguage.carbon })}
+                className="text-4xl md:text-[64px] font-semibold text-white text-center">
+                <CarbonLanguage name="project_title_1" />
               </p>
             </div>
           </div>
 
           <p className="text-white text-2xl md:text-[44px]">
-            {t("carbon.language", { lng: sectionLanguage.carbon })}
+            {t("carbon.choose_language", { lng: sectionLanguage.carbon })}
           </p>
           <span
             className="hidden flex-col items-center justify-center text-3xl text-white">
@@ -210,7 +207,7 @@ export default function PageZero({ setPage }: Props) {
                 className="font-bold text-primary">
                 {language == "english" || language == "English" ? "English" : "አማርኛ"}
               </span>
-              {t("carbon.isTheSelectedLanguage", { lng: sectionLanguage.carbon })}
+              <CarbonLanguage name="isTheSelectedLanguage" />
             </p>
           </div>
 

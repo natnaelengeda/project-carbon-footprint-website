@@ -86,7 +86,13 @@ export default function Root() {
     <div
       className="relative w-full h-full min-h-screen flex flex-col items-start justify-start">
       <Outlet />
-      <Devools />
+      <div
+        style={{
+          zIndex: 100
+        }}
+        className="relative ">
+        <Devools />
+      </div>
     </div>
   )
 }
