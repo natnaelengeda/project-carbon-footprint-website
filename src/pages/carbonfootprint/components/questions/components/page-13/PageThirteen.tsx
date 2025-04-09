@@ -16,6 +16,7 @@ import QuestionsLayout from "../QuestionsLayout";
 
 // AppAsset
 import AppAsset from "@/core/AppAsset";
+import CarbonLanguage from "@/utils/carbonLanguage";
 
 // Interface
 interface Props {
@@ -74,8 +75,8 @@ export default function PageThirteen({ setPage }: Props) {
               className="w-8 h-2 bg-pink-500 mt-7">
             </div>
             <div className="flex flex-col items-start justify-start">
-              <p className="text-white text-[30px]">Diet and Food Consumption</p>
-              <p className="text-[25px]">Meat</p>
+              <p className="text-white text-[30px]"><CarbonLanguage name="diet_and_food_consumption" /></p>
+              <p className="text-[25px]"><CarbonLanguage name="meat" /></p>
             </div>
 
           </div>
@@ -84,7 +85,7 @@ export default function PageThirteen({ setPage }: Props) {
         {/* Options */}
         <div
           className="w-full h-auto flex flex-col items-start justify-start pl-10 pt-10 gap-10">
-          <p className="text-[25px] text-white">You use <span className="text-primary">Meat for {selectedDays} days</span> per week.</p>
+          <p className="text-[25px] text-white"><CarbonLanguage name="you_use" /> <span className="text-primary"><CarbonLanguage name="meat" /> <CarbonLanguage name="for" /> {selectedDays} <CarbonLanguage name="days" /></span> <CarbonLanguage name="per_week" /></p>
         </div>
       </div>
     </QuestionsLayout>

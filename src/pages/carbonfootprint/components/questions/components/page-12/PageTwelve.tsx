@@ -12,6 +12,9 @@ import { addDiet } from '@/state/carbon';
 // Components
 import QuestionsLayout from "../QuestionsLayout";
 
+// Utils
+import CarbonLanguage from "@/utils/carbonLanguage";
+
 // AppAsset
 import AppAsset from "@/core/AppAsset";
 
@@ -72,8 +75,8 @@ export default function PageTwelve({ setPage }: Props) {
               className="w-8 h-2 bg-pink-500 mt-7">
             </div>
             <div className="flex flex-col items-start justify-start">
-              <p className="text-white text-[30px]">Diet and Food Consumption</p>
-              <p className="text-[25px]">Vegetables</p>
+              <p className="text-white text-[30px]"><CarbonLanguage name="diet_and_food_consumption" /></p>
+              <p className="text-[25px]"><CarbonLanguage name="vegetables" /></p>
             </div>
 
           </div>
@@ -82,9 +85,9 @@ export default function PageTwelve({ setPage }: Props) {
         {/* Options */}
         <div
           className="w-full h-auto flex flex-col items-start justify-start pl-10 pt-10 gap-10">
-          <p className="text-[25px] text-white">You use <span className="text-primary">Vegetables for {selectedDays} days</span> per week.</p>
+          <p className="text-[25px] text-white"><CarbonLanguage name="you_use" /><span className="text-primary"><CarbonLanguage name="vegetables" /> <CarbonLanguage name="for" /> {selectedDays} <CarbonLanguage name="days" /></span> <CarbonLanguage name="per_week" /></p>
         </div>
       </div>
-    </QuestionsLayout>
+    </QuestionsLayout >
   )
 }

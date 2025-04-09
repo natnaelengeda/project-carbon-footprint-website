@@ -8,6 +8,7 @@ import AppAsset from "@/core/AppAsset";
 import { useDispatch } from "react-redux";
 import { useSocket } from "@/context/SocketProvider";
 import { addTransportationMode } from "@/state/carbon";
+import CarbonLanguage from "@/utils/carbonLanguage";
 
 // Interface
 interface Props {
@@ -69,8 +70,8 @@ export default function PageTen({ setPage }: Props) {
               className="w-10 h-3 bg-purple-500 mt-7">
             </div>
             <div className="flex flex-col items-start justify-start">
-              <p className="text-white text-[40px]">Transportation Mode</p>
-              <p className="text-[30px]">Walking</p>
+              <p className="text-white text-[40px]"><CarbonLanguage name="transportation_mode" /></p>
+              <p className="text-[30px]"><CarbonLanguage name="walking" /></p>
             </div>
           </div>
         </div>
@@ -78,7 +79,8 @@ export default function PageTen({ setPage }: Props) {
         {/* Options */}
         <div
           className="w-full h-auto flex flex-col items-start justify-start pl-10 pt-10 gap-16 text-white text-[25px] pr-14">
-          <p>You use  <span className='text-primary'>Walking {km} Kilometers</span> per day and <span className='text-primary'>{days} days per week</span></p>
+          {/* <p>You use  <span className='text-primary'>Walking {km} Kilometers</span> per day and <span className='text-primary'>{days} days per week</span></p> */}
+          <p className='text-white'><span className='text-white'><CarbonLanguage name="you" /></span> <span className='text-primary'><CarbonLanguage name="walk" /> {km} <CarbonLanguage name="kilometers" /></span> <CarbonLanguage name="per_day_and" /> <span className='text-primary'>{days} <CarbonLanguage name="days_per_week" /></span></p>
 
         </div>
 

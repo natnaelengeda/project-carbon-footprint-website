@@ -2,13 +2,18 @@ import React, { useEffect, useState } from "react";
 
 // Default Background
 import DefaultBackground from "../DefaultBackground";
-
-// App Asset
-import AppAsset from "@/core/AppAsset";
 import NavComponent from "../../../NavComponent";
+
+// Resux
 import { useDispatch } from "react-redux";
 import { useSocket } from "@/context/SocketProvider";
 import { addWaste } from "@/state/carbon";
+
+// Utils
+import CarbonLanguage from "@/utils/carbonLanguage";
+
+// App Asset
+import AppAsset from "@/core/AppAsset";
 
 // Interface
 interface Props {
@@ -19,12 +24,12 @@ export default function PageSixteen({ setPage }: Props) {
   const [selectedItems, setSelectedItems] = useState<string[]>([]);
 
   const checkboxItems = [
-    { id: 0, name: "Plastics", type: "plastics" },
-    { id: 1, name: "Paper", type: "paper" },
-    { id: 2, name: "Glass/bottle", type: "glass" },
-    { id: 3, name: "Organic material", type: "organic" },
-    { id: 4, name: "Metals", type: "metals" },
-    { id: 5, name: "None", type: "none" }
+    { id: 0, name: <CarbonLanguage name="plastics" />, type: "plastics" },
+    { id: 1, name: <CarbonLanguage name="paper" />, type: "paper" },
+    { id: 2, name: <CarbonLanguage name="glass_bottle" />, type: "glass" },
+    { id: 3, name: <CarbonLanguage name="organic_material" />, type: "organic" },
+    { id: 4, name: <CarbonLanguage name="metals" />, type: "metals" },
+    { id: 5, name: <CarbonLanguage name="none" />, type: "none" }
   ];
 
   const socket = useSocket();
@@ -67,10 +72,10 @@ export default function PageSixteen({ setPage }: Props) {
             <div
               className="w-10 h-3 bg-purple-500">
             </div>
-            <p className="text-white text-[60px]">Waste Disposal</p>
+            <p className="text-white text-[60px]"><CarbonLanguage name="waste_disposal" /></p>
           </div>
-          <p className="text-[40px]">Recycling Habits</p>
-          <p className="text-[20px] text-gray-400 mt-2">Select the materials you regularly recycle</p>
+          <p className="text-[40px]"><CarbonLanguage name="recycling_habits" /></p>
+          <p className="text-[20px] text-gray-400 mt-2"><CarbonLanguage name="which_of_the_following_materials_do_you_recycle" /></p>
         </div>
 
         {/* Options */}
@@ -112,7 +117,7 @@ export default function PageSixteen({ setPage }: Props) {
 interface CheckboxItemProps {
   item: {
     id: number;
-    name: string;
+    name: any;
     type: string;
   };
   isSelected: boolean;

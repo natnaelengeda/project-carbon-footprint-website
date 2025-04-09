@@ -11,6 +11,7 @@ import NavComponent from "../../../NavComponent";
 import { addDiet } from "@/state/carbon";
 import { useSocket } from "@/context/SocketProvider";
 import { useDispatch } from "react-redux";
+import CarbonLanguage from "@/utils/carbonLanguage";
 
 // Interface
 interface Props {
@@ -31,9 +32,9 @@ export default function PageThirteen({ setPage }: Props) {
             <div
               className="w-10 h-3 bg-purple-500">
             </div>
-            <p className="text-white text-[60px]">Diet and Food Consumption</p>
+            <p className="text-white text-[60px]"><CarbonLanguage name="diet_and_food_consumption" /></p>
           </div>
-          <p className="text-[40px]">Meat</p>
+          <p className="text-[40px]"><CarbonLanguage name="meat" /></p>
         </div>
 
 
@@ -81,7 +82,7 @@ const RadioButtonsComponent = () => {
       })
     );
   }
-  
+
   return (
     <div
       className="w-full h-full flex flex-col items-start justify-start gap-5 text-white">
@@ -92,7 +93,7 @@ const RadioButtonsComponent = () => {
         className='w-full h-auto pl-2 pr-5 md:pr-32 flex flex-col items-start justify-start gap-2 pt-5'>
         {/* Text */}
         <p className="text-[#efefef] text-lg md:text-[30px] pb-2 md:pb-4">
-          How many days per week?
+          <CarbonLanguage name="how_many_days_per_week" />
         </p>
 
         <Slider

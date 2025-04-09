@@ -14,6 +14,7 @@ import QuestionsLayout from "../QuestionsLayout";
 
 // AppAsset
 import AppAsset from "@/core/AppAsset";
+import CarbonLanguage from "@/utils/carbonLanguage";
 
 // Interface
 interface Props {
@@ -25,12 +26,12 @@ export default function PageSixteen({ setPage }: Props) {
   const [selectedTypes, setSelectedTypes] = useState<string[]>([]);
 
   const buttons = [
-    { id: 0, name: "Plastics", type: "plastics" },
-    { id: 1, name: "Paper", type: "paper" },
-    { id: 2, name: "Glass/bottle", type: "glass" },
-    { id: 3, name: "Organic material", type: "organic" },
-    { id: 4, name: "Metals", type: "metals" },
-    { id: 5, name: "None", type: "none" }
+    { id: 0, name: <CarbonLanguage name="plastics" />, type: "plastics" },
+    { id: 1, name: <CarbonLanguage name="paper" />, type: "paper" },
+    { id: 2, name: <CarbonLanguage name="glass_bottle" />, type: "glass" },
+    { id: 3, name: <CarbonLanguage name="organic_material" />, type: "organic" },
+    { id: 4, name: <CarbonLanguage name="metals" />, type: "metals" },
+    { id: 5, name: <CarbonLanguage name="none" />, type: "none" }
   ];
 
   const socket = useSocket();
@@ -88,8 +89,8 @@ export default function PageSixteen({ setPage }: Props) {
               className="w-8 h-2 bg-pink-500 mt-7">
             </div>
             <div className="flex flex-col items-start justify-start">
-              <p className="text-white text-[30px]">Waste Disposal</p>
-              <p className="text-[25px]">Recycling Habits</p>
+              <p className="text-white text-[30px]"><CarbonLanguage name="waste_disposal" /></p>
+              <p className="text-[25px]"><CarbonLanguage name="recycling_habits" /></p>
             </div>
 
           </div>
@@ -100,7 +101,7 @@ export default function PageSixteen({ setPage }: Props) {
           className="w-full h-auto flex flex-col items-start justify-start pl-10 pt-2 gap-3">
           {
             buttons &&
-            buttons.map((button: { id: number, type: string, name: string }, index: number) => {
+            buttons.map((button: { id: number, type: string, name: any }, index: number) => {
               return (
                 <CheckboxComponent
                   key={index}

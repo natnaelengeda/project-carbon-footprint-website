@@ -11,6 +11,7 @@ import NavComponent from "../../../NavComponent";
 import { useSocket } from "@/context/SocketProvider";
 import { useDispatch } from "react-redux";
 import { addWaterUsage } from "@/state/carbon";
+import CarbonLanguage from "@/utils/carbonLanguage";
 
 // Interface
 interface Props {
@@ -32,9 +33,9 @@ export default function PageNineteen({ setPage }: Props) {
             <div
               className="w-10 h-3 bg-purple-500">
             </div>
-            <p className="text-white text-[60px]">Water Usage</p>
+            <p className="text-white text-[60px]"><CarbonLanguage name="water_usage" /></p>
           </div>
-          <p className="text-[40px]">Watering the garden</p>
+          <p className="text-[40px]"><CarbonLanguage name="watering_the_garden" /></p>
         </div>
 
 
@@ -114,7 +115,7 @@ const RadioButtonsComponent = () => {
         className='w-full h-auto pl-2 pr-5 md:pr-32 flex flex-col items-start justify-start gap-2 pt-5'>
         {/* Text */}
         <p className="text-[#efefef] text-lg md:text-[30px] pb-2 md:pb-4">
-          How many days per week?
+          <CarbonLanguage name="how_many_days_per_week" />
         </p>
 
         <Slider
@@ -142,7 +143,7 @@ const RadioButtonsComponent = () => {
         className='w-full h-auto pl-2 pr-5 md:pr-32 flex flex-col items-start justify-start gap-2 pt-5'>
         {/* Text */}
         <p className="text-[#efefef] text-lg md:text-[30px] pb-2 md:pb-4">
-          Average duration in minutes?
+          <CarbonLanguage name="average_duration_in_minutes" />
         </p>
 
         <Slider

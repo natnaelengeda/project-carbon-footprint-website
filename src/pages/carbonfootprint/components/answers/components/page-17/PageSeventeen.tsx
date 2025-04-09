@@ -2,13 +2,20 @@ import React, { useEffect, useState } from "react";
 
 // Default Background
 import DefaultBackground from "../DefaultBackground";
+import NavComponent from "../../../NavComponent";
+
+// Socket
+import { useSocket } from "@/context/SocketProvider";
+
+// Redux
+import { useDispatch } from "react-redux";
+import { addWaterUsage } from "@/state/carbon";
+
+// Utils
+import CarbonLanguage from "@/utils/carbonLanguage";
 
 // App Asset
 import AppAsset from "@/core/AppAsset";
-import NavComponent from "../../../NavComponent";
-import { useSocket } from "@/context/SocketProvider";
-import { useDispatch } from "react-redux";
-import { addWaterUsage } from "@/state/carbon";
 
 // Interface
 interface Props {
@@ -19,8 +26,8 @@ export default function PageSeventeen({ setPage }: Props) {
   const [selectedItems, setSelectedItems] = useState<string[]>([]);
 
   const checkboxItems = [
-    { id: 0, name: "Washing Machine", type: "washing-machine" },
-    { id: 1, name: "Handwash", type: "handwash" },
+    { id: 0, name: <CarbonLanguage name="washing_machine" />, type: "washing-machine" },
+    { id: 1, name: <CarbonLanguage name="handwash" />, type: "handwash" },
   ];
 
   const socket = useSocket();
@@ -58,9 +65,9 @@ export default function PageSeventeen({ setPage }: Props) {
             <div
               className="w-10 h-3 bg-purple-500">
             </div>
-            <p className="text-white text-[60px]">Water Usage</p>
+            <p className="text-white text-[60px]"><CarbonLanguage name="water_usage" /></p>
           </div>
-          <p className="text-[40px]">Washing Clothes</p>
+          <p className="text-[40px]"><CarbonLanguage name="washing_clothes" /></p>
         </div>
 
         {/* Options */}
@@ -101,7 +108,7 @@ export default function PageSeventeen({ setPage }: Props) {
 interface CheckboxItemProps {
   item: {
     id: number;
-    name: string;
+    name: any;
     type: string;
   };
   isSelected: boolean;

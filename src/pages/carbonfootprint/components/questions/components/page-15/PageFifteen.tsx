@@ -14,6 +14,7 @@ import QuestionsLayout from "../QuestionsLayout";
 
 // AppAsset
 import AppAsset from "@/core/AppAsset";
+import CarbonLanguage from "@/utils/carbonLanguage";
 
 // Interface
 interface Props {
@@ -21,6 +22,8 @@ interface Props {
 }
 
 export default function PageFifteen({ setPage }: Props) {
+
+  const sectionLanguage = JSON.parse(localStorage.getItem("language") || "{}");
 
   const [selectedDays, setSelectedDays] = useState<number>(0);
   const socket = useSocket();
@@ -70,8 +73,8 @@ export default function PageFifteen({ setPage }: Props) {
               className="w-8 h-2 bg-pink-500 mt-7">
             </div>
             <div className="flex flex-col items-start justify-start ">
-              <p className="text-white text-[30px]">Waste Disposal</p>
-              <p className="text-[25px]">Waste Disposal</p>
+              <p className="text-white text-[30px]"><CarbonLanguage name="waste_disposal" /></p>
+              <p className="text-[25px]"><CarbonLanguage name="waste_disposal" /></p>
             </div>
 
           </div>
@@ -80,12 +83,20 @@ export default function PageFifteen({ setPage }: Props) {
         {/* Options */}
         <div
           className="w-full h-auto flex flex-col items-start justify-start pl-10 pt-10 gap-10">
-          <div className="text-[25px] flex flex-row items-center justify-start gap-3">
-            <span className="text-white">You dispose </span>
-            <span className="text-primary">Waste</span>
-            <span className="text-white"> for</span>
-            <span className="text-primary">{selectedDays} days per week</span>
-          </div>
+          {sectionLanguage.carbon == "en" ?
+            <div className="text-[25px] flex flex-row items-center justify-start gap-3">
+              <span className="text-white">You dispose</span>
+              <span className="text-primary">Waste</span>
+              <span className="text-white"> for</span>
+              <span className="text-primary">{selectedDays} days per week</span>
+            </div> :
+            <div className="text-[25px] flex flex-row items-center justify-start gap-3">
+              <span className="text-white">በሳምንት </span>
+              <span className="text-primary">ለ {selectedDays} ቀናት</span>
+              <span className="text-white"> ቆሻሻን</span>
+              <span className="text-primary">ያስወግዳሉ</span>
+            </div>}
+
         </div>
       </div>
     </QuestionsLayout>

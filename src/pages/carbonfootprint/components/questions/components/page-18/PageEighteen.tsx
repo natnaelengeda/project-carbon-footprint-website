@@ -14,6 +14,7 @@ import QuestionsLayout from "../QuestionsLayout";
 
 // AppAsset
 import AppAsset from "@/core/AppAsset";
+import CarbonLanguage from "@/utils/carbonLanguage";
 
 // Interface
 interface Props {
@@ -26,8 +27,8 @@ export default function PageEighteen({ setPage }: Props) {
   const [selectedTypes, setSelectedTypes] = useState<string[]>([]);
 
   const buttons = [
-    { id: 0, name: "Washing Machine", type: "washing-machine" },
-    { id: 1, name: "Handwash", type: "handwash" },
+    { id: 0, name: <CarbonLanguage name="washing_machine" />, type: "washing-machine" },
+    { id: 1, name: <CarbonLanguage name="handwash" />, type: "handwash" },
   ];
 
   const socket = useSocket();
@@ -80,8 +81,8 @@ export default function PageEighteen({ setPage }: Props) {
               className="w-8 h-2 bg-pink-500 mt-7">
             </div>
             <div className="flex flex-col items-start justify-start">
-              <p className="text-white text-[30px]">Water Usage</p>
-              <p className="text-[25px]">Washing Clothes</p>
+              <p className="text-white text-[30px]"><CarbonLanguage name="water_usage" /></p>
+              <p className="text-[25px]"><CarbonLanguage name="washing_clothes" /></p>
             </div>
 
           </div>
@@ -92,7 +93,7 @@ export default function PageEighteen({ setPage }: Props) {
           className="w-full h-auto flex flex-col items-start justify-start pl-10 pt-5 gap-3">
           {
             buttons &&
-            buttons.map((button: { id: number, type: string, name: string }, index: number) => {
+            buttons.map((button: { id: number, type: string, name: any }, index: number) => {
               return (
                 <CheckboxComponent
                   key={index}
