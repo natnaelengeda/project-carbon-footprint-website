@@ -2,12 +2,12 @@ import React from 'react';
 
 interface ListItem {
   icon: string;
-  text: string;
+  text: any;
   alt?: string;
 }
 
 interface SectionProps {
-  title: string;
+  title: any;
   items: ListItem[];
   className?: string;
 }

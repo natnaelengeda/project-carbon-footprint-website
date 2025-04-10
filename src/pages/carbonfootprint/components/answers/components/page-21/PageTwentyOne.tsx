@@ -5,6 +5,7 @@ import DefaultBackground from '../DefaultBackground';
 import AppAsset from '@/core/AppAsset';
 import StackedProgressBar from '../../../questions/components/page-22/components/StackedProgressBar';
 import { useSocket } from '@/context/SocketProvider';
+import CarbonLanguage from '@/utils/carbonLanguage';
 
 // Interface
 interface Props {
@@ -39,10 +40,13 @@ export default function PageTwentyOne({ setPage }: Props) {
                   fontSize: "48px",
                 }}
                 className="flex flex-col items-center justify-center gap-2 text-white font-semibold">
-                <h1 className=" font-bold">Excellent</h1>
+                <h1 className=" font-bold"> <CarbonLanguage name="excellent" /></h1>
               </span>
               <span className="flex flex-col items-center justify-center gap-2 text-white font-semibold">
-                <p className="text-4xl">your carbon foot print per is </p>
+                <p
+                  className="text-4xl" >
+                  <CarbonLanguage name="your_carbon_footprint_per_year_is" />
+                </p>
                 <h2 style={{ fontSize: "48px" }} className=" font-bold">
                   49kg Co2 -e
                 </h2>
@@ -56,7 +60,9 @@ export default function PageTwentyOne({ setPage }: Props) {
               <div className="w-5/6 flex flex-col items-center justify-center gap-2 ">
                 <span className=" text-white ">
                   <p className="text-4xl">
-                    Global carbon foot print per person is 4,700 kg Co2-e per year{" "}
+                    <CarbonLanguage name="your_carbon_footprint_per_year_is" />
+                    4,700 kg Co2-e{" "}
+                    <CarbonLanguage name="per_year" />
                   </p>
                 </span>
                 <StackedProgressBar />
@@ -64,7 +70,9 @@ export default function PageTwentyOne({ setPage }: Props) {
               <div className="w-5/6 flex flex-col items-center justify-center gap-2 ">
                 <span className=" text-white ">
                   <p className="text-4xl">
-                    Global carbon foot print per person is 4,700 kg Co2-e per year
+                    <CarbonLanguage name="global_average_carbon_footprint_per_person_is_per_year" />
+                    4,700 kg Co2-e{" "}
+                    <CarbonLanguage name="per_year" />
                   </p>
                 </span>
                 <StackedProgressBar />
@@ -76,8 +84,7 @@ export default function PageTwentyOne({ setPage }: Props) {
               <div className=" w-full flex flex-col items-center justify-between px-[106px] gap-8 ">
                 <span style={{ fontSize: "25px" }}>
                   <p className="text-white ">
-                    This page will reset in 30 seconds. You can start again using
-                    the button below.
+                    <CarbonLanguage name="the_page_will_reset_in_30_seconds_you_can_start_again_using_the_button_below" />
                   </p>
                 </span>
               </div>

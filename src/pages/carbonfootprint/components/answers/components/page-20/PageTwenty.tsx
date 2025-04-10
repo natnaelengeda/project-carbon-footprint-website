@@ -6,6 +6,7 @@ import AppAsset from '@/core/AppAsset';
 // Background
 import DefaultBackground from '../DefaultBackground';
 import { useSocket } from '@/context/SocketProvider';
+import CarbonLanguage from '@/utils/carbonLanguage';
 // import { useSelector } from 'react-redux';
 // import { mapData } from '@/utils/convertDataFunc';
 // import axios from '@/utils/axios';
@@ -92,11 +93,14 @@ export default function PageTwenty({ setPage }: Props) {
               fontSize: "76px",
             }}
             className="flex flex-col items-center justify-center gap-2 text-white font-semibold">
-            <h1 className=" font-bold">Excellent</h1>
+            <h1
+              className=" font-bold">
+              <CarbonLanguage name="excellent" />
+            </h1>
           </span>
           <span className="flex flex-col items-center justify-center gap-2 text-white font-semibold">
             <p style={{ fontSize: "29px" }} className="font-semibold">
-              your carbon foot print per is{" "}
+              <CarbonLanguage name="your_carbon_footprint_per_year_is" />{" "}
             </p>
             <h2 style={{ fontSize: "56px" }} className=" font-bold">
               49kg Co2 -e
@@ -118,7 +122,7 @@ export default function PageTwenty({ setPage }: Props) {
             }}
             className={
               `w-10 h-10 md:w-[187px] md:h-[83px] flex rounded-full border border-primary items-center justify-center p-2 md:p-0 text-[32px] text-primary`}>
-            Insights
+            <CarbonLanguage name="insights" />
           </button>
 
           {/* Finish */}
@@ -132,7 +136,7 @@ export default function PageTwenty({ setPage }: Props) {
             }}
             className={
               `w-10 h-10 md:w-[187px] md:h-[83px] flex rounded-full border border-primary items-center justify-center p-2 md:p-0 text-[32px] text-white bg-primary`}>
-            Finish
+            <CarbonLanguage name="finish" />
           </button>
         </div>
 

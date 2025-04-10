@@ -3,6 +3,7 @@ import AppAsset from "@/core/AppAsset";
 
 import StackedProgressBar from "./components/StackedProgressBar";
 import QuestionsLayout from "../QuestionsLayout";
+import CarbonLanguage from "@/utils/carbonLanguage";
 
 // Interface
 interface Props {
@@ -32,12 +33,18 @@ export default function PageTwentyTwo({ setPage }: Props) {
               fontSize: "30px",
             }}
             className="flex flex-col items-center justify-center gap-2 text-white font-semibold">
-            <h1 className="font-bold">Excellent</h1>
+            <h1
+              className="font-bold">
+              <CarbonLanguage name="excellent" />
+            </h1>
           </span>
           <span className="flex flex-col items-center justify-center gap-2 text-white font-semibold">
-            <p className="text-xl">your carbon foot print per is </p>
+            <p
+              className="text-xl">
+              <CarbonLanguage name="your_carbon_footprint_per_year_is" />
+            </p>
             <h2 style={{ fontSize: "20px" }} className=" font-bold">
-              49kg Co2 -e
+              49kg Co2 -e{" "}
             </h2>
           </span>
         </div>
@@ -46,7 +53,9 @@ export default function PageTwentyTwo({ setPage }: Props) {
           <div className="w-5/6 flex flex-col items-center justify-center gap-2 ">
             <span className=" text-white ">
               <p className="text-lg">
-                Global carbon foot print per person is 4,700 kg Co2-e per year{" "}
+                <CarbonLanguage name="global_average_carbon_footprint_per_person_is_per_year" />
+                4,700 kg Co2-e{" "}
+                <CarbonLanguage name="per_year" />
               </p>
             </span>
             <StackedProgressBar />
@@ -54,7 +63,9 @@ export default function PageTwentyTwo({ setPage }: Props) {
           <div className="w-5/6 flex flex-col items-center justify-center gap-2 ">
             <span className=" text-white ">
               <p className="text-lg">
-                Global carbon foot print per person is 4,700 kg Co2-e per year
+                <CarbonLanguage name="ethiopian_average_carbon_footprint_per_person_is_per_year" />
+                4,700 kg Co2-e
+                <CarbonLanguage name="per_year" />
               </p>
             </span>
             <StackedProgressBar />
@@ -66,8 +77,7 @@ export default function PageTwentyTwo({ setPage }: Props) {
           <div className=" w-full flex flex-col items-center justify-between px-[80px] gap-8 pt-10">
             <span>
               <p className="text-white text-lg text-center">
-                This page will reset in 30 seconds. You can start again using
-                the button below.
+                <CarbonLanguage name="the_page_will_reset_in_30_seconds_you_can_start_again_using_the_button_below" />
               </p>
             </span>
           </div>

@@ -1,6 +1,7 @@
 // AppAsset
 import AppAsset from "@/core/AppAsset";
 import QuestionsLayout from "../QuestionsLayout";
+import CarbonLanguage from "@/utils/carbonLanguage";
 
 // Interface
 interface Props {
@@ -10,32 +11,32 @@ interface Props {
 export default function PageTwentyThree({ setPage }: Props) {
   const listData = [
     {
-      title: "Ethiopia has one of the lowest carbon footprints in the world. This is largely due to:",
+      title: <CarbonLanguage name="ethiopia_has_one_of_the_lowest_carbon_footprints_in_the_world" />,
       items: [
-        { icon: AppAsset.agricultureIcon, text: "Agricultural economy" },
-        { icon: AppAsset.industryIcon, text: "Low industrialization" },
-        { icon: AppAsset.renewableEnergyIcon, text: "Use of renewable energy" },
+        { icon: AppAsset.agricultureIcon, text: <CarbonLanguage name="agricultural_economy" /> },
+        { icon: AppAsset.industryIcon, text: <CarbonLanguage name="low_industrialization" /> },
+        { icon: AppAsset.renewableEnergyIcon, text: <CarbonLanguage name="use_of_renewable_energy" /> },
       ],
     },
     {
-      title: "Despite the low emissions, Ethiopia faces challenges such as:",
+      title: <CarbonLanguage name="despite_the_low_emissions_ethiopia_faces_challenges_such_as" />,
       items: [
-        { icon: AppAsset.deforestationIcon, text: "Deforestation" },
-        { icon: AppAsset.populationGrowthIcon, text: "Population growth" },
-        { icon: AppAsset.urbanizationIcon, text: "Urbanization" },
+        { icon: AppAsset.deforestationIcon, text: <CarbonLanguage name="deforestation" /> },
+        { icon: AppAsset.populationGrowthIcon, text: <CarbonLanguage name="population_growth" /> },
+        { icon: AppAsset.urbanizationIcon, text: <CarbonLanguage name="urbanization" /> },
       ],
     },
     {
-      title: "To sustain its low carbon footprint, Ethiopia is implementing strategies such as:",
+      title: <CarbonLanguage name="to_sustain_its_low_carbon_footprint_ethiopia_is_implementing_strategies_such_as" />,
       items: [
-        { icon: AppAsset.agricultureIcon, text: "Reforestation programs" },
-        { icon: AppAsset.sustainableEnergyIcon, text: "Sustainable energy projects (hydropower, solar, and wind)" },
-        { icon: AppAsset.ecoFriendlyIcon, text: "Eco-friendly policies" },
+        { icon: AppAsset.agricultureIcon, text: <CarbonLanguage name="reforestation_programs" /> },
+        { icon: AppAsset.sustainableEnergyIcon, text: <CarbonLanguage name="sustainable_energy_projects_hydropwer_solar_and_wind" /> },
+        { icon: AppAsset.ecoFriendlyIcon, text: <CarbonLanguage name="ecofriendly_policies" /> },
       ],
     },
   ];
 
-  const ListItem = ({ icon, text }: { icon: string; text: string }) => (
+  const ListItem = ({ icon, text }: { icon: string; text: any }) => (
     <li className="flex items-center gap-6">
       <div className="w-8 h-8">
         <img src={icon} alt={text} className="w-8 h-8" />
@@ -58,10 +59,10 @@ export default function PageTwentyThree({ setPage }: Props) {
 
           {/* Inserted List */}
           <div className="text-white text-left w-full max-w-[1200px] mx-auto px-[10px]" style={{ lineHeight: '50px' }}>
-            <h2 className="text-xl font-bold mb-8 text-center" style={{ lineHeight: '30px' }}>
-              Ethiopia's Carbon Footprint:
-              <p>A Unique Perspective</p>
-            </h2>
+            <div className="text-xl font-bold mb-8 text-center flex flex-col items-center justify-start gap-" style={{ lineHeight: '30px' }}>
+              <p><CarbonLanguage name="ethiopias_carbon_footprint_a" /></p>
+              <p><CarbonLanguage name="a_unique_perspective" /></p>
+            </div>
 
             <div className="px-4 flex flex-col gap-7">
               {listData.map((section, index) => (
@@ -78,7 +79,7 @@ export default function PageTwentyThree({ setPage }: Props) {
                 </div>
               ))}
               <p className="text-lg mt-2 leading-relaxed">
-                Together, these efforts position Ethiopia as a leader in sustainable development while balancing economic growth with environmental stewardship.
+                <CarbonLanguage name="together_these_efforts_position_ethiopia_as_a_leader_in_sustainable_development_while_balancing_economic_growth_with_environmental_stewardship" />
               </p>
             </div>
           </div>

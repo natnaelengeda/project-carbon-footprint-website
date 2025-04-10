@@ -1,6 +1,7 @@
 // AppAsset
 import AppAsset from "@/core/AppAsset";
 import QuestionsLayout from "../QuestionsLayout";
+import CarbonLanguage from "@/utils/carbonLanguage";
 
 // Interface
 interface Props {
@@ -24,18 +25,21 @@ export default function TwentyOne({ setPage }: Props) {
               width: "340px",
               height: "300px",
               objectFit: 'contain'
-            }}/>
+            }} />
 
           <span
             style={{
               fontSize: "40px",
             }}
             className="flex flex-col items-center justify-center gap-2 text-white font-semibold">
-            <h1 className="font-bold">Excellent</h1>
+            <h1
+              className="font-bold">
+              <CarbonLanguage name="excellent" />{" "}
+            </h1>
           </span>
           <span className="flex flex-col items-center justify-center gap-2 text-white font-semibold">
             <p style={{ fontSize: "28px" }} className="font-semibold">
-              your carbon foot print per is{" "}
+              <CarbonLanguage name="your_carbon_footprint_per_year_is" />{" "}
             </p>
             <h2 style={{ fontSize: "30px" }} className=" font-bold">
               49kg Co2 -e
@@ -47,8 +51,7 @@ export default function TwentyOne({ setPage }: Props) {
           <div className=" w-full flex flex-col items-center justify-between px-[106px] gap-8 pt-28">
             <span style={{ fontSize: "26px" }}>
               <p className="text-white  text-center">
-                This page will reset in 30 seconds. You can start again using
-                the button below.
+                <CarbonLanguage name="the_page_will_reset_in_30_seconds_you_can_start_again_using_the_button_below" />
               </p>
             </span>
           </div>
