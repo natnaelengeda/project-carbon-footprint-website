@@ -19,7 +19,7 @@ export default function Root() {
   const loadEruda = async () => {
     console.log(import.meta.env.MODE)
     if (
-      import.meta.env.MODE === 'development' &&
+      // import.meta.env.MODE === 'development' &&
       typeof window !== 'undefined') {
 
       const eruda = await import('eruda');
