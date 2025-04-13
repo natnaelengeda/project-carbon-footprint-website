@@ -2,13 +2,13 @@ import React, { useEffect, useRef, useState } from "react";
 
 // Components
 import Timer from "./components/Timer";
-import QABackground from "../QABackground";
 import Choice from "./components/Choice";
+import Question from "./components/Question";
+import QABackground from "../QABackground";
 import EmptyAnswer from "./components/EmptyAnswer";
 import NextQuestion from "./components/NextQuestion";
 import CorrectAnswer from "./components/CorrentAnswer";
 import IncorrectAnswer from "./components/IncorrectAnswer";
-import Question from "./components/Question";
 
 // Styles
 import "./styles/styles.css";
@@ -29,7 +29,6 @@ export default function xPageThree({ setPage, answers, setAnswers, setQuestions,
   const [incorrect, setIncorrect] = useState(false);
   const [selectedChoice, setSelectedChoice] = useState<any>();
 
-  // const [selected, setSelected] = useState<number>(0);
   const [firstSelected, setFirstSelected] = useState<boolean>(false);
 
   const [gamepadConnected, setGamepadConnected] = useState(false);
@@ -39,6 +38,12 @@ export default function xPageThree({ setPage, answers, setAnswers, setQuestions,
   const isKeyPressed = useRef(false);
   const [key, setKey] = useState(null);
 
+  const [currentQuestionA, setCurruentQuestion] = useState({
+    question: 0,
+    answer: 0,
+  });
+
+  const currentQuestion: any = questions && questions[currentQuestionIndex];
 
   // Check Joystick Connectivity
   useEffect(() => {
@@ -52,45 +57,71 @@ export default function xPageThree({ setPage, answers, setAnswers, setQuestions,
         setGamepadConnected(true);
 
         // Detect if buttons were just pressed (to avoid repeated actions)
-        const buttonPressed = (index: number) => {
-          return gamepad.buttons[index]?.pressed
+        const buttonPressed = (index: number) => gamepad.buttons[index]?.pressed;
+        const options = currentQuestion.translations[0].options;
+
+        if (!firstSelected) {
+          if (
+            Math.abs(gamepad.axes[0]) > 0.5 ||
+            Math.abs(gamepad.axes[1]) > 0.5 ||
+            buttonPressed(12) || buttonPressed(13) || buttonPressed(14) || buttonPressed(15)
+          ) {
+            // Select A initially
+            const a = options[0];
+            setSelectedChoice(a);
+            handleAnswerChange(currentQuestion._id, a._id, a.isCorrect);
+            setFirstSelected(true);
+          }
+          return;
         }
 
-        console.log(firstSelected)
-        if (firstSelected) {
-          // Up Direction
-          if (gamepad.axes[1] < -0.5 || buttonPressed(12)) {
-            console.log("Go Up");
-            handleAnswerChange(currentQuestion._id, currentQuestion.translations[0].options[0]._id, currentQuestion.translations[0].options[0].isCorrect);
-            setSelectedChoice(currentQuestion.translations[0].options[0]);
-          }
+        const selectedId = selectedChoice?._id;
+        const index = options.findIndex((o: any) => o._id === selectedId);
 
-          // Down Direction
-          if (gamepad.axes[1] > 0.5 || buttonPressed(13)) {
-            console.log("Go Down");
-            handleAnswerChange(currentQuestion._id, currentQuestion.translations[0].options[2]._id, currentQuestion.translations[0].options[2].isCorrect);
-            setSelectedChoice(currentQuestion.translations[0].options[2]);
-          }
+        // Grid structure: [A, B, C, D] → index 0,1,2,3
+        const moveTo = (newIndex: number) => {
+          const opt = options[newIndex];
+          setSelectedChoice(opt);
+          handleAnswerChange(currentQuestion._id, opt._id, opt.isCorrect);
+        };
 
-          // Left Direction
-          if (gamepad.axes[0] < -0.5 || buttonPressed(14)) {
-
-          }
-
-          // Right Direction
-          if (gamepad.axes[0] > 0.5 || buttonPressed(15)) {
-
-          }
-
-        } else {
-          if (gamepad.axes[1] < -0.5 || buttonPressed(12) || gamepad.axes[1] > 0.5 || buttonPressed(13) || gamepad.axes[0] < -0.5 || gamepad.axes[0] > 0.5 || buttonPressed(14) || buttonPressed(13)) {
-            handleFirstQuestion();
-          }
+        if ((gamepad.axes[0] > 0.5 || buttonPressed(15))) {
+          // RIGHT
+          if (index === 0) moveTo(1); // A → B
+          else if (index === 2) moveTo(3); // C → D
         }
 
+        if ((gamepad.axes[0] < -0.5 || buttonPressed(14))) {
+          // LEFT
+          if (index === 1) moveTo(0); // B → A
+          else if (index === 3) moveTo(2); // D → C
+        }
+
+        if ((gamepad.axes[1] < -0.5 || buttonPressed(12))) {
+          // UP
+          if (index === 2) moveTo(0); // C → A
+          else if (index === 3) moveTo(1); // D → B
+        }
+
+        if ((gamepad.axes[1] > 0.5 || buttonPressed(13))) {
+          // DOWN
+          if (index === 0) moveTo(2); // A → C
+          else if (index === 1) moveTo(3); // B → D
+        }
+
+        if (buttonPressed(0)) {
+          console.log("Click", click);
+          switch (click) {
+            case 1:
+              checkAnswer();
+              break;
+            case 2:
+              handleNextQuestion();
+              break;
+          }
+        }
       }
     }
-
 
     // Check if gamepad is already connected
     if (navigator.getGamepads && navigator.getGamepads()[0]) {
@@ -117,13 +148,7 @@ export default function xPageThree({ setPage, answers, setAnswers, setQuestions,
       if (gamepadCheckInterval) clearInterval(gamepadCheckInterval)
     }
 
-  }, [firstSelected]);
-
-  const handleFirstQuestion = () => {
-    handleAnswerChange(currentQuestion._id, currentQuestion.translations[0].options[0]._id, currentQuestion.translations[0].options[0].isCorrect);
-    setSelectedChoice(currentQuestion.translations[0].options[0]);
-    setFirstSelected(true);
-  }
+  }, [currentQuestion, selectedChoice, firstSelected]);
 
   useEffect(() => {
     if (isKeyPressed.current) {
@@ -160,6 +185,7 @@ export default function xPageThree({ setPage, answers, setAnswers, setQuestions,
               break;
             case 2:
               handleNextQuestion();
+
               break;
           }
           break;
@@ -193,10 +219,6 @@ export default function xPageThree({ setPage, answers, setAnswers, setQuestions,
   const duration = 100;
   const [timeLeft, setTimeLeft] = useState(duration);
 
-  const [currentQuestionA, setCurruentQuestion] = useState({
-    question: 0,
-    answer: 0,
-  });
 
   const [click, setClick] = useState<number>(1);
 
@@ -231,39 +253,79 @@ export default function xPageThree({ setPage, answers, setAnswers, setQuestions,
       setClick(1);
       setIncorrect(false);
       setTimeLeft(duration);
+      setSelectedChoice(null);
     }
   };
 
   const checkAnswer = () => {
-    console.log(answers, currentQuestionIndex);
-    if (!answers || Object.keys(answers).length === 0) {
+    const isLastQuestion = currentQuestionIndex >= 9;
+    const hasAnswered = answers && answers[currentQuestion._id];
+
+    if (!hasAnswered) {
+      // No answer given, mark as incorrect
       handleAnswerChange(currentQuestion._id, 0, false);
       setSelectedChoice('null');
       setIncorrect(true);
       setClick(2);
-      if (currentQuestionIndex >= 9) {
-        setPage(4);
-      } else {
-        setTimeout(() => {
-          handleNextQuestion();
-        }, 2000);
-      }
-    } else {
-      if (Object.keys(answers).length == currentQuestionIndex) {
-        handleAnswerChange(currentQuestion._id, 0, false);
-        setTimeout(() => {
-          handleNextQuestion();
-        }, 4000);
-      }
-      if (currentQuestionIndex >= 9) {
-        setPage(4);
-      } else {
-        setClick(2);
-      }
     }
-  }
 
-  const currentQuestion: any = questions && questions[currentQuestionIndex];
+    // Wait 4 seconds, then proceed
+    setTimeout(() => {
+      if (isLastQuestion) {
+        setPage(4); // Show result page
+      } else {
+        handleNextQuestion(); // Move to next question
+      }
+    }, 4000);
+  };
+
+  // const checkAnswer = () => {
+  //   console.log(answers)
+  //   // If Answer is Empty
+  //   if (!answers || Object.keys(answers).length === 0) {
+  //     console.log("1")
+  //     handleAnswerChange(currentQuestion._id, 0, false);
+  //     setSelectedChoice('null');
+  //     setIncorrect(true);
+  //     setClick(2);
+
+  //     // If it is the Last Question
+  //     if (currentQuestionIndex >= 9) {
+  //       console.log("2")
+  //       setPage(4);
+
+  //       // Regular Question
+  //     } else {
+  //       console.log("3")
+  //       setTimeout(() => {
+  //         handleNextQuestion();
+  //       }, 2000);
+  //     }
+  //   } else {
+
+  //     // If Answered 
+  //     if (Object.keys(answers).length == currentQuestionIndex) {
+  //       console.log("4")
+
+  //       handleAnswerChange(currentQuestion._id, 0, false);
+  //       setTimeout(() => {
+  //         handleNextQuestion();
+  //       }, 4000);
+  //     }
+  //     // If it is the Last Question
+  //     if (currentQuestionIndex >= 9) {
+  //       console.log("5")
+
+  //       setPage(4);
+  //     } else {
+  //       console.log("6")
+
+  //       setClick(2);
+  //     }
+  //   }
+  // }
+
+
 
   useEffect(() => {
     if (savedQuestions) {
@@ -291,7 +353,8 @@ export default function xPageThree({ setPage, answers, setAnswers, setQuestions,
       </div>
 
       {/* Main */}
-      <div className="w-full h-full mx-auto min-h-screen flex flex-col items-center justify-start relative z-10">
+      <div
+        className="w-full h-full mx-auto min-h-screen flex flex-col items-center justify-start relative z-10">
 
         {/* Questions */}
         <div

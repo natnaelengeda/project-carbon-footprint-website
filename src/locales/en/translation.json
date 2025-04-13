@@ -175,8 +175,8 @@
     "choose_language": "Choose language",
     "start_qa": "Start Q/A",
     "loading": "Loading",
-    "submit": "Submit",
-    "next": "Next",
+    "submit": "Press X to Submit",
+    "next": "Press X for Next",
     "incorrect_answer": "Incorrect Answer",
     "empty_answer": "Empty Answers",
     "correct": "Correct",
@@ -187,7 +187,7 @@
     "top_10": "Top 10",
     "participants": "Participants",
     "see_leader_board": "See Leaderboard",
-    "finish": "Finish",
+    "finish": "Press X to Finish",
     "great_job_share_with_friends_and_family": "Great job! Now share the results with your friends and family!"
   }
 }

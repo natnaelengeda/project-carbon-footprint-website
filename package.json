@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "vite --host",
     "build": "tsc -b && vite build",
+    "build-pm2": "tsc && vite build && pm2 start ecosystem.config.cjs --env production",
     "lint": "eslint .",
     "preview": "vite preview"
   },

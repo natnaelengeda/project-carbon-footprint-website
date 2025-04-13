@@ -40,7 +40,7 @@ export default function NextQuestion({ questions, click, currentQuestionIndex, c
 
               }
             }}
-            className="flex flex-row items-center justify-center w-60 h-60 md:w-[160.32px] md:h-[60px] bg-primary rounded-full text-white px-3 md:px-0 py-2 md:py-0 gap-2">
+            className="flex flex-row items-center justify-center w-60 h-60 md:w-[250.32px] md:h-[60px] bg-primary rounded-full text-white px-3 md:px-0 py-2 md:py-0 gap-2">
             {
               click == 1 ?
                 <>
@@ -62,7 +62,7 @@ export default function NextQuestion({ questions, click, currentQuestionIndex, c
             onClick={() => {
               setPage(4);
             }}
-            className="flex flex-row items-center justify-center md:w-[160.32px] md:h-[60px] bg-primary rounded-full text-white px-3 md:px-0 py-2 md:py-0 gap-2">
+            className="flex flex-row items-center justify-center md:w-[200.32px] md:h-[60px] bg-primary rounded-full text-white px-3 md:px-0 py-2 md:py-0 gap-2">
             <p
               className="text-xl md:text-[24px]">{t("qa.submit", { lng: savedlanguages.qa })}</p>
           </button>

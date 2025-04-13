@@ -1,0 +1,31 @@
+.keyboard {
+  position: relative;
+  background: rgba(0, 0, 0, 0.85);
+  padding: 5px;
+  margin-top: 30px;
+  margin-right: 40px;
+  border-radius: 12px;
+  z-index: 9999;
+}
+
+.keyboard-row {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 5px;
+}
+
+.keyboard-key {
+  margin: 3px;
+  padding: 12px 14px;
+  font-size: 18px;
+  border: none;
+  border-radius: 8px;
+  background-color: #1f1f1f;
+  color: #fff;
+  cursor: pointer;
+}
+
+.keyboard-key.selected {
+  background-color: #2ecc71;
+  color: #000;
+}

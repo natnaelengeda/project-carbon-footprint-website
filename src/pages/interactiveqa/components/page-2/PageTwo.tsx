@@ -1,4 +1,4 @@
-import { useState,  useEffect } from 'react';
+import { useState, useEffect } from 'react';
 
 import { Oval } from 'react-loader-spinner';
 
@@ -17,6 +17,7 @@ import AppAsset from '@/core/AppAsset';
 // Toast
 import toast from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
+import { sampleQA } from '@/data/questions';
 
 // Interface
 interface Props {
@@ -79,6 +80,9 @@ export default function PageTwo({ setPage, setQuestions }: Props) {
           setLoading(false);
           console.error(error);
           toast.error("Questions Fetch Unsuccessful");
+
+          setQuestions(sampleQA);
+          setPage(3);
         })
 
     } catch (error) {
