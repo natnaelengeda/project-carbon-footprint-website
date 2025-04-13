@@ -2,19 +2,29 @@ import React from 'react'
 
 // Background
 import DefaultBackground from '../DefaultBackground';
-import AppAsset from '@/core/AppAsset';
-import StackedProgressBar from '../../../questions/components/page-22/components/StackedProgressBar';
+
+// Sockets
 import { useSocket } from '@/context/SocketProvider';
+
+// Utils
 import CarbonLanguage from '@/utils/carbonLanguage';
+
+// Components
+import Result from './components/Result';
+import CarbonFootprintProgress from '../../../questions/components/page-22/components/CarbonFootprintProgress';
+import { useSelector } from 'react-redux';
 
 // Interface
 interface Props {
   setPage: React.Dispatch<React.SetStateAction<number>>;
+  carbonFootPrint: any;
 }
 
-export default function PageTwentyOne({ setPage }: Props) {
+export default function PageTwentyOne({ setPage, carbonFootPrint }: Props) {
   const socket = useSocket();
   const room = localStorage.getItem("room");
+
+  const carbon = useSelector((state: any) => state.carbon);
 
   return (
     <DefaultBackground>
@@ -25,34 +35,9 @@ export default function PageTwentyOne({ setPage }: Props) {
         <div
           className='w-full flex flex-row items-center justify-start'>
           {/* Left Side */}
-          <div
-            className='w-full h-auto flex flex-col items-center justify-start'>
-            <div className="w-full flex flex-col items-center justify-center gap-8 mb-20 ">
-              <img
-                src={AppAsset.BannerThirteen}
-                style={{
-                  width: "400px",
-                  height: "400px",
-                }} />
-
-              <span
-                style={{
-                  fontSize: "48px",
-                }}
-                className="flex flex-col items-center justify-center gap-2 text-white font-semibold">
-                <h1 className=" font-bold"> <CarbonLanguage name="excellent" /></h1>
-              </span>
-              <span className="flex flex-col items-center justify-center gap-2 text-white font-semibold">
-                <p
-                  className="text-4xl" >
-                  <CarbonLanguage name="your_carbon_footprint_per_year_is" />
-                </p>
-                <h2 style={{ fontSize: "48px" }} className=" font-bold">
-                  49kg Co2 -e
-                </h2>
-              </span>
-            </div>
-          </div>
+          <Result
+            value={carbonFootPrint}
+            isLoading={false} />
 
           {/* Right Side */}
           <div className='w-full h-auto flex flex-col items-center justify-start'>
@@ -65,17 +50,25 @@ export default function PageTwentyOne({ setPage }: Props) {
                     <CarbonLanguage name="per_year" />
                   </p>
                 </span>
-                <StackedProgressBar />
+                <CarbonFootprintProgress
+                  value={400}
+                  secondValue={800}
+                  firstText={carbon.name || "You"}
+                  secondText={"Global Average"} />
               </div>
               <div className="w-5/6 flex flex-col items-center justify-center gap-2 ">
-                <span className=" text-white ">
+                <span className=" text-white pb-2">
                   <p className="text-4xl">
                     <CarbonLanguage name="global_average_carbon_footprint_per_person_is_per_year" />
                     4,700 kg Co2-e{" "}
                     <CarbonLanguage name="per_year" />
                   </p>
                 </span>
-                <StackedProgressBar />
+                <CarbonFootprintProgress
+                  value={200}
+                  secondValue={500}
+                  firstText={carbon.name || "You"}
+                  secondText={"Ethiopian"} />
               </div>
             </div>
 

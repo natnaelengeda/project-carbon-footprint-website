@@ -26,7 +26,8 @@ import PageTwentyTwo from "./components/page-22";
 import PageTwentyThree from "./components/page-23";
 
 export default function Questions() {
-  const [page, setPage] = useState<number>(20);
+  const [page, setPage] = useState<number>(21);
+  const [carbonFootPrint, setCarbonFootPrint] = useState<number>(0);
 
   const [personalTransports, setPersonalTransports] = useState<string[]>([]);
   const [personalTransportArray, setPersonalTransportsArray] = useState([
@@ -110,9 +111,13 @@ export default function Questions() {
                                               page == 19 ?
                                                 <PageTwenty setPage={setPage} /> :
                                                 page == 20 ?
-                                                  <PageTwentyOne setPage={setPage} /> :
+                                                  <PageTwentyOne
+                                                    setPage={setPage}
+                                                    setCarbonFootPrint={setCarbonFootPrint} /> :
                                                   page == 21 ?
-                                                    <PageTwentyTwo setPage={setPage} /> :
+                                                    <PageTwentyTwo
+                                                      setPage={setPage}
+                                                      carbonFootPrint={carbonFootPrint} /> :
                                                     page == 22 ?
                                                       <PageTwentyThree setPage={setPage} /> : null
       }

@@ -1,16 +1,18 @@
-// AppAsset
-import AppAsset from "@/core/AppAsset";
-
-import StackedProgressBar from "./components/StackedProgressBar";
 import QuestionsLayout from "../QuestionsLayout";
 import CarbonLanguage from "@/utils/carbonLanguage";
+import Result from "./components/Result";
+import CarbonFootprintProgress from "./components/CarbonFootprintProgress";
+
+import { useSelector } from "react-redux";
 
 // Interface
 interface Props {
   setPage: React.Dispatch<React.SetStateAction<number>>;
+  carbonFootPrint: any;
 }
 
-export default function PageTwentyTwo({ setPage }: Props) {
+export default function PageTwentyTwo({ setPage, carbonFootPrint }: Props) {
+  const carbon = useSelector((state: any) => state.carbon);
 
   return (
     <QuestionsLayout
@@ -18,57 +20,40 @@ export default function PageTwentyTwo({ setPage }: Props) {
       <div className="relative z-10 w-full h-full mx-auto 2xl:container flex flex-col items-center justify-start pt-5 md:pt-[30px]">
 
         {/* Center */}
-        <div className="w-full flex flex-col items-center justify-center">
-          <img
-            src={AppAsset.BannerThirteen}
-            style={{
-              width: "340px",
-              height: "300px",
-              objectFit: 'contain'
-            }} />
+        <Result
+          value={carbonFootPrint}
+          isLoading={false} />
 
-
-          <span
-            style={{
-              fontSize: "30px",
-            }}
-            className="flex flex-col items-center justify-center gap-2 text-white font-semibold">
-            <h1
-              className="font-bold">
-              <CarbonLanguage name="excellent" />
-            </h1>
-          </span>
-          <span className="flex flex-col items-center justify-center gap-2 text-white font-semibold">
-            <p
-              className="text-xl">
-              <CarbonLanguage name="your_carbon_footprint_per_year_is" />
-            </p>
-            <h2 style={{ fontSize: "20px" }} className=" font-bold">
-              49kg Co2 -e{" "}
-            </h2>
-          </span>
-        </div>
 
         <div className="gap-5 w-full flex flex-col items-center justify-center py-10">
           <div className="w-5/6 flex flex-col items-center justify-center gap-2 ">
             <span className=" text-white ">
               <p className="text-lg">
                 <CarbonLanguage name="global_average_carbon_footprint_per_person_is_per_year" />
-                4,700 kg Co2-e{" "}
+                {" "}{carbonFootPrint} kg Co2-e{" "}
                 <CarbonLanguage name="per_year" />
               </p>
             </span>
-            <StackedProgressBar />
+            <CarbonFootprintProgress
+              value={400}
+              secondValue={800}
+              firstText={carbon.name || "You"}
+              secondText={"Global Average"} />
+
           </div>
           <div className="w-5/6 flex flex-col items-center justify-center gap-2 ">
             <span className=" text-white ">
               <p className="text-lg">
                 <CarbonLanguage name="ethiopian_average_carbon_footprint_per_person_is_per_year" />
-                4,700 kg Co2-e
+                {" "}4,700 kg Co2-e
                 <CarbonLanguage name="per_year" />
               </p>
             </span>
-            <StackedProgressBar />
+            <CarbonFootprintProgress
+              value={200}
+              secondValue={500}
+              firstText={carbon.name || "You"}
+              secondText={"Ethiopian"} />
           </div>
         </div>
 

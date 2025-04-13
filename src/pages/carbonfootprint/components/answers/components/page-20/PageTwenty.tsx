@@ -27,9 +27,10 @@ import { mapData } from '@/utils/convertDataFunc';
 // Interface
 interface Props {
   setPage: React.Dispatch<React.SetStateAction<number>>;
+  setCarbonFootPrint: React.Dispatch<React.SetStateAction<any>>;
 }
 
-export default function PageTwenty({ setPage }: Props) {
+export default function PageTwenty({ setPage, setCarbonFootPrint }: Props) {
   const socket = useSocket();
   const room = localStorage.getItem("room");
 
@@ -53,13 +54,10 @@ export default function PageTwenty({ setPage }: Props) {
     });
   }
 
-
   const sendFunction = () => {
     axios.post("/api/v1/carbonFootPrint", data)
       .then((response) => {
         const data = response.data;
-        var allSum = 0;
-        allSum = data.dietAndFood + data.foodWastage + data.householdEnergy + data.transportationMode + data.wasteDisposal + data.waterUsage;
 
         var waterEmission = data.waterUsage * 0.0003;
         var foodWasteEmission = data.foodWastage * 2.5;
@@ -71,6 +69,7 @@ export default function PageTwenty({ setPage }: Props) {
         var totalEmission = waterEmission + foodWasteEmission + transportEmission + dietEmission + wasteEmission + energyEmission;
         // var totalEmission = 2000;
         setValue(totalEmission.toFixed(0));
+        setCarbonFootPrint(totalEmission.toFixed(0));
         setIsLoading(false);
 
         fire(0.25, {

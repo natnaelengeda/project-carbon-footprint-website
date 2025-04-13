@@ -16,9 +16,10 @@ import Result from './components/Result';
 // Interface
 interface Props {
   setPage: React.Dispatch<React.SetStateAction<number>>;
+  setCarbonFootPrint: React.Dispatch<React.SetStateAction<any>>;
 }
 
-export default function TwentyOne({ setPage }: Props) {
+export default function TwentyOne({ setPage, setCarbonFootPrint }: Props) {
   const socket = useSocket();
 
   const [value, setValue] = useState<string>("");
@@ -46,6 +47,7 @@ export default function TwentyOne({ setPage }: Props) {
 
       // Set Value
       setValue(data.value.toFixed(0));
+      setCarbonFootPrint(data.value.toFixed(0));
 
       // Set Is Loading False
       setIsLoading(false);
