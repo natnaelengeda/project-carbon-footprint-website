@@ -26,7 +26,7 @@ import PageTwentyOne from './components/page-21';
 import PageTwentyTwo from './components/page-22';
 
 export default function Answers() {
-  const [page, setPage] = useState<number>(21);
+  const [page, setPage] = useState<number>(0);
   const [carbonFootPrint, setCarbonFootPrint] = useState<number>(0);
 
   const [personalTransports, setPersonalTransports] = useState<string[]>([]);
