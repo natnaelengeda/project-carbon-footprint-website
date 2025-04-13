@@ -16,7 +16,17 @@ export default function Root() {
   const queryParams = new URLSearchParams(location.search);
   const room = queryParams.get('room');
 
-  // const eruda = 
+  const loadEruda = async () => {
+    console.log(import.meta.env.MODE)
+    if (
+      import.meta.env.MODE === 'development' &&
+      typeof window !== 'undefined') {
+
+      const eruda = await import('eruda');
+      eruda.default.init();
+    }
+  };
+
 
   useEffect(() => {
     if (location.pathname != "/") {
@@ -79,6 +89,7 @@ export default function Root() {
         navigate("/");
       }
     }
+    loadEruda();
   }, []);
 
 
