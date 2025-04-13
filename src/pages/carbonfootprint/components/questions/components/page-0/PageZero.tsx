@@ -78,9 +78,9 @@ export default function PageZero({ setPage }: Props) {
     socket?.on("language-change-option-client", handleLanguageChange);
 
     // Cleanup: remove the listener when the component unmounts
-    return () => {
-      socket?.off("language-change-option-client", handleLanguageChange);
-    };
+    // return () => {
+    //   socket?.off("language-change-option-client", handleLanguageChange);
+    // };
   }, [mode, socket]);
 
 
