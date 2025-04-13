@@ -1,15 +1,28 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 
-// AppAsset
-import AppAsset from '@/core/AppAsset';
+
+// Components
+import Result from './components/Result';
 
 // Background
 import DefaultBackground from '../DefaultBackground';
+
+// State
+import { useSelector } from 'react-redux';
+
+// Axios
+import axios from '@/utils/axios';
+
+// Socket
 import { useSocket } from '@/context/SocketProvider';
+
+// Confetti Effect
+import confetti from 'canvas-confetti';
+
+// Utils
 import CarbonLanguage from '@/utils/carbonLanguage';
-// import { useSelector } from 'react-redux';
-// import { mapData } from '@/utils/convertDataFunc';
-// import axios from '@/utils/axios';
+import { mapData } from '@/utils/convertDataFunc';
+
 
 // Interface
 interface Props {
@@ -20,93 +33,95 @@ export default function PageTwenty({ setPage }: Props) {
   const socket = useSocket();
   const room = localStorage.getItem("room");
 
-  // const carbon = useSelector((state: any) => state.carbon);
-  // const data = mapData(carbon);
+  const [value, setValue] = useState<string>("");
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
-  // const [loading, setLoading] = useState<boolean>(true);
+  const carbon = useSelector((state: any) => state.carbon);
+  const data = mapData(carbon);
+
+  // Confetti
+  var count = 200;
+  var defaults = {
+    origin: { y: 0.7 }
+  };
+
+  function fire(particleRatio: any, opts: any) {
+    confetti({
+      ...defaults,
+      ...opts,
+      particleCount: Math.floor(count * particleRatio)
+    });
+  }
 
 
-  // const [allData, setAllData] = useState<number>(0);
+  const sendFunction = () => {
+    axios.post("/api/v1/carbonFootPrint", data)
+      .then((response) => {
+        const data = response.data;
+        var allSum = 0;
+        allSum = data.dietAndFood + data.foodWastage + data.householdEnergy + data.transportationMode + data.wasteDisposal + data.waterUsage;
 
-  // const [waterUsage, setWaterUsage] = useState<number>(0);
-  // const [foodWaste, setFoodWaste] = useState<number>(0);
-  // const [transport, setTransport] = useState<number>(0);
-  // const [diet, setDiet] = useState<number>(0);
-  // const [waste, setWaste] = useState<number>(0);
-  // const [energyUsage, setEnergyUsage] = useState<number>(0);
+        var waterEmission = data.waterUsage * 0.0003;
+        var foodWasteEmission = data.foodWastage * 2.5;
+        var transportEmission = data.transportationMode * 0.21;
+        var dietEmission = data.dietAndFood * 5.0;
+        var wasteEmission = data.wasteDisposal * 1.8;
+        var energyEmission = data.householdEnergy * 0.475;
 
-  // const sendFunction = () => {
-  //   axios.post("/api/v1/carbonFootPrint", data)
-  //     .then((response) => {
-  //       const data = response.data;
-  //       var allSum = 0;
-  //       allSum = data.dietAndFood + data.foodWastage + data.householdEnergy + data.transportationMode + data.wasteDisposal + data.waterUsage;
+        var totalEmission = waterEmission + foodWasteEmission + transportEmission + dietEmission + wasteEmission + energyEmission;
+        // var totalEmission = 2000;
+        setValue(totalEmission.toFixed(0));
+        setIsLoading(false);
 
-  //       setAllData(data);
+        fire(0.25, {
+          spread: 26,
+          startVelocity: 55,
+        });
+        fire(0.2, {
+          spread: 60,
+        });
+        fire(0.35, {
+          spread: 100,
+          decay: 0.91,
+          scalar: 0.8
+        });
+        fire(0.1, {
+          spread: 120,
+          startVelocity: 25,
+          decay: 0.92,
+          scalar: 1.2
+        });
+        fire(0.1, {
+          spread: 120,
+          startVelocity: 45,
+        });
 
-  //       var waterUsage = (data.waterUsage / allSum) * 100;
-  //       var foodWaste = (data.foodWastage / allSum) * 100;
-  //       var transport = (data.transportationMode / allSum) * 100;
-  //       var diet = (data.dietAndFood / allSum) * 100;
-  //       var waste = (data.wasteDisposal / allSum) * 100;
-  //       var energyUsage = (data.householdEnergy / allSum) * 100;
+        console.log("Carbon Footprint: " + totalEmission.toFixed(2) + " kg CO₂-e");
 
-  //       setWaterUsage(waterUsage);
-  //       setFoodWaste(foodWaste);
-  //       setTransport(transport);
-  //       setDiet(diet);
-  //       setWaste(waste);
-  //       setEnergyUsage(energyUsage);
+        socket?.emit("page-21-results-server", JSON.stringify({
+          value: totalEmission,
+          room: room,
+        }));
 
-  //       console.table({
-  //         waterUsage,
-  //         foodWaste,
-  //         transport,
-  //         diet,
-  //         waste,
-  //         energyUsage
-  //       });
+      })
+  }
 
-  //       setLoading(false);
-  //     })
-  // }
-
-  // useEffect(() => {
-  //   sendFunction();
-  // }, []);
+  useEffect(() => {
+    sendFunction();
+  }, []);
 
   return (
     <DefaultBackground>
       <div className="relative z-10 w-full h-full mx-auto 2xl:container flex flex-col items-center justify-start gap-5 py-10 md:py-[89px] ">
-
+        <button
+          onClick={sendFunction}
+          className='w-80 h-20 bg-primary absolute top-20 left-40 text-white text-4xl rounded-xl'>
+          Test
+        </button>
         {/* Center */}
-        <div className="w-full flex flex-col items-center justify-center gap-8 mb-20 ">
-          <img
-            src={AppAsset.BannerThirteen}
-            style={{
-              width: "464px",
-              height: "408px",
-            }} />
-
-          <span
-            style={{
-              fontSize: "76px",
-            }}
-            className="flex flex-col items-center justify-center gap-2 text-white font-semibold">
-            <h1
-              className=" font-bold">
-              <CarbonLanguage name="excellent" />
-            </h1>
-          </span>
-          <span className="flex flex-col items-center justify-center gap-2 text-white font-semibold">
-            <p style={{ fontSize: "29px" }} className="font-semibold">
-              <CarbonLanguage name="your_carbon_footprint_per_year_is" />{" "}
-            </p>
-            <h2 style={{ fontSize: "56px" }} className=" font-bold">
-              49kg Co2 -e
-            </h2>
-          </span>
-        </div>
+        <Result
+          value={value}
+          isLoading={isLoading} />
 
         <div
           className='absolute bottom-20 right-0 w-full  flex flex-row items-center justify-center gap-10'>
@@ -136,7 +151,8 @@ export default function PageTwenty({ setPage }: Props) {
             }}
             className={
               `w-10 h-10 md:w-[187px] md:h-[83px] flex rounded-full border border-primary items-center justify-center p-2 md:p-0 text-[32px] text-white bg-primary`}>
-            <CarbonLanguage name="finish" />
+            <CarbonLanguage
+              name="finish" />
           </button>
         </div>
 

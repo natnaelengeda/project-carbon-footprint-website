@@ -130,6 +130,14 @@ import SplashImage from "@/assets/imgs/splash-animation.svg";
 import PledgersIcon from "@/assets/icons/smallIcons/user-multiple-02.svg";
 import TreesIcon from "@/assets/icons/smallIcons/tree-06.svg";
 
+// Badges
+import ExcellentBadge from "@/assets/imgs/badges/excellent.svg";
+import VeryGoodBadge from "@/assets/imgs/badges/very-good.svg";
+import GoodBadge from "@/assets/imgs/badges/good.svg";
+import PoorBadge from "@/assets/imgs/badges/poor.svg";
+import BadBadge from "@/assets/imgs/badges/bad.svg";
+import VeryVeryBadBadge from "@/assets/imgs/badges/very-ver-bad.svg";
+
 class AppAsset {
   public constructor() { }
 
@@ -260,6 +268,14 @@ class AppAsset {
   // Pledge Ind
   static PledgersIcon = PledgersIcon;
   static TreesIcon = TreesIcon;
+
+  // Badges
+  static ExcellentBadge = ExcellentBadge;
+  static VeryGoodBadge = VeryGoodBadge;
+  static GoodBadge = GoodBadge;
+  static PoorBadge = PoorBadge;
+  static BadBadge = BadBadge;
+  static VeryVeryBadBadge = VeryVeryBadBadge;
 }
 
 export default AppAsset;

@@ -95,6 +95,8 @@
     "very_good": "Very Good",
     "good": "Good",
     "poor": "Poor",
+    "bad": "Bad",
+    "very_very_bad": "Very Very Bad",
     "very_poor": "Very Poor",
     "your_carbon_footprint_per_year_is": "Your carbon footprint per year is",
     "global_average_carbon_footprint_per_person_is_per_year": "Global average carbon footprint per person is",
@@ -118,7 +120,8 @@
     "sustainable_energy_projects_hydropwer_solar_and_wind": "Sustainable energy projects (hydropower, solar, and wind)",
     "ecofriendly_policies": "Eco-friendly Policies",
     "together_these_efforts_position_ethiopia_as_a_leader_in_sustainable_development_while_balancing_economic_growth_with_environmental_stewardship": "Together, these efforts position Ethiopia as a leader in sustainable development while balancing economic growth with environmental stewardship.",
-    "start_again": "Start again"
+    "start_again": "Start again",
+    "finish": "Finish"
   },
   "pledge": {
     "welcome": "Welcome to Your personal pledge",

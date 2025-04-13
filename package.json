@@ -14,6 +14,7 @@
     "@mantine/hooks": "^7.15.0",
     "@reduxjs/toolkit": "^2.5.0",
     "axios": "^1.7.9",
+    "canvas-confetti": "^1.9.3",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "eruda": "^3.4.1",
@@ -41,6 +42,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.15.0",
+    "@types/canvas-confetti": "^1.9.0",
     "@types/node": "^22.10.2",
     "@types/react": "^18.3.18",
     "@types/react-dom": "^18.3.5",
