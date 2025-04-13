@@ -25,7 +25,12 @@ export function SocketProvider({
   const [socket, setSocket] = useState<Socket | null>(null);
 
   useEffect(() => {
-    const newSocket = io(serverUrl);
+    const newSocket = io(serverUrl, {
+      transports: ["websocket"],
+      reconnection: true,
+      reconnectionAttempts: Infinity,
+      reconnectionDelay: 1000,
+    });
 
     newSocket.on("connect", () => {
       console.log("Connected to Socket.io");
