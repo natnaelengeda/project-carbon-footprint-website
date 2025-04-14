@@ -114,13 +114,13 @@ export default function PageOne({ setPage }: Props) {
           className="flex flex-col items-center justify-center gap-5 md:gap-28">
           <img
             src={AppAsset.Logo}
-            width={100}
-            height={100}
+            width={200}
+            height={200}
             className="object-contain" />
           <div
-            className="h-auto flex flex-col items-center justify-start gap-5 md:gap-5 text-[40px]">
-            <p className="text-2xl md:text-[40px] font-semibold">{t("qa.welcome_to_interactive", { lng: language.qa })}</p>
-            <p className="text-2xl md:text-[40px] font-semibold">{t("qa.qa", { lng: language.qa })}</p>
+            className="h-auto flex flex-col items-center justify-start gap-5 md:gap-10 text-[40px]">
+            <p className="text-2xl md:text-[70px] font-semibold">{t("qa.welcome_to_interactive", { lng: language.qa })}</p>
+            <p className="text-2xl md:text-[70px] font-semibold">{t("qa.qa", { lng: language.qa })}</p>
           </div>
         </div>
 

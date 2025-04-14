@@ -180,7 +180,7 @@ export default function PageTwo({ setPage, setQuestions }: Props) {
 
   return (
     <QABackground>
-      <div className='relative w-full h-full flex flex-col items-center justify-start z-10  md:pt-[140px] 3xl:pt-[550px]'>
+      <div className='relative w-full h-full flex flex-col items-center justify-start z-10  md:pt-[230px] 3xl:pt-[550px]'>
 
         {gamepadConnected && (
           <div className="absolute top-4 right-4 bg-green-100 text-green-800 px-3 py-1 rounded-md text-sm">
@@ -191,13 +191,13 @@ export default function PageTwo({ setPage, setQuestions }: Props) {
         {/* Title */}
         <div
           className='relative flex flex-col items-center justify-start gap-1 md:gap-10 3xl:gap-32 font-semibold text-white'>
-          <p className='text-2xl md:text-[40px] 3xl:text-[100px]'>{t("qa.welcome_to_interactive", { lng: savedlanguages.qa })}</p>
-          <p className='text-2xl md:text-[40px] 3xl:text-[130px]'>{t("qa.qa", { lng: savedlanguages.qa })}</p>
+          <p className='text-2xl md:text-[70px] 3xl:text-[100px]'>{t("qa.welcome_to_interactive", { lng: savedlanguages.qa })}</p>
+          <p className='text-2xl md:text-[70px] 3xl:text-[130px]'>{t("qa.qa", { lng: savedlanguages.qa })}</p>
         </div>
 
         {/* Choose Language */}
-        <div className='flex items-center justify-center mt-[30px] 3xl:mt-[120px] text-white'>
-          <p className='text-[35px] 3xl:text-[90px]'>{t("qa.choose_language", { lng: savedlanguages.qa })}</p>
+        <div className='flex items-center justify-center mt-[60px] 3xl:mt-[120px] text-white'>
+          <p className='text-[45px] 3xl:text-[90px]'>{t("qa.choose_language", { lng: savedlanguages.qa })}</p>
         </div>
 
         {/* Choice */}
@@ -223,7 +223,7 @@ export default function PageTwo({ setPage, setQuestions }: Props) {
         <div className='w-full h-full flex flex-row items-center justify-end pr-[100px] 3xl:pr-[190px] pt-28'>
           <button
             onClick={fetchQuestions}
-            className={`text-[19px] 3xl:text-[60px] font-semibold text-white flex flex-row items-center justify-center gap-2 rounded-full min-w-[220px] h-[60px] 3xl:min-w-[500px] 3xl:min-h-[150px]  px-5 transition-all ${loading ? "bg-gray-300" : "bg-primary"} ${selected == 2 ? "border-4 border-white" : ""}`}
+            className={`text-[30px] 3xl:text-[60px] font-semibold text-white flex flex-row items-center justify-center gap-2 rounded-full min-w-[320px] h-[80px] 3xl:min-w-[500px] 3xl:min-h-[150px]  px-5 transition-all ${loading ? "bg-gray-300" : "bg-primary"} ${selected == 2 ? "border-4 border-white" : ""}`}
             disabled={loading}>
             {
               !loading ? (

@@ -19,10 +19,10 @@ export default function QABackground({ page, children, setPage }: Props) {
 
         position: "relative",
         marginTop: "0px",
-        marginLeft: "380px",
+        marginLeft: "480px",
         border: "15px solid black",
-        width: "830px",
-        height: "865px",
+        width: "1035px",
+        height: "1080px",
       }}
       className='relative text-white flex flex-col items-center'>
       <div
@@ -51,12 +51,12 @@ export default function QABackground({ page, children, setPage }: Props) {
             className='absolute top-0 left-0 z-20 '>
             <img
               style={{
-                width: "150px",
-                height: "160px",
+                width: "200px",
+                height: "200px",
                 objectFit: "contain"
               }}
               src={AppAsset.Logo}
-              className='pt-10 pl-16' />
+              className='pt-5 pl-5' />
           </div>
 
           {children}
