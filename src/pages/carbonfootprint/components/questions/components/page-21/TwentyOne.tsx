@@ -88,11 +88,9 @@ export default function TwentyOne({ setPage, setCarbonFootPrint }: Props) {
       setPage={setPage}
       currPage={20}>
       <div className="relative z-10 w-full h-full mx-auto 2xl:container flex flex-col items-center justify-start gap-5 pt-20 md:py-[89px] ">
-
         <Result
           value={value}
           isLoading={isLoading} />
-
         <div>
           <div className=" w-full flex flex-col items-center justify-between px-[106px] gap-8 pt-28">
             <span style={{ fontSize: "26px" }}>

@@ -13,6 +13,7 @@ import { ValidateQuestions } from "@/pages/carbonfootprint/components/questions/
 import { useDispatch } from "react-redux";
 import { clearEverything } from "@/state/carbon";
 import CarbonLanguage from "@/utils/carbonLanguage";
+import toast from "react-hot-toast";
 
 // Interface
 interface Props {
@@ -59,19 +60,21 @@ export default function PageZero({ setPage }: Props) {
 
   useEffect(() => {
     const handleLanguageChange = (data: any) => {
+      toast("Change Language Socket");
+
       const parseData = JSON.parse(data);
       const check = ValidateQuestions(mode, parseData.mode);
 
-      if (check) {
-        const language = parseData.language === "አማርኛ" ? "አማርኛ" : "english";
-        setLanguage(language);
+      // if (check) {
+      const language = parseData.language === "አማርኛ" ? "አማርኛ" : "english";
+      setLanguage(language);
 
-        if (parseData.language === "አማርኛ") {
-          changeLanguage("carbon", "am");
-        } else {
-          changeLanguage("carbon", "en");
-        }
+      if (parseData.language === "አማርኛ") {
+        changeLanguage("carbon", "am");
+      } else {
+        changeLanguage("carbon", "en");
       }
+      // }
     };
 
     // Attach the event listener
@@ -105,12 +108,9 @@ export default function PageZero({ setPage }: Props) {
 
     // Change Page 
     socket?.on("change-page-client-1", (data) => {
+      toast("Change-Page Client 1");
       const parseData = JSON.parse(data);
-      const check = ValidateQuestions(mode, parseData.mode);
-
-      if (check) {
-        setPage(1);
-      }
+      setPage(1);
     });
   }, [socket]);
 

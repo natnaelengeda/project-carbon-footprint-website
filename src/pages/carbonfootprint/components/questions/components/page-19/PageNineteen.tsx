@@ -90,8 +90,8 @@ export default function PageNineteen({ setPage }: Props) {
           {
             sectionLanguage.carbon == "en" ?
               <div className="text-[25px]">
-                <span className="text-white">You use </span>
-                <span className="text-primary">Water for {selectedDays} days</span>
+                <span className="text-white">You take </span>
+                <span className="text-primary">Shower for {selectedDays} days</span>
                 <span className="text-white"> per week and </span>
                 <span className="text-primary">{selectedHours} minutes per day</span>
               </div> :

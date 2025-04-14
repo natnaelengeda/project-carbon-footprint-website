@@ -72,7 +72,7 @@ export default function Result({ value, isLoading }: { value: string, isLoading:
             </div>
           </span>
           <span className="flex flex-col items-center justify-center gap-2 text-white font-semibold">
-            <div className='w-[40rem] h-8 my-2'>
+            <div className='w-[30rem] h-8 my-2'>
               <Skeleton
                 className='w-full h-full' />
             </div>

@@ -74,7 +74,7 @@ export default function PageFifteen({ setPage }: Props) {
             </div>
             <div className="flex flex-col items-start justify-start ">
               <p className="text-white text-[30px]"><CarbonLanguage name="waste_disposal" /></p>
-              <p className="text-[25px]"><CarbonLanguage name="waste_disposal" /></p>
+              <p className="text-[25px]"><CarbonLanguage name="waste_disposal_habits" /></p>
             </div>
 
           </div>
@@ -87,7 +87,7 @@ export default function PageFifteen({ setPage }: Props) {
             <div className="text-[25px] flex flex-row items-center justify-start gap-3">
               <span className="text-white">You dispose</span>
               <span className="text-primary">Waste</span>
-              <span className="text-white"> for</span>
+              {/* <span className="text-white"> for</span> */}
               <span className="text-primary">{selectedDays} days per week</span>
             </div> :
             <div className="text-[25px] flex flex-row items-center justify-start gap-3">

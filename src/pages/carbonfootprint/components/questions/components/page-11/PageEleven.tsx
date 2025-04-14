@@ -25,7 +25,7 @@ interface Props {
 
 
 export default function PageEleven({ setPage }: Props) {
-  const [selectedDays, setSelectedDays] = useState<number[]>([0, 0, 0, 0]);
+  const [selectedDays, setSelectedDays] = useState<number>(0);
 
   const socket = useSocket();
   const dispatch = useDispatch();
