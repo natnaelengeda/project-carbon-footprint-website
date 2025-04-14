@@ -24,17 +24,16 @@ interface Props {
   questions: any[];
   setScore: React.Dispatch<React.SetStateAction<number>>;
   setcUserId: any;
-  check: { question: number, answer: number, isCorrect: boolean }[] | [];
+  check?: { question: number, answer: number, isCorrect: boolean }[] | [];
 }
 
-export default function FinishedPage({ setPage, answers, questions, setcUserId, setScore, check }: Props) {
+export default function FinishedPage({ setPage, answers, questions, setcUserId, setScore }: Props) {
   const [sum, setSum] = useState<number>(0);
   const [name, setName] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const [isGamepadConnected, setIsGamepadConnected] = useState<boolean>(false)
 
-  console.log(check);
   const length = Object.keys(answers).length;
 
   const calculateAnswers = () => {

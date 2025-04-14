@@ -12,7 +12,7 @@ import AppAsset from "@/core/AppAsset";
 import { useDispatch } from "react-redux";
 import { clearEverything } from "@/state/carbon";
 import CarbonLanguage from "@/utils/carbonLanguage";
-import toast from "react-hot-toast";
+// import toast from "react-hot-toast";
 
 // Interface
 interface Props {
@@ -59,7 +59,7 @@ export default function PageZero({ setPage }: Props) {
 
   useEffect(() => {
     const handleLanguageChange = (data: any) => {
-      toast("Change Language Socket");
+      // toast("Change Language Socket");
 
       const parseData = JSON.parse(data);
 
@@ -88,7 +88,7 @@ export default function PageZero({ setPage }: Props) {
 
     // Change Page 
     socket?.on("change-page-client-1", () => {
-      toast("Change-Page Client 1");
+      // toast("Change-Page Client 1");
       setPage(1);
     });
   }, [socket]);

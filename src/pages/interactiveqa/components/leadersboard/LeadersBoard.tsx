@@ -28,9 +28,6 @@ interface Props {
 
 export default function LeadersBoard({ setPage, cuserId }: Props) {
   const [leaderboardData, setLeaderboardData] = useState<any>(null);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
-
-  console.log(isLoading);
 
   const [gamepadConnected, setGamepadConnected] = useState(false);
 
@@ -46,9 +43,9 @@ export default function LeadersBoard({ setPage, cuserId }: Props) {
   const fetchLeaderboardData = () => {
     axios.get(`/api/v1/questionAttempts/top10/${cuserId}`)
       .then((response) => {
-        if (response.status == 201) {
+        if (response.status == 200) {
           setLeaderboardData(response.data);
-          setIsLoading(false);
+          console.log(response.data)
         }
       });
   }

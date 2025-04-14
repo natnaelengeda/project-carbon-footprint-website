@@ -51,7 +51,7 @@ export default function xPageThree({ setPage, answers, setAnswers, setQuestions,
   const currentQuestion: any = questions && questions[currentQuestionIndex];
 
   // Timer
-  const duration = 1;
+  const duration = 20;
   const [timeLeft, setTimeLeft] = useState(duration);
 
   // Click Checker

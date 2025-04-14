@@ -50,7 +50,7 @@ export default function LeaderboardsTable({ participants, cuserId }: ILeaderBoar
 
 
 export function LeaderboardRow({ participant, index, cuserId }: any) {
-  const baseClasses = "flex overflow-hidden flex-wrap gap-10 justify-between items-center px-24 py-2 w-full min-h-[60px] max-md:px-5 max-md:max-w-full";
+  const baseClasses = "flex overflow-hidden flex-row   gap-10 justify-between items-center px-2 py-2 w-full";
   const bgClasses =
     participant._id == cuserId ? "bg-primary" :
       index % 2 === 0 ?
@@ -59,7 +59,7 @@ export function LeaderboardRow({ participant, index, cuserId }: any) {
   const userClasses = participant.isCurrentUser ? "font-semibold bg-green-500 bg-opacity-30" : bgClasses;
 
   return (
-    <div className={`${baseClasses} ${userClasses} `}>
+    <div className={`${baseClasses} ${userClasses} w-full flex flex-row`}>
       <div className={`self-stretch my-auto w-[280px] ${participant._id == cuserId ? "font-bold text-white" : "text-black "}`}>
         {participant._id == cuserId ? `${participant.name} (You)` : participant.name}
       </div>
