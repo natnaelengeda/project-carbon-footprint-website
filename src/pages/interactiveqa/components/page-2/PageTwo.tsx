@@ -9,13 +9,13 @@ import QABackground from '../QABackground';
 import LanguageButton from './components/LanguageButton';
 
 // Axios
-import axios from "@/utils/axios";
+// import axios from "@/utils/axios";
 
 // AppAsset
 import AppAsset from '@/core/AppAsset';
 
 // Toast
-import toast from 'react-hot-toast';
+// import toast from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
 import { sampleQA } from '@/data/questions';
 
@@ -31,9 +31,6 @@ export default function PageTwo({ setPage, setQuestions }: Props) {
 
   const [selected, setSelected] = useState<number>(0);
   const [gamepadConnected, setGamepadConnected] = useState(false);
-
-  // const isKeyPressed = useRef(false);
-  // const [key, setKey] = useState(null);
 
   const savedlanguages = JSON.parse(localStorage.getItem("language") || JSON.stringify({
     carbon: "en",

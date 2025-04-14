@@ -133,7 +133,7 @@ export default function LeadersBoard({ setPage, cuserId }: Props) {
             className="flex flex-col items-center justify-center xl:text-[50px] gap-7 text-center">
             <p
               style={{
-                fontSize: savedlanguages.qa == "am" ? "60px" : "20px",
+                fontSize: savedlanguages.qa == "am" ? "40px" : "20px",
                 lineHeight: savedlanguages.qa == "am" ? "1.5" : "1.2"
               }}>
               {t("qa.great_job_share_with_friends_and_family", { lng: savedlanguages.qa })}

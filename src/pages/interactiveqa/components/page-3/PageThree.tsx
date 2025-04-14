@@ -13,7 +13,6 @@ import IncorrectAnswer from "./components/IncorrectAnswer";
 // Styles
 import "./styles/styles.css";
 import DevTools from "../DevToolts";
-import toast from "react-hot-toast";
 
 // Interface
 interface Props {
@@ -52,7 +51,7 @@ export default function xPageThree({ setPage, answers, setAnswers, setQuestions,
   const currentQuestion: any = questions && questions[currentQuestionIndex];
 
   // Timer
-  const duration = 500;
+  const duration = 1;
   const [timeLeft, setTimeLeft] = useState(duration);
 
   // Click Checker
@@ -163,9 +162,6 @@ export default function xPageThree({ setPage, answers, setAnswers, setQuestions,
 
   }, [currentQuestion, selectedChoice, firstSelected, click]);
 
-
-
-
   const handleAnswerChange = (questionId: number, choiceId: number, isCorrect: boolean) => {
     setAnswers(prevAnswers => ({
       ...prevAnswers,
@@ -210,87 +206,32 @@ export default function xPageThree({ setPage, answers, setAnswers, setQuestions,
     const hasAnswered = answers && answers[currentQuestion._id];
 
     if (!hasAnswered) {
-      toast.error("Please select an answer before proceeding.");
+      // toast.error("Please select an answer before proceeding.");
       // No answer given, mark as incorrect
+      console.log(currentQuestion)
       // handleAnswerChange(currentQuestion._id, 0, false);
-      // setSelectedChoice(null);
-      // setIncorrect(true);
-      // setClick(2);
+      setSelectedChoice(null);
+      setIncorrect(true);
+      setClick(2);
     } else {
-      console.log("Here")
+
       setClick(2);
     }
 
     // Clear any existing timeout before setting a new one
-    // if (timeoutRef.current) {
-    //   clearTimeout(timeoutRef.current);
-    // }
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
+    }
 
-    // Wait 4 seconds, then proceed
-    // setTimeout(() => {
-    //   if (isLastQuestion) {
-    //     setPage(4); // Show result page
-    //   } else {
-    //     handleNextQuestion(); // Move to next question
-    //   }
-    // }, 5000);
-
-    // timeoutRef.current = setTimeout(() => {
-    //   if (isLastQuestion) {
-    //     setPage(4); // Show result page
-    //   } else {
-    //     handleNextQuestion(); // Move to next question
-    //   }
-    // }, 5000);
+    // Wait 5 seconds, then proceed
+    timeoutRef.current = setTimeout(() => {
+      if (isLastQuestion) {
+        setPage(4); // Show result page
+      } else {
+        handleNextQuestion(); // Move to next question
+      }
+    }, 5000);
   };
-
-  // const checkAnswer = () => {
-  //   console.log(answers)
-  //   // If Answer is Empty
-  //   if (!answers || Object.keys(answers).length === 0) {
-  //     console.log("1")
-  //     handleAnswerChange(currentQuestion._id, 0, false);
-  //     setSelectedChoice('null');
-  //     setIncorrect(true);
-  //     setClick(2);
-
-  //     // If it is the Last Question
-  //     if (currentQuestionIndex >= 9) {
-  //       console.log("2")
-  //       setPage(4);
-
-  //       // Regular Question
-  //     } else {
-  //       console.log("3")
-  //       setTimeout(() => {
-  //         handleNextQuestion();
-  //       }, 2000);
-  //     }
-  //   } else {
-
-  //     // If Answered 
-  //     if (Object.keys(answers).length == currentQuestionIndex) {
-  //       console.log("4")
-
-  //       handleAnswerChange(currentQuestion._id, 0, false);
-  //       setTimeout(() => {
-  //         handleNextQuestion();
-  //       }, 4000);
-  //     }
-  //     // If it is the Last Question
-  //     if (currentQuestionIndex >= 9) {
-  //       console.log("5")
-
-  //       setPage(4);
-  //     } else {
-  //       console.log("6")
-
-  //       setClick(2);
-  //     }
-  //   }
-  // }
-
-
 
   useEffect(() => {
     if (savedQuestions) {
@@ -307,10 +248,13 @@ export default function xPageThree({ setPage, answers, setAnswers, setQuestions,
         </div>
       )}
 
-      <DevTools
-        click={click}
-        isLastQuestion={currentQuestionIndex >= 9}
-        hasAnswered={answers && answers[currentQuestion._id]} />
+      {
+        import.meta.env.MODE == "development" &&
+        < DevTools
+          click={click}
+          isLastQuestion={currentQuestionIndex >= 9}
+          hasAnswered={answers && answers[currentQuestion._id]} />
+      }
 
       {/* Timer */}
       <div className="absolute top-0 right-0 pr-[5px] pt-[5px] z-10">

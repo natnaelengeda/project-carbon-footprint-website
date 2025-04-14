@@ -18,6 +18,8 @@ export default function CorrectAnswer({ click, currentQuestionA, selectedChoice 
     <>
       {
         click == 2 &&
+        selectedChoice &&
+        selectedChoice._id &&
         currentQuestionA.answer == selectedChoice._id &&
         selectedChoice.isCorrect &&
         <>
