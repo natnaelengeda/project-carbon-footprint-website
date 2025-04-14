@@ -26,6 +26,7 @@ export default function PageZero({ setPage }: Props) {
   const mode = localStorage.getItem("page_mode");
   const dispatch = useDispatch();
 
+  
   // Socket
   const socket: any = useSocket();
 

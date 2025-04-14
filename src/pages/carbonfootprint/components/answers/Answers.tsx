@@ -1,5 +1,8 @@
 import { useEffect, useState } from "react";
 
+// Socket 
+import { useSocket } from "@/context/SocketProvider";
+
 // Pages
 import PageZero from './components/page-0';
 import PageOne from './components/page-1';
@@ -24,10 +27,13 @@ import PageNineteen from './components/page-19';
 import PageTwenty from './components/page-20';
 import PageTwentyOne from './components/page-21';
 import PageTwentyTwo from './components/page-22';
+import useCarbonInactivity from "./components/checkInactivity";
 
 export default function Answers() {
   const [page, setPage] = useState<number>(0);
   const [carbonFootPrint, setCarbonFootPrint] = useState<number>(0);
+  const socket = useSocket();
+  const room = localStorage.getItem("room");
 
   const [personalTransports, setPersonalTransports] = useState<string[]>([]);
   const [personalTransportArray, setPersonalTransportsArray] = useState([
@@ -53,6 +59,17 @@ export default function Answers() {
       }));
     }
   }, []);
+
+
+  useCarbonInactivity(() => {
+    console.log("No carbon state change in 30 seconds. Running command..., Send to Page Zero");
+    socket?.emit("reset-pages-server", JSON.stringify({
+      room: room,
+    }));
+    setPage(0);
+
+  });
+
 
   return (
     <div className="w-full h-screen">

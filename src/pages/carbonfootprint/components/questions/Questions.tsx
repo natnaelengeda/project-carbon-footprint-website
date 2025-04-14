@@ -1,5 +1,8 @@
 import { useState, useEffect } from "react";
 
+// Socket
+import { useSocket } from "@/context/SocketProvider";
+
 // Components
 import PageZero from "./components/page-0";
 import PageOne from "./components/page-1";
@@ -27,6 +30,7 @@ import PageTwentyThree from "./components/page-23";
 
 export default function Questions() {
   const [page, setPage] = useState<number>(0);
+  const socket = useSocket();
   const [carbonFootPrint, setCarbonFootPrint] = useState<number>(0);
 
   const [personalTransports, setPersonalTransports] = useState<string[]>([]);
@@ -52,6 +56,12 @@ export default function Questions() {
       }));
     }
   }, []);
+
+  useEffect(() => {
+    socket?.on("reset-pages-client", () => {
+      setPage(0);
+    })
+  }, [socket]);
 
   return (
     <div className="w-full h-screen">

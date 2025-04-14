@@ -59,6 +59,7 @@ export default function DefaultBackground({ children, currPage }: Props) {
 
   const bgImage = backgroundimages();
 
+
   return (
     <div
       style={{
