@@ -9,7 +9,6 @@ import { useSocket } from '@/context/SocketProvider';
 import AppAsset from "@/core/AppAsset";
 
 // Validate Questions
-import { ValidateQuestions } from "@/pages/carbonfootprint/components/questions/components/VallidateQuestions";
 import { useDispatch } from "react-redux";
 import { clearEverything } from "@/state/carbon";
 import CarbonLanguage from "@/utils/carbonLanguage";
@@ -63,9 +62,7 @@ export default function PageZero({ setPage }: Props) {
       toast("Change Language Socket");
 
       const parseData = JSON.parse(data);
-      const check = ValidateQuestions(mode, parseData.mode);
 
-      // if (check) {
       const language = parseData.language === "አማርኛ" ? "አማርኛ" : "english";
       setLanguage(language);
 
@@ -74,7 +71,6 @@ export default function PageZero({ setPage }: Props) {
       } else {
         changeLanguage("carbon", "en");
       }
-      // }
     };
 
     // Attach the event listener
@@ -89,27 +85,10 @@ export default function PageZero({ setPage }: Props) {
 
   // Recieve Updated From Server
   useEffect(() => {
-    // socket?.on("language-change-option-client", (data) => {
-    //   const parseData = JSON.parse(data);
-    //   const check = ValidateQuestions(mode, parseData.mode);
-
-    //   if (check) {
-    //     const language = parseData.language == "አማርኛ" ? "አማርኛ" : "english";
-    //     setLanguage(language);
-
-    //     if (parseData.language == "አማርኛ") {
-    //       changeLanguage("carbon", "am");
-    //     } else {
-    //       changeLanguage("carbon", "en");
-    //     }
-    //   }
-    // });
-
 
     // Change Page 
-    socket?.on("change-page-client-1", (data) => {
+    socket?.on("change-page-client-1", () => {
       toast("Change-Page Client 1");
-      const parseData = JSON.parse(data);
       setPage(1);
     });
   }, [socket]);
