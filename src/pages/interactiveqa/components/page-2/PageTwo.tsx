@@ -9,13 +9,13 @@ import QABackground from '../QABackground';
 import LanguageButton from './components/LanguageButton';
 
 // Axios
-import axios from "@/utils/axios";
+// import axios from "@/utils/axios";
 
 // AppAsset
 import AppAsset from '@/core/AppAsset';
 
 // Toast
-import toast from 'react-hot-toast';
+// import toast from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
 import { sampleQA } from '@/data/questions';
 
@@ -31,9 +31,6 @@ export default function PageTwo({ setPage, setQuestions }: Props) {
 
   const [selected, setSelected] = useState<number>(0);
   const [gamepadConnected, setGamepadConnected] = useState(false);
-
-  // const isKeyPressed = useRef(false);
-  // const [key, setKey] = useState(null);
 
   const savedlanguages = JSON.parse(localStorage.getItem("language") || JSON.stringify({
     carbon: "en",
@@ -60,30 +57,30 @@ export default function PageTwo({ setPage, setQuestions }: Props) {
   const fetchQuestions = () => {
     setLoading(true);
     try {
-      axios.post("/api/v1/question/rnd", {
-        language: lanuage == "amharic" ? "Amharic" : "English"
-      })
-        .then((response) => {
-          const questions = response.data;
+      // axios.post("/api/v1/question/rnd", {
+      //   language: lanuage == "amharic" ? "Amharic" : "English"
+      // })
+      //   .then((response) => {
+      //     const questions = response.data;
 
-          if (questions.length == 0) {
-            toast("No Questions Found");
-          } else {
-            toast.success("Questions Succefully Fetched")
-            setQuestions(response.data);
-            localStorage.setItem("questions", JSON.stringify(response.data));
-            setPage(3);
-          }
-          setLoading(false);
+      //     if (questions.length == 0) {
+      //       toast("No Questions Found");
+      //     } else {
+      //       toast.success("Questions Succefully Fetched")
+      //       setQuestions(response.data);
+      //       localStorage.setItem("questions", JSON.stringify(response.data));
+      //       setPage(3);
+      //     }
+      //     setLoading(false);
 
-        }).catch((error) => {
-          setLoading(false);
-          console.error(error);
-          toast.error("Questions Fetch Unsuccessful");
+      //   }).catch((error) => {
+      //     setLoading(false);
+      //     console.error(error);
+      //     toast.error("Questions Fetch Unsuccessful");
 
-          setQuestions(sampleQA);
-          setPage(3);
-        })
+      setQuestions(sampleQA);
+      setPage(3);
+      //   })
 
     } catch (error) {
       console.error(error);

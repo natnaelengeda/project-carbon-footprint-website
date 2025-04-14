@@ -30,8 +30,10 @@ interface Props {
 export default function FinishedPage({ setPage, answers, questions, setcUserId, setScore, check }: Props) {
   const [sum, setSum] = useState<number>(0);
   const [name, setName] = useState<string>("");
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  const [gamepadConnected, setGamepadConnected] = useState(false);
+  const [isGamepadConnected, setIsGamepadConnected] = useState<boolean>(false)
+
   console.log(check);
   const length = Object.keys(answers).length;
 
@@ -71,6 +73,7 @@ export default function FinishedPage({ setPage, answers, questions, setcUserId, 
 
   const addData = () => {
     if (name === "") {
+      setIsLoading(true);
       var cname = generateRandomName();
 
       axios.post("/api/v1/questionAttempts/", {
@@ -83,6 +86,7 @@ export default function FinishedPage({ setPage, answers, questions, setcUserId, 
 
       })
     } else {
+      setIsLoading(true);
       axios.post("/api/v1/questionAttempts/", {
         name: name,
         score: sum
@@ -102,9 +106,9 @@ export default function FinishedPage({ setPage, answers, questions, setcUserId, 
     <QABackground>
       <div
         className="relative grid grid-cols-2 items-start w-full z-10">
-        <GamePadStatus gamepadConnected={gamepadConnected} />
+        <GamePadStatus gamepadConnected={isGamepadConnected} />
         <LeftSide sum={sum} />
-        <RightSide name={name} setName={setName} addData={addData} setGamepadConnected={setGamepadConnected} />
+        <RightSide name={name} setName={setName} addData={addData} setGamepadConnected={setIsGamepadConnected} isLoading={isLoading} />
       </div>
     </QABackground>
   )
