@@ -39,9 +39,9 @@ export default function PageOne({ setPage }: Props) {
   const [name, setName] = useState<string>("");
 
   const id = generateRandomId();
+  const newName = generateRandomName();
 
   const room = localStorage.getItem("room");
-
 
   // React Language Packaged;
   const { t } = useTranslation();
@@ -70,8 +70,9 @@ export default function PageOne({ setPage }: Props) {
     }));
   }
 
+
   const func = () => {
-    const newName = generateRandomName();
+
 
     if (name.length > 0) return true;
     else
@@ -80,7 +81,7 @@ export default function PageOne({ setPage }: Props) {
         name: newName,
       }));
 
-    return false;
+    return true;
   }
 
   useEffect(() => {
@@ -118,7 +119,9 @@ export default function PageOne({ setPage }: Props) {
             nextPage={2}
             prevPage={0}
             currPage={1}
-            func={func} />
+            func={func}
+            id={id}
+            name={newName} />
         </div>
       </div>
     </DefaultBackground>

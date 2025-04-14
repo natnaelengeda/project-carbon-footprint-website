@@ -20,9 +20,11 @@ interface Props {
   noOfPages?: number;
   selectedComponent?: number;
   setSelectedComponent?: any;
+  id?: any;
+  name?: any;
 }
 
-export default function NavComponent({ setPage, func, currPage, nextPage, prevPage, noOfPages, selectedComponent, setSelectedComponent }: Props) {
+export default function NavComponent({ setPage, func, currPage, nextPage, prevPage, noOfPages, selectedComponent, setSelectedComponent, id, name }: Props) {
   const socket = useSocket();
   const room = localStorage.getItem("room");
 
@@ -43,9 +45,12 @@ export default function NavComponent({ setPage, func, currPage, nextPage, prevPa
           room: room,
         }));
       } else {
+        func();
         socket?.emit("page-next-server", JSON.stringify({
           nextPage: nextPage,
           room: room,
+          name: name,
+          id: id,
         }));
       }
     } else if (currPage == 8 || currPage == 9) {
@@ -66,7 +71,7 @@ export default function NavComponent({ setPage, func, currPage, nextPage, prevPa
             nextPage: nextPage,
             room: room,
             currComponent: selectedComponent,
-            nextComponent:nextComponent,
+            nextComponent: nextComponent,
           }));
         }
       }

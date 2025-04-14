@@ -5,8 +5,8 @@ import AppAsset from "@/core/AppAsset";
 import { useSocket } from "@/context/SocketProvider";
 
 // Redux
-import { useSelector } from "react-redux";
-import { CarbonState } from "@/state/carbon";
+import { useDispatch, useSelector } from "react-redux";
+import { addName, CarbonState } from "@/state/carbon";
 
 import { useEffect } from "react";
 
@@ -20,12 +20,22 @@ interface Props {
 
 export default function QuestionsLayout({ children, setPage, currPage }: Props) {
   const socket = useSocket();
+  const dispatch = useDispatch();
   const carbon = useSelector((state: { carbon: CarbonState }) => state.carbon);
 
   useEffect(() => {
     socket?.on("page-next-client", (temp) => {
       const data = JSON.parse(temp);
       setPage(data.nextPage);
+
+      console.log(data)
+      if (currPage == 1) {
+        dispatch(addName({
+          id: data.id,
+          name: data.name,
+        }));
+      }
+
     });
 
     socket?.on("page-prev-client", (temp) => {
