@@ -93,7 +93,7 @@ export default function PageTwentyTwo({ setPage }: Props) {
         </div>
 
         {/* Top */}
-        <div className='w-full h-auto grid grid-cols-2 mt-20 gap-5'>
+        <div className='w-full h-auto grid grid-cols-2 mt-0 gap-5'>
           <Section {...data1} />
           <Section {...data2} />
         </div>

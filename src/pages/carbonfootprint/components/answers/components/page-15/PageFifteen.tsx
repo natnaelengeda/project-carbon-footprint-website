@@ -39,7 +39,7 @@ export default function PageFifteen({ setPage }: Props) {
             </div>
             <p className="text-white text-[60px]"><CarbonLanguage name="waste_disposal" /></p>
           </div>
-          <p className="text-[40px]"><CarbonLanguage name="waste_disposal" /></p>
+          <p className="text-[40px]"><CarbonLanguage name="waste_disposal_habits" /></p>
         </div>
 
 
