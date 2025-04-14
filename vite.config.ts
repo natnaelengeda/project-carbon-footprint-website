@@ -10,7 +10,6 @@ import Inspect from 'vite-plugin-inspect';
 export default defineConfig({
   server: {
     port: 4040
-    port: 1029
     // // port: 3000
   },
   plugins: [
