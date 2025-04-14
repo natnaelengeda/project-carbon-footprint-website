@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useSocket } from "@/context/SocketProvider";
 
 // Tools
-import Devools from "@/tools/Devools";
+// import Devools from "@/tools/Devools";
 
 import { Outlet, useNavigate, useLocation, } from "react-router-dom";
 
@@ -16,17 +16,16 @@ export default function Root() {
   const queryParams = new URLSearchParams(location.search);
   const room = queryParams.get('room');
 
-  const loadEruda = async () => {
-    console.log(import.meta.env.MODE)
-    if (
-      // import.meta.env.MODE === 'development' &&
-      typeof window !== 'undefined') {
+  // const loadEruda = async () => {
+  //   console.log(import.meta.env.MODE)
+  //   if (
+  //     // import.meta.env.MODE === 'development' &&
+  //     typeof window !== 'undefined') {
 
-      const eruda = await import('eruda');
-      eruda.default.init();
-    }
-  };
-
+  //     const eruda = await import('eruda');
+  //     eruda.default.init();
+  //   }
+  // };
 
   useEffect(() => {
     if (location.pathname != "/") {
@@ -89,7 +88,6 @@ export default function Root() {
         navigate("/");
       }
     }
-    loadEruda();
   }, []);
 
 
@@ -97,13 +95,13 @@ export default function Root() {
     <div
       className="relative w-full h-full min-h-screen flex flex-col items-start justify-start">
       <Outlet />
-      <div
+      {/* <div
         style={{
           zIndex: 100
         }}
         className="relative ">
         <Devools />
-      </div>
+      </div> */}
     </div>
   )
 }

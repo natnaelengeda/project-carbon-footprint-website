@@ -1,7 +1,7 @@
 module.exports = {
   apps: [
     {
-      name: "vite-app",
+      name: "carbonfootprint-app",
       script: "serve ./dist --single --listen 4040",
       // args: 'dist --single --listen 3000',
       env: {
