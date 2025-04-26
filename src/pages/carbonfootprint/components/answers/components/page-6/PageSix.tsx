@@ -70,7 +70,7 @@ export default function PageSix({ setPage }: Props) {
         </div>
 
         <div
-          className={`absolute bottom-0 right-0 ${currentlySelected == 3 ? "pb-44" : ""}`}>
+          className={`absolute bottom-0 right-0 ${currentlySelected == 3 ? "pb-64" : ""}`}>
           <NavComponent
             setPage={setPage}
             nextPage={7}
@@ -125,7 +125,7 @@ const SliderComponent = ({ id, selectedTypes, type, text, setSelectedTypes, curr
             type === "compact-fluorescent-bulb" ? 3 :
               type === "led-lighting" ? 4 : 0,
         name: type === "incandescent-bulb" ? "lighting-incandescent" :
-          type === "fluorescent-bulb" ? "light-bulb-incandecent" :
+          type === "fluorescent-bulb" ? "light-bulb-incandescent" :
             type === "compact-fluorescent-bulb" ? "light-bulb-cfl" :
               type === "led-lighting" ? "light-bulb-florecent" : "",
         selected: true,
@@ -167,7 +167,7 @@ const SliderComponent = ({ id, selectedTypes, type, text, setSelectedTypes, curr
             type === "compact-fluorescent-bulb" ? 3 :
               type === "led-lighting" ? 4 : 0,
         name: type === "incandescent-bulb" ? "lighting-incandescent" :
-          type === "fluorescent-bulb" ? "light-bulb-incandecent" :
+          type === "fluorescent-bulb" ? "light-bulb-incandescent" :
             type === "compact-fluorescent-bulb" ? "light-bulb-cfl" :
               type === "led-lighting" ? "light-bulb-florecent" : "",
         selected: true,

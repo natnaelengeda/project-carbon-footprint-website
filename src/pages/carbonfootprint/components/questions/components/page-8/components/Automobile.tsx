@@ -19,8 +19,8 @@ export default function Automobile() {
 
   const buttons = [
     { id: 0, name: <CarbonLanguage name="gas_powered" />, type: "gas-powered", extra: <CarbonLanguage name='gas_powered_personal_vehicle_automobile' /> },
-    { id: 1, name: <CarbonLanguage name="electric_powered" />, type: "electric-powered", extra: "Electric Powered Personal Vehicle - Automobile" },
-    { id: 2, name: <CarbonLanguage name="hybrid" />, type: "hybrid", extra: "Hybrid Personal Vehicle - Automobile" },
+    { id: 1, name: <CarbonLanguage name="electric_powered" />, type: "electric-powered", extra: <CarbonLanguage name='electric_powered_personal_vehicle_automobile' /> },
+    { id: 2, name: <CarbonLanguage name="hybrid" />, type: "hybrid", extra: <CarbonLanguage name='hybrid_powered_personal_vehicle_automobile'/> },
   ];
 
   const socket: any = useSocket();

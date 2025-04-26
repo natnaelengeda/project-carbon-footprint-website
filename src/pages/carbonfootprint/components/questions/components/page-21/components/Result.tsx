@@ -41,7 +41,7 @@ export default function Result({ value, isLoading }: { value: string, isLoading:
     } else if (number > 4500) {
       return "very_very_bad";
     } else {
-      return "Good"
+      return "good"
     }
   }
 
@@ -104,10 +104,10 @@ export default function Result({ value, isLoading }: { value: string, isLoading:
             </span>
             <span className="flex flex-col items-center justify-center gap-2 text-white font-semibold">
               <p style={{ fontSize: "28px" }} className="font-semibold">
-                <CarbonLanguage name="your_carbon_footprint_per_year_is" />{" "}
+                <CarbonLanguage name="your_carbon_footprint_per_year_is" />
               </p>
               <h2 style={{ fontSize: "30px" }} className=" font-bold">
-                {value} kg Co2 -e
+                {value} KG CO₂-e {" "}
               </h2>
             </span>
           </>

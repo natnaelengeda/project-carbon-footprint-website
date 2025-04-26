@@ -64,7 +64,7 @@ export default function PageThree({ setPage }: Props) {
         category: [
           {
             id: 1,
-            name: "electric_air_conditioning",
+            name: "electric",
             selected: true,
             value: value,
             frequency: electricSlider2
@@ -90,7 +90,7 @@ export default function PageThree({ setPage }: Props) {
         category: [
           {
             id: 1,
-            name: "electric_air_conditioning",
+            name: "electric",
             selected: true,
             value: electricSlider,
             frequency: value,

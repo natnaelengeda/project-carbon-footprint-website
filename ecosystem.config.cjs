@@ -5,10 +5,10 @@ module.exports = {
       script: "serve ./dist --single --listen 4040",
       // args: 'dist --single --listen 3000',
       env: {
-        NODE_ENV: "development",
+        NODE_ENV: "production",
       },
       env_production: {
-        NODE_ENV: "development",
+        NODE_ENV: "production",
       },
     },
   ],

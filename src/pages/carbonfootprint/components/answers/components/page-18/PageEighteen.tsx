@@ -12,6 +12,8 @@ import { useSocket } from "@/context/SocketProvider";
 import { useDispatch } from "react-redux";
 import { addWaterUsage } from "@/state/carbon";
 import CarbonLanguage from "@/utils/carbonLanguage";
+import { useSelector } from "react-redux";
+import { RootState } from "@/store";
 
 // Interface
 interface Props {
@@ -19,6 +21,11 @@ interface Props {
 }
 
 export default function PageEighteen({ setPage }: Props) {
+const housingType = useSelector((state: RootState) => state.carbon.housing_type);
+  console.log("Housing Type: ", housingType);
+  // Determine the next page based on housingType
+  const nextPageState = housingType === "house" ? 19 : 20;
+  console.log("Next Page:", nextPageState);
 
   return (
     <DefaultBackground
@@ -49,7 +56,7 @@ export default function PageEighteen({ setPage }: Props) {
           className='absolute bottom-0 right-0'>
           <NavComponent
             setPage={setPage}
-            nextPage={19}
+            nextPage={nextPageState}
             prevPage={17} />
         </div>
       </div>
@@ -172,4 +179,4 @@ const RadioButtonsComponent = () => {
 }
 
 
-// PageFifteen
+// PageEighteen Component

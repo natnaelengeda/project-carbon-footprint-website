@@ -13,6 +13,7 @@ import CarbonLanguage from '@/utils/carbonLanguage';
 import Result from './components/Result';
 import CarbonFootprintProgress from '../../../questions/components/page-22/components/CarbonFootprintProgress';
 import { useSelector } from 'react-redux';
+import { Global } from 'recharts';
 
 // Interface
 interface Props {
@@ -23,7 +24,8 @@ interface Props {
 export default function PageTwentyOne({ setPage, carbonFootPrint }: Props) {
   const socket = useSocket();
   const room = localStorage.getItem("room");
-
+  const ethiopianAverage = 170;
+  const globalAverage = 4700;
   const carbon = useSelector((state: any) => state.carbon);
 
   return (
@@ -37,7 +39,7 @@ export default function PageTwentyOne({ setPage, carbonFootPrint }: Props) {
           {/* Left Side */}
           <Result
             value={carbonFootPrint}
-            isLoading={false} />
+            isLoading={true} />
 
           {/* Right Side */}
           <div className='w-full h-auto flex flex-col items-center justify-start'>
@@ -45,30 +47,55 @@ export default function PageTwentyOne({ setPage, carbonFootPrint }: Props) {
               <div className="w-5/6 flex flex-col items-center justify-center gap-2 ">
                 <span className=" text-white ">
                   <p className="text-4xl">
-                    <CarbonLanguage name="your_carbon_footprint_per_year_is" />
-                    4,700 kg Co2-e{" "}
-                    <CarbonLanguage name="per_year" />
+                    <CarbonLanguage name="global_average_carbon_footprint_per_person_is_per_year" />
+                      {" "}{globalAverage} KG CO₂-e{" "}
+                    <CarbonLanguage name="is" />
                   </p>
                 </span>
+                { carbonFootPrint < globalAverage?
+              <CarbonFootprintProgress
+                value={carbonFootPrint}
+                secondValue={globalAverage}
+                firstText={carbon.name || "You"}
+                secondText={"Global Average"}
+                firstColror = {"bg-green-400"}
+                secondColor = {"bg-blue-500"}
+                />:
                 <CarbonFootprintProgress
-                  value={400}
-                  secondValue={800}
-                  firstText={carbon.name || "You"}
-                  secondText={"Global Average"} />
+                value={globalAverage}
+                secondValue={carbonFootPrint}
+                firstText={"Global Average"}
+                secondText={carbon.name || "You"}
+                firstColror = {"bg-blue-500"}
+                secondColor = {"bg-green-400"} /> 
+               
+            }
               </div>
               <div className="w-5/6 flex flex-col items-center justify-center gap-2 ">
                 <span className=" text-white pb-2">
                   <p className="text-4xl">
-                    <CarbonLanguage name="global_average_carbon_footprint_per_person_is_per_year" />
-                    4,700 kg Co2-e{" "}
-                    <CarbonLanguage name="per_year" />
+                    <CarbonLanguage name="ethiopian_average_carbon_footprint_per_person_is_per_year" />
+                      {" "} {ethiopianAverage} KG CO₂-e
+                     <CarbonLanguage name="is" />
                   </p>
                 </span>
-                <CarbonFootprintProgress
-                  value={200}
-                  secondValue={500}
-                  firstText={carbon.name || "You"}
-                  secondText={"Ethiopian"} />
+                { carbonFootPrint < ethiopianAverage?
+                  <CarbonFootprintProgress
+                    value={carbonFootPrint}
+                    secondValue={ethiopianAverage}
+                    firstText={carbon.name || "You"}
+                    secondText={"Ethiopian Average"}
+                    firstColror = {"bg-green-400"}
+                    secondColor = {"bg-blue-500"}
+                    />:
+                    <CarbonFootprintProgress
+                    value={ethiopianAverage}
+                    secondValue={carbonFootPrint}
+                    firstText={"Ethiopian Average"}
+                    secondText={carbon.name || "You"}
+                    firstColror = {"bg-blue-500"}
+                    secondColor = {"bg-green-400"} /> 
+                }
               </div>
             </div>
 

@@ -138,7 +138,7 @@ const RadioButtonsComponent = () => {
           color="#35D36A"
           size="xl"
           className='w-full'
-          min={0}
+          min={1}
           max={7}
           marks={[
             { value: 1, label: '1' },

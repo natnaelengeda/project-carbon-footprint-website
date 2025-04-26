@@ -285,7 +285,9 @@ const CheckboxComponent = ({
           src={check ? AppAsset.CheckedIcon : AppAsset.UncheckedIcon}
           className='w-7 md:w-[40px] md:h-[40px] object-contain cursor-pointer' />
         <p
-          className='text-xl md:text-[45px] font-normal'>
+          className='text-xl md:text-[45px] font-normal'
+          style={{ whiteSpace: "nowrap"}}
+          >
           {name}
         </p>
       </div>

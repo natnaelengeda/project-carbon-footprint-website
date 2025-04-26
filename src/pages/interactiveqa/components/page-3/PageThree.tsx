@@ -60,10 +60,11 @@ export default function xPageThree({ setPage, answers, setAnswers, setQuestions,
   // Check Joystick Connectivity
   useEffect(() => {
     let gamepadCheckInterval: NodeJS.Timeout;
+    let isProcessing = false; // Track whether the button press is being processed
 
     const checkGamepad = () => {
       const gamepads = navigator.getGamepads();
-      const gamepad = gamepads[0]
+      const gamepad = gamepads[0];
 
       if (gamepad) {
         setGamepadConnected(true);
@@ -72,7 +73,7 @@ export default function xPageThree({ setPage, answers, setAnswers, setQuestions,
         const buttonPressed = (index: number) => gamepad.buttons[index]?.pressed;
         const options = currentQuestion.translations[0].options;
 
-        if (!firstSelected && click == 1) {
+        if (!firstSelected && click === 1) {
           if (
             Math.abs(gamepad.axes[0]) > 0.5 ||
             Math.abs(gamepad.axes[1]) > 0.5 ||
@@ -97,69 +98,78 @@ export default function xPageThree({ setPage, answers, setAnswers, setQuestions,
           handleAnswerChange(currentQuestion._id, opt._id, opt.isCorrect);
         };
 
-        if ((gamepad.axes[0] > 0.5 || buttonPressed(15)) && click == 1) {
+        if ((gamepad.axes[0] > 0.5 || buttonPressed(15)) && click === 1) {
           // RIGHT
           if (index === 0) moveTo(1); // A → B
           else if (index === 2) moveTo(3); // C → D
         }
 
-        if ((gamepad.axes[0] < -0.5 || buttonPressed(14)) && click == 1) {
+        if ((gamepad.axes[0] < -0.5 || buttonPressed(14)) && click === 1) {
           // LEFT
           if (index === 1) moveTo(0); // B → A
           else if (index === 3) moveTo(2); // D → C
         }
 
-        if ((gamepad.axes[1] < -0.5 || buttonPressed(12)) && click == 1) {
+        if ((gamepad.axes[1] < -0.5 || buttonPressed(12)) && click === 1) {
           // UP
           if (index === 2) moveTo(0); // C → A
           else if (index === 3) moveTo(1); // D → B
         }
 
-        if ((gamepad.axes[1] > 0.5 || buttonPressed(13)) && click == 1) {
+        if ((gamepad.axes[1] > 0.5 || buttonPressed(13)) && click === 1) {
           // DOWN
           if (index === 0) moveTo(2); // A → C
           else if (index === 1) moveTo(3); // B → D
         }
 
+        // Handle X button press (button index 0)
         if (buttonPressed(0)) {
-          console.log("Click", click);
-          switch (click) {
-            case 1:
-              checkAnswer();
-              break;
-            case 2:
-              handleNextQuestion();
-              break;
+          if (!isProcessing) {
+            isProcessing = true; // Set processing flag to true
+            console.log("Click", click);
+
+            switch (click) {
+              case 1:
+                checkAnswer();
+                break;
+              case 2:
+                handleNextQuestion();
+                break;
+            }
+
+            // Add a debounce delay to prevent double taps
+            setTimeout(() => {
+              isProcessing = false; // Reset processing flag after delay
+            }, 300); // Adjust delay as needed (300ms in this case)
           }
         }
       }
-    }
+    };
 
     // Check if gamepad is already connected
     if (navigator.getGamepads && navigator.getGamepads()[0]) {
-      setGamepadConnected(true)
-      gamepadCheckInterval = setInterval(checkGamepad, 100)
+      setGamepadConnected(true);
+      gamepadCheckInterval = setInterval(checkGamepad, 100);
     }
 
     const handleGamepadConnected = () => {
-      setGamepadConnected(true)
-      gamepadCheckInterval = setInterval(checkGamepad, 100)
-    }
+      setGamepadConnected(true);
+      gamepadCheckInterval = setInterval(checkGamepad, 100);
+    };
 
     const handleGamepadDisconnected = () => {
-      setGamepadConnected(false)
-      if (gamepadCheckInterval) clearInterval(gamepadCheckInterval)
-    }
+      setGamepadConnected(false);
+      if (gamepadCheckInterval) clearInterval(gamepadCheckInterval);
+    };
 
-    window.addEventListener("gamepadconnected", handleGamepadConnected)
-    window.addEventListener("gamepaddisconnected", handleGamepadDisconnected)
+    window.addEventListener("gamepadconnected", handleGamepadConnected);
+    window.addEventListener("gamepaddisconnected", handleGamepadDisconnected);
 
     return () => {
-      window.removeEventListener("gamepadconnected", handleGamepadConnected)
-      window.removeEventListener("gamepaddisconnected", handleGamepadDisconnected)
-      if (gamepadCheckInterval) clearInterval(gamepadCheckInterval)
-    }
-
+      window.removeEventListener("gamepadconnected", handleGamepadConnected);
+      window.removeEventListener("gamepaddisconnected", handleGamepadDisconnected);
+      if (gamepadCheckInterval) clearInterval(gamepadCheckInterval);
+    };
   }, [currentQuestion, selectedChoice, firstSelected, click]);
 
   const handleAnswerChange = (questionId: number, choiceId: number, isCorrect: boolean) => {

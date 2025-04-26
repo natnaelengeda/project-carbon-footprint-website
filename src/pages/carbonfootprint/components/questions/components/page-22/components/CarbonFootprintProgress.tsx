@@ -11,10 +11,11 @@ type Props = {
 
 const CarbonFootprintProgress = ({ value, secondValue, firstText = "You", secondText = "Global Average", firstColror = "bg-green-400", secondColor = "bg-blue-500" }: Props) => {
 
-  const fullScale = secondValue + 200;
+  // Calculate the full scale of the bar  
+  const fullScale = (value>secondValue)? (Number(value) + 200) : (Number(secondValue) + 200);
   const yourPercent = Math.min((value / fullScale) * 100, 100);
   const globalPercent = Math.min((secondValue / fullScale) * 100, 100);
-
+  
   return (
     <div className="w-full max-w-3xl space-y-4">
 

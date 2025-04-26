@@ -7,10 +7,10 @@ import AppAsset from "@/core/AppAsset";
 import { useSocket } from "@/context/SocketProvider";
 
 // React Redux
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 // State
-import { addHousingType, } from '@/state/carbon';
+import { addHousingType, CarbonState, } from '@/state/carbon';
 import QuestionsLayout from "../QuestionsLayout";
 
 // Mantine
@@ -48,7 +48,9 @@ export default function PageTwo({ setPage }: Props) {
     });
   }, [socket]);
 
+  const nameFromState = useSelector((state: { carbon: CarbonState }) => state.carbon.name);
   return (
+    console.log(nameFromState),
     <QuestionsLayout
       currPage={2}
       setPage={setPage}>

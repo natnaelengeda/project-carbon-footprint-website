@@ -70,7 +70,7 @@ export default function Result({ value, isLoading }: { value: string, isLoading?
             <CarbonLanguage name="your_carbon_footprint_per_year_is" />
           </p>
           <h2 style={{ fontSize: "48px" }} className=" font-bold">
-            {value} kg Co2 -e
+            {value} KG CO₂-e
           </h2>
         </span>
       </div>

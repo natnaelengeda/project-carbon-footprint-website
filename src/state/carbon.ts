@@ -77,7 +77,6 @@ export interface CarbonState {
   diet: Diet[];
   waste: WasteDisposal[];
   water_usage: WaterUsage[];
-  food_wastage: number;
 }
 
 
@@ -91,7 +90,6 @@ const initialState: CarbonState = {
   diet: [],
   waste: [],
   water_usage: [],
-  food_wastage: 0,
 };
 
 
@@ -384,9 +382,9 @@ export const carbonSlice = createSlice({
     },
 
     // Food Wastage
-    updateFoodWastage: (state, action: PayloadAction<{ food_wastage: number }>) => {
+   /* updateFoodWastage: (state, action: PayloadAction<{ food_wastage: number }>) => {
       state.food_wastage = action.payload.food_wastage
-    },
+    }*/
 
     // Clear all state fields
     clearEverything: (state) => {
@@ -398,7 +396,6 @@ export const carbonSlice = createSlice({
       state.diet = [];
       state.waste = [];
       state.water_usage = [];
-      state.food_wastage = 0;
     },
   },
 });
@@ -444,7 +441,7 @@ export const {
   deleteWaterUsage,
 
   // Food Wastage
-  updateFoodWastage
+  //updateFoodWastage
 
 } = carbonSlice.actions;
 export const selectCarbon = (state: { carbon: CarbonState; }) => state.carbon;

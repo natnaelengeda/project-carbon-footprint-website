@@ -27,11 +27,11 @@ export const CalculateCarbonFootPrint = (pledge: PledgeState) => {
     if (item.name == "heating-cooling") {
       item.category.map((category: any) => {
         if (category.name == "electric_air_conditioning") {
-          sum += category.value * electricCarbonEmitedKgPerKwh * 1.5 * year;
+          sum += category.value * electricCarbonEmitedKgPerKwh * 1.5 * week;
         }
 
         if (category.name == "charcoal") {
-          sum += category.value * electricCarbonEmitedKgPerKwh * 0.58 * year;
+          sum += category.value * electricCarbonEmitedKgPerKwh * 0.58 * week;
         }
 
       })
@@ -124,7 +124,7 @@ export const CalculateCarbonFootPrint = (pledge: PledgeState) => {
       const taxiIndex = item.category.findIndex((category: any) => category.name == "taxi");
       const rideIndex = item.category.findIndex((category: any) => category.name == "ride");
 
-      // Bus
+      // Bus - carrying 100 people
       if (busIndex !== -1) {
         sum += ((item.category[busIndex].value * item.category[busIndex].frequency * 1.1) / 100) * week;
       }
@@ -134,7 +134,7 @@ export const CalculateCarbonFootPrint = (pledge: PledgeState) => {
         sum += item.category[trainIndex].value * item.category[trainIndex].frequency * electricCarbonEmitedKgPerKwh * 0.57;
       }
 
-      // Taxi
+      // Minibus Taxi - carrying 14 people
       if (taxiIndex !== -1) {
         sum += ((item.category[taxiIndex].value * item.category[taxiIndex].frequency * 0.159) / 14) * week;
       }
@@ -145,6 +145,10 @@ export const CalculateCarbonFootPrint = (pledge: PledgeState) => {
       }
     }
 
+    // Bicycle
+    if (item.name == "motorcycle") {
+      sum += item.value * item.frequency * 0.021 * week;
+    }
     // Bicycle
     if (item.name == "bicycle") {
       sum += item.value * item.frequency * 0.021 * week;

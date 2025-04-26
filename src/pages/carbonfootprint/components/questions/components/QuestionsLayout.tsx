@@ -22,19 +22,20 @@ export default function QuestionsLayout({ children, setPage, currPage }: Props) 
   const socket = useSocket();
   const dispatch = useDispatch();
   const carbon = useSelector((state: { carbon: CarbonState }) => state.carbon);
-
+  
+  console.log("Carbon Data. Name:", carbon.name)
   useEffect(() => {
     socket?.on("page-next-client", (temp) => {
       const data = JSON.parse(temp);
       setPage(data.nextPage);
 
-      console.log(data)
-      if (currPage == 1) {
+      console.log("QL Name:",data)
+      /*if (currPage == 1) {
         dispatch(addName({
           id: data.id,
           name: data.name,
         }));
-      }
+      }*/
 
     });
 
@@ -140,12 +141,12 @@ export default function QuestionsLayout({ children, setPage, currPage }: Props) 
           className='' />
       </div>
 
-      {/* User Name */}
-      <div
+     {/* User Name */}
+     <div
         style={{
           display: carbon.name ? "flex" : "none"
         }}
-        className="absolute top-0 right-0 z-20 pr-[50px] pt-[120px] flex flex-row items-center justify-end gap-5">
+        className="absolute top-0 right-0 z-20 pr-[40px] pt-[60px] flex flex-row items-center justify-end gap-5">
         <img
           src={AppAsset.UserBlackIcon}
           className="w-7 md:w-[40px] object-contain" />

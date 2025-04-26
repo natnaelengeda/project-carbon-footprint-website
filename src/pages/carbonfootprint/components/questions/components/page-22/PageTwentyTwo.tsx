@@ -2,6 +2,8 @@ import QuestionsLayout from "../QuestionsLayout";
 import CarbonLanguage from "@/utils/carbonLanguage";
 import Result from "./components/Result";
 import CarbonFootprintProgress from "./components/CarbonFootprintProgress";
+import { useTranslation } from 'react-i18next';
+
 
 import { useSelector } from "react-redux";
 
@@ -13,7 +15,10 @@ interface Props {
 
 export default function PageTwentyTwo({ setPage, carbonFootPrint }: Props) {
   const carbon = useSelector((state: any) => state.carbon);
-
+  const ethiopianAverage = 170;
+  const globalAverage = 4700;
+  const { t } = useTranslation();
+  const sectionLanguage = JSON.parse(localStorage.getItem("language") || "{}");
   return (
     <QuestionsLayout
       setPage={setPage}>
@@ -30,36 +35,62 @@ export default function PageTwentyTwo({ setPage, carbonFootPrint }: Props) {
             <span className=" text-white ">
               <p className="text-lg">
                 <CarbonLanguage name="global_average_carbon_footprint_per_person_is_per_year" />
-                {" "}{carbonFootPrint} kg Co2-e{" "}
-                <CarbonLanguage name="per_year" />
+                {" "}{globalAverage} KG CO₂-e{" "}
+                <CarbonLanguage name="is" />
               </p>
             </span>
-            <CarbonFootprintProgress
-              value={400}
-              secondValue={800}
-              firstText={carbon.name || "You"}
-              secondText={"Global Average"} />
+            { carbonFootPrint < globalAverage?
+              <CarbonFootprintProgress
+                value={carbonFootPrint}
+                secondValue={globalAverage}
+                firstText={carbon.name || "You"}
+                secondText={t(`carbon.global_average`, { lng: sectionLanguage?.carbon })}
+                firstColror = {"bg-green-400"}
+                secondColor = {"bg-blue-500"}
+                />:
+                <CarbonFootprintProgress
+                value={globalAverage}
+                secondValue={carbonFootPrint}
+                firstText={t(`carbon.global_average`, { lng: sectionLanguage?.carbon })}
+                secondText={carbon.name || "You"}
+                firstColror = {"bg-blue-500"}
+                secondColor = {"bg-green-400"} /> 
+               
+            }
 
           </div>
           <div className="w-5/6 flex flex-col items-center justify-center gap-2 ">
             <span className=" text-white ">
               <p className="text-lg">
                 <CarbonLanguage name="ethiopian_average_carbon_footprint_per_person_is_per_year" />
-                {" "}4,700 kg Co2-e
-                <CarbonLanguage name="per_year" />
+                {" "} {ethiopianAverage} KG CO₂-e
+                <CarbonLanguage name="is" />
               </p>
             </span>
-            <CarbonFootprintProgress
-              value={200}
-              secondValue={500}
-              firstText={carbon.name || "You"}
-              secondText={"Ethiopian"} />
+            { carbonFootPrint < ethiopianAverage?
+              <CarbonFootprintProgress
+                value={carbonFootPrint}
+                secondValue={ethiopianAverage}
+                firstText={carbon.name || "You"}
+                secondText={t(`carbon.ethiopian_average`, { lng: sectionLanguage?.carbon })}
+                firstColror = {"bg-green-400"}
+                secondColor = {"bg-blue-500"}
+                />:
+                <CarbonFootprintProgress
+                value={ethiopianAverage}
+                secondValue={carbonFootPrint}
+                firstText={t(`carbon.ethiopian_average`, { lng: sectionLanguage?.carbon })}
+                secondText={carbon.name || "You"}
+                firstColror = {"bg-blue-500"}
+                secondColor = {"bg-green-400"} /> 
+               
+            }
           </div>
         </div>
 
         {/* Bottom */}
         <div>
-          <div className=" w-full flex flex-col items-center justify-between px-[80px] gap-8 pt-10">
+          <div className=" w-full flex flex-col items-center justify-between px-[70px] gap-8 pt-10">
             <span>
               <p className="text-white text-lg text-center">
                 <CarbonLanguage name="the_page_will_reset_in_30_seconds_you_can_start_again_using_the_button_below" />

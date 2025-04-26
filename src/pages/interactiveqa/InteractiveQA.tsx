@@ -6,6 +6,7 @@ import PageTwo from "./components/page-2";
 import PageThree from "./components/page-3";
 import FinishedPage from "./components/finished-page";
 import LeadersBoard from "./components/leadersboard";
+import UploadQuestions from "./components/uploadQuestions";
 
 export default function InteractiveQA() {
   const [page, setPage] = useState<number>(1);
@@ -48,6 +49,10 @@ export default function InteractiveQA() {
                     score={score}
                     setPage={setPage}
                     cuserId={cuserId} /> :
+                  page == 6 ?
+                  <UploadQuestions
+                    setPage={setPage}
+                     /> :
                   null
 
       }

@@ -18,6 +18,7 @@ import AppAsset from "@/core/AppAsset";
 // Utils
 import CarbonLanguage from "@/utils/carbonLanguage";
 import DaysPerWeekHoursPerDay from "../DaysPerWeekHoursPerDay";
+import DaysPerWeekMinutesPerDay from "../DaysPerWeekMinutesPerDay";
 
 // Interface
 interface Props {
@@ -37,6 +38,7 @@ export default function PageFive({ setPage }: Props) {
   const [selectedTypes, setSelectedTypes] = useState<string[]>([]);
   const [selectedDays, setSelectedDays] = useState<number[]>([0, 0, 0, 0]);
   const [selectedHours, setSelectedHours] = useState<number[]>([0, 0, 0, 0]);
+
 
   const buttons = [
     { id: 0, name: <CarbonLanguage name="iron" />, type: "iron" },
@@ -253,16 +255,24 @@ const CheckboxComponent = (
 
       {/* Usage */}
       <div
-        style={{
-          display: check ? "flex" : "none"
-        }}
-        className="pr-10">
-        {/* <p className="text-[20px]"><CarbonLanguage name="you_use" /> <span className="text-primary">{text} <CarbonLanguage name="for" /> {selectedDays[id]} <CarbonLanguage name="days" /></span> <CarbonLanguage name="per_week_and" /> <span className="text-primary">{selectedHours[id]} <CarbonLanguage name="hours_per_day" /></span></p> */}
-        <DaysPerWeekHoursPerDay
-          text={text}
-          selectedDays={selectedDays[id]}
-          selectedHours={selectedHours[id]} />
-      </div>
+    style={{
+      display: check ? "flex" : "none"
+    }}
+    className="pr-10">
+    {type === "fridge" || type === "television" ? (
+      // Use DaysPerWeekHoursPerDay for Fridge and Television
+      <DaysPerWeekHoursPerDay
+        text={text}
+        selectedDays={selectedDays[id]}
+        selectedHours={selectedHours[id]} />
+    ) : (
+      // Use DaysPerWeekMinutesPerDay for Iron and Water Boiler
+      <DaysPerWeekMinutesPerDay
+        text={text}
+        selectedDays={selectedDays[id]}
+        selectedHours={selectedHours[id]} />
+    )}
+  </div>
     </div>
   );
 }

@@ -12,6 +12,7 @@ import { useSocket } from "@/context/SocketProvider";
 import { useDispatch } from "react-redux";
 import { addWaterUsage } from "@/state/carbon";
 import CarbonLanguage from "@/utils/carbonLanguage";
+// Redux state
 
 // Interface
 interface Props {
@@ -19,6 +20,7 @@ interface Props {
 }
 
 export default function PageNineteen({ setPage }: Props) {
+  
 
   return (
     <DefaultBackground

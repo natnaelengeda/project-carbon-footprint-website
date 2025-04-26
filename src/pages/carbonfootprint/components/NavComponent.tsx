@@ -27,6 +27,7 @@ interface Props {
 export default function NavComponent({ setPage, func, currPage, nextPage, prevPage, noOfPages, selectedComponent, setSelectedComponent, id, name }: Props) {
   const socket = useSocket();
   const room = localStorage.getItem("room");
+  
 
   const { t } = useTranslation();
   const sectionLanguage = JSON.parse(localStorage.getItem("language") || "");
@@ -180,7 +181,10 @@ export default function NavComponent({ setPage, func, currPage, nextPage, prevPa
       }
     } else {
       setPage(nextPage);
+      console.log("handleNextPage - nextPage: ", nextPage);
+
     }
+    console.log("handleNextPage - nextPage: ", nextPage);
     socketNextPage();
   }
 
