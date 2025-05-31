@@ -70,12 +70,10 @@ export default function PageTwo({ setPage, setQuestions }: Props) {
 
       const questions = response.data;
 
-      // Log the number of questions received
-      console.log(`Number of questions received: ${questions.length}`);
-
       if (questions.length === 0) {
         toast("No Questions Found");
       } else {
+        toast.success("Questions Successfully Fetched");
         setQuestions(questions);
         localStorage.setItem("questions", JSON.stringify(questions));
         setPage(3);

@@ -37,16 +37,18 @@ export default function FinishedPage({ setPage, answers, questions, setcUserId, 
   const length = Object.keys(answers).length;
 
   const calculateAnswers = () => {
-    let sum = 0;
-    for (let i = 0; i < length; i++) {
-      const data = Object.entries(answers)[i];
-      const q = questions.find((question) => question._id === data[0]);
-      if (!q) continue; // Skip if question not found
+    var sum = 0;
+    for (var i = 0; i < length; i++) {
+      var data = Object.entries(answers)[i];
+      console.log(data[0])
+      var q = questions.filter((question) => {
+        return question._id === data[0];
+      })[0];
 
-      const choices = q.translations[0]?.options || [];
+      const choices = q.translations[0].options;
       const difficulty = q.difficulty;
 
-      choices.forEach((choice: any) => {
+      choices.filter((choice: any) => {
         if (choice._id === data[1]) {
           if (choice.isCorrect) {
             switch (difficulty) {
@@ -62,7 +64,7 @@ export default function FinishedPage({ setPage, answers, questions, setcUserId, 
             }
           }
         }
-      });
+      })
     }
     setSum(sum);
     setScore(sum);

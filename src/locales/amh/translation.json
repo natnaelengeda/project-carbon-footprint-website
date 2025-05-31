@@ -107,7 +107,7 @@
     "per_year": "በአመት",
     "your_carbon_footprint_per_year_is": "የእርስዎ የካርቦን ልቀት አሻራ በዓመት ነው።",
     "ethiopia": "ኢትዮጵያ",
-    "global_average_carbon_footprint_per_person_is_per_year": "የአለም አማካይ የካርበን አሻራ በአንድ ሰው በዓመት ነው።",
+    "global_average_carbon_footprint_per_person_is_per_year": "የአለም አማካይ የካርቦን አሻራ በአንድ ሰው በዓመት ነው።",
     "ethiopian_average_carbon_footprint_per_person_is_per_year": "የኢትዮጵያ አማካይ የካርቦን ልቀት  አሻራ መጠን በዓመት ነው።",
     "the_page_will_reset_in_30_seconds_you_can_start_again_using_the_button_below": "ገጹ በ30 ሰከንድ ውስጥ ዳግም ይጀምራል። ከዚህ በታች ያለውን ቁልፍ በመጠቀም እንደገና መጀምር ይችላሉ።",
     "ethiopias_carbon_footprint_a": "የኢትዮጵያ የካርቦን ልቀት አሻራ፡ ",
@@ -125,7 +125,7 @@
     "reforestation_programs": "የደን ​​መልሶ ማልማት ፕሮግራሞች",
     "sustainable_energy_projects_hydropwer_solar_and_wind": "ዘላቂ የኢነርጂ ፕሮጀክቶች (የሃይድሮ ፓወር ፣ የፀሐይ እና የንፋስ)",
     "ecofriendly_policies": "ለአካባቢ ተስማሚ መመሪያዎች",
-    "finish": "ጨርስ",
+    "finish": "ይጨርሱ",
     "together_these_efforts_position_ethiopia_as_a_leader_in_sustainable_development_while_balancing_economic_growth_with_environmental_stewardship": "እነዚህ ጥረቶች አንድ ላይ ሆነው የኢኮኖሚ እድገትን ከአካባቢ ጥበቃ ጋር በማመጣጠን ኢትዮጵያን በዘላቂ ልማት ግንባር ቀደም ያደርጓታል።"
   },
   "pledge": {
@@ -156,7 +156,7 @@
     "reduceWaste": "ቆሻሻን እንደገና ጥቅም ላይ ማዋል ወይም ማዳበር ፣ የፕላስቲክ አጠቃቀምን መቀነስ",
     "localFood": "ከአካባቢው የተመረተ እና ከዕፅዋት የተቀመሙ ምግቦችን ይምረጡ.",
     "unplugDevices": "በማይጠቀሙበት ጊዜ የኤሌክትሪክ ዕቃዎችን ይንቀሉ እና ኃይል ቆጣቢ መሳሪያዎችን ይጠቀሙ",
-    "carbonFootprintComparison": "አጠቃላይ የካርበን አሻራዎ ",
+    "carbonFootprintComparison": "አጠቃላይ የካርቦን አሻራዎ ",
     "carbonFoot2": "ሲሆን ይህም ",
     "carbonFoot3": "ከማቃጠል ጋር እኩል ነው።",
     "trrres": "ዛፎችን",
@@ -194,7 +194,7 @@
     "top_10": "እርስዎ ከምርጥ 10",
     "participants": "ተሳታፊዎች አንዱ ነዎት",
     "see_leader_board": "መሪ ሰሌዳን ይመልከቱ",
-    "finish": "ለመጨረስ X ይጫኑ",
+    "finish": "ለመጨረስ Xን ይጫኑ",
     "great_job_share_with_friends_and_family": "ምርጥ ስራ! አሁን ውጤቱን ለጓደኞችዎ እና ለቤተሰብዎ ያካፍሉ!"
   }
 }

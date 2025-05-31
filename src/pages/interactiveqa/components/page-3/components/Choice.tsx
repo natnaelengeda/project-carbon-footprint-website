@@ -1,4 +1,3 @@
-
 interface IChoice {
   questions: any[];
   currentQuestion: any;
@@ -11,7 +10,7 @@ interface IChoice {
 export default function Choice({ click, questions, answers, currentQuestion, handleAnswerChange, setSelectedChoice }: IChoice) {
   return (
     <div
-      className="w-[45rem] h-auto grid grid-cols-2 space-y-5 items-end justify-center gap-5 md:gap-[30px] px-3 md:px-0 mx-auto">
+      className="w-[45rem] h-auto grid grid-cols-2 items-center justify-center gap-5 md:gap-[30px] px-3 md:px-0 mx-auto">
       {
         questions &&
         currentQuestion &&
@@ -26,25 +25,29 @@ export default function Choice({ click, questions, answers, currentQuestion, han
                   setSelectedChoice(choice);
                 }
               }}
-              className={`w-full h-full flex flex-row items-center justify-start gap-2 border rounded-lg py-5 pl-3 md:w-[360px]  ${answers[currentQuestion._id] === choice._id ? "bg-[#35D36A40] border-primary" : "border-white "}`}>
+              className={`w-full h-[120px] flex items-center justify-start gap-2 border rounded-lg p-4 md:w-[360px] ${
+                answers[currentQuestion._id] === choice._id
+                  ? "bg-[#35D36A40] border-primary"
+                  : "border-white"
+              }`}
+            >
               <label
                 key={choice._id}
-                className="w-full h-auto flex flex-row items-center md:items-start justify-start gap-3 md:gap-[20px] custom-radio">
+                className="w-full h-full flex flex-row items-center justify-start gap-3 custom-radio">
                 <span className="text-lg md:text-[20px]">
-                  {
-                    ["A) ", "B) ", "C) ", "D) "][index] || null
-                  }
+                  {["A) ", "B) ", "C) ", "D) "][index] || null}
                 </span>
                 <span
-                  className="text-lg md:text-[20px] font-normal">
-                  <p
-                    style={{
-                      whiteSpace: 'wrap',
-                      flex: 'wrap',
-                      lineHeight: "1.2",
-                    }}>
-                    {choice.text}
-                  </p>
+                  className="text-lg md:text-[20px] font-normal flex-1"
+                  style={{
+                    whiteSpace: "normal", // Allows text wrapping
+                    lineHeight: "1.5",   // Improves readability
+                    textAlign: "left", // Centers text horizontally
+                    display: "flex",     // Enables vertical alignment
+                    alignItems: "center", // Centers text vertically
+                  }}
+                >
+                  {choice.text}
                 </span>
               </label>
             </div>
@@ -52,5 +55,5 @@ export default function Choice({ click, questions, answers, currentQuestion, han
         })
       }
     </div>
-  )
+  );
 }

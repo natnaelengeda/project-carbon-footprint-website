@@ -25,6 +25,51 @@ interface Props {
   setCarbonFootPrint: React.Dispatch<React.SetStateAction<any>>;
 }
 
+interface ResponseData {
+  waterUsage: number;
+  foodWastage: number;
+  transportationMode: number;
+  dietAndFood: number;
+  wasteDisposal: number;
+  householdEnergy: number;
+}
+
+function calculateTotalEmissions(responseData: ResponseData): number {
+  const waterEmission = responseData.waterUsage || 0;
+  const foodWasteEmission = responseData.foodWastage || 0;
+  const transportEmission = responseData.transportationMode || 0;
+  const dietEmission = responseData.dietAndFood || 0;
+  const wasteEmission = responseData.wasteDisposal || 0;
+  const energyEmission = responseData.householdEnergy || 0;
+  console.log("Response Data:", responseData);
+  // Log the response data for debugging
+  console.log("Water Usage Emission:", responseData.waterUsage);
+  console.log("Food Wastage Emission:", responseData.foodWastage);
+  console.log("Transportation Mode Emission:", responseData.transportationMode);
+  console.log("Diet and Food Emission:", responseData.dietAndFood);
+  console.log("Waste Disposal Emission:", responseData.wasteDisposal);
+  console.log("Household Energy Emission:", responseData.householdEnergy);
+  
+  console.log("Water Emission:", waterEmission);
+  console.log("Food Waste Emission:", foodWasteEmission);
+  console.log("Transport Emission:", transportEmission);
+  console.log("Diet Emission:", dietEmission);
+  console.log("Waste Emission:", wasteEmission);
+  console.log("Energy Emission:", energyEmission);
+
+  const totalEmission =
+    waterEmission +
+    foodWasteEmission +
+    transportEmission +
+    dietEmission +
+    wasteEmission +
+    energyEmission;
+
+  console.log("Total Emission:", totalEmission);
+
+  return totalEmission;
+}
+
 export default function PageTwenty({ setPage, setCarbonFootPrint }: Props) {
   const socket = useSocket();
   const room = localStorage.getItem("room");
@@ -41,41 +86,27 @@ export default function PageTwenty({ setPage, setCarbonFootPrint }: Props) {
 
   const sendFunction = async (): Promise<void> => {
     if (isLoading) {
-      console.log("sendFunction is already running, skipping...");
+      //console.log("sendFunction is already running, skipping...");
       return;
     }
     setIsLoading(true);
     try {
-      console.log("Sending data to server...");
-      console.log("Data: ", data);
+      //console.log("Sending data to server...");
+      //console.log("Data: ", data);
 
       const response = await axios.post("/api/v1/carbonFootPrint", data);
-      const responseData = response.data;
-      console.log("Successfully added to the server");
-      console.log("Data: ", responseData);
-
-      // Compute emissions for each category
-      const waterEmission = responseData.waterUsage;
-      const foodWasteEmission = responseData.foodWastage;
-      const transportEmission = responseData.transportationMode;
-      const dietEmission = responseData.dietAndFood;
-      const wasteEmission = responseData.wasteDisposal;
-      const energyEmission = responseData.householdEnergy;
+      const responseData = response.data.data;
+      //console.log("Successfully added to the server");
+      //console.log("Data: ", responseData);
 
       // Compute total emissions
-      const totalEmission =
-        waterEmission +
-        foodWasteEmission +
-        transportEmission +
-        dietEmission +
-        wasteEmission +
-        energyEmission;
+      const totalEmission = calculateTotalEmissions(responseData);
 
       // Set total emissions
       setValue(totalEmission.toFixed(0));
       setCarbonFootPrint(totalEmission.toFixed(0));
 
-      console.log("Carbon Footprint: " + totalEmission.toFixed(2) + " kg CO₂-e");
+      //console.log("Carbon Footprint: " + totalEmission.toFixed(2) + " kg CO₂-e");
 
       // Emit results to the server
       socket?.emit(

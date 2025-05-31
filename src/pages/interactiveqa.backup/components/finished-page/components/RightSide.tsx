@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState } from 'react'
 
 // App Asset
 import AppAsset from '@/core/AppAsset';
@@ -30,47 +30,7 @@ export default function RightSide({ name, setName, addData, setGamepadConnected,
   const { t } = useTranslation();
 
 
-  const [showKeyboard, setShowKeyboard] = useState(true);
-
-  // Cooldown and edge detection refs for X button
-  const xButtonCooldownRef = useRef(false);
-  const prevXPressedRef = useRef(false);
-
-  useEffect(() => {
-    let gamepadCheckInterval: NodeJS.Timeout;
-
-    const checkGamepad = () => {
-      const gamepads = navigator.getGamepads();
-      const gamepad = gamepads[0];
-
-      if (gamepad) {
-        setGamepadConnected(true);
-        const xPressed = gamepad.buttons[0]?.pressed;
-
-        // Only trigger addData if X is pressed, wasn't pressed last frame, and not in cooldown, and keyboard is hidden
-        if (
-          !showKeyboard && // Only allow when keyboard is hidden (submit button visible)
-          xPressed &&
-          !prevXPressedRef.current &&
-          !xButtonCooldownRef.current &&
-          !isLoading
-        ) {
-          xButtonCooldownRef.current = true;
-          addData();
-          setTimeout(() => {
-            xButtonCooldownRef.current = false;
-          }, 2000); // 2 second cooldown
-        }
-        prevXPressedRef.current = xPressed;
-      }
-    };
-
-    gamepadCheckInterval = setInterval(checkGamepad, 100);
-
-    return () => {
-      clearInterval(gamepadCheckInterval);
-    };
-  }, [addData, setGamepadConnected, isLoading, showKeyboard]);
+  const [showKeyboard, setShowKeyboard] = useState(true); // toggle with button/gamepad
 
   return (
     <div

@@ -49,7 +49,7 @@ export default function InteractiveQA() {
                     score={score}
                     setPage={setPage}
                     cuserId={cuserId} /> :
-                
+              
                   null
 
       }

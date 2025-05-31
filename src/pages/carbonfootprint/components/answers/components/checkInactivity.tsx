@@ -4,7 +4,7 @@ import isEqual from "lodash.isequal";
 
 type CarbonState = any; // Replace this with your actual CarbonState type
 
-export const useCarbonInactivity = (onInactivity: () => void, timeout = 180000) => {
+export const useCarbonInactivity = (onInactivity: () => void, timeout = 300000) => {
   const carbon = useSelector((state: { carbon: CarbonState }) => state.carbon);
   const prevCarbonRef = useRef<CarbonState>(carbon);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);

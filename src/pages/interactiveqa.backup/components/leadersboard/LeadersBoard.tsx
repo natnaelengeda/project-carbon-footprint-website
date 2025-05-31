@@ -45,8 +45,7 @@ export default function LeadersBoard({ setPage, cuserId }: Props) {
       .then((response) => {
         if (response.status == 200) {
           setLeaderboardData(response.data);
-          
-          console.log("User data from database:",response.data)
+          console.log(response.data)
         }
       });
   }

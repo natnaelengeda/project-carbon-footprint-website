@@ -29,7 +29,7 @@ export default function CorrectAnswer({ click, currentQuestionA, selectedChoice 
               style={{
                 lineHeight: "1.5"
               }}
-              className="text-5xl md:text-[15px]">
+              className="text-2xl md:text-[15px]">
               <span
                 style={{
                   lineHeight: "1.2"

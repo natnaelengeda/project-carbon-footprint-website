@@ -95,7 +95,7 @@ export default function Result({ value, isLoading }: { value: string; isLoading:
     } else if (number > 4500) {
       return "very_very_bad";
     } else {
-      return "good";
+      return "none"; // Optional fallback
     }
   };
 
@@ -103,6 +103,8 @@ export default function Result({ value, isLoading }: { value: string; isLoading:
     const grade = GradeChecker(parseInt(value));
     if (["excellent", "very_good", "good"].includes(grade)) {
       fireConfetti(grade as "excellent" | "very_good" | "good");
+    } else {
+      console.log(`No confetti for grade: ${grade}`);
     }
   }, [value]);
 

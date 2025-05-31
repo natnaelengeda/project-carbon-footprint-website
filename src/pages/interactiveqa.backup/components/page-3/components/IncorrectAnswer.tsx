@@ -6,7 +6,7 @@ interface ICorrectAnswer {
   selectedChoice: any;
 }
 
-export default function CorrectAnswer({ click, currentQuestionA, selectedChoice }: ICorrectAnswer) {
+export default function IncorrectAnswer({ click, currentQuestionA, selectedChoice }: ICorrectAnswer) {
   const savedlanguages = JSON.parse(localStorage.getItem("language") || JSON.stringify({
     carbon: "en",
     pledge: "en",
@@ -21,7 +21,7 @@ export default function CorrectAnswer({ click, currentQuestionA, selectedChoice 
         selectedChoice &&
         selectedChoice._id &&
         currentQuestionA.answer == selectedChoice._id &&
-        selectedChoice.isCorrect &&
+        !selectedChoice.isCorrect &&
         <>
           <div
             className="pt-5 w-full">
@@ -29,12 +29,12 @@ export default function CorrectAnswer({ click, currentQuestionA, selectedChoice 
               style={{
                 lineHeight: "1.5"
               }}
-              className="text-5xl md:text-[15px]">
+              className="text-2xl md:text-[15px]">
               <span
                 style={{
                   lineHeight: "1.2"
                 }}
-                className={`${selectedChoice.isCorrect && "text-primary"} font-bold`}>{selectedChoice.isCorrect && `${t("qa.correct", { lng: savedlanguages.qa })}:`}</span>
+                className={`${!selectedChoice.isCorrect && "text-red-500"} font-bold`}>{!selectedChoice.isCorrect && `${t("qa.incorrect_answer", { lng: savedlanguages.qa })}: `}</span>
               {selectedChoice.explanation}
             </p>
           </div>

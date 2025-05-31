@@ -153,7 +153,7 @@ export default function VirtualKeyboard({ setText, addData, setShowKeyboard, set
       if (key.value === "backspace") {
         setText((prev) => prev.slice(0, -1))
       } else if (key.value == "enter") {
-        //addData();
+        addData();
         setShowKeyboard(false);
       } else {
         setText((prev) => prev + key.value)
