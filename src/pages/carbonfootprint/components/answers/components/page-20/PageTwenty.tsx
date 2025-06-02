@@ -41,7 +41,7 @@ function calculateTotalEmissions(responseData: ResponseData): number {
   const dietEmission = responseData.dietAndFood || 0;
   const wasteEmission = responseData.wasteDisposal || 0;
   const energyEmission = responseData.householdEnergy || 0;
-  console.log("Response Data:", responseData);
+  /*console.log("Response Data:", responseData);
   // Log the response data for debugging
   console.log("Water Usage Emission:", responseData.waterUsage);
   console.log("Food Wastage Emission:", responseData.foodWastage);
@@ -55,17 +55,17 @@ function calculateTotalEmissions(responseData: ResponseData): number {
   console.log("Transport Emission:", transportEmission);
   console.log("Diet Emission:", dietEmission);
   console.log("Waste Emission:", wasteEmission);
-  console.log("Energy Emission:", energyEmission);
+  console.log("Energy Emission:", energyEmission);*/
 
   const totalEmission =
-    waterEmission +
-    foodWasteEmission +
-    transportEmission +
-    dietEmission +
-    wasteEmission +
-    energyEmission;
+    Number(waterEmission) +
+    Number(foodWasteEmission) +
+    Number(transportEmission) +
+    Number(dietEmission) +
+    Number(wasteEmission) +
+    Number(energyEmission);
 
-  console.log("Total Emission:", totalEmission);
+  console.log("Total Emission (Number):", totalEmission);
 
   return totalEmission;
 }
@@ -101,10 +101,10 @@ export default function PageTwenty({ setPage, setCarbonFootPrint }: Props) {
 
       // Compute total emissions
       const totalEmission = calculateTotalEmissions(responseData);
-
+      console.log("Total Emission Calculated (String):", totalEmission.toString());
       // Set total emissions
-      setValue(totalEmission.toFixed(0));
-      setCarbonFootPrint(totalEmission.toFixed(0));
+      setValue(totalEmission.toString());
+      setCarbonFootPrint(totalEmission.toString());
 
       //console.log("Carbon Footprint: " + totalEmission.toFixed(2) + " kg CO₂-e");
 

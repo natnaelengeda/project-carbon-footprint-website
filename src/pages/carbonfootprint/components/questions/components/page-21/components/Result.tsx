@@ -1,14 +1,68 @@
-// Components
-import CarbonLanguage from '@/utils/carbonLanguage';
+import React, { useEffect } from "react";
+import CarbonLanguage from "@/utils/carbonLanguage";
+import Skeleton from "react-loading-skeleton";
+import AppAsset from "@/core/AppAsset";
+import confetti from "canvas-confetti";
 
-// Skeleton
-import Skeleton from 'react-loading-skeleton';
+const count = 200;
+const defaults = {
+  origin: { y: 0.7 },
+};
 
-// AppAsset
-import AppAsset from '@/core/AppAsset';
+function fire(particleRatio: number, opts: any) {
+  confetti({
+    ...defaults,
+    ...opts,
+    particleCount: Math.floor(count * particleRatio),
+  });
+}
 
-export default function Result({ value, isLoading }: { value: string, isLoading: boolean }) {
+function fireConfetti(level: "excellent" | "very_good" | "good") {
+  const particleSettings = {
+    excellent: {
+      particleRatio: 0.5,
+      spread: 150,
+      startVelocity: 70,
+      scalar: 1.4,
+    },
+    very_good: {
+      particleRatio: 0.25,
+      spread: 80,
+      startVelocity: 50,
+      scalar: 1.0,
+    },
+    good: {
+      particleRatio: 0.1,
+      spread: 50,
+      startVelocity: 30,
+      scalar: 0.8,
+    },
+  };
 
+  const settings = particleSettings[level];
+
+  fire(settings.particleRatio, {
+    spread: settings.spread,
+    startVelocity: settings.startVelocity,
+    scalar: settings.scalar,
+  });
+
+  fire(settings.particleRatio * 0.8, {
+    spread: settings.spread + 20,
+    startVelocity: settings.startVelocity - 10,
+    decay: 0.92,
+    scalar: settings.scalar * 1.1,
+  });
+
+  fire(settings.particleRatio * 0.6, {
+    spread: settings.spread + 40,
+    startVelocity: settings.startVelocity - 20,
+    decay: 0.91,
+    scalar: settings.scalar * 1.2,
+  });
+}
+
+export default function Result({ value, isLoading }: { value: string; isLoading: boolean }) {
   const BadgeChecker = (number: number) => {
     if (number < 1000) {
       return AppAsset.ExcellentBadge; // Excellent
@@ -25,7 +79,7 @@ export default function Result({ value, isLoading }: { value: string, isLoading:
     } else {
       return AppAsset.GoodBadge; // Optional fallback
     }
-  }
+  };
 
   const GradeChecker = (number: number) => {
     if (number < 1000) {
@@ -33,18 +87,26 @@ export default function Result({ value, isLoading }: { value: string, isLoading:
     } else if (number >= 1000 && number <= 1750) {
       return "very_good";
     } else if (number >= 1751 && number <= 2500) {
-      return "good"
+      return "good";
     } else if (number >= 2501 && number <= 3000) {
-      return "poor"
+      return "poor";
     } else if (number >= 3001 && number <= 4500) {
-      return "very_poor"
+      return "very_poor";
     } else if (number > 4500) {
       return "very_very_bad";
     } else {
-      return "good"
+      return "none"; // Optional fallback
     }
-  }
+  };
 
+  useEffect(() => {
+    const grade = GradeChecker(parseInt(value));
+    if (["excellent", "very_good", "good"].includes(grade)) {
+      fireConfetti(grade as "excellent" | "very_good" | "good");
+    } else {
+      console.log(`No confetti for grade: ${grade}`);
+    }
+  }, [value]);
 
   return (
     <div

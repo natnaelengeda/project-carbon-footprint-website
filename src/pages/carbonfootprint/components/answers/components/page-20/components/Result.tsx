@@ -21,19 +21,19 @@ function fireConfetti(level: "excellent" | "very_good" | "good") {
   const particleSettings = {
     excellent: {
       particleRatio: 0.5,
-      spread: 120,
+      spread: 750,
       startVelocity: 70,
       scalar: 1.4,
     },
     very_good: {
       particleRatio: 0.25,
-      spread: 80,
+      spread: 450,
       startVelocity: 50,
       scalar: 1.0,
     },
     good: {
       particleRatio: 0.1,
-      spread: 50,
+      spread: 250,
       startVelocity: 30,
       scalar: 0.8,
     },
@@ -100,8 +100,16 @@ export default function Result({ value, isLoading }: { value: string; isLoading:
   };
 
   useEffect(() => {
-    const grade = GradeChecker(parseInt(value));
+    console.log("Value passed to GradeChecker:", value);
+
+    const parsedValue = parseInt(value);
+    console.log("Parsed value:", parsedValue);
+
+    const grade = GradeChecker(parsedValue);
+    console.log("Grade returned by GradeChecker:", grade);
+
     if (["excellent", "very_good", "good"].includes(grade)) {
+      console.log(`Firing confetti for grade: ${grade}`);
       fireConfetti(grade as "excellent" | "very_good" | "good");
     } else {
       console.log(`No confetti for grade: ${grade}`);

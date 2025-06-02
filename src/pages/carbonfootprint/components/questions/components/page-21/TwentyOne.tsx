@@ -25,6 +25,7 @@ export default function TwentyOne({ setPage, setCarbonFootPrint }: Props) {
   const [value, setValue] = useState<string>(""); // Total emissions value
   const [isLoading, setIsLoading] = useState<boolean>(true); // Loading state
 
+  console.log("Page 21 Results:", value);
   // Confetti
   const count = 200;
   const defaults = {
@@ -40,43 +41,19 @@ export default function TwentyOne({ setPage, setCarbonFootPrint }: Props) {
   }
 
   useEffect(() => {
-    // Listen for the "page-21-results-client" event
-    socket?.on("page-21-results-client", (temp) => {
-      const data = JSON.parse(temp);
+    if (socket?.connected) {
+      console.log("Socket is connected");
+      socket.on("page-21-results-client", (temp) => {
+        const data = JSON.parse(temp);
+        setValue(data.value.toString());
+        setCarbonFootPrint(data.value.toString());
+        setIsLoading(false);
+        console.log("Page 21 Data:", data);
+      });
+    } else {
+      console.log("Socket is not connected");
+    }
 
-      // Set the value and carbon footprint
-      setValue(data.value.toFixed(0));
-      setCarbonFootPrint(data.value.toFixed(0));
-
-      // Set loading to false
-      setIsLoading(false);
-
-      // Trigger confetti
-      fire(0.25, {
-        spread: 26,
-        startVelocity: 55,
-      });
-      fire(0.2, {
-        spread: 60,
-      });
-      fire(0.35, {
-        spread: 100,
-        decay: 0.91,
-        scalar: 0.8,
-      });
-      fire(0.1, {
-        spread: 120,
-        startVelocity: 25,
-        decay: 0.92,
-        scalar: 1.2,
-      });
-      fire(0.1, {
-        spread: 120,
-        startVelocity: 45,
-      });
-    });
-
-    // Clean up the socket listener on unmount
     return () => {
       socket?.off("page-21-results-client");
     };
