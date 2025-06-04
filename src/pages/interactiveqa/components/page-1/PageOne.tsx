@@ -17,9 +17,8 @@ interface Props {
 }
 
 export default function PageOne({ setPage }: Props) {
-  // const isKeyPressed = useRef(false);
-  // const [key, setKey] = useState(null);
-  const [gamepadConnected, setGamepadConnected] = useState(false)
+  const [gamepadConnected, setGamepadConnected] = useState(false);
+  const [buttonCooldown, setButtonCooldown] = useState(false); // Cooldown state
 
   const savedlanguages = JSON.parse(localStorage.getItem("language") || JSON.stringify({
     qa: "en"
@@ -28,63 +27,58 @@ export default function PageOne({ setPage }: Props) {
   const [language, setLanguage] = useState(savedlanguages);
   const { t } = useTranslation();
 
-  // useEffect(() => {
-  //   if (isKeyPressed.current) {
-  //     console.log(key);
-  //     setPage(2)
-  //   }
-  // }, [isKeyPressed.current]);
-
   // Check Joystick Connectivity
   useEffect(() => {
-    let gamepadCheckInterval: NodeJS.Timeout
+    let gamepadCheckInterval: NodeJS.Timeout;
 
     const checkGamepad = () => {
-      const gamepads = navigator.getGamepads()
-      const gamepad = gamepads[0]
+      const gamepads = navigator.getGamepads();
+      const gamepad = gamepads[0];
 
       if (gamepad) {
-        setGamepadConnected(true)
+        setGamepadConnected(true);
 
         // Detect if buttons were just pressed (to avoid repeated actions)
         const buttonPressed = (index: number) => {
-          return gamepad.buttons[index]?.pressed
-        }
+          return gamepad.buttons[index]?.pressed;
+        };
 
-        if (buttonPressed(0)) {
-          setPage(2);
+        // Add cooldown logic for X button press
+        if (buttonPressed(0) && !buttonCooldown) {
+          setPage(2); // Navigate to PageTwo
+          setButtonCooldown(true); // Activate cooldown
+          setTimeout(() => setButtonCooldown(false), 500); // Cooldown duration: 1 second
         }
-
       } else {
-        setGamepadConnected(false)
+        setGamepadConnected(false);
       }
-    }
+    };
 
     // Check if gamepad is already connected
     if (navigator.getGamepads && navigator.getGamepads()[0]) {
-      setGamepadConnected(true)
-      gamepadCheckInterval = setInterval(checkGamepad, 100)
+      setGamepadConnected(true);
+      gamepadCheckInterval = setInterval(checkGamepad, 100);
     }
 
     const handleGamepadConnected = () => {
-      setGamepadConnected(true)
-      gamepadCheckInterval = setInterval(checkGamepad, 100)
-    }
+      setGamepadConnected(true);
+      gamepadCheckInterval = setInterval(checkGamepad, 100);
+    };
 
     const handleGamepadDisconnected = () => {
-      setGamepadConnected(false)
-      if (gamepadCheckInterval) clearInterval(gamepadCheckInterval)
-    }
+      setGamepadConnected(false);
+      if (gamepadCheckInterval) clearInterval(gamepadCheckInterval);
+    };
 
-    window.addEventListener("gamepadconnected", handleGamepadConnected)
-    window.addEventListener("gamepaddisconnected", handleGamepadDisconnected)
+    window.addEventListener("gamepadconnected", handleGamepadConnected);
+    window.addEventListener("gamepaddisconnected", handleGamepadDisconnected);
 
     return () => {
-      window.removeEventListener("gamepadconnected", handleGamepadConnected)
-      window.removeEventListener("gamepaddisconnected", handleGamepadDisconnected)
-      if (gamepadCheckInterval) clearInterval(gamepadCheckInterval)
-    }
-  }, []);
+      window.removeEventListener("gamepadconnected", handleGamepadConnected);
+      window.removeEventListener("gamepaddisconnected", handleGamepadDisconnected);
+      if (gamepadCheckInterval) clearInterval(gamepadCheckInterval);
+    };
+  }, [buttonCooldown]);
 
   useEffect(() => {
     const intervalId = setInterval(() => {

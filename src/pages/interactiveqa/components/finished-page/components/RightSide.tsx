@@ -26,15 +26,47 @@ export default function RightSide({ name, setName, addData, setGamepadConnected,
   const savedlanguages = JSON.parse(localStorage.getItem("language") || JSON.stringify({
     qa: "en"
   }));
-  // React Language Packaged;
   const { t } = useTranslation();
-
 
   const [showKeyboard, setShowKeyboard] = useState(true);
 
   // Cooldown and edge detection refs for X button
   const xButtonCooldownRef = useRef(false);
   const prevXPressedRef = useRef(false);
+
+  // Track the ith user today
+  const [userCount, setUserCount] = useState(0);
+
+  useEffect(() => {
+    // Fetch the current user count from localStorage or initialize it
+    const count = parseInt(localStorage.getItem("userCount") || "0", 10);
+    setUserCount(count);
+  }, []);
+
+  const generateRandomName = () => {
+    const randomSuffix = Math.floor(1000 + Math.random() * 9000); // Generate a random 4-digit number
+    return `user-${randomSuffix}`;
+  };
+
+  const handleSubmit = () => {
+    // Generate a default name if the user doesn't input one
+    const generatedName = name.trim() === "" ? generateRandomName() : name;
+
+    // Debug information
+    console.debug("Generated Name:", generatedName);
+    console.debug("User Count:", userCount);
+    console.debug("Name Provided:", name);
+
+    // Update the user count in localStorage
+    localStorage.setItem("userCount", String(userCount + 1));
+
+    // Call the addData function with the generated name
+    setName(generatedName);
+    addData();
+
+    // Move to the next page (this logic should be handled in the parent component)
+    console.log(`Submitted name: ${generatedName}`);
+  };
 
   useEffect(() => {
     let gamepadCheckInterval: NodeJS.Timeout;
@@ -47,7 +79,7 @@ export default function RightSide({ name, setName, addData, setGamepadConnected,
         setGamepadConnected(true);
         const xPressed = gamepad.buttons[0]?.pressed;
 
-        // Only trigger addData if X is pressed, wasn't pressed last frame, and not in cooldown, and keyboard is hidden
+        // Only trigger handleSubmit if X is pressed, wasn't pressed last frame, and not in cooldown, and keyboard is hidden
         if (
           !showKeyboard && // Only allow when keyboard is hidden (submit button visible)
           xPressed &&
@@ -56,7 +88,7 @@ export default function RightSide({ name, setName, addData, setGamepadConnected,
           !isLoading
         ) {
           xButtonCooldownRef.current = true;
-          addData();
+          handleSubmit();
           setTimeout(() => {
             xButtonCooldownRef.current = false;
           }, 2000); // 2 second cooldown
@@ -70,7 +102,7 @@ export default function RightSide({ name, setName, addData, setGamepadConnected,
     return () => {
       clearInterval(gamepadCheckInterval);
     };
-  }, [addData, setGamepadConnected, isLoading, showKeyboard]);
+  }, [handleSubmit, setGamepadConnected, isLoading, showKeyboard]);
 
   return (
     <div
@@ -106,7 +138,7 @@ export default function RightSide({ name, setName, addData, setGamepadConnected,
           showKeyboard &&
           <VirtualKeyboard
             setText={setName}
-            addData={addData}
+            addData={handleSubmit} // Trigger handleSubmit on Enter
             setShowKeyboard={setShowKeyboard}
             setIsGamepadConnected={setGamepadConnected} />
         }
@@ -115,7 +147,7 @@ export default function RightSide({ name, setName, addData, setGamepadConnected,
         <div
           className={`${showKeyboard ? "pt-5" : "pt-20"}`}>
           <button
-            onClick={addData}
+            onClick={handleSubmit} // Trigger handleSubmit on button click
             disabled={isLoading}
             className="flex flex-row items-center justify-center md:w-[240px] md:h-[70px] bg-transparent border border-primary text-primary rounded-full px-3 md:px-0 py-2 md:py-0 gap-2 pt-10">
             <p className="text-xl md:text-[20px]"> {t("qa.see_leader_board", { lng: savedlanguages.qa })}</p>
@@ -133,5 +165,5 @@ export default function RightSide({ name, setName, addData, setGamepadConnected,
       </div>
 
     </div>
-  )
+  );
 }

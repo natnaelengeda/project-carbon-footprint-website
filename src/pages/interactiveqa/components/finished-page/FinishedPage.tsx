@@ -38,6 +38,9 @@ export default function FinishedPage({ setPage, answers, questions, setcUserId, 
 
   const calculateAnswers = () => {
     let sum = 0;
+    const totalQuestions = questions.length; // Total number of questions
+    const maxScorePerQuestion = 100 / totalQuestions; // Maximum score per question to fit 100
+
     for (let i = 0; i < length; i++) {
       const data = Object.entries(answers)[i];
       const q = questions.find((question) => question._id === data[0]);
@@ -51,22 +54,24 @@ export default function FinishedPage({ setPage, answers, questions, setcUserId, 
           if (choice.isCorrect) {
             switch (difficulty) {
               case "Easy":
-                sum += 7.5;
+                sum += maxScorePerQuestion * 0.75; // 75% of max score for Easy
                 break;
               case "Medium":
-                sum += 10;
+                sum += maxScorePerQuestion; // 100% of max score for Medium
                 break;
               case "Difficult":
-                sum += 40 / 3;
+                sum += maxScorePerQuestion * 1.33; // 133% of max score for Difficult
                 break;
             }
           }
         }
       });
     }
+
+    sum = Math.round(sum); // Round off the sum to the nearest integer
     setSum(sum);
     setScore(sum);
-  }
+  };
 
   const addData = () => {
     if (name === "") {

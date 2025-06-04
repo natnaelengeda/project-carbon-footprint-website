@@ -29,6 +29,7 @@ export default function PageTwo({ setPage, setQuestions }: Props) {
   const [language, setLanguage] = useState<string>("english");
   const [selected, setSelected] = useState<number>(0);
   const [gamepadConnected, setGamepadConnected] = useState(false);
+  const [buttonCooldown, setButtonCooldown] = useState(false); // Cooldown state
 
   const savedLanguages = JSON.parse(
     localStorage.getItem("language") ||
@@ -116,8 +117,11 @@ export default function PageTwo({ setPage, setQuestions }: Props) {
           }
         }
 
-        if (buttonPressed(0)) {
-          fetchQuestions();
+        // Add cooldown logic for X button press
+        if (buttonPressed(0) && !buttonCooldown) {
+          fetchQuestions(); // Fetch questions
+          setButtonCooldown(true); // Activate cooldown
+          setTimeout(() => setButtonCooldown(false), 1000); // Cooldown duration: 1 second
         }
       } else {
         setGamepadConnected(false);
@@ -148,7 +152,7 @@ export default function PageTwo({ setPage, setQuestions }: Props) {
       window.removeEventListener("gamepaddisconnected", handleGamepadDisconnected);
       if (gamepadCheckInterval) clearInterval(gamepadCheckInterval);
     };
-  }, [selected, language]);
+  }, [selected, language, buttonCooldown]);
 
   useEffect(() => {
     const defaultLanguage = JSON.stringify({

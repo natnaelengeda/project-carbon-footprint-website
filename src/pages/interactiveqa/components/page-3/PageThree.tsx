@@ -294,22 +294,26 @@ export default function xPageThree({ setPage, answers, setAnswers, setQuestions,
           className="w-full md:w-[auto] flex flex-col items-start justify-start gap-4 md:gap-[60px] text-white pt-[150px]">
           {/* Question */}
           <div
-            className="relative w-full flex flex-col items-start justify-start"
+            className="relative w-full flex flex-col items-center justify-center"
             style={{
               maxWidth: "600px",  // Restricts width for wrapping
               margin: "0 auto",   // Centers the content horizontally
+              minHeight: "150px", // Ensures consistent height for the question container
+              marginBottom: "20px", // Adds spacing below the question box
             }}
           >
             <div
-              className="w-full bg-white bg-opacity-0 rounded-lg p-4 overflow-hidden"
+              className="w-full bg-white bg-opacity-0 rounded-lg p-4"
               style={{
-                minHeight: "10px", // Adjusted height to reduce extra space
-                display: "flex",   // Enables flexbox layout
+                minHeight: "150px", // Ensures consistent height for the question text
+                maxHeight: "150px", // Restricts height to prevent overflow
+                display: "flex",    // Enables flexbox layout
                 flexDirection: "column", // Ensures content stacks vertically
-                alignItems: "flex-start", // Aligns content to the top-left
-                justifyContent: "flex-start", // Aligns content to the top-left
+                alignItems: "center", // Centers content horizontally
+                justifyContent: "center", // Centers content vertically
                 wordBreak: "break-word", // Ensures long words wrap
-                textAlign: "left", // Ensures text is left-justified
+                textAlign: "center", // Centers text horizontally
+                lineHeight: "1.5", // Sets line height for consistent spacing
               }}
             >
               <Question
@@ -338,9 +342,11 @@ export default function xPageThree({ setPage, answers, setAnswers, setQuestions,
             }}
           >
             <div
-              className="w-full bg-white bg-opacity-10 rounded-lg  p-4"
+              className="w-full bg-white bg-opacity-10 rounded-lg p-4"
               style={{
                 minHeight: "80px", // Ensures the box is always visible
+                maxHeight: "150px", // Restricts height to prevent overflow
+                overflow: "hidden", // Prevents layout shifts caused by long text
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
@@ -364,5 +370,5 @@ export default function xPageThree({ setPage, answers, setAnswers, setQuestions,
           setPage={setPage} />
       </div>
     </QABackground>
-  )
+  );
 }
