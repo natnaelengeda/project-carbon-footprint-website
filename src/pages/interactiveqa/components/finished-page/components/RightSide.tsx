@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect, useRef } from 'react';
 
 // App Asset
 import AppAsset from '@/core/AppAsset';
@@ -10,7 +10,7 @@ import { useTranslation } from "react-i18next";
 import { CiUser } from "react-icons/ci";
 
 // Style
-import "../styles.css"
+import "../styles.css";
 import VirtualKeyboard from './VirtualKeyboard';
 import { Oval } from 'react-loader-spinner';
 
@@ -52,20 +52,12 @@ export default function RightSide({ name, setName, addData, setGamepadConnected,
     // Generate a default name if the user doesn't input one
     const generatedName = name.trim() === "" ? generateRandomName() : name;
 
-    // Debug information
-    console.debug("Generated Name:", generatedName);
-    console.debug("User Count:", userCount);
-    console.debug("Name Provided:", name);
-
     // Update the user count in localStorage
     localStorage.setItem("userCount", String(userCount + 1));
 
     // Call the addData function with the generated name
     setName(generatedName);
     addData();
-
-    // Move to the next page (this logic should be handled in the parent component)
-    console.log(`Submitted name: ${generatedName}`);
   };
 
   useEffect(() => {
@@ -122,7 +114,7 @@ export default function RightSide({ name, setName, addData, setGamepadConnected,
           {/* Text Input */}
           <div className="flex gap-2.5 justify-center items-center self-stretch my-auto">
             <CiUser
-              className=" shrink-0 self-stretch my-auto aspect-square w-[20px]" />
+              className="shrink-0 self-stretch my-auto aspect-square w-[20px]" />
             <input
               value={name}
               onChange={(e) => setName(e.target.value)}
@@ -163,7 +155,6 @@ export default function RightSide({ name, setName, addData, setGamepadConnected,
           </button>
         </div>
       </div>
-
     </div>
   );
 }

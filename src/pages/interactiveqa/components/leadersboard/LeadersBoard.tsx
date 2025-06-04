@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 
 // Layout
 import QABackground from "../QABackground";
@@ -10,7 +10,6 @@ import axios from "@/utils/axios";
 import { useTranslation } from "react-i18next";
 import LeaderboardsTable from "./components/LeaderboardsTable";
 import GamePadStatus from "../GamePadStatus";
-
 
 export interface ParticipantData {
   userId: string;
@@ -28,7 +27,6 @@ interface Props {
 
 export default function LeadersBoard({ setPage, cuserId }: Props) {
   const [leaderboardData, setLeaderboardData] = useState<any>(null);
-
   const [gamepadConnected, setGamepadConnected] = useState(false);
 
   const savedlanguages = JSON.parse(localStorage.getItem("language") || JSON.stringify({
@@ -37,74 +35,116 @@ export default function LeadersBoard({ setPage, cuserId }: Props) {
     qa: "en"
   }));
 
-  // React Language Packaged;
   const { t } = useTranslation();
+
+  // Cooldown ref for X button
+  const xButtonCooldownRef = useRef(false);
+
+  // Inactivity timeout ref
+  const inactivityTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+  const resetInactivityTimeout = () => {
+    if (inactivityTimeoutRef.current) {
+      clearTimeout(inactivityTimeoutRef.current);
+    }
+    inactivityTimeoutRef.current = setTimeout(() => {
+      console.log("Returning to page 1 due to inactivity.");
+      setPage(1);
+    }, 60000); // 1 minute inactivity timeout
+  };
 
   const fetchLeaderboardData = () => {
     axios.get(`/api/v1/questionAttempts/top10/${cuserId}`)
       .then((response) => {
         if (response.status == 200) {
           setLeaderboardData(response.data);
-          
-          console.log("User data from database:",response.data)
+
+          // Debugging: Log the leaderboard data
+          console.log("Leaderboard Data:", response.data);
+        } else {
+          console.error("Failed to fetch leaderboard data. Status:", response.status);
         }
+      })
+      .catch((error) => {
+        console.error("Error fetching leaderboard data:", error);
       });
-  }
+  };
 
   useEffect(() => {
-    if (true) {
+    if (cuserId) {
       fetchLeaderboardData();
+    } else {
+      console.warn("cuserId is null or undefined. Cannot fetch leaderboard data.");
     }
   }, [cuserId]);
 
   useEffect(() => {
-    let gamepadCheckInterval: NodeJS.Timeout
+    let gamepadCheckInterval: NodeJS.Timeout;
 
     const checkGamepad = () => {
-      const gamepads = navigator.getGamepads()
-      const gamepad = gamepads[0]
+      const gamepads = navigator.getGamepads();
+      const gamepad = gamepads[0];
 
       if (gamepad) {
-        setGamepadConnected(true)
+        setGamepadConnected(true);
 
         // Detect if buttons were just pressed (to avoid repeated actions)
         const buttonPressed = (index: number) => {
-          return gamepad.buttons[index]?.pressed
-        }
+          return gamepad.buttons[index]?.pressed;
+        };
 
-        if (buttonPressed(0)) {
+        if (buttonPressed(0) && !xButtonCooldownRef.current) {
+          xButtonCooldownRef.current = true;
+          console.log("X button pressed, navigating to page 1.");
           setPage(1);
-        }
 
+          // Reset cooldown after 500ms
+          setTimeout(() => {
+            xButtonCooldownRef.current = false;
+          }, 500); // 500ms cooldown
+        }
       } else {
-        setGamepadConnected(false)
+        setGamepadConnected(false);
       }
-    }
+    };
 
     // Check if gamepad is already connected
     if (navigator.getGamepads && navigator.getGamepads()[0]) {
-      setGamepadConnected(true)
-      gamepadCheckInterval = setInterval(checkGamepad, 100)
+      setGamepadConnected(true);
+      gamepadCheckInterval = setInterval(checkGamepad, 100);
     }
 
     const handleGamepadConnected = () => {
-      setGamepadConnected(true)
-      gamepadCheckInterval = setInterval(checkGamepad, 100)
-    }
+      setGamepadConnected(true);
+      gamepadCheckInterval = setInterval(checkGamepad, 100);
+    };
 
     const handleGamepadDisconnected = () => {
-      setGamepadConnected(false)
-      if (gamepadCheckInterval) clearInterval(gamepadCheckInterval)
-    }
+      setGamepadConnected(false);
+      if (gamepadCheckInterval) clearInterval(gamepadCheckInterval);
+    };
 
-    window.addEventListener("gamepadconnected", handleGamepadConnected)
-    window.addEventListener("gamepaddisconnected", handleGamepadDisconnected)
+    window.addEventListener("gamepadconnected", handleGamepadConnected);
+    window.addEventListener("gamepaddisconnected", handleGamepadDisconnected);
+
+    // Reset inactivity timeout on any user interaction
+    window.addEventListener("mousemove", resetInactivityTimeout);
+    window.addEventListener("keydown", resetInactivityTimeout);
+    window.addEventListener("click", resetInactivityTimeout);
+
+    // Initialize inactivity timeout
+    resetInactivityTimeout();
 
     return () => {
-      window.removeEventListener("gamepadconnected", handleGamepadConnected)
-      window.removeEventListener("gamepaddisconnected", handleGamepadDisconnected)
-      if (gamepadCheckInterval) clearInterval(gamepadCheckInterval)
-    }
+      window.removeEventListener("gamepadconnected", handleGamepadConnected);
+      window.removeEventListener("gamepaddisconnected", handleGamepadDisconnected);
+      window.removeEventListener("mousemove", resetInactivityTimeout);
+      window.removeEventListener("keydown", resetInactivityTimeout);
+      window.removeEventListener("click", resetInactivityTimeout);
+
+      if (gamepadCheckInterval) clearInterval(gamepadCheckInterval);
+      if (inactivityTimeoutRef.current) clearTimeout(inactivityTimeoutRef.current);
+    };
   }, []);
 
   return (
@@ -118,10 +158,11 @@ export default function LeadersBoard({ setPage, cuserId }: Props) {
 
         {/* Grid 1 */}
         <div className="w-full flex flex-col items-start justify-start pt-52 pl-20">
+          {/* Debugging: Log leaderboardData before passing it */}
+          {console.log("Passing leaderboardData to LeaderboardsTable:", leaderboardData)}
           <LeaderboardsTable
             participants={leaderboardData}
             cuserId={cuserId} />
-
         </div>
 
         {/* Grid 2 */}
@@ -148,8 +189,7 @@ export default function LeadersBoard({ setPage, cuserId }: Props) {
             </button>
           </div>
         </div>
-
       </div>
     </QABackground>
-  )
+  );
 }

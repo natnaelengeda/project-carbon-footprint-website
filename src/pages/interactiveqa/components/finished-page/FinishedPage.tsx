@@ -38,9 +38,25 @@ export default function FinishedPage({ setPage, answers, questions, setcUserId, 
 
   const calculateAnswers = () => {
     let sum = 0;
+    let totalWeight = 0; // Total weight of all questions
     const totalQuestions = questions.length; // Total number of questions
-    const maxScorePerQuestion = 100 / totalQuestions; // Maximum score per question to fit 100
 
+    // Calculate the total weight of all questions based on their difficulty
+    questions.forEach((question) => {
+      switch (question.difficulty) {
+        case "Easy":
+          totalWeight += 0.75; // Easy questions contribute 0.75 weight
+          break;
+        case "Medium":
+          totalWeight += 1; // Medium questions contribute 1 weight
+          break;
+        case "Difficult":
+          totalWeight += 1.33; // Difficult questions contribute 1.33 weight
+          break;
+      }
+    });
+
+    // Compute the user's score based on their answers
     for (let i = 0; i < length; i++) {
       const data = Object.entries(answers)[i];
       const q = questions.find((question) => question._id === data[0]);
@@ -54,13 +70,13 @@ export default function FinishedPage({ setPage, answers, questions, setcUserId, 
           if (choice.isCorrect) {
             switch (difficulty) {
               case "Easy":
-                sum += maxScorePerQuestion * 0.75; // 75% of max score for Easy
+                sum += 0.75; // Add 0.75 for correct Easy answers
                 break;
               case "Medium":
-                sum += maxScorePerQuestion; // 100% of max score for Medium
+                sum += 1; // Add 1 for correct Medium answers
                 break;
               case "Difficult":
-                sum += maxScorePerQuestion * 1.33; // 133% of max score for Difficult
+                sum += 1.33; // Add 1.33 for correct Difficult answers
                 break;
             }
           }
@@ -68,37 +84,66 @@ export default function FinishedPage({ setPage, answers, questions, setcUserId, 
       });
     }
 
-    sum = Math.round(sum); // Round off the sum to the nearest integer
-    setSum(sum);
-    setScore(sum);
+    // Normalize the score to fit within 100
+    const normalizedScore = (sum / totalWeight) * 100;
+
+    // Round off the score to the nearest integer
+    const finalScore = Math.round(normalizedScore);
+
+    setSum(finalScore);
+    setScore(finalScore);
   };
 
   const addData = () => {
+    // Debug: Check the current name and sum values
+    console.log("addData called");
+    console.log("Name:", name);
+    console.log("Score (sum):", sum);
+
     if (name === "") {
+      console.log("Name is empty, generating a random name...");
       setIsLoading(true);
       var cname = generateRandomName();
+
+      // Debug: Check the generated random name
+      console.log("Generated Random Name:", cname);
 
       axios.post("/api/v1/questionAttempts/", {
         name: cname,
         score: sum
       }).then((response) => {
-        console.log(response.data);
-        setcUserId(response.data.data._id)
-        setPage(5);
+        // Debug: Log the API response
+        console.log("API Response:", response.data);
 
-      })
+        setcUserId(response.data.data._id);
+        setPage(5);
+      }).catch((error) => {
+        // Debug: Log any errors from the API call
+        console.error("Error in API call:", error);
+      }).finally(() => {
+        setIsLoading(false);
+      });
     } else {
+      console.log("Name provided by user:", name);
       setIsLoading(true);
+
       axios.post("/api/v1/questionAttempts/", {
         name: name,
         score: sum
       }).then((response) => {
-        console.log(response.data);
-        setcUserId(response.data.data._id)
+        // Debug: Log the API response
+        console.log("API Response:", response.data);
+
+        setcUserId(response.data.data._id);
         setPage(5);
-      })
+      }).catch((error) => {
+        // Debug: Log any errors from the API call
+        console.error("Error in API call:", error);
+      }).finally(() => {
+        setIsLoading(false);
+      });
     }
-  }
+  };
 
   useEffect(() => {
     calculateAnswers();

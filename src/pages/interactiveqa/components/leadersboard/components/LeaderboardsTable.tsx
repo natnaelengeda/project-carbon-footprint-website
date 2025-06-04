@@ -12,11 +12,18 @@ export default function LeaderboardsTable({ participants, cuserId }: ILeaderBoar
   useEffect(() => {
     if (participants) {
       setIsDataPresent(true);
+
+      // Debug: Log the list of participants and their userId
+      console.log("Participants Object:", participants);
+      console.log("Top Attempts:");
+      participants?.topAttempts?.forEach((participant: any, index: number) => {
+        console.log(`Rank ${index + 1}:`, participant.name, `UserId: ${participant._id}`);
+      });
+
+      console.log("Current User:");
+      console.log(`Name: ${participants?.userName}, Score: ${participants?.userScore}, Rank: ${participants?.userRank}`);
     }
   }, [participants]);
-
-  // Find the current user's rank
-  const currentUserRank = participants?.allAttempts.findIndex((participant: any) => participant._id === cuserId) + 1;
 
   return (
     <div className="w-full h-full flex flex-col items-start justify-start">
@@ -35,26 +42,27 @@ export default function LeaderboardsTable({ participants, cuserId }: ILeaderBoar
           isDataPresent ? (
             <>
               {/* Top 10 Participants */}
-              {participants &&
-                participants.topAttempts.map((participant: any, index: number) => {
-                  return (
-                    <LeaderboardRow
-                      key={`${participant.userId}-${index}`}
-                      participant={participant}
-                      index={index}
-                      rank={index + 1}
-                      cuserId={cuserId}
-                      isHighlighted={participant._id === cuserId}
-                    />
-                  );
-                })}
+              {participants?.topAttempts.map((participant: any, index: number) => (
+                <LeaderboardRow
+                  key={`${participant._id}-${index}`}
+                  participant={participant}
+                  index={index}
+                  rank={index + 1}
+                  cuserId={cuserId}
+                  isHighlighted={participant._id === cuserId}
+                />
+              ))}
 
               {/* Add 11th Row for Current User if not in Top 10 */}
-              {currentUserRank > 10 && (
+              {participants?.userRank > 10 && (
                 <LeaderboardRow
-                  participant={participants.allAttempts.find((participant: any) => participant._id === cuserId)}
+                  participant={{
+                    name: participants?.userName,
+                    score: participants?.userScore,
+                    _id: cuserId
+                  }}
                   index={10} // 11th row
-                  rank={currentUserRank}
+                  rank={participants?.userRank}
                   cuserId={cuserId}
                   isHighlighted={true} // Highlight the current user
                 />
