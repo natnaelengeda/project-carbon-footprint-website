@@ -20,9 +20,10 @@ interface IRightSide {
   addData: () => void;
   setGamepadConnected: React.Dispatch<React.SetStateAction<boolean>>;
   isLoading: boolean;
+  setPage: React.Dispatch<React.SetStateAction<number>>;
 }
 
-export default function RightSide({ name, setName, addData, setGamepadConnected, isLoading }: IRightSide) {
+export default function RightSide({ name, setName, addData, setGamepadConnected, isLoading, setPage }: IRightSide) {
   const savedlanguages = JSON.parse(localStorage.getItem("language") || JSON.stringify({
     qa: "en"
   }));
@@ -33,6 +34,9 @@ export default function RightSide({ name, setName, addData, setGamepadConnected,
   // Cooldown and edge detection refs for X button
   const xButtonCooldownRef = useRef(false);
   const prevXPressedRef = useRef(false);
+
+  // Inactivity timeout ref
+  const inactivityTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   // Track the ith user today
   const [userCount, setUserCount] = useState(0);
@@ -48,7 +52,7 @@ export default function RightSide({ name, setName, addData, setGamepadConnected,
     return `user-${randomSuffix}`;
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = (navigateToPage: number) => {
     // Generate a default name if the user doesn't input one
     const generatedName = name.trim() === "" ? generateRandomName() : name;
 
@@ -58,6 +62,19 @@ export default function RightSide({ name, setName, addData, setGamepadConnected,
     // Call the addData function with the generated name
     setName(generatedName);
     addData();
+
+    // Move to the specified page based on the flag
+    setPage(navigateToPage);
+  };
+
+  const resetInactivityTimeout = () => {
+    if (inactivityTimeoutRef.current) {
+      clearTimeout(inactivityTimeoutRef.current);
+    }
+    inactivityTimeoutRef.current = setTimeout(() => {
+      console.log("Idle for 1 minute. Submitting data and returning to page 1.");
+      handleSubmit(1); // Move to page 1 after inactivity
+    }, 60000); // 1 minute inactivity timeout
   };
 
   useEffect(() => {
@@ -80,19 +97,38 @@ export default function RightSide({ name, setName, addData, setGamepadConnected,
           !isLoading
         ) {
           xButtonCooldownRef.current = true;
-          handleSubmit();
+          handleSubmit(5);
           setTimeout(() => {
             xButtonCooldownRef.current = false;
-          }, 2000); // 2 second cooldown
+          }, 500); // 500ms cooldown
         }
         prevXPressedRef.current = xPressed;
       }
     };
 
+    // Add cooldown when the component is initialized
+    xButtonCooldownRef.current = true;
+    setTimeout(() => {
+      xButtonCooldownRef.current = false;
+    }, 500); // 500ms cooldown on initialization
+
     gamepadCheckInterval = setInterval(checkGamepad, 100);
+
+    // Reset inactivity timeout on any user interaction
+    window.addEventListener("mousemove", resetInactivityTimeout);
+    window.addEventListener("keydown", resetInactivityTimeout);
+    window.addEventListener("click", resetInactivityTimeout);
+
+    // Initialize inactivity timeout
+    resetInactivityTimeout();
 
     return () => {
       clearInterval(gamepadCheckInterval);
+      window.removeEventListener("mousemove", resetInactivityTimeout);
+      window.removeEventListener("keydown", resetInactivityTimeout);
+      window.removeEventListener("click", resetInactivityTimeout);
+
+      if (inactivityTimeoutRef.current) clearTimeout(inactivityTimeoutRef.current);
     };
   }, [handleSubmit, setGamepadConnected, isLoading, showKeyboard]);
 
@@ -130,7 +166,7 @@ export default function RightSide({ name, setName, addData, setGamepadConnected,
           showKeyboard &&
           <VirtualKeyboard
             setText={setName}
-            addData={handleSubmit} // Trigger handleSubmit on Enter
+            addData={() => handleSubmit(5)} // Trigger handleSubmit on Enter
             setShowKeyboard={setShowKeyboard}
             setIsGamepadConnected={setGamepadConnected} />
         }
@@ -139,7 +175,7 @@ export default function RightSide({ name, setName, addData, setGamepadConnected,
         <div
           className={`${showKeyboard ? "pt-5" : "pt-20"}`}>
           <button
-            onClick={handleSubmit} // Trigger handleSubmit on button click
+            onClick={() => handleSubmit(5)} // Trigger handleSubmit on button click
             disabled={isLoading}
             className="flex flex-row items-center justify-center md:w-[240px] md:h-[70px] bg-transparent border border-primary text-primary rounded-full px-3 md:px-0 py-2 md:py-0 gap-2 pt-10">
             <p className="text-xl md:text-[20px]"> {t("qa.see_leader_board", { lng: savedlanguages.qa })}</p>

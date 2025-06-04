@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
 import { Oval } from "react-loader-spinner";
 
@@ -30,6 +30,8 @@ export default function PageTwo({ setPage, setQuestions }: Props) {
   const [selected, setSelected] = useState<number>(0);
   const [gamepadConnected, setGamepadConnected] = useState(false);
   const [buttonCooldown, setButtonCooldown] = useState(false); // Cooldown state
+
+  const xButtonCooldownRef = useRef(false); // Cooldown ref for X button
 
   const savedLanguages = JSON.parse(
     localStorage.getItem("language") ||
@@ -118,7 +120,7 @@ export default function PageTwo({ setPage, setQuestions }: Props) {
         }
 
         // Add cooldown logic for X button press
-        if (buttonPressed(0) && !buttonCooldown) {
+        if (buttonPressed(0) && !buttonCooldown && !xButtonCooldownRef.current) {
           fetchQuestions(); // Fetch questions
           setButtonCooldown(true); // Activate cooldown
           setTimeout(() => setButtonCooldown(false), 1000); // Cooldown duration: 1 second
@@ -127,6 +129,12 @@ export default function PageTwo({ setPage, setQuestions }: Props) {
         setGamepadConnected(false);
       }
     };
+
+    // Add cooldown when the component is initialized
+    xButtonCooldownRef.current = true;
+    setTimeout(() => {
+      xButtonCooldownRef.current = false;
+    }, 500); // 500ms cooldown on initialization
 
     // Check if gamepad is already connected
     if (navigator.getGamepads && navigator.getGamepads()[0]) {
