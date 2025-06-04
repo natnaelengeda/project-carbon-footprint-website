@@ -41,21 +41,6 @@ function calculateTotalEmissions(responseData: ResponseData): number {
   const dietEmission = responseData.dietAndFood || 0;
   const wasteEmission = responseData.wasteDisposal || 0;
   const energyEmission = responseData.householdEnergy || 0;
-  /*console.log("Response Data:", responseData);
-  // Log the response data for debugging
-  console.log("Water Usage Emission:", responseData.waterUsage);
-  console.log("Food Wastage Emission:", responseData.foodWastage);
-  console.log("Transportation Mode Emission:", responseData.transportationMode);
-  console.log("Diet and Food Emission:", responseData.dietAndFood);
-  console.log("Waste Disposal Emission:", responseData.wasteDisposal);
-  console.log("Household Energy Emission:", responseData.householdEnergy);
-  
-  console.log("Water Emission:", waterEmission);
-  console.log("Food Waste Emission:", foodWasteEmission);
-  console.log("Transport Emission:", transportEmission);
-  console.log("Diet Emission:", dietEmission);
-  console.log("Waste Emission:", wasteEmission);
-  console.log("Energy Emission:", energyEmission);*/
 
   const totalEmission =
     Number(waterEmission) +
@@ -78,35 +63,53 @@ export default function PageTwenty({ setPage, setCarbonFootPrint }: Props) {
   const [isLoading, setIsLoading] = useState<boolean>(false); // Loading state
   const [isRun, setIsRun] = useState<boolean>(false); // Loading state
 
-
   const carbon = useSelector((state: any) => state.carbon);
   const data = mapData(carbon);
 
-  const hasExecuted = useRef(false); // Ref to track if sendFunction has been executed
+  const inactivityTimeoutRef = useRef<NodeJS.Timeout | null>(null); // Ref for inactivity timeout
+
+  const resetInactivityTimeout = () => {
+    if (inactivityTimeoutRef.current) {
+      clearTimeout(inactivityTimeoutRef.current);
+    }
+    inactivityTimeoutRef.current = setTimeout(() => {
+      console.log("Navigating to page 0 due to inactivity.");
+      setPage(0); // Navigate to page 0 after 30 seconds of inactivity
+      socket?.emit(
+        "page-next-server",
+        JSON.stringify({
+          nextPage: 0,
+          room: room,
+        })
+      );
+    }, 30000); // 30 seconds inactivity timeout
+  };
 
   const sendFunction = async (): Promise<void> => {
     if (isLoading) {
-      //console.log("sendFunction is already running, skipping...");
       return;
     }
     setIsLoading(true);
     try {
-      //console.log("Sending data to server...");
-      //console.log("Data: ", data);
-
       const response = await axios.post("/api/v1/carbonFootPrint", data);
       const responseData = response.data.data;
-      //console.log("Successfully added to the server");
-      //console.log("Data: ", responseData);
+
+      // Validate responseData
+      if (!responseData || typeof responseData !== "object") {
+        throw new Error("Invalid response data");
+      }
 
       // Compute total emissions
       const totalEmission = calculateTotalEmissions(responseData);
-      console.log("Total Emission Calculated (String):", totalEmission.toString());
+
+      // Validate totalEmission
+      if (isNaN(totalEmission)) {
+        throw new Error("Invalid total emission value");
+      }
+
       // Set total emissions
       setValue(totalEmission.toString());
       setCarbonFootPrint(totalEmission.toString());
-
-      //console.log("Carbon Footprint: " + totalEmission.toFixed(2) + " kg CO₂-e");
 
       // Emit results to the server
       socket?.emit(
@@ -118,30 +121,48 @@ export default function PageTwenty({ setPage, setCarbonFootPrint }: Props) {
       );
     } catch (error) {
       console.error("Error fetching data:", error);
+      setValue("0"); // Fallback to a default value
+      setCarbonFootPrint("0");
     } finally {
-      // Ensure loading is set to false even if there is an error
       setIsLoading(false);
     }
   };
 
   useEffect(() => {
-    /*if (!hasExecuted.current) {
-      hasExecuted.current = true; // Mark as executed
-      sendFunction();
-    }*/
     if (!isRun) {
       sendFunction();
       setIsRun(true); // Mark as executed
     }
   }, []); // Empty dependency array ensures this runs only once
 
+  useEffect(() => {
+    // Reset inactivity timeout on user interactions (mouse, keyboard, touch)
+    window.addEventListener("mousemove", resetInactivityTimeout);
+    window.addEventListener("keydown", resetInactivityTimeout);
+    window.addEventListener("click", resetInactivityTimeout);
+    window.addEventListener("touchstart", resetInactivityTimeout); // Handle touch interactions
+
+    // Initialize inactivity timeout
+    resetInactivityTimeout();
+
+    return () => {
+      // Cleanup event listeners and timeout
+      window.removeEventListener("mousemove", resetInactivityTimeout);
+      window.removeEventListener("keydown", resetInactivityTimeout);
+      window.removeEventListener("click", resetInactivityTimeout);
+      window.removeEventListener("touchstart", resetInactivityTimeout); // Cleanup touch interactions
+
+      if (inactivityTimeoutRef.current) {
+        clearTimeout(inactivityTimeoutRef.current);
+      }
+    };
+  }, [socket]);
+
   return (
     <DefaultBackground>
       <div className="relative z-10 w-full h-full mx-auto 2xl:container flex flex-col items-center justify-start gap-5 py-10 md:py-[89px] ">
         {/* Show Results */}
-        {!isLoading && (
-          <Result value={value} isLoading={false} />
-        )}
+        {!isLoading && <Result value={value} isLoading={false} />}
 
         {/* Show a fallback if needed */}
         {isLoading && (

@@ -129,14 +129,12 @@ const CheckboxComponent = (
   // State
   const dispatch = useDispatch();
 
-
   const checkSelectedTypes = () => {
     return selectedTypes.includes(type);
-  }
+  };
 
   const addRemoveTyeps = () => {
     const check = selectedTypes.includes(type);
-    console.log(check);
 
     if (check) {
       const newSelectedTypes = selectedTypes.filter((item: any) => item !== type); // Remove the item immutably
@@ -144,7 +142,7 @@ const CheckboxComponent = (
     } else {
       setSelectedTypes([...selectedTypes, type]); // Add the item immutably
     }
-  }
+  };
 
   const updateSelectedDays = ({ index, value }: { index: number, value: number }) => {
     setSelectedDays((prevSelectedDays: any) => {
@@ -167,7 +165,6 @@ const CheckboxComponent = (
   useEffect(() => {
     socket?.on("page-change-send-data-client", (temp: any) => {
       const data: InData = JSON.parse(temp);
-
 
       if (data.page == "page-6") {
         setSelectedTypes((prevSelectedTypes: any) => {
@@ -203,7 +200,7 @@ const CheckboxComponent = (
             selected: true,
             value: 1
           })
-        )
+        );
 
         dispatch(
           addHouseholdEnegryCategory({
@@ -226,10 +223,8 @@ const CheckboxComponent = (
             frequency: data.slider2
           })
         );
-
       }
     });
-
   }, [socket]);
 
   return (
@@ -244,7 +239,7 @@ const CheckboxComponent = (
           src={check ? AppAsset.CheckedIcon : AppAsset.UncheckedIcon}
           className='w-7 md:w-[40px] md:h-[40px] object-contain cursor-pointer' />
         <p
-          className='text-xl md:text-[45px] font-normal'>
+          className='text-sm md:text-base lg:text-lg xl:text-xl font-normal'>
           {text}
         </p>
       </div>
@@ -262,4 +257,4 @@ const CheckboxComponent = (
       </div>
     </div>
   );
-}
+};

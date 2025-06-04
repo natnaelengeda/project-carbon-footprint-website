@@ -52,7 +52,7 @@ export default function PageFive({ setPage }: Props) {
       setPage={setPage}
       currPage={5}>
       <div
-        className="relative z-10 w-full h-full mx-auto 2xl:container flex flex-col items-center justify-start gap-5 pt-20 md:pt-[200px]">
+        className="relative z-10 w-full h-full mx-auto 2xl:container flex flex-col items-center justify-start gap-5 pt-20 md:pt-[150px]">
 
         {/* Image Content */}
         <div
@@ -60,25 +60,25 @@ export default function PageFive({ setPage }: Props) {
           {/* Image */}
           <img
             src={AppAsset.BannerFour}
-            className="w-[250px] h-[250px] object-cover" />
+            className="w-[200px] h-[200px] md:w-[250px] md:h-[250px] object-cover" />
         </div>
 
         {/* Title */}
         <div
-          className="w-full h-auto flex flex-col items-start justify-start pl-10 text-white">
+          className="w-full h-auto flex flex-col items-start justify-start pl-5 md:pl-10 text-white">
           <div
-            className="flex flex-row items-center justify-start gap-5">
+            className="flex flex-row items-center justify-start gap-3 md:gap-5">
             <div
-              className="w-10 h-3 bg-purple-500">
+              className="w-8 h-2 md:w-10 md:h-3 bg-purple-500">
             </div>
-            <p className="text-white text-[40px]"><CarbonLanguage name="household_energy" /></p>
+            <p className="text-white text-[30px] md:text-[40px] font-semibold"><CarbonLanguage name="household_energy" /></p>
           </div>
-          <p className="text-[30px]"><CarbonLanguage name="electric_appliances" /></p>
+          <p className="text-[20px] md:text-[30px] font-normal"><CarbonLanguage name="electric_appliances" /></p>
         </div>
 
         {/* Options */}
         <div
-          className="w-full h-auto flex flex-col items-start justify-start pl-10 pt-1 gap-5">
+          className="w-full h-auto flex flex-col items-start justify-start pl-5 md:pl-10 pt-1 gap-3 md:gap-5">
           {
             buttons &&
             buttons.map((button: { id: number, type: string, name: any }, index: number) => {
@@ -133,10 +133,9 @@ const CheckboxComponent = (
   // State
   const dispatch = useDispatch();
 
-
   const checkSelectedTypes = () => {
     return selectedTypes.includes(type);
-  }
+  };
 
   const addRemoveTyeps = () => {
     const check = selectedTypes.includes(type);
@@ -147,7 +146,7 @@ const CheckboxComponent = (
     } else {
       setSelectedTypes([...selectedTypes, type]); // Add the item immutably
     }
-  }
+  };
 
   const updateSelectedDays = ({ index, value }: { index: number, value: number }) => {
     setSelectedDays((prevSelectedDays: any) => {
@@ -199,7 +198,6 @@ const CheckboxComponent = (
           value: data.slider2
         });
 
-
         dispatch(
           addHouseholdEnergy({
             id: 3,
@@ -238,41 +236,41 @@ const CheckboxComponent = (
 
   return (
     <div
-      className="w-full h-full flex flex-col items-start justify-start gap-3 text-white">
+      className="w-full h-full flex flex-col items-start justify-start gap-2 md:gap-3 text-white">
       <div
-        className='flex flex-row items-center justify-start gap-3 md:gap-[20px] text-white'>
+        className='flex flex-row items-center justify-start gap-2 md:gap-5 text-white'>
         <img
           onClick={() => {
             addRemoveTyeps();
           }}
           src={check ? AppAsset.CheckedIcon : AppAsset.UncheckedIcon}
-          className='w-7 md:w-[40px] md:h-[40px] object-contain cursor-pointer' />
+          className='w-6 h-6 md:w-8 md:h-8 object-contain cursor-pointer' />
         <p
-          className='text-xl md:text-[45px] font-normal'>
+          className='text-lg md:text-xl font-normal'>
           {text}
         </p>
       </div>
 
       {/* Usage */}
       <div
-    style={{
-      display: check ? "flex" : "none"
-    }}
-    className="pr-10">
-    {type === "fridge" || type === "television" ? (
-      // Use DaysPerWeekHoursPerDay for Fridge and Television
-      <DaysPerWeekHoursPerDay
-        text={text}
-        selectedDays={selectedDays[id]}
-        selectedHours={selectedHours[id]} />
-    ) : (
-      // Use DaysPerWeekMinutesPerDay for Iron and Water Boiler
-      <DaysPerWeekMinutesPerDay
-        text={text}
-        selectedDays={selectedDays[id]}
-        selectedHours={selectedHours[id]} />
-    )}
-  </div>
+        style={{
+          display: check ? "flex" : "none"
+        }}
+        className="pr-5 md:pr-10">
+        {type === "fridge" || type === "television" ? (
+          // Use DaysPerWeekHoursPerDay for Fridge and Television
+          <DaysPerWeekHoursPerDay
+            text={text}
+            selectedDays={selectedDays[id]}
+            selectedHours={selectedHours[id]} />
+        ) : (
+          // Use DaysPerWeekMinutesPerDay for Iron and Water Boiler
+          <DaysPerWeekMinutesPerDay
+            text={text}
+            selectedDays={selectedDays[id]}
+            selectedHours={selectedHours[id]} />
+        )}
+      </div>
     </div>
   );
-}
+};

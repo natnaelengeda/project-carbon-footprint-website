@@ -44,11 +44,27 @@ export default function TwentyOne({ setPage, setCarbonFootPrint }: Props) {
     if (socket?.connected) {
       console.log("Socket is connected");
       socket.on("page-21-results-client", (temp) => {
-        const data = JSON.parse(temp);
-        setValue(data.value.toString());
-        setCarbonFootPrint(data.value.toString());
-        setIsLoading(false);
-        console.log("Page 21 Data:", data);
+        try {
+          const data = JSON.parse(temp);
+
+          // Validate data.value
+          if (data.value && !isNaN(Number(data.value))) {
+            setValue(data.value.toString());
+            setCarbonFootPrint(data.value.toString());
+            setIsLoading(false);
+            console.log("Page 21 Data:", data);
+          } else {
+            console.error("Invalid value received:", data.value);
+            setValue("0"); // Fallback to a default value
+            setCarbonFootPrint("0");
+            setIsLoading(false);
+          }
+        } catch (error) {
+          console.error("Error parsing socket data:", error);
+          setValue("0"); // Fallback to a default value
+          setCarbonFootPrint("0");
+          setIsLoading(false);
+        }
       });
     } else {
       console.log("Socket is not connected");
@@ -68,7 +84,7 @@ export default function TwentyOne({ setPage, setCarbonFootPrint }: Props) {
         {/* Reset Message */}
         <div>
           <div className="w-full flex flex-col items-center justify-between px-[106px] gap-8 pt-28">
-            <span style={{ fontSize: "26px" }}>
+            <span style={{ fontSize: "22px" }}>
               <p className="text-white text-center">
                 <CarbonLanguage name="the_page_will_reset_in_30_seconds_you_can_start_again_using_the_button_below" />
               </p>

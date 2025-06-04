@@ -1,11 +1,9 @@
-import React from 'react'
+import React, { useEffect, useRef } from 'react';
 
 // Background
 import DefaultBackground from '../DefaultBackground';
-// import NavComponent from '../../../NavComponent';
 import AppAsset from '@/core/AppAsset';
 import Section from '@/components/Section';
-// import { ethiopiaFootprintData } from '@/data/sectionData';
 import { useSocket } from '@/context/SocketProvider';
 import CarbonLanguage from '@/utils/carbonLanguage';
 
@@ -17,6 +15,45 @@ interface Props {
 export default function PageTwentyTwo({ setPage }: Props) {
   const socket = useSocket();
   const room = localStorage.getItem("room");
+
+  const inactivityTimeoutRef = useRef<NodeJS.Timeout | null>(null); // Ref for inactivity timeout
+
+  const resetInactivityTimeout = () => {
+    if (inactivityTimeoutRef.current) {
+      clearTimeout(inactivityTimeoutRef.current);
+    }
+    inactivityTimeoutRef.current = setTimeout(() => {
+      console.log("Navigating to page 0 due to inactivity.");
+      setPage(0); // Navigate to page 0 after 30 seconds of inactivity
+      socket?.emit("page-next-server", JSON.stringify({
+        nextPage: 0,
+        room: room,
+      }));
+    }, 30000); // 30 seconds inactivity timeout
+  };
+
+  useEffect(() => {
+    // Reset inactivity timeout on user interactions
+    window.addEventListener("mousemove", resetInactivityTimeout);
+    window.addEventListener("keydown", resetInactivityTimeout);
+    window.addEventListener("click", resetInactivityTimeout);
+    window.addEventListener("touchstart", resetInactivityTimeout); // Handle touch interactions
+
+    // Initialize inactivity timeout
+    resetInactivityTimeout();
+
+    return () => {
+      // Cleanup event listeners and timeout
+      window.removeEventListener("mousemove", resetInactivityTimeout);
+      window.removeEventListener("keydown", resetInactivityTimeout);
+      window.removeEventListener("click", resetInactivityTimeout);
+      window.removeEventListener("touchstart", resetInactivityTimeout); // Cleanup touch interactions
+
+      if (inactivityTimeoutRef.current) {
+        clearTimeout(inactivityTimeoutRef.current);
+      }
+    };
+  }, [socket]);
 
   const data1 = {
     title: <CarbonLanguage name="ethiopia_has_one_of_the_lowest_carbon_footprints_in_the_world" />,

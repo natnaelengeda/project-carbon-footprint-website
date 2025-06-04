@@ -90,9 +90,9 @@ export default function PageTwentyTwo({ setPage, carbonFootPrint }: Props) {
 
         {/* Bottom */}
         <div>
-          <div className=" w-full flex flex-col items-center justify-between px-[70px] gap-8 pt-10">
+          <div className="w-full flex flex-col items-center justify-between px-[70px] gap-8 pt-10">
             <span>
-              <p className="text-white text-lg text-center">
+              <p className="text-white text-sm md:text-base text-center">
                 <CarbonLanguage name="the_page_will_reset_in_30_seconds_you_can_start_again_using_the_button_below" />
               </p>
             </span>

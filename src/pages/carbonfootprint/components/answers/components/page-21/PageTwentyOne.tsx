@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useRef } from 'react';
 
 // Background
 import DefaultBackground from '../DefaultBackground';
@@ -13,7 +13,6 @@ import CarbonLanguage from '@/utils/carbonLanguage';
 import Result from './components/Result';
 import CarbonFootprintProgress from '../../../questions/components/page-22/components/CarbonFootprintProgress';
 import { useSelector } from 'react-redux';
-import { Global } from 'recharts';
 
 // Interface
 interface Props {
@@ -27,6 +26,45 @@ export default function PageTwentyOne({ setPage, carbonFootPrint }: Props) {
   const ethiopianAverage = 170;
   const globalAverage = 4700;
   const carbon = useSelector((state: any) => state.carbon);
+
+  const inactivityTimeoutRef = useRef<NodeJS.Timeout | null>(null); // Ref for inactivity timeout
+
+  const resetInactivityTimeout = () => {
+    if (inactivityTimeoutRef.current) {
+      clearTimeout(inactivityTimeoutRef.current);
+    }
+    inactivityTimeoutRef.current = setTimeout(() => {
+      console.log("Navigating to page 0 due to inactivity.");
+      setPage(0); // Navigate to page 0 after 30 seconds of inactivity
+      socket?.emit("page-next-server", JSON.stringify({
+        nextPage: 0,
+        room: room,
+      }));
+    }, 30000); // 30 seconds inactivity timeout
+  };
+
+  useEffect(() => {
+    // Reset inactivity timeout on user interactions
+    window.addEventListener("mousemove", resetInactivityTimeout);
+    window.addEventListener("keydown", resetInactivityTimeout);
+    window.addEventListener("click", resetInactivityTimeout);
+    window.addEventListener("touchstart", resetInactivityTimeout); // Handle touch interactions
+
+    // Initialize inactivity timeout
+    resetInactivityTimeout();
+
+    return () => {
+      // Cleanup event listeners and timeout
+      window.removeEventListener("mousemove", resetInactivityTimeout);
+      window.removeEventListener("keydown", resetInactivityTimeout);
+      window.removeEventListener("click", resetInactivityTimeout);
+      window.removeEventListener("touchstart", resetInactivityTimeout); // Cleanup touch interactions
+
+      if (inactivityTimeoutRef.current) {
+        clearTimeout(inactivityTimeoutRef.current);
+      }
+    };
+  }, [socket]);
 
   return (
     <DefaultBackground>
