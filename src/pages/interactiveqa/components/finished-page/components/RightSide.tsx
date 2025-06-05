@@ -35,6 +35,12 @@ export default function RightSide({ name, setName, addData, setGamepadConnected,
   const xButtonCooldownRef = useRef(false);
   const prevXPressedRef = useRef(false);
 
+  // Cooldown for button presses on page load
+  const pageLoadCooldownRef = useRef(false);
+
+  // Cooldown for submit actions
+  const submitActionCooldownRef = useRef(false);
+
   // Inactivity timeout ref
   const inactivityTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
@@ -45,6 +51,12 @@ export default function RightSide({ name, setName, addData, setGamepadConnected,
     // Fetch the current user count from localStorage or initialize it
     const count = parseInt(localStorage.getItem("userCount") || "0", 10);
     setUserCount(count);
+
+    // Activate cooldown for button presses on page load
+    pageLoadCooldownRef.current = true;
+    setTimeout(() => {
+      pageLoadCooldownRef.current = false; // Cooldown ends after 1000ms (1 second)
+    }, 1000);
   }, []);
 
   const generateRandomName = () => {
@@ -53,6 +65,24 @@ export default function RightSide({ name, setName, addData, setGamepadConnected,
   };
 
   const handleSubmit = (navigateToPage: number) => {
+    // 1. Prevent button presses during initial page load cooldown
+    if (pageLoadCooldownRef.current) {
+      console.log("Submit ignored due to page load cooldown.");
+      return;
+    }
+
+    // 2. Prevent rapid re-submission from any source (click, gamepad, virtual keyboard)
+    if (submitActionCooldownRef.current) {
+      console.log("Submit ignored due to action cooldown.");
+      return;
+    }
+
+    // Activate cooldown for this submit action
+    submitActionCooldownRef.current = true;
+    setTimeout(() => {
+      submitActionCooldownRef.current = false;
+    }, 1000); // 1-second cooldown for submit actions
+
     // Generate a default name if the user doesn't input one
     const generatedName = name.trim() === "" ? generateRandomName() : name;
 
@@ -167,7 +197,7 @@ export default function RightSide({ name, setName, addData, setGamepadConnected,
           <VirtualKeyboard
             setText={setName}
             addData={() => handleSubmit(5)} // Trigger handleSubmit on Enter
-            setShowKeyboard={setShowKeyboard}
+            setShowKeyboard={setShowKeyboard} // Keep the keyboard visible
             setIsGamepadConnected={setGamepadConnected} />
         }
 

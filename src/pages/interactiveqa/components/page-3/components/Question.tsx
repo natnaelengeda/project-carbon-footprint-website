@@ -1,4 +1,3 @@
-
 interface IQuestion {
   questions: any;
   currentQuestion: any;
@@ -11,7 +10,7 @@ export default function Question({ questions, currentQuestion }: IQuestion) {
         style={{
           lineHeight: "1.3"
         }}
-        className="text-2xl md:text-[40px] font-bold md:leading-10 space-y-2 text-center">
+        className="text-xl md:text-[32px] font-bold md:leading-9 space-y-2 text-center">
         {
           questions &&
           currentQuestion &&

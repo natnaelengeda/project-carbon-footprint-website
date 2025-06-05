@@ -46,24 +46,22 @@ export default function TwentyOne({ setPage, setCarbonFootPrint }: Props) {
       socket.on("page-21-results-client", (temp) => {
         try {
           const data = JSON.parse(temp);
+          console.log("Received data:", data);
 
           // Validate data.value
-          if (data.value && !isNaN(Number(data.value))) {
-            setValue(data.value.toString());
-            setCarbonFootPrint(data.value.toString());
-            setIsLoading(false);
-            console.log("Page 21 Data:", data);
+          const parsedValue = Number(data.value);
+          if (!isNaN(parsedValue)) {
+            setValue(parsedValue.toString());
+            setCarbonFootPrint(parsedValue.toString());
           } else {
             console.error("Invalid value received:", data.value);
             setValue("0"); // Fallback to a default value
             setCarbonFootPrint("0");
-            setIsLoading(false);
           }
         } catch (error) {
           console.error("Error parsing socket data:", error);
           setValue("0"); // Fallback to a default value
           setCarbonFootPrint("0");
-          setIsLoading(false);
         }
       });
     } else {

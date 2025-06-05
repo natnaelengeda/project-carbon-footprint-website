@@ -22,16 +22,30 @@ const CarbonFootprintProgress = ({
   const yourPercent = Math.min((value / fullScale) * 100, 100);
   const globalPercent = Math.min((secondValue / fullScale) * 100, 100);
 
-  // Adjust label positions to avoid overlap
-  const labelOffsetAbove = Math.abs(yourPercent - globalPercent) < 10 ? 15 : 0; // Offset for labels above the bar
-  const labelOffsetBelow = Math.abs(yourPercent - globalPercent) < 10 ? 25 : 10; // Extra separation for labels below the bar
-
   // Ensure labels stay within the container boundaries
   const adjustBoundary = (percent: number) => {
     if (percent < 5) return 5; // Prevent text from going too far left
     if (percent > 95) return 95; // Prevent text from going too far right
     return percent;
   };
+
+  // Dynamically adjust vertical offsets to prevent overlap and enforce separation
+  const proximity = Math.abs(yourPercent - globalPercent);
+  const labelOffsetAbove = proximity < 10 ? 20 : 10; // Increase offset for labels above the bar
+  const labelOffsetBelow = proximity < 10 ? 30 : 15; // Increase offset for labels below the bar
+  const minimumSeparation = 5; // Minimum separation between labels
+
+  // Adjust positions to ensure minimum separation
+  const adjustedYourPercent = adjustBoundary(yourPercent);
+  const adjustedGlobalPercent = adjustBoundary(globalPercent);
+
+  const aboveLabelOffset = adjustedYourPercent > adjustedGlobalPercent
+    ? labelOffsetAbove + minimumSeparation
+    : labelOffsetAbove;
+
+  const belowLabelOffset = adjustedYourPercent < adjustedGlobalPercent
+    ? labelOffsetBelow + minimumSeparation
+    : labelOffsetBelow;
 
   return (
     <div className="w-full max-w-3xl space-y-4">
@@ -41,8 +55,8 @@ const CarbonFootprintProgress = ({
         <div
           className="absolute text-sm text-white font-medium"
           style={{
-            left: `${adjustBoundary(yourPercent)}%`,
-            transform: `translateX(-50%) translateY(${labelOffsetAbove}px)`, // Offset for labels above the bar
+            left: `${adjustedYourPercent}%`,
+            transform: `translateX(-50%) translateY(${aboveLabelOffset}px)`, // Offset for labels above the bar
           }}
         >
           {firstText}
@@ -50,8 +64,8 @@ const CarbonFootprintProgress = ({
         <div
           className="absolute text-sm text-white font-medium"
           style={{
-            left: `${adjustBoundary(globalPercent)}%`,
-            transform: `translateX(-50%) translateY(-${labelOffsetAbove}px)`, // Offset for labels above the bar
+            left: `${adjustedGlobalPercent}%`,
+            transform: `translateX(-50%) translateY(-${aboveLabelOffset}px)`, // Offset for labels above the bar
           }}
         >
           <p
@@ -87,8 +101,8 @@ const CarbonFootprintProgress = ({
         <div
           className="absolute text-white text-sm font-semibold"
           style={{
-            left: `${adjustBoundary(yourPercent)}%`,
-            transform: `translateX(-50%) translateY(${labelOffsetBelow}px)`, // Extra separation for labels below the bar
+            left: `${adjustedYourPercent}%`,
+            transform: `translateX(-50%) translateY(${belowLabelOffset}px)`, // Extra separation for labels below the bar
           }}
         >
           <p
@@ -102,8 +116,8 @@ const CarbonFootprintProgress = ({
         <div
           className="absolute text-white text-sm font-semibold"
           style={{
-            left: `${adjustBoundary(globalPercent)}%`,
-            transform: `translateX(-50%) translateY(-${labelOffsetBelow}px)`, // Extra separation for labels below the bar
+            left: `${adjustedGlobalPercent}%`,
+            transform: `translateX(-50%) translateY(-${belowLabelOffset}px)`, // Extra separation for labels below the bar
           }}
         >
           <p

@@ -298,15 +298,16 @@ export default function xPageThree({ setPage, answers, setAnswers, setQuestions,
             style={{
               maxWidth: "600px",  // Restricts width for wrapping
               margin: "0 auto",   // Centers the content horizontally
-              minHeight: "150px", // Ensures consistent height for the question container
+              minHeight: "200px", // Increased height to accommodate up to four lines
+              maxHeight: "250px", // Restricts height to prevent overflow
               marginBottom: "20px", // Adds spacing below the question box
             }}
           >
             <div
               className="w-full bg-white bg-opacity-0 rounded-lg p-4"
               style={{
-                minHeight: "150px", // Ensures consistent height for the question text
-                maxHeight: "150px", // Restricts height to prevent overflow
+                minHeight: "200px", // Increased height to accommodate up to four lines
+                maxHeight: "250px", // Restricts height to prevent overflow
                 display: "flex",    // Enables flexbox layout
                 flexDirection: "column", // Ensures content stacks vertically
                 alignItems: "center", // Centers content horizontally
