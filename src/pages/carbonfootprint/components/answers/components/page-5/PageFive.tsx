@@ -46,9 +46,9 @@ export default function PageFive({ setPage }: Props) {
             <div
               className="w-10 h-3 bg-purple-500">
             </div>
-            <p className="text-white text-[60px]">Household Energy</p>
+            <p className="text-white text-[60px]"><CarbonLanguage name="household_energy" /></p>
           </div>
-          <p className="text-[50px]">Electric Appliances</p>
+          <p className="text-[50px]"><CarbonLanguage name="electric_appliances" /></p>
         </div>
 
         {/* Bottom Context */}

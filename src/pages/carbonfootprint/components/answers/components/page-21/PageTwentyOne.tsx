@@ -80,9 +80,9 @@ export default function PageTwentyOne({ setPage, carbonFootPrint }: Props) {
             isLoading={true} />
 
           {/* Right Side */}
-          <div className='w-full h-auto flex flex-col items-center justify-start'>
+          <div className='w-full h-auto flex flex-col items-center justify-start space-y-8'>
             <div className="gap-20 w-full flex flex-col items-center justify-center mb-20 ">
-              <div className="w-5/6 flex flex-col items-center justify-center gap-2 ">
+              <div className="w-5/6 flex flex-col items-center justify-center gap-2 space-y-8">
                 <span className=" text-white ">
                   <p className="text-4xl">
                     <CarbonLanguage name="global_average_carbon_footprint_per_person_is_per_year" />
@@ -109,7 +109,8 @@ export default function PageTwentyOne({ setPage, carbonFootPrint }: Props) {
                
             }
               </div>
-              <div className="w-5/6 flex flex-col items-center justify-center gap-2 ">
+             
+              <div className="w-5/6 flex flex-col items-center justify-center gap-2 space-y-8">
                 <span className=" text-white pb-2">
                   <p className="text-4xl">
                     <CarbonLanguage name="ethiopian_average_carbon_footprint_per_person_is_per_year" />

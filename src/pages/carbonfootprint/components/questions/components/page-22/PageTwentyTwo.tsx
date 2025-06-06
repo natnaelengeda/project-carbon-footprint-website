@@ -30,8 +30,8 @@ export default function PageTwentyTwo({ setPage, carbonFootPrint }: Props) {
           isLoading={false} />
 
 
-        <div className="gap-5 w-full flex flex-col items-center justify-center py-10">
-          <div className="w-5/6 flex flex-col items-center justify-center gap-2 ">
+        <div className="gap-5 w-full flex flex-col items-center justify-center py-10 space-y-8">
+          <div className="w-5/6 flex flex-col items-center justify-center gap-2 space-y-8">
             <span className=" text-white ">
               <p className="text-lg">
                 <CarbonLanguage name="global_average_carbon_footprint_per_person_is_per_year" />
@@ -57,9 +57,8 @@ export default function PageTwentyTwo({ setPage, carbonFootPrint }: Props) {
                 secondColor = {"bg-green-400"} /> 
                
             }
-
           </div>
-          <div className="w-5/6 flex flex-col items-center justify-center gap-2 ">
+          <div className="w-5/6 flex flex-col items-center justify-center gap-2 space-y-8"> 
             <span className=" text-white ">
               <p className="text-lg">
                 <CarbonLanguage name="ethiopian_average_carbon_footprint_per_person_is_per_year" />

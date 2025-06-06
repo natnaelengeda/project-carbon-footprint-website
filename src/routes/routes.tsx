@@ -8,6 +8,7 @@ import Home from "../pages/home";
 import Answers from "@/pages/carbonfootprint/components/answers";
 import Questions from "@/pages/carbonfootprint/components/questions";
 import InteractiveQA from "@/pages/interactiveqa";
+import CarbonFootprintProgressTestPage from "@/pages/test/progress";
 
 // Test
 import Test from "@/pages/test";
@@ -48,6 +49,10 @@ export const router = createBrowserRouter([
       {
         path: "/qanew",
         element: <QANew />,
+      },
+      {
+        path: "/test/progress",
+        element: <CarbonFootprintProgressTestPage />,
       }
     ]
   }
